@@ -183,7 +183,7 @@ def chat(req: ChatRequest):
         results = qdrant.query_points(
             collection_name=COLLECTION,
             query=embedding,
-            limit=max(req.top_k, 15),  # fetch extra for keyword re-ranking
+            limit=max(req.top_k, 30),  # fetch extra for keyword re-ranking
             query_filter=query_filter,
         )
     except Exception as e:
@@ -199,16 +199,28 @@ def chat(req: ChatRequest):
     words = re.findall(r'\b[a-záàâãéèêíïóôõöúçñ]{4,}\b', req.question.lower())
     key_terms = [w for w in words if w not in stopwords]
     
-    # Re-score: boost chunks containing key terms
+    # Also extract 2-word phrases for exact matching
+    question_lower = req.question.lower()
+    bigrams = []
+    for i in range(len(words) - 1):
+        if words[i] not in stopwords and words[i+1] not in stopwords:
+            bigrams.append(f"{words[i]} {words[i+1]}")
+    
+    # Re-score: boost chunks containing key terms and phrases
     scored_hits = []
     for hit in results.points:
         text_lower = hit.payload.get("text", "").lower()
         keyword_boost = 0
+        # Single word matches
         for term in key_terms:
             if term in text_lower:
-                # Count occurrences for stronger boost
                 count = text_lower.count(term)
                 keyword_boost += 0.02 * min(count, 5)
+        # Bigram matches (stronger boost)
+        for bigram in bigrams:
+            if bigram in text_lower:
+                count = text_lower.count(bigram)
+                keyword_boost += 0.05 * min(count, 3)
         final_score = hit.score + keyword_boost
         scored_hits.append((final_score, hit))
     
