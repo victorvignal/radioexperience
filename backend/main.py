@@ -272,9 +272,10 @@ def chat(req: ChatRequest):
     context = "\n\n---\n\n".join(context_parts)
 
     # 3.5. Score gate: reject if top result is below threshold
-    top_score = sources[0].score if sources else 0.0
-    if top_score < MIN_RELEVANCE_SCORE:
-        logger.info(f"Rejected: top_score={top_score:.3f} < {MIN_RELEVANCE_SCORE}")
+    # Use boosted score (keyword+semantic) for gate, not raw semantic score
+    top_boosted_score = scored_hits[0][0] if scored_hits else 0.0
+    if top_boosted_score < MIN_RELEVANCE_SCORE:
+        logger.info(f"Rejected: top_boosted_score={top_boosted_score:.3f} < {MIN_RELEVANCE_SCORE}")
         return ChatResponse(
             answer="Não encontrei informações suficientes na base de conhecimento para responder essa pergunta. Tente reformular com mais detalhes — por exemplo, inclua a especialidade, o tipo de exame ou a região anatômica.",
             sources=[],
