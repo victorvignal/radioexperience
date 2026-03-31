@@ -1,0 +1,5 @@
+pypdf
+openai
+qdrant-client
+pymupdf
+pillow
