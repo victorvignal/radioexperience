@@ -58,6 +58,7 @@ class ChatRequest(BaseModel):
     question: str
     top_k: int = 10
     specialty: str | None = None
+    image_base64: str | None = None  # base64 encoded image
 
     def validate_question(self):
         if not self.question or not self.question.strip():
@@ -284,12 +285,24 @@ def chat(req: ChatRequest):
 
     # 4. Generate answer
     try:
+        system_prompt = SYSTEM_PROMPT.format(context=context)
+        context_text = context
+        if req.image_base64:
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": [
+                    {"type": "text", "text": f"PERGUNTA DO USUÁRIO:\n{req.question}\n\nCONTEXTO:\n{context_text}"},
+                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{req.image_base64}", "detail": "high"}},
+                ]},
+            ]
+        else:
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": req.question},
+            ]
         response = openai_client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT.format(context=context)},
-                {"role": "user", "content": req.question},
-            ],
+            messages=messages,
             temperature=0.3,
             max_tokens=1500,
         )
