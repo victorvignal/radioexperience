@@ -177,9 +177,20 @@ export default function AriaChat() {
             {m.sources && m.sources.length > 0 && (
               <div style={styles.sources}>
                 <strong>📚 Fontes:</strong>
-                {m.sources.map((s, j) => (
-                  <div key={j}>• {s.title}{s.page_start ? ` (p. ${s.page_start}${s.page_end ? `-${s.page_end}` : ""})` : ""}</div>
-                ))}
+                {m.sources.slice(0, 3).map((s, j) => {
+                  // Clean up filename: remove prefixes, suffixes, replace underscores
+                  let title = s.title
+                    .replace(/^(Mama|Neurorradiologia|Abdome|Torax|Pediatria|Geral|Ms|intervencao|Vascular|radioprotecao|Cabeca_Pescoco|Obstetricia|Urgencia)_Livro_/i, '')
+                    .replace(/^(Mama|Neurorradiologia|Abdome|Torax|Pediatria|Geral|Ms|intervencao|Vascular|radioprotecao|Cabeca_Pescoco|Obstetricia|Urgencia)_Artigo_/i, '')
+                    .replace(/_Semautor_SemAno.*$/i, '')
+                    .replace(/_DUP\d+$/i, '')
+                    .replace(/_Revisar/gi, '')
+                    .replace(/_/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+                  const pg = s.page_start ? ` (p. ${s.page_start}${s.page_end && s.page_end !== s.page_start ? `-${s.page_end}` : ""})` : "";
+                  return <div key={j}>• {title}{pg}</div>;
+                })}
               </div>
             )}
           </div>
