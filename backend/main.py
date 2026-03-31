@@ -56,7 +56,7 @@ app.add_middleware(
 # ── Models ──
 class ChatRequest(BaseModel):
     question: str
-    top_k: int = 7
+    top_k: int = 10
     specialty: str | None = None
 
     def validate_question(self):
@@ -82,15 +82,17 @@ class ChatResponse(BaseModel):
 # ── System Prompt ──
 SYSTEM_PROMPT = """Você é ARIA, um assistente de inteligência artificial especializado em radiologia e diagnóstico por imagem.
 
-Diretrizes:
+## REGRAS OBRIGATÓRIAS (siga TODAS, sem exceção):
+
 1. Responda em português brasileiro.
-2. Baseie-se EXCLUSIVAMENTE nos trechos fornecidos como contexto.
-3. **OBRIGATÓRIO:** Cite as fontes SEMPRE no formato [Fonte: Título, p. X-Y] ao final de CADA afirmação factual ou parágrafo. Nunca omita citações — mesmo que a resposta seja curta. Se citar múltiplas fontes para a mesma afirmação, separe por ponto-e-vírgula.
-4. Se o contexto não for suficiente, diga claramente: "Não encontrei informações suficientes na base de conhecimento para responder essa pergunta."
+2. Baseie-se EXCLUSIVAMENTE nos trechos fornecidos como contexto. NÃO use conhecimento prévio.
+3. **FORMATO DE CITAÇÃO:** Ao final de CADA afirmação de fato, adicione [Fonte: Nome, p.X-Y]. Exemplo: "O pneumotórax é visível na radiografia [Fonte: Manual de Tórax, p.1653]." Se não houver fonte relevante no contexto para um dado ponto, diga "Não encontrei referência sobre [ponto específico] na base de conhecimento."
+4. **NUNCA termine uma resposta sem citações.** Se não conseguir citar, considere que não há contexto suficiente e diga isso.
 5. Nunca invente informações clínicas.
 6. Use linguagem técnica mas acessível.
-7. Quando relevante, mencione imagens clínicas referenciadas nos documentos.
-8. Ao descrever achados de imagem (sinais radiológicos, padrões, etc.), cite o texto exato ou parafraseie com indicação precisa da fonte e página.
+
+## PERGUNTAS DE DEFINIÇÃO/CONCEITO
+Quando o usuário perguntar "o que é [termo]" ou "defina [termo]", procure nos trechos a definição mais direta. Se o termo aparecer em um trecho sobre outra patologia (ex: "sinal do X" dentro de um texto sobre pneumotórax), EXTRAIA a definição desse trecho mesmo assim — não ignore só porque o trecho é sobre outro tema.
 
 ## Classificações e escalas (BI-RADS, TI-RADS, etc.)
 
@@ -235,6 +237,17 @@ def chat(req: ChatRequest):
         tokens_used = response.usage.total_tokens if response.usage else 0
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Generation error: {e}")
+
+    # 4.5. Post-process: if answer has no citations but has sources, append them
+    if "Fonte:" not in answer and "fonte:" not in answer.lower() and sources:
+        is_not_found = "não encontrei" in answer.lower() or "nao encontrei" in answer.lower()
+        if not is_not_found:
+            refs = "; ".join(
+                f"[Fonte: {s.title[:60]}, p.{s.page_start}-{s.page_end}]" if s.page_start else f"[Fonte: {s.title[:60]}]"
+                for s in sources[:3]
+            )
+            answer += f"\n\n📚 Fontes consultadas: {refs}"
+            logger.info("Post-processed: appended sources (model did not cite)")
 
     return ChatResponse(
         answer=answer,
