@@ -183,40 +183,60 @@ def chat(req: ChatRequest):
         results = qdrant.query_points(
             collection_name=COLLECTION,
             query=embedding,
-            limit=max(req.top_k, 30),  # fetch extra for keyword re-ranking
+            limit=max(req.top_k, 50),  # fetch extra for keyword re-ranking
             query_filter=query_filter,
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Search error: {e}")
 
-    # 2.5. Keyword re-ranking: extract key terms and boost matching chunks
+    # 2.5. Hybrid re-ranking: keyword boost + secondary search
     import re
-    # Extract potential key terms (2-3 word phrases, medical terms)
     stopwords = {"o", "a", "os", "as", "de", "da", "do", "das", "dos", "em", "na", "no",
                  "que", "e", "é", "um", "uma", "com", "por", "para", "se", "qual", "quais",
                  "como", "sao", "são", "este", "esta", "isso", "esse", "essa", "mais", "menos",
-                 "sobre", "entre", "seu", "sua", "seus", "suas", "pelo", "pela", "onde", "quando"}
+                 "sobre", "entre", "seu", "sua", "seus", "suas", "pelo", "pela", "onde", "quando",
+                 "paciente", "como", "quando", "onde", "isso", "aquele", "aquela", "tais", "tipo"}
     words = re.findall(r'\b[a-záàâãéèêíïóôõöúçñ]{4,}\b', req.question.lower())
     key_terms = [w for w in words if w not in stopwords]
     
-    # Also extract 2-word phrases for exact matching
-    question_lower = req.question.lower()
+    # Extract 2-word phrases for exact matching
+    question_words = re.findall(r'\b[a-záàâãéèêíïóôõöúçñ]+\b', req.question.lower())
     bigrams = []
-    for i in range(len(words) - 1):
-        if words[i] not in stopwords and words[i+1] not in stopwords:
-            bigrams.append(f"{words[i]} {words[i+1]}")
-    
-    # Re-score: boost chunks containing key terms and phrases
+    for i in range(len(question_words) - 1):
+        if question_words[i] not in stopwords and question_words[i+1] not in stopwords:
+            bigrams.append(f"{question_words[i]} {question_words[i+1]}")
+
+    # Secondary search: embed key terms only (catches specific terms the full question might miss)
+    seen_ids = {hit.id for hit in results.points}
+    if key_terms:
+        try:
+            focused_query = " ".join(key_terms[:5])  # top 5 key terms
+            focused_emb = openai_client.embeddings.create(
+                input=[focused_query], model=EMBED_MODEL,
+            ).data[0].embedding
+            extra_results = qdrant.query_points(
+                collection_name=COLLECTION,
+                query=focused_emb,
+                limit=20,
+                query_filter=query_filter,
+            )
+            # Merge unseen results
+            for hit in extra_results.points:
+                if hit.id not in seen_ids:
+                    results.points.append(hit)
+                    seen_ids.add(hit.id)
+        except Exception:
+            pass  # secondary search is best-effort
+
+    # Re-score: semantic + keyword boost
     scored_hits = []
     for hit in results.points:
         text_lower = hit.payload.get("text", "").lower()
         keyword_boost = 0
-        # Single word matches
         for term in key_terms:
             if term in text_lower:
                 count = text_lower.count(term)
                 keyword_boost += 0.02 * min(count, 5)
-        # Bigram matches (stronger boost)
         for bigram in bigrams:
             if bigram in text_lower:
                 count = text_lower.count(bigram)
