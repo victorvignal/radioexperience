@@ -29,6 +29,7 @@ qdrant = QdrantClient(
 )
 COLLECTION = os.getenv("QDRANT_COLLECTION", "radioexperience_knowledge")
 EMBED_MODEL = os.getenv("OPENAI_EMBED_MODEL", "text-embedding-3-small")
+MIN_RELEVANCE_SCORE = float(os.getenv("MIN_RELEVANCE_SCORE", "0.55"))
 
 # ── App ──
 app = FastAPI(title="ARIA API", version="1.0.0")
@@ -89,6 +90,16 @@ Diretrizes:
 5. Nunca invente informações clínicas.
 6. Use linguagem técnica mas acessível.
 7. Quando relevante, mencione imagens clínicas referenciadas nos documentos.
+
+## Detecção de perguntas inadequadas
+
+Antes de responder, avalie se a pergunta do usuário é clara e específica o suficiente para radiologia/diagnóstico por imagem:
+
+- **Palavra solta ou muito genérica** (ex: "mama", "dor", "osso"): Peça ao usuário para reformular com mais contexto. Exemplo: "Sua pergunta é muito genérica. Pode reformular? Por exemplo: 'Quais são os achados mamográficos do BI-RADS 4?'"
+- **Pergunta sem contexto** (ex: "isso é grave?", "tá normal?"): Peça esclarecimentos sobre qual exame, região ou achado o usuário se refere.
+- **Fora do escopo de radiologia**: Informe que sua especialidade é radiologia e diagnóstico por imagem.
+
+Se a pergunta for clara e pertinente, responda normalmente.
 
 Contexto recuperado:
 {context}"""
@@ -188,6 +199,16 @@ def chat(req: ChatRequest):
         ))
 
     context = "\n\n---\n\n".join(context_parts)
+
+    # 3.5. Score gate: reject if top result is below threshold
+    top_score = sources[0].score if sources else 0.0
+    if top_score < MIN_RELEVANCE_SCORE:
+        logger.info(f"Rejected: top_score={top_score:.3f} < {MIN_RELEVANCE_SCORE}")
+        return ChatResponse(
+            answer="Não encontrei informações suficientes na base de conhecimento para responder essa pergunta. Tente reformular com mais detalhes — por exemplo, inclua a especialidade, o tipo de exame ou a região anatômica.",
+            sources=[],
+            tokens_used=0,
+        )
 
     # 4. Generate answer
     try:
