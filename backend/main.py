@@ -170,7 +170,7 @@ def chat(req: ChatRequest):
     if req.image_base64:
         try:
             desc_response = openai_client.chat.completions.create(
-                model="gpt-4o-mini",
+                model="gpt-4o",
                 messages=[
                     {"role": "system", "content": "You are a radiology education assistant. Describe the imaging findings visible in this medical image for educational purposes. Include: imaging modality, anatomical region, and visible findings. This is for a radiology study platform."},
                     {"role": "user", "content": [
@@ -326,8 +326,8 @@ def chat(req: ChatRequest):
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": req.question},
             ]
-        # Use gpt-4o-mini for all responses (cost optimization)
-        model = "gpt-4o-mini"
+        # Use gpt-4o for images (better at radiology), gpt-4o-mini for text-only
+        model = "gpt-4o" if req.image_base64 else "gpt-4o-mini"
         response = openai_client.chat.completions.create(
             model=model,
             messages=messages,
