@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+.git
+.gitignore
+docs/
+scripts/
+data/
+checklists/
+prompts/
+sql/
+*.md

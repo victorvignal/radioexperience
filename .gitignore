@@ -1,0 +1,15 @@
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Data (large files, indexed separately)
+data/
+checklists/
+
+# IDE
+.vscode/
+.idea/
