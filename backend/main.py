@@ -56,7 +56,7 @@ app.add_middleware(
 # ── Models ──
 class ChatRequest(BaseModel):
     question: str
-    top_k: int = 5
+    top_k: int = 7
     specialty: str | None = None
 
     def validate_question(self):
@@ -85,11 +85,12 @@ SYSTEM_PROMPT = """Você é ARIA, um assistente de inteligência artificial espe
 Diretrizes:
 1. Responda em português brasileiro.
 2. Baseie-se EXCLUSIVAMENTE nos trechos fornecidos como contexto.
-3. Sempre cite as fontes no formato [Fonte: Título, p. X-Y].
+3. **OBRIGATÓRIO:** Cite as fontes SEMPRE no formato [Fonte: Título, p. X-Y] ao final de CADA afirmação factual ou parágrafo. Nunca omita citações — mesmo que a resposta seja curta. Se citar múltiplas fontes para a mesma afirmação, separe por ponto-e-vírgula.
 4. Se o contexto não for suficiente, diga claramente: "Não encontrei informações suficientes na base de conhecimento para responder essa pergunta."
 5. Nunca invente informações clínicas.
 6. Use linguagem técnica mas acessível.
 7. Quando relevante, mencione imagens clínicas referenciadas nos documentos.
+8. Ao descrever achados de imagem (sinais radiológicos, padrões, etc.), cite o texto exato ou parafraseie com indicação precisa da fonte e página.
 
 ## Classificações e escalas (BI-RADS, TI-RADS, etc.)
 
