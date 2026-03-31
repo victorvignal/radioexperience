@@ -1,6 +1,13 @@
 import { useState, useRef } from "react";
 
-const API_URL = import.meta.env.VITE_ARIA_API || "https://aria-backend-production-176b.up.railway.app/chat";
+const DEFAULT_API = "https://aria-backend-production-176b.up.railway.app/chat";
+const API_URL = (() => {
+  if (typeof window !== "undefined") {
+    const qs = new URLSearchParams(window.location.search);
+    return qs.get("api") || window.ARIA_API_URL || import.meta.env.VITE_ARIA_API || DEFAULT_API;
+  }
+  return import.meta.env.VITE_ARIA_API || DEFAULT_API;
+})();
 
 export default function AriaChat() {
   const [messages, setMessages] = useState([]);

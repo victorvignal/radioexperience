@@ -96,7 +96,6 @@ const ctx = canvas.getContext("2d");
 const w = canvas.width = window.innerWidth;
 const h = canvas.height = document.documentElement.scrollHeight;
 
-```
 // Create particles
 const count = Math.floor((w * h) / 18000);
 particlesRef.current = Array.from({ length: count }, () => ({
@@ -144,7 +143,7 @@ const animate = () => {
     const glow = Math.sin(p.pulse) * 0.15 + 0.85;
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r * glow, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(192, 214, 234, ${p.opacity * glow})`;
+    ctx.fillStyle = 'rgba(192, 214, 234, ' + (p.opacity * glow) + ')';
     ctx.fill();
   }
 
@@ -161,9 +160,9 @@ const animate = () => {
         const yAvg = (particles[i].y + particles[j].y) / 2;
         const hueShift = (yAvg / h) * 0.3;
         if (hueShift < 0.15) {
-          ctx.strokeStyle = `rgba(221, 255, 85, ${alpha * 0.6})`;
+          ctx.strokeStyle = 'rgba(221, 255, 85, ' + (alpha * 0.6) + ')';
         } else {
-          ctx.strokeStyle = `rgba(192, 214, 234, ${alpha})`;
+          ctx.strokeStyle = 'rgba(192, 214, 234, ' + alpha + ')';
         }
         ctx.beginPath();
         ctx.moveTo(particles[i].x, particles[i].y);
@@ -177,7 +176,6 @@ const animate = () => {
 };
 
 animate();
-```
 
 }, []);
 
@@ -325,7 +323,6 @@ return (
 <span style={{ fontSize: 13, color: C.accent, fontWeight: 500 }}>A única plataforma que divide os lucros com você</span>
 </div>
 
-```
   <div style={{ ...a(0.1), marginBottom: 28, position: "relative", zIndex: 1 }}>
     <h1 style={{ fontSize: "clamp(38px, 5.5vw, 72px)", fontWeight: 800, lineHeight: 1.05, color: C.text, maxWidth: 900, letterSpacing: "-0.04em" }}>
       A <EX color={C.accent} size={72} />periência que vai<br />
@@ -353,7 +350,6 @@ return (
     ))}
   </div>
 </section>
-```
 
 );
 }
@@ -446,7 +442,6 @@ Radio<EX color={C.accent} size={18} />perience não é um software. É um <stron
 </p>
 </div>
 
-```
     <div style={{ ...a(0.25), textAlign: "center", padding: "40px 48px", borderRadius: 24, marginBottom: 48, background: "linear-gradient(135deg, rgba(221,255,85,0.04), rgba(192,214,234,0.03))", border: "1px solid rgba(221,255,85,0.15)", position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0, backdropFilter: "blur(30px) saturate(1.5)", WebkitBackdropFilter: "blur(30px) saturate(1.5)" }} />
       <div style={{ position: "relative" }}>
@@ -470,7 +465,6 @@ Radio<EX color={C.accent} size={18} />perience não é um software. É um <stron
     </div>
   </div>
 </section>
-```
 
 );
 }
@@ -576,7 +570,6 @@ return (
 <div style={{ position: "relative", background: C.bg, color: C.text, minHeight: "100vh", fontFamily: "'Inter',-apple-system,BlinkMacSystemFont,sans-serif", overflowX: "hidden" }}>
 <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap'); *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:${C.bg}} @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}} @keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}} @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}} @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-40px)}} @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,30px)}} @keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,25px)}} button:hover{filter:brightness(1.08)}a:hover{color:${C.accent}!important} ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:${C.bg}}::-webkit-scrollbar-thumb{background:${C.border};border-radius:3px} @media(max-width:960px){ #pillars>div>div{grid-template-columns:repeat(2,1fr)!important;max-width:100%!important} #pricing>div>div:nth-of-type(2){grid-template-columns:repeat(2,1fr)!important} #community>div>div:last-child{grid-template-columns:repeat(2,1fr)!important} } @media(max-width:640px){ #pillars>div>div{grid-template-columns:1fr!important} #pricing>div>div:nth-of-type(2){grid-template-columns:1fr!important} #community>div>div:last-child{grid-template-columns:1fr!important} }`}</style>
 
-```
   {/* ═══ BACKGROUND LAYERS ═══ */}
   {/* Layer 1: Animated neural network */}
   <NeuralBackground />
@@ -616,7 +609,6 @@ return (
     <AriaModal open={ariaOpen} onClose={() => setAriaOpen(false)} />
   </div>
 </div>
-```
 
 );
 }
