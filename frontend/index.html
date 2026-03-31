@@ -253,7 +253,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const API_URL = window.API_URL
       || urlParams.get('api')
-      || `${window.location.protocol}//${window.location.hostname}:8000/chat`;
+      || 'https://aria-backend-production-176b.up.railway.app/chat';
     const chat = document.getElementById('chat');
     const input = document.getElementById('input');
     const sendBtn = document.getElementById('send');
