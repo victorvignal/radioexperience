@@ -6,10 +6,10 @@
 
 ### Indexação Qdrant (live)
 - **Collection:** `radioexperience_knowledge`
-- **Total chunks:** ~100.868 e crescendo
-- **Especialidades:** geral (39.7K), neurorradiologia (15.1K), pediatria (14.3K), intervenção (12.4K), abdome (11.5K), msk (4.1K), mama (1.3K), radioprotecao (1.1K), tórax (726)
-- **Tipos:** book (97.3K), guideline (3K), article (494)
-- **Remaining unknown:** 118 chunks, 482 duplicatas
+- **Total chunks:** 117.191
+- **Especialidades:** geral (39.694), unknown (16.441), neurorradiologia (15.118), pediatria (14.346), intervenção (12.403), abdome (11.479), msk (4.087), mama (1.283), radioprotecao (1.132), tórax (726), _duplicates (482)
+- **Tipos:** book (113.643), guideline (3.054), article (494)
+- **Indexer em execução:** não (só uvicorn rodando)
 
 ### Backend
 - FastAPI rodando em `http://127.0.0.1:8000`
@@ -31,9 +31,9 @@
 
 ## Immediate Next Steps
 
-### 1. Fix remaining 118 unknown chunks
-- Provavelmente paths com estrutura não-padrão
-- Rodar `check_unknowns.py` para identificar
+### 1. Fix remaining ~16.4K unknown chunks
+- Paths com estrutura não-padrão ainda sem specialty
+- Rodar `check_unknowns.py` e aplicar `fix_specialty_payload.py`
 
 ### 2. Deploy do backend
 - Dockerfile para Railway/Render/Fly

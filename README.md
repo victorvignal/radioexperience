@@ -1,35 +1,49 @@
 # RadioeXperience
 
-Estrutura organizada do projeto de base RAG + ingestão + pesquisa semanal.
+Assistente de Radiologia por IA — RAG com base de conhecimento real.
+
+## Status (2026-03-30)
+
+- **Backend:** https://aria-backend-production-176b.up.railway.app (FastAPI + RAG)
+- **Indexação:** 117.191 chunks no Qdrant (10 especialidades)
+- **Frontend:** Chat widget integrado em [victorvignal.github.io](https://victorvignal.github.io#demo)
+- **Cron:** Auto-avanço a cada 45min
+
+## Especialidades indexadas
+
+geral, neurorradiologia, pediatria, intervenção, abdome, msk, mama, radioprotecao, tórax
 
 ## Estrutura
 
-- `docs/`
-  - `architecture_pipeline.md` → visão geral da arquitetura
-  - `ingestion_pipeline.md` → fluxo de ingestão inicial
-  - `multimodal_pipeline.md` / `multimodal_rag.md` → estratégia multimodal
-  - `pilot_status.md` / `next_steps.md` / `local_data_audit.md` → status e próximos passos
-- `sql/`
-  - `rag_schema.sql` → schema do banco principal
-  - `sources_seed.sql` → fontes iniciais para discovery
-- `prompts/`
-  - `openclaw_weekly_discovery_prompt.txt` → prompt do cron/agente semanal
-- `scripts/`
-  - `rad_ingest.py` → inventário + piloto + indexação inicial
-  - `inspect_staging.py` → inspeção rápida de um chunk do staging
-  - `staging_search.py` → busca local simples sobre o staging
-  - `audit_text_quality.py` → auditoria conservadora de ruído textual no staging
-  - `review_problem_chunks.py` → ranqueia chunks mais suspeitos para revisão manual
-  - `requirements.txt` → dependências do script
-- `checklists/`
-  - `books_ingestion_checklist.md` → checklist da ingestão dos livros
+```
+backend/         → FastAPI (main.py, requirements.txt)
+frontend/        → Chat widget standalone
+scripts/         → Pipeline de ingestão e indexação
+docs/            → Documentação técnica
+sql/             → Schema do banco
+data/            → Dados locais (staging, inventário)
+```
 
-## Ordem sugerida
-1. Ler `docs/architecture_pipeline.md`
-2. Subir `sql/rag_schema.sql`
-3. Usar os dados locais em `radioexperience/data/`
-4. Rodar `scripts/rad_ingest.py` em modo `inventory`
-5. Rodar `pilot` com poucos arquivos
-6. Auditar staging localmente (`inspect_staging.py`, `staging_search.py`, `review_problem_chunks.py`)
-7. Refinar limpeza textual com base nos piores chunks
-8. Só depois indexar
+## Deploy
+
+Ver [DEPLOY.md](DEPLOY.md) para instruções completas.
+
+```bash
+# Local
+cd backend && pip install -r requirements.txt && uvicorn main:app --reload
+
+# Railway
+railway up
+```
+
+## API Endpoints
+
+- `GET /health` — status da indexação
+- `POST /chat` — pergunta RAG (body: `{"question": "...", "top_k": 5}`)
+
+## Scripts principais
+
+- `rad_ingest.py` — ingestão e indexação de PDFs
+- `fix_specialty_payload.py` — corrige metadata de specialty
+- `audit_text_quality.py` — auditoria de qualidade dos chunks
+- `review_problem_chunks.py` — identifica chunks problemáticos
