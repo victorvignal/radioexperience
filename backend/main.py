@@ -162,11 +162,36 @@ def list_specialties():
 
 @app.post("/chat", response_model=ChatResponse)
 def chat(req: ChatRequest):
-    logger.info(f"Chat request: question_len={len(req.question)}, top_k={req.top_k}, specialty={req.specialty}")
-    # 1. Embed the question
+    logger.info(f"Chat request: question_len={len(req.question)}, top_k={req.top_k}, specialty={req.specialty}, has_image={bool(req.image_base64)}")
+
+    # 0. If image: first describe it to enhance the search query
+    search_query = req.question
+    image_description = None
+    if req.image_base64:
+        try:
+            desc_response = openai_client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {"role": "system", "content": "Você é um especialista em radiologia e diagnóstico por imagem. Descreva detalhadamente os achados desta imagem médica em português brasileiro. Inclua: tipo de exame, região anatômica, achados visuais relevantes, possíveis padrões."},
+                    {"role": "user", "content": [
+                        {"type": "text", "text": "Descreva os achados desta imagem médica:"},
+                        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{req.image_base64}", "detail": "high"}},
+                    ]},
+                ],
+                temperature=0.2,
+                max_tokens=500,
+            )
+            image_description = desc_response.choices[0].message.content
+            # Combine user question with image description for better search
+            search_query = f"{req.question}\n\nAchados da imagem: {image_description}"
+            logger.info(f"Image description: {image_description[:200]}...")
+        except Exception as e:
+            logger.warning(f"Image description failed: {e}, falling back to text-only search")
+
+    # 1. Embed the question (enhanced with image description if present)
     try:
         embedding = openai_client.embeddings.create(
-            input=[req.question],
+            input=[search_query],
             model=EMBED_MODEL,
         ).data[0].embedding
     except Exception as e:
@@ -288,10 +313,11 @@ def chat(req: ChatRequest):
         system_prompt = SYSTEM_PROMPT.format(context=context)
         context_text = context
         if req.image_base64:
+            img_ctx = f"\n\nDESCRIÇÃO DA IMAGEM (pré-análise):\n{image_description}" if image_description else ""
             messages = [
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": [
-                    {"type": "text", "text": f"PERGUNTA DO USUÁRIO:\n{req.question}\n\nCONTEXTO:\n{context_text}"},
+                    {"type": "text", "text": f"PERGUNTA DO USUÁRIO:\n{req.question}{img_ctx}\n\nCONTEXTO DA BASE DE CONHECIMENTO:\n{context_text}"},
                     {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{req.image_base64}", "detail": "high"}},
                 ]},
             ]
@@ -300,8 +326,10 @@ def chat(req: ChatRequest):
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": req.question},
             ]
+        # Use gpt-4o for image analysis, gpt-4o-mini for text-only
+        model = "gpt-4o" if req.image_base64 else "gpt-4o-mini"
         response = openai_client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=model,
             messages=messages,
             temperature=0.3,
             max_tokens=1500,
