@@ -12,6 +12,10 @@ from pydantic import BaseModel
 from openai import OpenAI
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("aria")
 
 # Load env from parent directory
 env_path = Path(__file__).parent.parent / ".env"
@@ -34,6 +38,7 @@ app.add_middleware(
     allow_origins=[
         "https://victorvignal.github.io",
         "https://victorvignal.me",
+        "https://www.victorvignal.me",
         "http://localhost:5173",
         "http://localhost:3000",
         "http://localhost:4173",
@@ -52,6 +57,14 @@ class ChatRequest(BaseModel):
     question: str
     top_k: int = 5
     specialty: str | None = None
+
+    def validate_question(self):
+        if not self.question or not self.question.strip():
+            raise ValueError("Question cannot be empty")
+        if len(self.question) > 2000:
+            raise ValueError("Question too long (max 2000 characters)")
+        if self.top_k < 1 or self.top_k > 20:
+            raise ValueError("top_k must be between 1 and 20")
 
 class Source(BaseModel):
     title: str
@@ -97,8 +110,35 @@ def health():
         return {"status": "error", "detail": str(e)}
 
 
+@app.get("/specialties")
+def list_specialties():
+    """List available specialties with approximate chunk counts (sampled)."""
+    try:
+        result, _ = qdrant.scroll(
+            collection_name=COLLECTION,
+            limit=5000,
+            with_payload=["specialty"],
+        )
+        from collections import Counter
+        counts = Counter(
+            p.payload.get("specialty", "unknown") for p in result
+        )
+        # Scale estimates to full collection
+        total = qdrant.count(collection_name=COLLECTION).count
+        scale = total / len(result) if result else 1
+        specialties = {
+            spec: int(count * scale)
+            for spec, count in counts.most_common()
+            if spec and spec not in ("unknown", "_duplicates")
+        }
+        return {"specialties": specialties, "total": total, "sampled": len(result)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.post("/chat", response_model=ChatResponse)
 def chat(req: ChatRequest):
+    logger.info(f"Chat request: question_len={len(req.question)}, top_k={req.top_k}, specialty={req.specialty}")
     # 1. Embed the question
     try:
         embedding = openai_client.embeddings.create(
