@@ -171,7 +171,7 @@ def chat(req: ChatRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Embedding error: {e}")
 
-    # 2. Search Qdrant
+    # 2. Search Qdrant (semantic)
     query_filter = None
     if req.specialty:
         from qdrant_client.models import FieldCondition, MatchValue, Filter
@@ -183,16 +183,43 @@ def chat(req: ChatRequest):
         results = qdrant.query_points(
             collection_name=COLLECTION,
             query=embedding,
-            limit=req.top_k,
+            limit=max(req.top_k, 15),  # fetch extra for keyword re-ranking
             query_filter=query_filter,
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Search error: {e}")
 
+    # 2.5. Keyword re-ranking: extract key terms and boost matching chunks
+    import re
+    # Extract potential key terms (2-3 word phrases, medical terms)
+    stopwords = {"o", "a", "os", "as", "de", "da", "do", "das", "dos", "em", "na", "no",
+                 "que", "e", "é", "um", "uma", "com", "por", "para", "se", "qual", "quais",
+                 "como", "sao", "são", "este", "esta", "isso", "esse", "essa", "mais", "menos",
+                 "sobre", "entre", "seu", "sua", "seus", "suas", "pelo", "pela", "onde", "quando"}
+    words = re.findall(r'\b[a-záàâãéèêíïóôõöúçñ]{4,}\b', req.question.lower())
+    key_terms = [w for w in words if w not in stopwords]
+    
+    # Re-score: boost chunks containing key terms
+    scored_hits = []
+    for hit in results.points:
+        text_lower = hit.payload.get("text", "").lower()
+        keyword_boost = 0
+        for term in key_terms:
+            if term in text_lower:
+                # Count occurrences for stronger boost
+                count = text_lower.count(term)
+                keyword_boost += 0.02 * min(count, 5)
+        final_score = hit.score + keyword_boost
+        scored_hits.append((final_score, hit))
+    
+    # Sort by boosted score and take top_k
+    scored_hits.sort(key=lambda x: x[0], reverse=True)
+    ranked_hits = [hit for _, hit in scored_hits[:req.top_k]]
+
     # 3. Build context
     sources = []
     context_parts = []
-    for i, hit in enumerate(results.points, 1):
+    for i, hit in enumerate(ranked_hits, 1):
         p = hit.payload
         excerpt = p.get("text", "")[:800]
         title = p.get("title", "Desconhecido")
