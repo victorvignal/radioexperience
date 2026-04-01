@@ -288,7 +288,7 @@ Exemplo:
 
     import httpx
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
-    supabase_key = os.getenv("SUPABASE_SERVICE_KEY", os.getenv("SUPABASE_ANON_KEY", ""))
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY", os.getenv("SUPABASE_ANON_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjZGVxdXNpcGJreGNmZndlaW93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MzY1ODEsImV4cCI6MjA5MDIxMjU4MX0.HxKGdH-kVL6p5knR2PgTgUl9OsIZ59G732StkQ8EXus"))
     headers = {
         "apikey": supabase_key,
         "Authorization": f"Bearer {supabase_key}",
@@ -321,7 +321,7 @@ def get_shifts(location: str | None = None, day: str | None = None, status: str 
     """Lista vagas com filtros opcionais."""
     import httpx
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
-    supabase_key = os.getenv("SUPABASE_SERVICE_KEY", os.getenv("SUPABASE_ANON_KEY", ""))
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY", os.getenv("SUPABASE_ANON_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjZGVxdXNpcGJreGNmZndlaW93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MzY1ODEsImV4cCI6MjA5MDIxMjU4MX0.HxKGdH-kVL6p5knR2PgTgUl9OsIZ59G732StkQ8EXus"))
     headers = {
         "apikey": supabase_key,
         "Authorization": f"Bearer {supabase_key}",
