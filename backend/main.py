@@ -1,12 +1,39 @@
 """
+SQL (rodar no Supabase):
+CREATE TABLE IF NOT EXISTS public.shifts (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  location text NOT NULL,
+  room text,
+  day_of_week text NOT NULL,
+  time_slot text,
+  doctor_name text,
+  status text NOT NULL DEFAULT 'available',
+  specialty text DEFAULT 'USG',
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+ALTER TABLE public.shifts ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Anyone can view shifts" ON public.shifts
+  FOR SELECT USING (true);
+
+CREATE POLICY "Authenticated users can insert shifts" ON public.shifts
+  FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
+
+CREATE POLICY "Authenticated users can delete shifts" ON public.shifts
+  FOR DELETE USING (auth.uid() IS NOT NULL);
+
 ARIA - Assistente de Radiologia por IA
 Backend FastAPI com RAG (Qdrant + OpenAI)
 """
 import os
 import json
+import tempfile
+import base64
 from pathlib import Path
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
@@ -177,6 +204,128 @@ def list_specialties():
         return {"specialties": specialties, "total": total, "sampled": len(result)}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/upload-shifts")
+async def upload_shifts(file: UploadFile = File(...)):
+    """
+    Recebe um PDF com escala médica, extrai dados via GPT-4o vision,
+    e salva na tabela shifts do Supabase.
+    """
+    contents = await file.read()
+
+    import fitz
+    import io
+    from PIL import Image
+
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+        tmp.write(contents)
+        tmp_path = tmp.name
+
+    try:
+        doc = fitz.open(tmp_path)
+        images_b64 = []
+        for page_num in range(min(len(doc), 4)):
+            page = doc[page_num]
+            pix = page.get_pixmap(dpi=200)
+            img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+            buf = io.BytesIO()
+            img.save(buf, format="JPEG", quality=85)
+            b64 = base64.b64encode(buf.getvalue()).decode()
+            images_b64.append(b64)
+        doc.close()
+    finally:
+        os.unlink(tmp_path)
+
+    if not images_b64:
+        raise HTTPException(status_code=400, detail="PDF vazio ou ilegível")
+
+    vision_messages = []
+    for i, b64 in enumerate(images_b64):
+        vision_messages.append({
+            "type": "image_url",
+            "image_url": {"url": f"data:image/jpeg;base64,{b64}", "detail": "high"},
+        })
+
+    extraction_prompt = """Analise esta imagem de escala médica de radiologia.
+Extraia TODOS os dados em formato JSON. Para cada entrada, inclua:
+- location: nome do local (ex: "LA ARPOADOR", "LA BOTAFOGO", "LA MEGA BARRA")
+- room: sala (ex: "USG - Sala 1")
+- day_of_week: dia da semana (ex: "SEG", "TER", "QUA", "QUI", "SEX", "SÁB")
+- time_slot: horário se houver (ex: "08:00-12:00", "14:00-18:00"), ou null
+- doctor_name: nome do médico, ou "vago" se vazio
+- status: "available" se "vago", "reserved" se "(RESERVADO)", "occupied" caso contrário
+- specialty: "USG" por padrão
+
+Responda APENAS com um JSON array, sem texto adicional.
+Exemplo:
+[
+  {"location": "LA ARPOADOR", "room": "USG - Sala 1", "day_of_week": "SEG", "time_slot": null, "doctor_name": "Dirceu B. G. Junior", "status": "occupied", "specialty": "USG"},
+  {"location": "LA ARPOADOR", "room": "USG - Sala 4", "day_of_week": "SEG", "time_slot": null, "doctor_name": "vago", "status": "available", "specialty": "USG"}
+]"""
+
+    try:
+        response = openai_client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": extraction_prompt},
+                {"role": "user", "content": vision_messages},
+            ],
+            temperature=0.1,
+            max_tokens=4000,
+        )
+        raw_response = response.choices[0].message.content
+
+        import json
+        json_start = raw_response.find('[')
+        json_end = raw_response.rfind(']') + 1
+        if json_start >= 0 and json_end > json_start:
+            shifts = json.loads(raw_response[json_start:json_end])
+        else:
+            raise ValueError("No JSON array found in response")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao processar PDF: {str(e)}")
+
+    from supabase import create_client
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY", os.getenv("SUPABASE_ANON_KEY", ""))
+    sb = create_client(supabase_url, supabase_key)
+
+    sb.table("shifts").delete().neq("id", "00000000-0000-0000-0000-000000000000").execute()
+
+    BATCH_SIZE = 100
+    inserted = 0
+    for i in range(0, len(shifts), BATCH_SIZE):
+        batch = shifts[i:i + BATCH_SIZE]
+        sb.table("shifts").insert(batch).execute()
+        inserted += len(batch)
+
+    return {
+        "message": f"{inserted} vagas processadas com sucesso",
+        "locations": list(set(s.get("location", "") for s in shifts)),
+        "available": sum(1 for s in shifts if s.get("status") == "available"),
+        "total": inserted,
+    }
+
+
+@app.get("/shifts")
+def get_shifts(location: str | None = None, day: str | None = None, status: str | None = None):
+    """Lista vagas com filtros opcionais."""
+    from supabase import create_client
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY", os.getenv("SUPABASE_ANON_KEY", ""))
+    sb = create_client(supabase_url, supabase_key)
+
+    query = sb.table("shifts").select("*")
+    if location:
+        query = query.ilike("location", f"%{location}%")
+    if day:
+        query = query.eq("day_of_week", day.upper())
+    if status:
+        query = query.eq("status", status)
+
+    result = query.order("location").order("day_of_week").execute()
+    return {"shifts": result.data, "total": len(result.data)}
 
 
 @app.post("/chat", response_model=ChatResponse)
