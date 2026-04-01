@@ -1,5 +1,14 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 import AriaChat from "./AriaChat";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
+import ProfileSetup from "./pages/ProfileSetup";
+import Vagas from "./pages/Vagas";
+import AdminUpload from "./pages/AdminUpload";
 
 const C = {
 bg: "#001a2b", bgDeep: "#002233",
@@ -81,125 +90,8 @@ function AriaModal({ open, onClose }) {
 }
 
 // ═══════════════════════════════════════════════════
-// ANIMATED NEURAL NETWORK BACKGROUND
-// ═══════════════════════════════════════════════════
-function NeuralBackground() {
-const canvasRef = useRef(null);
-const animRef = useRef(null);
-const particlesRef = useRef([]);
-const mouseRef = useRef({ x: -1000, y: -1000 });
-
-const init = useCallback(() => {
-const canvas = canvasRef.current;
-if (!canvas) return;
-const ctx = canvas.getContext("2d");
-const w = canvas.width = window.innerWidth;
-const h = canvas.height = document.documentElement.scrollHeight;
-
-// Create particles
-const count = Math.floor((w * h) / 18000);
-particlesRef.current = Array.from({ length: count }, () => ({
-  x: Math.random() * w,
-  y: Math.random() * h,
-  vx: (Math.random() - 0.5) * 0.3,
-  vy: (Math.random() - 0.5) * 0.2,
-  r: Math.random() * 1.8 + 0.5,
-  opacity: Math.random() * 0.4 + 0.1,
-  pulse: Math.random() * Math.PI * 2,
-  pulseSpeed: Math.random() * 0.01 + 0.005,
-}));
-
-const animate = () => {
-  ctx.clearRect(0, 0, w, h);
-  const particles = particlesRef.current;
-  const mx = mouseRef.current.x;
-  const my = mouseRef.current.y;
-
-  // Update & draw particles
-  for (let i = 0; i < particles.length; i++) {
-    const p = particles[i];
-    p.x += p.vx;
-    p.y += p.vy;
-    p.pulse += p.pulseSpeed;
-
-    // Bounce
-    if (p.x < 0 || p.x > w) p.vx *= -1;
-    if (p.y < 0 || p.y > h) p.vy *= -1;
-
-    // Mouse repulsion
-    const dx = p.x - mx;
-    const dy = p.y - my;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist < 150) {
-      const force = (150 - dist) / 150 * 0.5;
-      p.vx += (dx / dist) * force;
-      p.vy += (dy / dist) * force;
-    }
-
-    // Damping
-    p.vx *= 0.999;
-    p.vy *= 0.999;
-
-    const glow = Math.sin(p.pulse) * 0.15 + 0.85;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r * glow, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(192, 214, 234, ' + (p.opacity * glow) + ')';
-    ctx.fill();
-  }
-
-  // Draw connections
-  ctx.lineWidth = 0.5;
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const dx = particles[i].x - particles[j].x;
-      const dy = particles[i].y - particles[j].y;
-      const d = dx * dx + dy * dy;
-      if (d < 14000) {
-        const alpha = (1 - d / 14000) * 0.12;
-        // Color based on vertical position
-        const yAvg = (particles[i].y + particles[j].y) / 2;
-        const hueShift = (yAvg / h) * 0.3;
-        if (hueShift < 0.15) {
-          ctx.strokeStyle = 'rgba(221, 255, 85, ' + (alpha * 0.6) + ')';
-        } else {
-          ctx.strokeStyle = 'rgba(192, 214, 234, ' + alpha + ')';
-        }
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.stroke();
-      }
-    }
-  }
-
-  animRef.current = requestAnimationFrame(animate);
-};
-
-animate();
-
-}, []);
-
-useEffect(() => {
-init();
-const handleResize = () => { cancelAnimationFrame(animRef.current); init(); };
-const handleMouse = (e) => { mouseRef.current = { x: e.clientX, y: e.clientY + window.scrollY }; };
-window.addEventListener("resize", handleResize);
-window.addEventListener("mousemove", handleMouse);
-return () => {
-cancelAnimationFrame(animRef.current);
-window.removeEventListener("resize", handleResize);
-window.removeEventListener("mousemove", handleMouse);
-};
-}, [init]);
-
-return (
-<canvas ref={canvasRef} style={{
-position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-pointerEvents: "none", opacity: 0.6,
-}} />
-);
-}
-
+// Simple CSS background (no canvas)
+function NeuralBackground() { return null; }
 // Floating gradient orbs
 function FloatingOrbs() {
 return (
@@ -293,19 +185,46 @@ useEffect(() => { const el = ref.current; if (!el) return; const obs = new Inter
 // ─── Navbar ───
 function Navbar({ section }) {
 const [scrolled, setScrolled] = useState(false);
+const [menuOpen, setMenuOpen] = useState(false);
 useEffect(() => { const h = () => setScrolled(window.scrollY > 50); window.addEventListener("scroll", h); return () => window.removeEventListener("scroll", h); }, []);
 const links = [{ id: "hero", l: "Início" }, { id: "pillars", l: "Plataforma" }, { id: "community", l: "Comunidade" }, { id: "pricing", l: "Planos" }, { id: "embaixadores", l: "Embaixadores" }];
 return (
-<nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 200, background: scrolled ? "rgba(0,26,43,0.92)" : "transparent", backdropFilter: scrolled ? "blur(24px) saturate(1.4)" : "none", WebkitBackdropFilter: scrolled ? "blur(24px) saturate(1.4)" : "none", borderBottom: scrolled ? `1px solid ${C.border}` : "1px solid transparent", transition: "all 0.5s cubic-bezier(.4,0,.2,1)" }}>
-<div style={{ maxWidth: 1240, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64, padding: "0 24px" }}>
+<nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 200, background: scrolled ? "rgba(0,26,43,0.92)" : "rgba(0,26,43,0.85)", backdropFilter: scrolled ? "blur(24px) saturate(1.4)" : "blur(16px)", WebkitBackdropFilter: scrolled ? "blur(24px) saturate(1.4)" : "blur(16px)", borderBottom: scrolled ? `1px solid ${C.border}` : "1px solid transparent", transition: "all 0.5s cubic-bezier(.4,0,.2,1)" }}>
+<div style={{ maxWidth: 1240, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64, padding: "0 16px" }}>
 <Logo size={17} />
-<div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+{/* Desktop links */}
+<div style={{ display: "flex", alignItems: "center", gap: 3 }} className="desktop-nav">
 {links.map(l => (<a key={l.id} href={`#${l.id}`} style={{ padding: "7px 13px", borderRadius: 8, fontSize: 12.5, fontWeight: 500, color: section === l.id ? C.accent : C.textMuted, background: section === l.id ? C.accentSoft : "transparent", textDecoration: "none", transition: "all 0.25s" }}>{l.l}</a>))}
+<Link to="/vagas" style={{ padding: "7px 13px", borderRadius: 8, fontSize: 12.5, fontWeight: 600, color: C.textSoft, textDecoration: "none", background: "transparent", transition: "all 0.25s" }}>Vagas</Link>
 <div style={{ width: 1, height: 20, background: C.border, margin: "0 8px" }} />
-<button style={{ padding: "7px 16px", borderRadius: 9, fontSize: 12.5, fontWeight: 500, color: C.textSoft, background: "transparent", border: `1px solid ${C.glassBorder}`, cursor: "pointer" }}>Entrar</button>
-<button style={{ padding: "7px 20px", borderRadius: 9, fontSize: 12.5, fontWeight: 700, color: C.bgDeep, background: C.accent, border: "none", cursor: "pointer", marginLeft: 6, boxShadow: `0 0 16px ${C.accentGlow}` }}>Começar</button>
+<Link to="/login" style={{ textDecoration: "none" }}><button style={{ padding: "7px 16px", borderRadius: 9, fontSize: 12.5, fontWeight: 500, color: C.textSoft, background: "transparent", border: `1px solid ${C.glassBorder}`, cursor: "pointer" }}>Entrar</button></Link>
+<Link to="/signup" style={{ textDecoration: "none" }}><button style={{ padding: "7px 20px", borderRadius: 9, fontSize: 12.5, fontWeight: 700, color: C.bgDeep, background: C.accent, border: "none", cursor: "pointer", marginLeft: 6, boxShadow: `0 0 16px ${C.accentGlow}` }}>Começar</button></Link>
+</div>
+{/* Hamburger */}
+<div className="hamburger" onClick={() => setMenuOpen(!menuOpen)} style={{ display: "none", flexDirection: "column", gap: 5, cursor: "pointer", padding: 8 }}>
+<span style={{ display: "block", width: 22, height: 2, background: C.textSoft, borderRadius: 2, transition: "all 0.3s", transform: menuOpen ? "rotate(45deg) translate(5px,5px)" : "none" }} />
+<span style={{ display: "block", width: 22, height: 2, background: C.textSoft, borderRadius: 2, transition: "all 0.3s", opacity: menuOpen ? 0 : 1 }} />
+<span style={{ display: "block", width: 22, height: 2, background: C.textSoft, borderRadius: 2, transition: "all 0.3s", transform: menuOpen ? "rotate(-45deg) translate(5px,-5px)" : "none" }} />
 </div>
 </div>
+{/* Mobile menu */}
+{menuOpen && (
+<div className="mobile-menu" style={{ display: "none", flexDirection: "column", padding: "12px 16px 20px", borderTop: `1px solid ${C.border}`, background: "rgba(0,26,43,0.95)" }}>
+{links.map(l => (<a key={l.id} href={`#${l.id}`} onClick={() => setMenuOpen(false)} style={{ padding: "14px 0", borderRadius: 8, fontSize: 15, fontWeight: 500, color: section === l.id ? C.accent : C.textSoft, textDecoration: "none", borderBottom: `1px solid ${C.border}` }}>{l.l}</a>))}
+<Link to="/vagas" onClick={() => setMenuOpen(false)} style={{ padding: "14px 0", borderRadius: 8, fontSize: 15, fontWeight: 600, color: C.textSoft, textDecoration: "none", borderBottom: `1px solid ${C.border}` }}>Vagas</Link>
+<div style={{ display: "flex", gap: 10, marginTop: 12 }}>
+<Link to="/login" style={{ textDecoration: "none", flex: 1 }}><button onClick={() => setMenuOpen(false)} style={{ width: "100%", padding: "14px", borderRadius: 10, fontSize: 15, fontWeight: 500, color: C.textSoft, background: "transparent", border: `1px solid ${C.glassBorder}`, cursor: "pointer" }}>Entrar</button></Link>
+<Link to="/signup" style={{ textDecoration: "none", flex: 1 }}><button onClick={() => setMenuOpen(false)} style={{ width: "100%", padding: "14px", borderRadius: 10, fontSize: 15, fontWeight: 700, color: C.bgDeep, background: C.accent, border: "none", cursor: "pointer" }}>Começar</button></Link>
+</div>
+</div>
+)}
+<style>{`
+@media(max-width:768px) {
+  .desktop-nav { display: none !important; }
+  .hamburger { display: flex !important; }
+  .mobile-menu { display: flex !important; }
+}
+`}</style>
 </nav>
 );
 }
@@ -556,7 +475,7 @@ return (
 // ═══════════════════════════════════════════════════
 // MAIN APP
 // ═══════════════════════════════════════════════════
-export default function App() {
+function LandingPage() {
 const [sec, setSec] = useState("hero");
 const [ariaOpen, setAriaOpen] = useState(false);
 useEffect(() => {
@@ -612,3 +531,35 @@ return (
 
 );
 }
+
+function ProfileGate({ children }) {
+  const { profileComplete } = useAuth();
+  if (!profileComplete) return <Navigate to="/profile-setup" replace />;
+  return children;
+}
+
+function ProfileSetupGate() {
+  const { profileComplete } = useAuth();
+  if (profileComplete) return <Navigate to="/dashboard" replace />;
+  return <ProfileSetup />;
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/profile-setup" element={<ProtectedRoute><ProfileSetupGate /></ProtectedRoute>} />
+          <Route path="/dashboard" element={<ProtectedRoute><ProfileGate><Dashboard /></ProfileGate></ProtectedRoute>} />
+          <Route path="/vagas" element={<Vagas />} />
+          <Route path="/admin/upload" element={<AdminUpload />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  );
+}
+
+export default App;

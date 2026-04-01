@@ -1,0 +1,1069 @@
+[
+  [
+    1,
+    "O que e uma fistula arteriovenosa coronaria e quais sao seus achados de imagem?",
+    {
+      "answer": "Uma f\u00edstula arteriovenosa coron\u00e1ria \u00e9 uma conex\u00e3o anormal entre uma art\u00e9ria coron\u00e1ria e uma veia, permitindo que o sangue flua diretamente da art\u00e9ria para a veia, contornando a microcircula\u00e7\u00e3o. Essa condi\u00e7\u00e3o pode levar a uma s\u00e9rie de complica\u00e7\u00f5es, incluindo insufici\u00eancia card\u00edaca e isquemia mioc\u00e1rdica.\n\nOs achados de imagem t\u00edpicos em casos de f\u00edstula arteriovenosa coron\u00e1ria incluem:\n\n1. **Angiografia**: Pode mostrar a f\u00edstula como uma comunica\u00e7\u00e3o direta entre a art\u00e9ria coron\u00e1ria e a veia, com um padr\u00e3o de fluxo an\u00f4malo.\n2. **Resson\u00e2ncia Magn\u00e9tica (RM)**: A RM coronariana pode evidenciar a anatomia da f\u00edstula, bem como a presen\u00e7a de dilata\u00e7\u00e3o das veias drenantes e altera\u00e7\u00f5es no fluxo sangu\u00edneo [Fonte: Vascular_Livro_Angiografia_Por_Tc_E_Rm_Avalia\u00e7\u00e3o_Revisar_Semautor_Semautor_SemAno, p.424-424].\n\nN\u00e3o encontrei refer\u00eancia espec\u00edfica sobre outros achados de imagem para f\u00edstulas arteriovenosas coron\u00e1rias na base de conhecimento.",
+      "sources": [
+        {
+          "title": "Vascular_Livro_Angiografia_Por_Tc_E_Rm_Avalia\u00e7\u00e3o_Revisar_Semautor_Semautor_SemAno",
+          "page_start": 425,
+          "page_end": 425,
+          "score": 0.6952,
+          "excerpt": "Art\u00e9rias Coron\u00e1rias 415 \nterap\u00eauticas incluem corre\u00e7\u00e3o cir\u00fargica (102-104) e emboliza\u00e7\u00e3o \ntranscateter (105-108). O tratamento \u00e9 controversoeas recomen\u00ad\nda\u00e7\u00f5es baseiam-se em observa\u00e7\u00f5es causais ou pequenas s\u00e9ries re\u00ad\ntrospectivas ( 1O1). \nEmboraaimagem n\u00e3o invasiva possa facilitarodiagn\u00f3sticoea \nide"
+        },
+        {
+          "title": "Vascular_Livro_Angiografia_Por_Tc_E_Rm_Avalia\u00e7\u00e3o_Revisar_Semautor_Semautor_SemAno",
+          "page_start": 940,
+          "page_end": 940,
+          "score": 0.62,
+          "excerpt": "ssocia\u00e7\u00e3o das caracter\u00edsticas do 3\u00ba est\u00e1gioeda insufici\u00ean\u00ad\ncia card\u00edaca de alto d\u00e9biro. Os achados ao exame cl\u00ednico incluem \numa massa puls\u00e1til, eritema, aumento da temperatura , pulsa\u00e7\u00f5es, \nsoprosefr\u00eamitos. A hipertrofia dos tecidos molesedo osso, ami\u00fade \ncom malforma\u00e7\u00e3o capilar cut\u00e2nea sobrejacent"
+        },
+        {
+          "title": "Neurorradiologia_Livro_Encefalo_Imagem_Patologia_E_Anatomia_Osborn_2014",
+          "page_start": 161,
+          "page_end": 161,
+          "score": 0.6241,
+          "excerpt": "152 Hemorragias n\u00e3o traum\u00e1ticaseles\u00f5es vasculares\nEm ambas as classifica\u00e7\u00f5es, a presen\u00e7a cie veias cor\u00edicais de drenagem (VCD) colocaaFAVd em uma cate\ngoria de maior risco. A subdivis\u00e3o das les\u00f5es com VCD\nem sintom\u00e1ticaseassintom\u00e1ticas pode ajudaramelhorar\naestratifica\u00e7\u00e3o de risco. As FAVds s\u00e3o les\u00f5"
+        },
+        {
+          "title": "Vascular_Livro_Angiografia_Por_Tc_E_Rm_Avalia\u00e7\u00e3o_Revisar_Semautor_Semautor_SemAno",
+          "page_start": 423,
+          "page_end": 423,
+          "score": 0.6624,
+          "excerpt": "Art\u00e9rias Coron\u00e1rias 413 \nem cinco art\u00e9riasedecorrentes de artefato por movimento card\u00edaco \nem duas, resultando em especificidade de 92,5%. \nResson\u00e2ncia Magn\u00e9ti a \nDados de uma s\u00e9rie de adolescenteseadultos jovens com aneuris\u00ad\nmas da art\u00e9ria coron\u00e1ria defin idos \u00e0 angiografia por raiosXconfir\u00ad\nmarama"
+        },
+        {
+          "title": "Neurorradiologia_Livro_Encefalo_Imagem_Patologia_E_Anatomia_Osborn_2014",
+          "page_start": 164,
+          "page_end": 164,
+          "score": 0.6213,
+          "excerpt": "Malforma\u00e7\u00f5es vasculares 155\n* ^\n7-22 Figura ilustraamalforma\u00e7\u00e3o da veia de Galeno. Art\u00e9rias cor\u00f3ideas aumentadas E9 drenam diretamente para veia prosenecef\u00e1iica\nmediana (VPM) dilatada seio falcinoAt\u00f3rcuto herophili {con\nflu\u00eancia dos seios venosos) est\u00e1 mass\u00edvamente aumentada.\n7-23 Exame de TC com co"
+        },
+        {
+          "title": "Neurorradiologia_Guideline_Cbr_Coluna_Neuroradiologia_Jo\u00e3o_Luiz_Fernandes_201_Cbr_SemAno",
+          "page_start": 915,
+          "page_end": 916,
+          "score": 0.6216,
+          "excerpt": "drena diretamente para as veias piais. Ocorre geralmente ap\u00f3sa\nquarta d\u00e9cada de vida, sendo 80% dos casos em homens.\nACHADOS CL\u00cdNICOS, LABORATORIAISE\nHISTOL\u00d3GICOS\nAs manifesta\u00e7\u00f5es cl\u00ednicas s\u00e3o lentaseculminam em uma mielopatia\ncr\u00f4nica progressiva, com d\u00e9ficits sensitivoemotor, associadaa\ndisfun\u00e7\u00f5es "
+        },
+        {
+          "title": "Vascular_Livro_Angiografia_Por_Tc_E_Rm_Avalia\u00e7\u00e3o_Revisar_Semautor_Semautor_SemAno",
+          "page_start": 424,
+          "page_end": 424,
+          "score": 0.6511,
+          "excerpt": "414 Arterras Coronarras \nFIGURA 14.27 Aneur isma da art\u00e9ria coron\u00e1ria \u00e0 angioRM . AngioRM coronariana com pr\u00e9-pul so T2 3D transversal (A) de um paciente com \naneurisma da art\u00e9ria coron\u00e1riaesquerda (LCA) e angiografia por raiosXcorrespondente (B), mostrando boa correla\u00e7\u00e3o com os achados\u00e0RM \ncoronari"
+        },
+        {
+          "title": "Abdome_Livro_Ultrassonografia_Abdominal_2edi\u00e7\u00e3o_Chammas_Ocr_Abd_Semautor_SemAno",
+          "page_start": 380,
+          "page_end": 380,
+          "score": 0.628,
+          "excerpt": "408 lIi\u00b7'j'\u00e9i\u00b7*\u00b7t3Mitii:l.,.@IMMi \nB \nFig. 10-89. F\u00edstula arteriovenosa (carcinoma de c\u00e9lulas renais). (A) Ultra-sonografiamodo B: imagem ult ra-sonogr\u00e1fica do rim direito (corte \nlongitudin al) - efeito de massa s\u00f3lida, arredondada, hiperecog\u00eanica, exof\u00edtica em rela\u00e7\u00e3o ao p\u00f3lo inferior do rim. (B) "
+        },
+        {
+          "title": "Fisica_Medica_Livro_Fisica_-_Ultrassonografia_Diagnostica_Kodaira_SemAno",
+          "page_start": 380,
+          "page_end": 380,
+          "score": 0.628,
+          "excerpt": "408 lIi\u00b7'j'\u00e9i\u00b7*\u00b7t3Mitii:l.,.@IMMi \nB \nFig. 10-89. F\u00edstula arteriovenosa (carcinoma de c\u00e9lulas renais). (A) Ultra-sonografiamodo B: imagem ult ra-sonogr\u00e1fica do rim direito (corte \nlongitudin al) - efeito de massa s\u00f3lida, arredondada, hiperecog\u00eanica, exof\u00edtica em rela\u00e7\u00e3o ao p\u00f3lo inferior do rim. (B) "
+        },
+        {
+          "title": "Neurorradiologia_Livro_Encefalo_Imagem_Patologia_E_Anatomia_Osborn_2014",
+          "page_start": 163,
+          "page_end": 163,
+          "score": 0.6249,
+          "excerpt": "154 Hemorragias n\u00e3o traum\u00e1ticaseles\u00f5es vasculares\n7-20 FAV pia! com ramos levemenle aumentados da ACA ES\nconectandoauma variz venosa \u00cdSevela cortical de drenagem\ndilatada\n7-21 Aquisi\u00e7\u00e3o no plano coronal em Ti p\u00f3s-contraste demonstra uma\nFAVpiai na fossa posterior. Uma pequena art\u00e9ria cerebelar CS co"
+        }
+      ],
+      "tokens_used": 3693
+    }
+  ],
+  [
+    2,
+    "Descreva a trombose in-situ da arteria pulmonar na tomografia.",
+    {
+      "answer": "N\u00e3o encontrei refer\u00eancia sobre a trombose in-situ da art\u00e9ria pulmonar na base de conhecimento.",
+      "sources": [
+        {
+          "title": "Vascular_Livro_Angiografia_Por_Tc_E_Rm_Avalia\u00e7\u00e3o_Revisar_Semautor_Semautor_SemAno",
+          "page_start": 1006,
+          "page_end": 1006,
+          "score": 0.673,
+          "excerpt": "996 Si~tema Ven05o \nFIGURA 24.49 Estreitamento da VCS por aneurisma da aorta ascendente em paciente de 50 anos com dissec\u00e7\u00e3o a\u00f3rtica tipoAe \naneurisma da aorta ascendente, que se apresenta com edemafacial progressivo. RV (A) mostra um grande aneurisma da aorta ascen\u00ad\ndente. Corte transversal (B) e M"
+        },
+        {
+          "title": "Torax_Guideline_Cbr_T\u00f3rax_Torax_Cbr_Col\u00e9gio_Bras_De_Radiol_Isabela_Cbr_SemAno",
+          "page_start": 502,
+          "page_end": 505,
+          "score": 0.7,
+          "excerpt": "\u2022\n\u2022\n\u2022\n\u2022\n\u2022\n\u2022\n\u2022\nTrombo ocluindo completamente uma art\u00e9riaetipicamente\nassociado \u00e0 redu\u00e7\u00e3o do di\u00e2metro da art\u00e9ria oclu\u00edda (Fig. 6.3-5).\nLocaliza\u00e7\u00e3o exc\u00eantrica dos \u00eambolos pulmonares com ou sem\ncalcifica\u00e7\u00e3o (Fig. 6.3-6).\nEstreitamento abrupto do di\u00e2metro arterial.\nRecanaliza\u00e7\u00e3o das falhas de enchimento "
+        },
+        {
+          "title": "Torax_Guideline_Cbr_T\u00f3rax_Torax_Cbr_Col\u00e9gio_Bras_De_Radiol_Isabela_Cbr_SemAno",
+          "page_start": 481,
+          "page_end": 482,
+          "score": 0.7182,
+          "excerpt": "FIGURA 6.2-7. Hipertens\u00e3o arterial pulmonar em paciente com tromboembolia\npulmonar cr\u00f4nica. Angiotomografia computadorizada do t\u00f3rax demonstra dilata\u00e7\u00e3o\ndo tronco da art\u00e9ria pulmonaredas art\u00e9rias pulmonar direitaeinterlobar esquerda.\nExistem trombos exc\u00eantricoseparietais com calcifica\u00e7\u00e3o (setas) nas"
+        },
+        {
+          "title": "Torax_Guideline_Cbr_T\u00f3rax_Torax_Cbr_Col\u00e9gio_Bras_De_Radiol_Isabela_Cbr_SemAno",
+          "page_start": 461,
+          "page_end": 462,
+          "score": 0.6911,
+          "excerpt": "FIGURA 6.1-9. Tromboembolia pulmonar aguda ocorrida no d\u00e9cimo quinto dia ap\u00f3s\nacidente com arma de fogo que resultou em paraplegia em um ind\u00edv\u00edduo com 42\nanos de idade v\u00edtima de assalto. A TC de m\u00faltiplos detectores com inje\u00e7\u00e3o\nintravenosa do material contrastante exibe \u201c\u00eambolo em sela\u201d (seta) nos r"
+        },
+        {
+          "title": "Torax_Guideline_Cbr_T\u00f3rax_Torax_Cbr_Col\u00e9gio_Bras_De_Radiol_Isabela_Cbr_SemAno",
+          "page_start": 477,
+          "page_end": 480,
+          "score": 0.6865,
+          "excerpt": "\u2022\n\u2022\n\u2022\n\u2022\n\u2022\n\u2022\n\u2022\nFIGURA 6.2-2. Cintilografia em tromboembolia pulmonar cr\u00f4nica. A, Cinti- \nlografia de inala\u00e7\u00e3o normal. B, Na cintilografia de perfus\u00e3o observam-se m\u00faltiplos\ndefeitos segmentaresesubsegmentares.\nANGIOTOMOGRAFIA COMPUTADORIZADA DO\nT\u00d3RAX\nLocaliza\u00e7\u00e3o exc\u00eantrica dos \u00eambolos pulmonares (Fig."
+        },
+        {
+          "title": "Torax_Livro_Radiologia_E_Diagnostico_Por_Imagem_-_Aparelho_Res_Sbr_2004",
+          "page_start": 154,
+          "page_end": 158,
+          "score": 0.7028,
+          "excerpt": "Avalia\u00e7\u00e3o das Les\u00f5es Vasculares Pulmonares por Tomografia ComputadorizadaHelicoidal \nadeq uada. Os ramossegmentares devem ser \nacompanhados individu almente da sua periferia \n\u00e0 regi\u00e3o hilar, ou vice-versa. \nApesar do \u00d3timo desempen ho dos equipa\u00ad\nmentos modernos, o radiologista deve estar aten\u00ad\nto d"
+        },
+        {
+          "title": "Torax_Guideline_Cbr_T\u00f3rax_Torax_Cbr_Col\u00e9gio_Bras_De_Radiol_Isabela_Cbr_SemAno",
+          "page_start": 501,
+          "page_end": 501,
+          "score": 0.6465,
+          "excerpt": "\u2022\npulmonar, desde que exclu\u00eddas outras formas de HAP. \u00c9 uma doen\u00e7a\ngrave causada por obstru\u00e7\u00e3o das art\u00e9rias pulmonares que n\u00e3o foi\nresolvida comotratamento cl\u00ednico habitual. At\u00e9 h\u00e1 pouco tempo\ndificilmente se faziaodiagn\u00f3stico de hipertens\u00e3o pulmonar causada\npor tromboembolia cr\u00f4nica, principalmente"
+        },
+        {
+          "title": "Torax_Guideline_Cbr_T\u00f3rax_Torax_Cbr_Col\u00e9gio_Bras_De_Radiol_Isabela_Cbr_SemAno",
+          "page_start": 506,
+          "page_end": 508,
+          "score": 0.6946,
+          "excerpt": "\u2022\u00cambolos representados por falhas de enchimento homog\u00eaneas.\nFIGURA 6.3-9. Hipertens\u00e3o arterial pulmonar em paciente com tromboembolia\ncr\u00f4nica. Arteriografia pulmonar demonstra aus\u00eancia de contraste no pulm\u00e3o direito\neno lobo inferior esquerdo. Presen\u00e7a do sinal do flushing no lobo superior esquerdo\n"
+        },
+        {
+          "title": "Geral_Livro_Tomografia_Computadorizada_Do_Corpo_Em_Correlacao__Lee_SemAno",
+          "page_start": 513,
+          "page_end": 514,
+          "score": 0.6716,
+          "excerpt": "A \nc \nPulm\u00e3o 499 \nB \nFig. 7.144 Dissec\u00e7\u00e3o a\u00f3rtica, n\u00e3o embolia pulmonar. A: A tomografia computadorizada n\u00e3o\u00ad\ncontrastada preliminar mostra queot\u00e9cnico colocou por enganoocursor circular lateral \u00e0 \nart\u00e9ria pulmonar . B: A tomografia computadorizada contrastada mostra opacifica\u00e7\u00e3o insatis\u00ad\nfat\u00f3ria da"
+        },
+        {
+          "title": "Vascular_Livro_Angiografia_Por_Tc_E_Rm_Avalia\u00e7\u00e3o_Revisar_Semautor_Semautor_SemAno",
+          "page_start": 515,
+          "page_end": 515,
+          "score": 0.682,
+          "excerpt": "Vasculariza\u00e7\u00e3o Pulmonar 505 \nFIGURA 16.38 Mulherde 52 anos com dispneia . Imagens de angioTC multidetector exibidas em corte axial (A) e renderiza\u00e7\u00e3o de volume (B) \nmostram um defeito de enchimento da luz na art\u00e9ria pulmonar direita (seta) que inicialmente foi considerado compat\u00edvel com tromboemboli"
+        }
+      ],
+      "tokens_used": 3445
+    }
+  ],
+  [
+    3,
+    "Quais sao os achados de imagem da luxacao posterior do quadril?",
+    {
+      "answer": "Os achados de imagem da luxa\u00e7\u00e3o posterior do quadril incluem:\n\n1. Luxa\u00e7\u00e3o posterior da cabe\u00e7a femoral, que pode ser visualizada em exames de imagem como a radiografia.\n2. Fratura da coluna posterior, que \u00e9 respons\u00e1vel por quase 30% de todas as fraturas acetabulares.\n3. Presen\u00e7a de um pequeno fragmento intra-articular, que pode ser identificado como uma ponta de sela pequena.\n4. Lipoemartrose na articula\u00e7\u00e3o, que pode ser observada em exames de imagem [Fonte: Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno, p.2423-2423]. \n\nEsses achados s\u00e3o t\u00edpicos em casos de luxa\u00e7\u00e3o posterior do quadril, especialmente ap\u00f3s traumas, como acidentes automobil\u00edsticos.",
+      "sources": [
+        {
+          "title": "Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno",
+          "page_start": 2423,
+          "page_end": 2423,
+          "score": 0.6647,
+          "excerpt": "5. Parede anterior. \n~9 Quadril 2m '+9 \nFig:ura 'f9 -26. Fratura da coluna poslerior com luxa\u00e7\u00e3o em um homem \nde 30 anos ap\u00f3s um acidenle aulomobil\u00edstico. Ajma~em de Te \ndemonstraaluxa\u00e7\u00e3o posterior da cabe\u00e7a femoral (ponlas de selas \ngrandes). com um pequeno fra~mento intra-arlicular (ponta de sela "
+        },
+        {
+          "title": "Msk_Script_Ultrassonografia_Do_Quadril_-_Anatomia_E_Rotina_Desconhecido_SemAno",
+          "page_start": 13,
+          "page_end": 23,
+          "score": 0.648,
+          "excerpt": "COMPARTIMENTO LATERAL\nGl\u00fateo m\u00e1ximo\nOrigem: Superf\u00edcie l\u00e1tero-posterior do sacroedo c\u00f3ccix, superf\u00edcie gl\u00fatea do \u00edlio (atr\u00e1s da linha gl\u00fatea posterior), fascia\ntoracolombar, ligamento sacrotuberal\nInser\u00e7\u00e3o: Trato iliotibial, tuberosidade gl\u00fatea do f\u00eamur\nInerva\u00e7\u00e3o: Nervo gl\u00fateo inferior (L5, S1 e S2)"
+        },
+        {
+          "title": "Msk_Livro_Atlas_Comentado_De_Ultrassonografia_Musculoesquel\u00e9_Semautor_SemAno_DUP84",
+          "page_start": 315,
+          "page_end": 318,
+          "score": 0.6517,
+          "excerpt": "296 Atlas Comentado de Ultrassonografia Musculoesquel\u00e9tica\nFig. 9-28. M\u00e9todo de Graf - Linha auxiliar do teto cartilaginoso. Desenho esquem\u00e1tico ilustrandootra\u00e7ado desta linhaapartir do ponto\ninferior interno do artefato de Graf at\u00e9o\u00e1pice labral (A). Imagem ecogr\u00e1fica da linha auxiliar do teto carti"
+        },
+        {
+          "title": "Msk_Livro_Atlas_Comentado_De_Ultrassonografia_Musculoesquel\u00e9_Semautor_SemAno",
+          "page_start": 315,
+          "page_end": 318,
+          "score": 0.6517,
+          "excerpt": "296 Atlas Comentado de Ultrassonografia Musculoesquel\u00e9tica\nFig. 9-28. M\u00e9todo de Graf - Linha auxiliar do teto cartilaginoso. Desenho esquem\u00e1tico ilustrandootra\u00e7ado desta linhaapartir do ponto\ninferior interno do artefato de Graf at\u00e9o\u00e1pice labral (A). Imagem ecogr\u00e1fica da linha auxiliar do teto carti"
+        },
+        {
+          "title": "Pediatria_Livro_Diagn\u00f3stico_Por_Imagem_Da_Articula\u00e7\u00e3o_Pedi\u00e1trica_2_Semautor_SemAno",
+          "page_start": 565,
+          "page_end": 565,
+          "score": 0.635,
+          "excerpt": "13.4\n Displasia do desenvolvimento do quadril\n \nAo inv\u00e9s de uma \u00fanica doen\u00e7a, a displasia do desenvolvimento do quadril (DDQ) compreende um\namplo espectro de malforma\u00e7\u00f5es cong\u00eanitas que t\u00eam em comum uma rela\u00e7\u00e3o anormal entrea\ncabe\u00e7a femoraleo acet\u00e1bulo. Estas condi\u00e7\u00f5es podem variar de quadris est\u00e1ve"
+        },
+        {
+          "title": "Msk_Livro_Ultrassonografia_Do_Sistema_Musculoesqueletico_Sernik_SemAno",
+          "page_start": 278,
+          "page_end": 279,
+          "score": 0.6235,
+          "excerpt": "A \nB \nDISPLASIA DO DESENVOLVIMENTO DO QUADRIL (DDQ) I 271 \nFig. 4-19. Avalia\u00e7\u00e3o da cobertura \u00f3ssea da cabe\u00e7a femoralpela raz\u00e3o \nd/D. (A) Ilust ra\u00e7\u00e3o. (8) Ultrassonografia. (81 ) Representa um quadril \nnormal com recobrimento \u00f3sseo de 51,58%. No quadril displ\u00e1sico (82), \na porcentagem do recobrimento"
+        },
+        {
+          "title": "Msk_Livro_Ultrassonografia_Do_Sistema_Musculoesqueletico_Sernik_SemAno",
+          "page_start": 317,
+          "page_end": 321,
+          "score": 0.6454,
+          "excerpt": "310 I CAP\u00edTULO 4 \u2022 QUADRIL \nFig. 4-63. (A-E) Ilustra\u00e7\u00e3o do quadril posterior (tend\u00f5esem\u00fasculos isquiotibiais). Nas fotos de cad\u00e1veres foram feitas as demarca\u00e7\u00f5es dos v\u00e1rios n\u00edveis \nem que foram obtidas as imagens de resson\u00e2ncia magn\u00e9ticaede ultrassonografia. TUBER ISQ = tuberosidade isqui\u00e1tica; gma "
+        },
+        {
+          "title": "Msk_Livro_Atlas_Comentado_De_Ultrassonografia_Musculoesquel\u00e9_Semautor_SemAno_DUP84",
+          "page_start": 242,
+          "page_end": 242,
+          "score": 0.6045,
+          "excerpt": "olo femoral\u00e9que\nse percebeoderrame articular, situado normalmente soboligamento iliofemoralesobreoplano osteoperiosteal do colo\nfemoral, tornando este local pr\u00f3prio paraoestudo ecogr\u00e1fico\ndas cole\u00e7\u00f5es intracupsulares.\nO quadril consegue executar sete dos movimentos. No\neixo transversal promove os mo"
+        },
+        {
+          "title": "Msk_Livro_Atlas_Comentado_De_Ultrassonografia_Musculoesquel\u00e9_Semautor_SemAno",
+          "page_start": 242,
+          "page_end": 242,
+          "score": 0.6045,
+          "excerpt": "olo femoral\u00e9que\nse percebeoderrame articular, situado normalmente soboligamento iliofemoralesobreoplano osteoperiosteal do colo\nfemoral, tornando este local pr\u00f3prio paraoestudo ecogr\u00e1fico\ndas cole\u00e7\u00f5es intracupsulares.\nO quadril consegue executar sete dos movimentos. No\neixo transversal promove os mo"
+        },
+        {
+          "title": "Msk_Livro_Atlas_Comentado_De_Ultrassonografia_Musculoesquel\u00e9_Semautor_SemAno",
+          "page_start": 242,
+          "page_end": 242,
+          "score": 0.6354,
+          "excerpt": "CONSIDERA\u00c7\u00d5ES INICIAIS\nAavalia\u00e7\u00e3o ultrassonogr\u00e1fica do quadril do adulto temacada\ndia mais indica\u00e7\u00f5es \u00e0 medida queom\u00e9todo vai se popularizando na classe m\u00e9dicaeque, na curva de aprendizado, o examinador mais experiente vai atingindo seu melhor momentoeconsegue obter imagens de melhor defini\u00e7\u00e3o dessa"
+        }
+      ],
+      "tokens_used": 3700
+    }
+  ],
+  [
+    4,
+    "O que e o leiomioma parasitario?",
+    {
+      "answer": "O leiomioma parasit\u00e1rio \u00e9 um fibroide subseroso pedunculado que desenvolve uma nova irriga\u00e7\u00e3o a partir de estruturas adjacentes, geralmente omento, e se destaca completamente do \u00fatero [Fonte: Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno, p.2106-2106].",
+      "sources": [
+        {
+          "title": "Obstetricia_Livro_Tratado_De_Ginecologia_E_Obstetricia_Desconhecido_SemAno",
+          "page_start": 891,
+          "page_end": 893,
+          "score": 0.6554,
+          "excerpt": "CONCEITOECLASSIFICA\u00c7\u00c3O\nOleiomioma uterino\u00e9um tumor benigno, formado por fibras musculares\nlisas, entrela\u00e7adas por tecido conectivo. Em dois ter\u00e7os dos casos, os\ntumores s\u00e3o m\u00faltiplos. Podem ser classificados, de acordo com sua\nlocaliza\u00e7\u00e3o no \u00fatero, como corporais, em 98% dos casos, ou cervicais. Os\n"
+        },
+        {
+          "title": "Obstetricia_Livro_Callen_Ultrassonografia_Em_Obstetr\u00edcia_E_Ginecolog_Semautor_SemAno",
+          "page_start": 943,
+          "page_end": 943,
+          "score": 0.6458,
+          "excerpt": "AVALIA\u00c7\u00c3O UL TRASSONOGR\u00c1 FICA DO \u00daTERO 931 \nFIGURA 27-18. Localiza\u00e7\u00f5es comuns de leiomiomas . (Ilustra\u00e7\u00e3o de James A. Cooper, MO, San Oiego, CA.) \nsuperf\u00edcie diferentemente da adenomiose , que gera um \u00fatero \ngloboso , mas de contorno liso. Os leiomiomas mais comumente se apresentam como massas p\u00e9lvi"
+        },
+        {
+          "title": "Obstetricia_Livro_Resson\u00e2ncia_Magn\u00e9tica_Em_Obstetr\u00edcia_E_Ginecologia_Semautor_SemAno",
+          "page_start": 72,
+          "page_end": 72,
+          "score": 0.6439,
+          "excerpt": "*I*'\"N\u00b7' \nB \nFig. 6-23. Leiomiomas. Tumores bem delimitados, envolvidos por uma pseudoc\u00e1psula, arredondados, \nde cor branco-acinzentada, geralmente localizados no miom\u00e9trio. Microscopia. Tumora\u00e7\u00e3o bem \ndefinida composta por feixes de fibras musculares lisas que lembramaarquitetura do miom\u00e9trio \nvizi"
+        },
+        {
+          "title": "Obstetricia_Livro_Ultrassonografia_Em_Ginecologia_E_Obstetricia_Callen_2009",
+          "page_start": 943,
+          "page_end": 943,
+          "score": 0.6381,
+          "excerpt": "AVALIA\u00c7\u00c3O UL TRASSONOGR\u00c1 FICA DO \u00daTERO 931 \nFIGURA 27-18. Localiza\u00e7\u00f5es comuns de leiomiomas . (Ilustra\u00e7\u00e3o de James A. Cooper, MO, San Oiego, CA.) \nsuperf\u00edcie diferentemente da adenomiose , que gera um \u00fatero \ngloboso , mas de contorno liso. Os leiomiomas mais comu\u00ad\nmente se apresentam como massas p\u00e9l"
+        },
+        {
+          "title": "Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno",
+          "page_start": 2107,
+          "page_end": 2107,
+          "score": 0.6375,
+          "excerpt": "'111 Pelve Feminina 2107 qJf \nFi~ura 't't- 1S. Leiomioma da c\u00e9rvix poslerior . A, Ima~em sa~ital ponderada em T2 demonstra ~rande massa hipointensa (seta) fazendo protrus\u00e3o a \npartir da jun\u00e7\u00e3o cervico\u00edstmica na escava\u00e7\u00e3o retoulerina, sugerindo um leiomioma pedunculado. a, Imagem ponderada em 11 com "
+        },
+        {
+          "title": "Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno",
+          "page_start": 2106,
+          "page_end": 2106,
+          "score": 0.65,
+          "excerpt": "a localiza\u00e7\u00e3o no \u00fatero, como submucosos , \nintramurais (intersticiais) e subserosos.1S6 Emboraamaio\u00ad\nria dos leiomiomas seja clinicamente silenciosa, sua ioca\u00ad\nliza\u00e7\u00e3o determina os sintomas em potencial. Os leiamiamas \nsubmucosas, que s\u00e3o os menos comuns, t\u00eamaprobabi\u00ad\nlidade de causar sintomas, como"
+        },
+        {
+          "title": "Obstetricia_Livro_Resson\u00e2ncia_Magn\u00e9tica_Em_Obstetr\u00edcia_E_Ginecologia_Semautor_SemAno",
+          "page_start": 73,
+          "page_end": 73,
+          "score": 0.6244,
+          "excerpt": "60 lrJgj\u2022I\u00a7M\u00a7!3fjJ.1M3\u00a71ii!+Jfdul:6iljiiJ!3ijiiji\u00a7IJi\u2022llti3d \nc \nB \nFig. 6-26. Leiomiomas intramuraisesubmucosos. Macroscopia no plano sagital. \nCaso 1. (A). M\u00fal tiplos leiomiomas de aspecto habitual, o dominante intramuralesubmucoso corporal \nposterior. Caso 2. (B) . M\u00fal tiplos leiomiomas, os domin"
+        },
+        {
+          "title": "Obstetricia_Livro_Resson\u00e2ncia_Magn\u00e9tica_Em_Obstetr\u00edcia_E_Ginecologia_Semautor_SemAno",
+          "page_start": 80,
+          "page_end": 80,
+          "score": 0.6137,
+          "excerpt": "LEIOM IOMA SU BMOCOSO \nDetalhes anat\u00f4micosaserem avaliados \npela RM \nTamanho \nBase de impl anta\u00e7\u00e3o \nN\u00fam ero de leiom iomas \nLocaliz a\u00e7\u00e3o \nCl assifica\u00e7\u00e3o \nDist\u00e2ncia at\u00e9aserosa \nN\u00fa meroelocal iza\u00e7\u00e3o de \nleiomiom as submuco sos \n\u00c9 impor tanteadefini\u00e7\u00e3o pelo radio\u00ad\nlogista do n\u00famero de leiomiomas submu\u00ad"
+        },
+        {
+          "title": "Obstetricia_Livro_Resson\u00e2ncia_Magn\u00e9tica_Em_Obstetr\u00edcia_E_Ginecologia_Semautor_SemAno",
+          "page_start": 71,
+          "page_end": 71,
+          "score": 0.6128,
+          "excerpt": "58 \n\u00c9 uma patologia muito freq\u00fcente em \nmul heres no per\u00edodo reprodutivo, e s\u00e3o \nles\u00f5es end\u00f3crino-dependentes, sofrendo \naumento r\u00e1pido na gravidezeregredindo \ncomachegada da menopausa. \nS\u00e3o tumores bem delimit ados, envol\u00ad\nvidos por uma pseudoc\u00e1psula, arredonda\u00ad\ndos, de cor branco-acinzentada, gera"
+        },
+        {
+          "title": "Obstetricia_Livro_Tratado_De_Ginecologia_E_Obstetricia_Desconhecido_SemAno",
+          "page_start": 1078,
+          "page_end": 1078,
+          "score": 0.6105,
+          "excerpt": "feminino est\u00e1 localizada no \u00fatero, no entanto tamb\u00e9m aparecem em outras\n\u00e1reas como vulva, vagina, ov\u00e1rios, bexiga, uretra, ligamentos redondos,\nligamentos uterossacrais, canal inguinaleretroperit\u00f4nio. Os leiomiomas\nvulvares s\u00e3o raros, sendo sua incid\u00eancia entre 0,07% e 4,2% dos tumores\nvulvares. Exi"
+        }
+      ],
+      "tokens_used": 3680
+    }
+  ],
+  [
+    5,
+    "Quais sao as manifestacoes radiologicas da doenca de Sjogren?",
+    {
+      "answer": "As manifesta\u00e7\u00f5es radiol\u00f3gicas da s\u00edndrome de Sj\u00f6gren incluem:\n\n1. **Comprometimento das gl\u00e2ndulas salivares**: As gl\u00e2ndulas salivares, especialmente as par\u00f3tidas, podem apresentar aumento de volume e altera\u00e7\u00f5es na ecogenicidade, como redu\u00e7\u00e3o da ecogenicidade quando comparadas a gl\u00e2ndulas normais, al\u00e9m de ecotextura heterog\u00eanea [Fonte: Cabeca_Pescoco_Guideline_Cbr_Cabe\u00e7a_E_Pesco\u00e7o_Radiologia_Semautor_2017_Cbr_SemAno, p.336-336].\n\n2. **Achados histol\u00f3gicos**: A infiltra\u00e7\u00e3o de linf\u00f3citos nas gl\u00e2ndulas salivares \u00e9 uma caracter\u00edstica marcante, resultando em sialadenite linfoc\u00edtica [Fonte: Cabeca_Pescoco_Guideline_Cbr_Cabe\u00e7a_E_Pesco\u00e7o_Radiologia_Semautor_2017_Cbr_SemAno, p.336-336].\n\n3. **Manifesta\u00e7\u00f5es pleuropulmonares**: Embora n\u00e3o sejam espec\u00edficas, podem incluir pneumonia intersticial e bronquiectasia [Fonte: Torax_Livro_Tc_De_Alta_Resolucao_Do_Pulmao_Webb_2010, p.632-632].\n\nEsses achados podem variar em apresenta\u00e7\u00e3o e gravidade entre os pacientes.",
+      "sources": [
+        {
+          "title": "Cabeca_Pescoco_Guideline_Cbr_Cabe\u00e7a_E_Pesco\u00e7o_Radiologia_Semautor_2017_Cbr_SemAno",
+          "page_start": 335,
+          "page_end": 335,
+          "score": 0.7362,
+          "excerpt": "S\u00cdNDROME DE SJ\u00dcGREN \nA s\u00edndrome de Sjogren\u00e9uma doen\u00e7a autoimune caracterizada \npela tr\u00edade: xerostomia, ceratoconjuntivite seca (xeroftalmia) \ne outra doen\u00e7a autoimune associada. Os achados da doen\u00e7a \ns\u00e3o decorrentes do comprometimento das gl\u00e2ndulas ex\u00f3crinas, \nsalivares (com redu\u00e7\u00e3o da produ\u00e7\u00e3o da "
+        },
+        {
+          "title": "Cabeca_Pescoco_Guideline_Cbr_Cabe\u00e7a_E_Pesco\u00e7o_Radiologia_Semautor_2017_Cbr_SemAno",
+          "page_start": 336,
+          "page_end": 336,
+          "score": 0.682,
+          "excerpt": "4. Destrui\u00e7\u00e3o do par\u00eanquima glandular. \nA cintilografia demonstra quantitativamenteaatividade m\u00e1\u00ad\nxima do radiof\u00e1rmaco na gl\u00e2ndulaea taxa de decaimento da \natividade ap\u00f3soest\u00edmulo com subst\u00e2ncia \u00e1cida. \nAchados Histopatol\u00f3gicos \nO padr\u00e3o microsc\u00f3pico da s\u00edndrome de Sjogren\u00e9o de uma \nsialadenite linf"
+        },
+        {
+          "title": "Cabeca_Pescoco_Livro_Ultrassonografia_De_Pequenas_Partes_Saito_SemAno_DUP524",
+          "page_start": 142,
+          "page_end": 142,
+          "score": 0.6375,
+          "excerpt": "140 \nA B \nFig. 5-9. Sialoadenite aguda. (AeB) Gl\u00e2ndula aumentada com m\u00faltiplas imagens micronodulares no seu interior (Microabscesso). \nq\u00fcentemente s\u00e3o encontradas m\u00faltiplas \u00e1reas micronodulares \nhipoecog\u00eanicas intraglandulareseque provavelmente corresponderiaafocos de microabscesso (Fig. 5-9).8 .1 "
+        },
+        {
+          "title": "Cabeca_Pescoco_Guideline_Cbr_Cabe\u00e7a_E_Pesco\u00e7o_Radiologia_Semautor_2017_Cbr_SemAno",
+          "page_start": 811,
+          "page_end": 811,
+          "score": 0.6932,
+          "excerpt": "S\u00cdNDROME DE SJ\u00dcGREN \nA s\u00edndrome de Sjogren\u00e9um desarranjo autoimune cujos alvos \ns\u00e3o as gl\u00e2ndulas lacrimaisesalivares. As gl\u00e2ndulas inflamadas \nreduzemaprodu\u00e7\u00e3o de l\u00e1grimasesaliva, causando os princi\u00ad\npais sintomas da s\u00edndrome: bocaeolhos secos. Nas mulheres, \nmais comumente afetadas pela s\u00edndrome, p"
+        },
+        {
+          "title": "Cabeca_Pescoco_Livro_Ultrassonografia_De_Pequenas_Partes_Saito_SemAno_DUP524",
+          "page_start": 143,
+          "page_end": 143,
+          "score": 0.6505,
+          "excerpt": "'i!iiiMtill'fl+i\u00a7itl@MiiJhVJUi \nFig. 5-10. Sjogren agudo. Sjogren nas fases iniciais com gl\u00e2ndula \naumentada heterog\u00eaneaecom in\u00fameros microcistos no seu interior \ne trab\u00e9culas ecog\u00eanicas de permeio. \n\u2022 Grau IV: desaparecimento do par\u00eanquima com atrofia \nglandulareirregularidade de contornos (Fig. 5-"
+        },
+        {
+          "title": "Cabeca_Pescoco_Guideline_Cbr_Cabe\u00e7a_E_Pesco\u00e7o_Radiologia_Semautor_2017_Cbr_SemAno",
+          "page_start": 336,
+          "page_end": 336,
+          "score": 0.708,
+          "excerpt": "comparado \u00e0 popula\u00e7\u00e3o geral; os subtipos de linfoma relacio\u00ad\nnados s\u00e3o os de c\u00e9lulasBe MALT (Mucosa-Associated Lym\u00ad\nphoid Tissue; tecido linfoide associadoamucosa). \nA doen\u00e7a acomete preferencialmente as mulheres (90%), \ngeralmente na quinta ou sexta d\u00e9cada de vida. As par\u00f3tidas es\u00ad\nt\u00e3o comprometida"
+        },
+        {
+          "title": "Torax_Livro_Tc_De_Alta_Resolucao_Do_Pulmao_Webb_SemAno",
+          "page_start": 265,
+          "page_end": 265,
+          "score": 0.6699,
+          "excerpt": "n \n\" l -\n\" 'S \nl-\n). \n4 \nD OEN\u00c7AS CARACTER IZADAS PRINCIPALMENTE POR OPAC IDADES LIN EARESERETICULARES 213 \nA \n\\ \nI \nB \nFIG. 4.35. TeAR de um paciente com doen\u00e7a mista do tecido conjuntivo, achados de faveolamen toecarcinoma pulmonar associa do. A: \u00c9 vis\u00edvel faveolamenlo na \nregi\u00e3o perif\u00e9rica subple"
+        },
+        {
+          "title": "Torax_Guideline_Cbr_T\u00f3rax_Torax_Cbr_Col\u00e9gio_Bras_De_Radiol_Isabela_Cbr_SemAno",
+          "page_start": 1484,
+          "page_end": 1484,
+          "score": 0.7081,
+          "excerpt": "\u2022\n\u2022\n\u2022\nO sintoma respirat\u00f3rio mais comum\u00e9tosse seca. Dispneia\nprogressivaedor pleur\u00edtica ocorrem em alguns casos. A maioria dos\npacientes t\u00eam gamopatia policlonal IgGeIgM, cerca de 90% t\u00eam fator\nreumatoide positivo e 70% t\u00eam anticorpos antinucleares.\nACHADOS HISTOL\u00d3GICOS\nAmanifesta\u00e7\u00e3o histol\u00f3gica car"
+        },
+        {
+          "title": "Torax_Livro_Tc_De_Alta_Resolucao_Do_Pulmao_Webb_2010",
+          "page_start": 632,
+          "page_end": 632,
+          "score": 0.698,
+          "excerpt": "S\u00cdNDROME DE SJ\u00d6GREN\nS\u00edndrome de Sj\u00f6gren\u00e9formada pela tr\u00edade cl\u00ednica de ceratoconjuntivite seca, xerostomiaeintumescimento\nrecorrente da par\u00f3tida. A s\u00edndrome de Sj\u00f6gren prim\u00e1ria ocorre em aproximadamente 0,5% da popula\u00e7\u00e3oe\napresenta raz\u00e3o mulher:homem de 9:0; essas caracter\u00edsticas s\u00e3o semelhantes \u00e0s "
+        },
+        {
+          "title": "Torax_Guideline_Cbr_T\u00f3rax_Torax_Cbr_Col\u00e9gio_Bras_De_Radiol_Isabela_Cbr_SemAno",
+          "page_start": 1483,
+          "page_end": 1483,
+          "score": 0.6861,
+          "excerpt": "\u2022\n\u2022\n\u2022\n\u2022\n\u2022\nde anticorpos ao ant\u00edgeno nuclear extra\u00edvel (anti-nRNP). Os achados\nde l\u00fapus, esclerose sist\u00eamicaepolimiosite/dermatomiosite podem\nocorrer juntos ou evoluir sequencialmente.\nACHADOS DE IMAGEM\nRadiografiaeTomografia Computadorizada de T\u00f3rax\nAs manifesta\u00e7\u00f5es radiol\u00f3gicas da doen\u00e7a mista do t"
+        }
+      ],
+      "tokens_used": 3704
+    }
+  ],
+  [
+    6,
+    "Descreva os achados de imagem da doenca celiaca no transito intestinal.",
+    {
+      "answer": "Os achados de imagem da doen\u00e7a cel\u00edaca no tr\u00e2nsito intestinal incluem:\n\n1. **Atrofia vilosa extensa** com perda de superf\u00edcie mucosa e redu\u00e7\u00e3o do n\u00famero de pregas por segmento jejunal.\n2. No \u00edleo, ocorre um aumento do n\u00famero e espessamento de pregas, um processo conhecido como **jejuniza\u00e7\u00e3o do \u00edleo**, que \u00e9 uma resposta compensat\u00f3ria \u00e0 atrofia vilosa jejunal.\n3. Pode haver **dilata\u00e7\u00e3o de al\u00e7as intestinais** e secre\u00e7\u00e3o excessiva de l\u00edquidos, resultando em **dilui\u00e7\u00e3o e flocula\u00e7\u00e3o do b\u00e1rio**.\n4. Intussuscep\u00e7\u00f5es transit\u00f3rias podem estar presentes.\n5. O **sinal de hide-bound intestinal** \u00e9 caracter\u00edstico da doen\u00e7a, correspondendo \u00e0 aproxima\u00e7\u00e3o de pregas coniventes, apesar da distens\u00e3o intestinal, refletindo o padr\u00e3o de atrofia e fibrose das camadas musculares parietais do intestino [Fonte: Abdome_Guideline_S\u00e9rie_Cbr_Gastrointestinal_Abdomen_Semautor_2011_Cbr_SemAno, p.194-196].",
+      "sources": [
+        {
+          "title": "Abdome_Script_Exames_Especializados_De_Sistema_Digestorio_Desconhecido_SemAno",
+          "page_start": 406,
+          "page_end": 423,
+          "score": 0.5964,
+          "excerpt": "PIN\u00c7AMENTO AORTO \nMESENT\u00c9RICO\n\nCA DE CABE\u00c7A DE P\u00c2NCREAS\n\nCISTO DE CO\u00c9DOCO\n\nCISTO DE CO\u00c9DOCO\n\nPSEUDO CISTO DE P\u00c2NCREAS\n\nDELGADO\n\nANATOMIA\nJEJUNO\nILEO\n\nANATOMIA\n\nACHADOS RADIOL\u00d3GICOS\n\uf0a7 TEMPO DE TRANSITO \u2013 ( + ou \u2013 3 h )\n\uf0a7 DILATA\u00c7\u00c3O\n\uf0a7 DILUI\u00c7\u00c3O\n\uf0a7 SEGMENTA\u00c7\u00c3O\n\uf0a7 PREGAS ESPESSADAS\n\u2013 REGULARES\n\u2013 IRREGULARES"
+        },
+        {
+          "title": "Abdome_Guideline_S\u00e9rie_Cbr_Gastrointestinal_Abdomen_Semautor_2011_Cbr_SemAno",
+          "page_start": 194,
+          "page_end": 194,
+          "score": 0.7502,
+          "excerpt": "11. ACHADOS DE IMAGEM \nRadiografia ConvencionaleContrastada \nOcorre atrofia vilosa exte nsa com perda de superf\u00edcie mucosa \ne redu\u00e7\u00e3o do n\u00famero de pregas por segmento jejunal . \nNo \u00edleo ocorreoinverso, not ando-se aumento do n\u00famero \ne espessame nto de pregas, em um processo conhecido como \njejuniza\u00e7"
+        },
+        {
+          "title": "Abdome_Guideline_S\u00e9rie_Cbr_Gastrointestinal_Abdomen_Semautor_2011_Cbr_SemAno",
+          "page_start": 196,
+          "page_end": 196,
+          "score": 0.6681,
+          "excerpt": "11. ACHADOS DE IMAGEM \nRadiografia ConvencionaleContrastada \nGraus vari\u00e1veis de dilata\u00e7\u00e3o do duodenoejejuno, de acordo \ncomagravidade da doen\u00e7a. \nO chamado sinal de hide-bound intestinal\u00e9caracter\u00edstico da \ndoen\u00e7a, correspondendo \u00e0 aproxima\u00e7\u00e3o de pregas coniventes, \napesar da clistens\u00e3o intestinal. R"
+        },
+        {
+          "title": "Abdome_Guideline_S\u00e9rie_Cbr_Gastrointestinal_Abdomen_Semautor_2011_Cbr_SemAno",
+          "page_start": 195,
+          "page_end": 196,
+          "score": 0.7228,
+          "excerpt": "111. DIAGN\u00d3STICO DIFERENCIAL \nA doen\u00e7a celiaca deve ser diferenc iada clinicamente de outros \ndist\u00farbios mal absor tivos. O padr\u00e3o de espessa men to parietal \ncomjejuniza\u00e7\u00e3o do \u00edleo pode ser \u00fatil na diferencia\u00e7\u00e3o com a \ndoen\u00e7a deWhippl e, doe n\u00e7a de Cro hn, processos infecciosos \nou isqu\u00eamicos intes"
+        },
+        {
+          "title": "Abdome_Guideline_S\u00e9rie_Cbr_Gastrointestinal_Abdomen_Semautor_2011_Cbr_SemAno",
+          "page_start": 193,
+          "page_end": 193,
+          "score": 0.6702,
+          "excerpt": "Caprtulo 5 Jejunoe\u00cdleo 181 \nFIGURA 5\u00b712. AeB, Doen\u00e7a de Crohn. Imagens localizadas do quadrante inferior direito, comparativas entreotr\u00e2nsito intestinalea RM de um mesmo \npaciente. Noteaal\u00e7a intestinal angulada com aspecto em \u00f4mega (setas), com paredes espessadasepadr\u00e3o mucosa em paralelep\u00edpedo, mai"
+        },
+        {
+          "title": "Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno",
+          "page_start": 1285,
+          "page_end": 1285,
+          "score": 0.6218,
+          "excerpt": "Fifura lO-lOIf . Met\u00e1slase ileal originada de c\u00e2ncer pulmonar \nprim\u00e1rio (tipo c\u00e9 lu las escamosas), A. A imagem caronaIda \nTe mostra uma massa circular (cabe\u00e7as de setas) sem \nobstru\u00e7\u00e3o no ileo. a. A imagem coronal da fOG PEr exibe \numa \u00e1rea com absor\u00e7\u00e3o anormal de fDG (asterisco) \ncorrespondendoale"
+        },
+        {
+          "title": "Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno",
+          "page_start": 1296,
+          "page_end": 1296,
+          "score": 0.6301,
+          "excerpt": "1296 V Ola;n\u00f5sllco por Imatem do Tr.to Gasfrolnt.Jllna' \nFigura 30~12 0 . Mucormicose intestinal. A TC mostra \u00e1reas alternadas \nde poucoep rolon~ado realce contraslado na parede do intestino \ndel~ado (asteriscos) com nebulosidade do mesent\u00e9rio re~ional (De Lee \nJH. Ha HK, Yoo E5, el ai: CT and sono~"
+        },
+        {
+          "title": "Fisica_Medica_Livro_Fisica_-_Ultrassonografia_Diagnostica_Kodaira_SemAno",
+          "page_start": 328,
+          "page_end": 329,
+          "score": 0.611,
+          "excerpt": "!\",.uM. IIi'i'ii.it['I3iMihiiiMM4:j.I.@j,*i,.ii\"~i'iMi. 1M' \nA \nc \n353 \nB \nFig. 9-36. (A) Imagem transversal evidenciando al\u00e7a \nintestinal (setas) contendo v\u00e1rias pequenas imagens \nanelares ecog\u00eanicas intraluminais correspondendo aos \nvermes em corte transversal. (8) Imagem longitudinal \ndo mesmo ca"
+        },
+        {
+          "title": "Abdome_Livro_Ultrassonografia_Abdominal_2edi\u00e7\u00e3o_Chammas_Ocr_Abd_Semautor_SemAno",
+          "page_start": 328,
+          "page_end": 329,
+          "score": 0.611,
+          "excerpt": "!\",.uM. IIi'i'ii.it['I3iMihiiiMM4:j.I.@j,*i,.ii\"~i'iMi. 1M' \nA \nc \n353 \nB \nFig. 9-36. (A) Imagem transversal evidenciando al\u00e7a \nintestinal (setas) contendo v\u00e1rias pequenas imagens \nanelares ecog\u00eanicas intraluminais correspondendo aos \nvermes em corte transversal. (8) Imagem longitudinal \ndo mesmo ca"
+        },
+        {
+          "title": "Abdome_Guideline_S\u00e9rie_Cbr_Gastrointestinal_Abdomen_Semautor_2011_Cbr_SemAno",
+          "page_start": 204,
+          "page_end": 204,
+          "score": 0.6019,
+          "excerpt": "192 Cap\u00edtulo 5 Jejunoefleo \nFIGURA 5-20. Tumor carcinoide em \u00edleo distai. A, Tr\u00e2nsito intestinal evidencia massa na raiz do mesent\u00e9rio (setas), afilando segmento de al\u00e7a central e \ndeslocando segmentos de al\u00e7a adjacentes. BeC, TC semecom contraste deste mesmo caso demonstra les\u00e3o infiltrativa com as"
+        }
+      ],
+      "tokens_used": 3796
+    }
+  ],
+  [
+    7,
+    "Quais sao os achados do dreno ventricular externo na radiografia de cranio?",
+    {
+      "answer": "N\u00e3o encontrei refer\u00eancia sobre os achados do dreno ventricular externo na radiografia de cr\u00e2nio na base de conhecimento.",
+      "sources": [
+        {
+          "title": "Neurorradiologia_Livro_Encefalo_Imagem_Patologia_E_Anatomia_Osborn_2014",
+          "page_start": 1039,
+          "page_end": 1039,
+          "score": 0.6199,
+          "excerpt": "Hidrocefaliaedoen\u00e7as do l\u00edquido cerebrospinal 1041\n34-44A TC em uma crian\u00e7a\ncom hidrocefaliaederiva\u00e7\u00e3o\nventricular demonstrandoocateter B3 e os ventricuios laterais\nem fenda S. Apesar do mal\nfuncionamento da deriva\u00e7\u00e3o, o\npaciente estava assintom\u00e1tico.\n34-44B Radiografia do cr\u00e2nio\nobtida no mesmo mom"
+        },
+        {
+          "title": "Obstetricia_Livro_Callen_Ultrassonografia_Em_Obstetr\u00edcia_E_Ginecolog_Semautor_SemAno",
+          "page_start": 534,
+          "page_end": 534,
+          "score": 0.6182,
+          "excerpt": "522 AVALIA\u00c7\u00c3O ULTRASSONOGR\u00c1FICA DO CORA\u00c7\u00c3O FETAL \nAnterior \nEsquerda \nF \nDireita \nPosterior \nSuperior E \nDire ita \nSuperior \nG \nEsquerda \nFIGURA 14-8 conto E-G. Cortesediagrama da via de sa\u00edda do ventr\u00edculo direito . O corte da via de sa\u00edda do ventr\u00edculo direito (RV) leva para a \nart\u00e9ria pulmonar pr"
+        },
+        {
+          "title": "Obstetricia_Livro_Ultrassonografia_Em_Ginecologia_E_Obstetricia_Callen_2009",
+          "page_start": 534,
+          "page_end": 534,
+          "score": 0.6176,
+          "excerpt": "522 AVALIA\u00c7\u00c3O ULTRASSONOGR\u00c1FICA DO CORA\u00c7\u00c3O FETAL \nAnterior \nEsquerda \nF \nDireita \nPosterior \nSuperior E \nDire ita \nSuperior \nG \nEsquerda \nFIGURA 14-8 conto E-G. Cortesediagrama da via de sa\u00edda do ventr\u00edculo direito . O corte da via de sa\u00edda do ventr\u00edculo direito (RV) leva para a \nart\u00e9ria pulmonar pr"
+        },
+        {
+          "title": "Obstetricia_Livro_Atlas_De_Ecocardiografia_Fetal_Torax_Nathalie_J_M__Semautor_SemAno",
+          "page_start": 33,
+          "page_end": 35,
+          "score": 0.6132,
+          "excerpt": "dire\u00e7\u00e3o ao\nest\u00f4mago.\nV\u00eddeo 9-1\nNo plano 4C\nobservamos ampla\ncomunica\u00e7\u00e3o\ninterventricular\nmuscular com\nextens\u00e3o para via de\nentrada.\nhttps://www.thieme.de/de/q.htm?\np=opn/cs/20/11/13070935f97fb80c\nV\u00eddeo 9-2\nO mapeamentoa\ncores (color Doppler)\nno plano 4C\ndemonstra pequena\ncomunica\u00e7\u00e3o\ninterventricular"
+        },
+        {
+          "title": "Obstetricia_Livro_Callen_Ultrassonografia_Em_Obstetr\u00edcia_E_Ginecolog_Semautor_SemAno",
+          "page_start": 562,
+          "page_end": 562,
+          "score": 0.6123,
+          "excerpt": "A \nc \n550 AVA LIA\u00c7\u00c3O ULTRASSONOGR\u00c1FICA DO CORA\u00c7\u00c3O FETAL \nB \nD \nFIGURA 14-33. Veia cava superior bilateral. A. Corte axial atrav\u00e9s da parte inferior do quatro c\u00e2maras mostraoseio coronariano dilatado (CS) . \nTantooseio coronariano quantoaveia cava inferior (IVC) abrem no \u00e1trio direito (RA). O seio co"
+        },
+        {
+          "title": "Obstetricia_Livro_Ultrassonografia_Em_Ginecologia_E_Obstetricia_Callen_2009",
+          "page_start": 562,
+          "page_end": 562,
+          "score": 0.6083,
+          "excerpt": "A \nc \n550 AVA LIA\u00c7\u00c3O ULTRASSONOGR\u00c1FICA DO CORA\u00c7\u00c3O FETAL \nB \nD \nFIGURA 14-33. Veia cava superior bilateral. A. Corte axial atrav\u00e9s da parte inferior do quatro c\u00e2maras mostraoseio coronariano dilatado (CS) . \nTantooseio coronariano quantoaveia cava inferior (IVC) abrem no \u00e1trio direito (RA). O seio co"
+        },
+        {
+          "title": "Obstetricia_Livro_Atlas_De_Ecocardiografia_Fetal_Torax_Nathalie_J_M__Semautor_SemAno",
+          "page_start": 51,
+          "page_end": 53,
+          "score": 0.6044,
+          "excerpt": "No plano 4C, vemos\nm\u00faltiplas massas\ncom densidade\nhomog\u00eanea\nlocalizadas em\nambos os\nventr\u00edculoseno \u00e1trio\ndireito, sendo\ncompat\u00edveis com\nrabdomiomas.\np=opn/cs/20/11/130709748aa777ea\nV\u00eddeo 23-2\nObservamos\nm\u00faltiplos\nrabdomiomas de\ntamanhos m\u00e9dioe\ngrande, sendoo\nmaior localizado no\nventr\u00edculo direito (2"
+        },
+        {
+          "title": "Neurorradiologia_Livro_Encefalo_Imagem_Patologia_E_Anatomia_Osborn_2014",
+          "page_start": 1040,
+          "page_end": 1040,
+          "score": 0.604,
+          "excerpt": "1042 Dist\u00farbios t\u00f3xicos, metab\u00f3licos, degenerativosedo\n34-45A Imagem ponderada em T2 ap\u00f3s instala\u00e7\u00e3o\nde deriva\u00e7\u00e3o demonstrando um grande quarto ventriculo \"isolado\" SI achatandoaponte contraodivo B3,\ncomprimindooverme \u00cdS.\n\u25a0 . ^ r - \"\n34-45B imagem ponderada em T2 no piano axial\ndemonstrando queoquar"
+        },
+        {
+          "title": "Torax_Livro_Radiologia_Do_Torax_-_Manual_Pratico_De_Ensino_Desconhecido_SemAno",
+          "page_start": 220,
+          "page_end": 220,
+          "score": 0.6219,
+          "excerpt": ". -\u00b7,-, . \n..,. o( -' \u2022 \nr r '- \\\" \nfII \"' ~ r ~ .~~~-,o \"'I I_! ._. \nChave de Respostas \nm Solu\u00e7\u00e3o paraap. 182: A radiografia PA (Fig. 219.1) mostra um \nmarca-passos l+) e tamb\u00e9m um sistema portpara administra\u00e7\u00e3o de \nquimioterapia. O reservat\u00f3rio ( \" ) do sistema porteocateter ( [>) \npodem ser iden"
+        },
+        {
+          "title": "Geral_Livro_Topicos_Relevantes_No_Diagnostico_Por_Imagem_Funari_SemAno",
+          "page_start": 487,
+          "page_end": 487,
+          "score": 0.6408,
+          "excerpt": "460 MANUAIS DE ESPECIALIZA\u00c7\u00c3O\ntes axiais, em que podem ser observados os ventr\u00edculos laterais, o III ventr\u00edculo\ncaudado, putamen, globos p\u00e1lidos internoeexterno, claustrum, n\u00facleo rubro \nIV ventr\u00edculo. Pontos anat\u00f4micos importantesaserem identificados dentro do\nsistema ventricular s\u00e3o os cornos fron"
+        }
+      ],
+      "tokens_used": 3660
+    }
+  ],
+  [
+    8,
+    "O que sao os tumores cardiacos malignos secundarios e como aparecem na imagem?",
+    {
+      "answer": "Os tumores card\u00edacos malignos secund\u00e1rios s\u00e3o aqueles que se originam de met\u00e1stases de neoplasias malignas de outras partes do corpo, em vez de se desenvolverem primariamente no cora\u00e7\u00e3o. Eles podem surgir a partir de diversos tipos de c\u00e2ncer, como os pulmonares, e frequentemente apresentam um padr\u00e3o de realce heterog\u00eaneo nas imagens.\n\nNa tomografia, os angiosarcomas, que s\u00e3o um tipo de tumor card\u00edaco maligno prim\u00e1rio, podem apresentar realce heterog\u00eaneo e, em alguns casos, um derrame peric\u00e1rdico hemorr\u00e1gico pode estar presente. Devido \u00e0 sua localiza\u00e7\u00e3o, esses tumores podem causar sintomas como insufici\u00eancia card\u00edaca direita, obstru\u00e7\u00e3o da veia cava ou doen\u00e7a peric\u00e1rdica [Fonte: Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno, p.1161-1161]. \n\nN\u00e3o encontrei informa\u00e7\u00f5es espec\u00edficas sobre a apar\u00eancia de tumores card\u00edacos malignos secund\u00e1rios nas imagens.",
+      "sources": [
+        {
+          "title": "Neurorradiologia_Livro_Encefalo_Imagem_Patologia_E_Anatomia_Osborn_2014",
+          "page_start": 611,
+          "page_end": 612,
+          "score": 0.5851,
+          "excerpt": "606 Neoplasias, cistoseles\u00f5es pseudotumorais\n22-29 Grande les\u00e3o na base do cr\u00e2nio S] invadindo\noc\u00e9rebro. Observe componentes de aspecto cartilaginoso Condrossarcoma. (Arquivos da AF\u00edP.)\n22-30 ilustra\u00e7\u00e3o demonstra condrossarcoma da base\ndo cr\u00e2nio SI centrada na fissura petro-occipital es\nquerda (comp"
+        },
+        {
+          "title": "Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno",
+          "page_start": 1158,
+          "page_end": 1158,
+          "score": 0.6637,
+          "excerpt": "1158 IV Dlafn\u00f3sllco por Imal.m do T\u00f3rax \nFigura 28 -21. Enxertos de bypass arteriais coron\u00e1rios. Essa imagem de \nTe axial contrastada mostraorealce de enxertos de bypass arteriais \ncoron\u00e1rios direitoeesquerdo (setas). AA, aorta ascendente ; DA, aorta \ndescendente ; LSV, veia pulmonar superior esquer"
+        },
+        {
+          "title": "Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno",
+          "page_start": 1161,
+          "page_end": 1161,
+          "score": 0.6722,
+          "excerpt": "\u2022 Tumores Card\u00edacos Malignos \nAngios arcom a \nO angiosarcoma\u00e9o tumor card\u00edaco maligno prim\u00e1rio \nmais comum ,JO Esses tumores ocorremhabitualmente em \nadultos. mas j\u00e1 foram relatados em uma ampla faixa \n\u20acl\u00e1ria. II,JO,l4.l17 Os homens s\u00e3o afetados mais frequente\u00ad\nmente do que as mu lheres. W.80.1I~ OS"
+        },
+        {
+          "title": "Geral_Livro_Tomografia_Computadorizada_Do_Corpo_Em_Correlacao__Lee_SemAno",
+          "page_start": 695,
+          "page_end": 695,
+          "score": 0.6225,
+          "excerpt": "basta \nparaodiagn\u00f3stico , j\u00e1 que, \u00e0s vezes, um peric\u00e1rdio \u00edntegro e \nnormal situado sobre os ap\u00eandices atriais esquerdoseo ventr\u00ed \u00ad\nculo esquerdo n\u00e3o \u00e9 identificado. A import\u00e2ncia da aus\u00eancia \nparcial de peric\u00e1rdio est\u00e1 ligada ao maior risco (por\u00e9m, ainda \nassim um evento raro) de hernia\u00e7\u00e3oeestrangu"
+        },
+        {
+          "title": "Vascular_Livro_Angiografia_Por_Tc_E_Rm_Avalia\u00e7\u00e3o_Revisar_Semautor_Semautor_SemAno",
+          "page_start": 514,
+          "page_end": 514,
+          "score": 0.6164,
+          "excerpt": "s\u00e3o raras. A maioria \ndos tumores prim\u00e1rios consiste em sarcomas, embora sejam muito \nmais comuns os tumores originados nas art\u00e9rias pulmonares do que \nnas veias pulmonares (156). O leiomiossarcoma da veia pulmonar \n\u00e9aneoplasia prim\u00e1ria mais comum originada na veia pulmonar. \n\u00c9 mais comum em mulhere"
+        },
+        {
+          "title": "Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno",
+          "page_start": 1062,
+          "page_end": 1062,
+          "score": 0.6088,
+          "excerpt": "1062 IV DiaJ n\u00f3sl;co por ImilJf!m do T\u00d3ta. \nFigura 25 -Jtl . Hemangioma de parede tor\u00e2cica em uma menina com 2 dias de \nvida . tmagem coronal ponderada em TI (TR = '+50 ms, TE = 12 ms) (A) e imagem \naxial ponderada em T2 (TR = 3.000 ms, TE = 102 msl (B) mostram uma massa \nheterog\u00eanea de tecido mole "
+        },
+        {
+          "title": "Vascular_Livro_Angiografia_Por_Tc_E_Rm_Avalia\u00e7\u00e3o_Revisar_Semautor_Semautor_SemAno",
+          "page_start": 910,
+          "page_end": 910,
+          "score": 0.5988,
+          "excerpt": "900 Vasculariza\u00e7ao dos Membros Superiores \nFIGURA 22.81 Angiografia por TC realizada para mapearaextens\u00e3o de um hemangioma intramuscular infiltrativo. Como mostram as imagens \nde RV da pele (A) e da rede vascular (B), o principal suprimento do hemangioma prov\u00e9m da art\u00e9ria ulnaretem dois epicentros -"
+        },
+        {
+          "title": "Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno",
+          "page_start": 1060,
+          "page_end": 1060,
+          "score": 0.6383,
+          "excerpt": "1060 IV Dl\u00edlJn\u00f3s'ico por 'maJem do T\u00f3r .. \nTumores Vasculares \nOs hemangiomas s\u00e3o uma categoria amp la de les\u00f5es, \nabrangendo ma lforma\u00e7\u00f5es vascu lares cavernosas , venosas , \nateriov enosas, capilaresemistas.,')\u00b799 Os hemangiomas \ncavernosos s\u00e3o compostos de vasos dilatados, tortuosos, de \nparedes "
+        },
+        {
+          "title": "Obstetricia_Livro_Ultrassonografia_Em_Ginecologia_E_Obstetricia_Callen_2009",
+          "page_start": 579,
+          "page_end": 579,
+          "score": 0.6175,
+          "excerpt": "TUMORES CARD\u00edACOS \nOs tumores prim\u00e1rios card\u00edacos s\u00e3o incomuns no fetoeno \nneonato l46. Por\u00e9m , os tumores card\u00edacos est\u00e3o sendo diag\u00ad\nnosticados mais frequentemente nos fetos do que no neonato , \nocorrendo em 0,1 % a 0,2% de todas as s\u00e9ries de ecocardiogra\u00ad\nfia fetal 147, 148. Isto ocorre devido ao"
+        },
+        {
+          "title": "Geral_Livro_Tomografia_Computadorizada_Do_Corpo_Em_Correlacao__Lee_SemAno",
+          "page_start": 621,
+          "page_end": 621,
+          "score": 0.5966,
+          "excerpt": "TUMORES DA PAREDE TOR\u00c1CICA \nOs tumores benignosemalignos podem originar-se em qual\u00ad\nquer um dos tecidos mol es ou ossos da pa rede tor\u00e1cica. Carci\u00ad\nnoma broncog\u00eanicoede mama, ti mama, Iinfomaemesotelio\u00ad\nma podem envo lveraparede tor\u00e1cica por extens\u00e3o direta \n(158) . Quase todos os processos malignos"
+        }
+      ],
+      "tokens_used": 3741
+    }
+  ],
+  [
+    9,
+    "barriga",
+    {
+      "answer": "N\u00e3o encontrei informa\u00e7\u00f5es suficientes na base de conhecimento para responder essa pergunta. Tente reformular com mais detalhes \u2014 por exemplo, inclua a especialidade, o tipo de exame ou a regi\u00e3o anat\u00f4mica.",
+      "sources": [],
+      "tokens_used": 0
+    }
+  ],
+  [
+    10,
+    "quadril",
+    {
+      "answer": "Sua pergunta \u00e9 muito gen\u00e9rica. Pode reformular? Por exemplo: \"Quais s\u00e3o os achados ultrassonogr\u00e1ficos do quadril displ\u00e1sico?\"\n\n\ud83d\udcda Fontes consultadas: [Fonte: Msk_Livro_Ultrassonografia_Do_Sistema_Musculoesqueletico_Ser, p.273-273]; [Fonte: Msk_Livro_Ultrassonografia_Do_Sistema_Musculoesqueletico_Ser, p.281-282]; [Fonte: Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_, p.2397-2397]",
+      "sources": [
+        {
+          "title": "Msk_Livro_Ultrassonografia_Do_Sistema_Musculoesqueletico_Sernik_SemAno",
+          "page_start": 273,
+          "page_end": 273,
+          "score": 0.5931,
+          "excerpt": "266 I CAP\u00edTULO 4 \u2022 QUADRil \nA 8 \nFig. 4-12. (AeB) Quadril displ\u00e1sico, por\u00e9m, ainda centrado. O teto \u00f3sseo est\u00e1 retificadoeo promont\u00f3rio (p) arredondado. A cabe\u00e7a femoral est\u00e1 \ntotalmente recoberta; entretanto, o teto cartilaginoso \u00e9 proporcionalmente maior. Comparar comaFigura 4\u00b711. \n\u00c2ngulos alfaebe"
+        },
+        {
+          "title": "Msk_Livro_Ultrassonografia_Do_Sistema_Musculoesqueletico_Sernik_SemAno",
+          "page_start": 281,
+          "page_end": 282,
+          "score": 0.5662,
+          "excerpt": "274 I CAP\u00edTULO 4 \u2022 QUADRil \nFig. 4-23. Ultrassonografia 3D. (A) Quadril normal. (8) Quadrilluxado (exc\u00eantrico). 1= ll\u00edaco; CF = cabe\u00e7a femora l; tm = troc\u00e2nter maior; \nAct = acet\u00e1bu lo. \nFig. 4-24. Suspens\u00f3rio de Pavlik. \nB\n\nDISPLASIA DO DESENVOLVIMENTO DO QUADRIL (DDQ) I 275 \nB \nFig. 4-25. Vascular"
+        },
+        {
+          "title": "Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno",
+          "page_start": 2397,
+          "page_end": 2397,
+          "score": 0.5551,
+          "excerpt": "Mark D. Murphey Cheryl A. Petersilge \no quadril\u00e9uma articula\u00e7\u00e3o grandeecomplexa que pode \nestar envolvida em diversas condi\u00e7\u00f5es patol\u00f3gicas. Estas \nincluem anormalidades que resultam de trauma, infec\u00e7\u00e3o, \nnecrose avascular, neoplasiaseprocessos sinoviais. Al\u00e9m \ndisso, as manifesta\u00e7\u00f5es de anomalias c"
+        },
+        {
+          "title": "Msk_Livro_Ultrassonografia_Do_Sistema_Musculoesqueletico_Sernik_SemAno",
+          "page_start": 274,
+          "page_end": 275,
+          "score": 0.5484,
+          "excerpt": "Figo 4-140 Representa\u00e7\u00e3o da linha de base (em vermelho). A seta indica \no ponto de interse\u00e7\u00e3o do peric\u00f4ndrio proximal comoosso il\u00edaco. \n\u2022 Linha do teto cartilaginoso: tamb\u00e9m chamada de linha \nde inclina\u00e7\u00e3o, \u00e9 tra\u00e7adaapartir de 2 pontos . Um deles \nsitua-se no centro (ecos centrais) do l\u00e1bio acetabul"
+        },
+        {
+          "title": "Msk_Livro_Atlas_Comentado_De_Ultrassonografia_Musculoesquel\u00e9_Semautor_SemAno",
+          "page_start": 242,
+          "page_end": 242,
+          "score": 0.5468,
+          "excerpt": "CONSIDERA\u00c7\u00d5ES INICIAIS\nAavalia\u00e7\u00e3o ultrassonogr\u00e1fica do quadril do adulto temacada\ndia mais indica\u00e7\u00f5es \u00e0 medida queom\u00e9todo vai se popularizando na classe m\u00e9dicaeque, na curva de aprendizado, o examinador mais experiente vai atingindo seu melhor momentoeconsegue obter imagens de melhor defini\u00e7\u00e3o dessa"
+        },
+        {
+          "title": "Msk_Livro_Atlas_Comentado_De_Ultrassonografia_Musculoesquel\u00e9_Semautor_SemAno_DUP84",
+          "page_start": 242,
+          "page_end": 242,
+          "score": 0.5468,
+          "excerpt": "CONSIDERA\u00c7\u00d5ES INICIAIS\nAavalia\u00e7\u00e3o ultrassonogr\u00e1fica do quadril do adulto temacada\ndia mais indica\u00e7\u00f5es \u00e0 medida queom\u00e9todo vai se popularizando na classe m\u00e9dicaeque, na curva de aprendizado, o examinador mais experiente vai atingindo seu melhor momentoeconsegue obter imagens de melhor defini\u00e7\u00e3o dessa"
+        },
+        {
+          "title": "Msk_Livro_Atlas_Comentado_De_Ultrassonografia_Musculoesquel\u00e9_Semautor_SemAno",
+          "page_start": 242,
+          "page_end": 242,
+          "score": 0.5414,
+          "excerpt": "olo femoral\u00e9que\nse percebeoderrame articular, situado normalmente soboligamento iliofemoralesobreoplano osteoperiosteal do colo\nfemoral, tornando este local pr\u00f3prio paraoestudo ecogr\u00e1fico\ndas cole\u00e7\u00f5es intracupsulares.\nO quadril consegue executar sete dos movimentos. No\neixo transversal promove os mo"
+        },
+        {
+          "title": "Msk_Livro_Atlas_Comentado_De_Ultrassonografia_Musculoesquel\u00e9_Semautor_SemAno_DUP84",
+          "page_start": 242,
+          "page_end": 242,
+          "score": 0.5414,
+          "excerpt": "olo femoral\u00e9que\nse percebeoderrame articular, situado normalmente soboligamento iliofemoralesobreoplano osteoperiosteal do colo\nfemoral, tornando este local pr\u00f3prio paraoestudo ecogr\u00e1fico\ndas cole\u00e7\u00f5es intracupsulares.\nO quadril consegue executar sete dos movimentos. No\neixo transversal promove os mo"
+        },
+        {
+          "title": "Msk_Livro_Ultrassonografia_Do_Sistema_Musculoesqueletico_Sernik_SemAno",
+          "page_start": 277,
+          "page_end": 277,
+          "score": 0.5798,
+          "excerpt": "270 I CAP\u00edTULO 4 \u2022 QUADRil \nAl\u00e9m dos 4 tipos de quadris , a medida dos \u00e2ngulos alfa e \nbeta possibilitouadivis\u00e3o em subgrupos . \n\u2022 Quadris tipo laeIb: a diferen\u00e7a entre esses dois tipos de quadril \nest\u00e1 na extens\u00e3o do recobrimento do teto cartilaginoso, maior \nno quadril Ia. Esta subdivis\u00e3o\u00e9de pouca"
+        },
+        {
+          "title": "Msk_Livro_Ultrassonografia_Do_Sistema_Musculoesqueletico_Sernik_SemAno",
+          "page_start": 278,
+          "page_end": 279,
+          "score": 0.5236,
+          "excerpt": "A \nB \nDISPLASIA DO DESENVOLVIMENTO DO QUADRIL (DDQ) I 271 \nFig. 4-19. Avalia\u00e7\u00e3o da cobertura \u00f3ssea da cabe\u00e7a femoralpela raz\u00e3o \nd/D. (A) Ilust ra\u00e7\u00e3o. (8) Ultrassonografia. (81 ) Representa um quadril \nnormal com recobrimento \u00f3sseo de 51,58%. No quadril displ\u00e1sico (82), \na porcentagem do recobrimento"
+        }
+      ],
+      "tokens_used": 3345
+    }
+  ],
+  [
+    11,
+    "e normal?",
+    {
+      "answer": "N\u00e3o encontrei informa\u00e7\u00f5es suficientes na base de conhecimento para responder essa pergunta. Tente reformular com mais detalhes \u2014 por exemplo, inclua a especialidade, o tipo de exame ou a regi\u00e3o anat\u00f4mica.",
+      "sources": [],
+      "tokens_used": 0
+    }
+  ],
+  [
+    12,
+    "tipo assim aquela coisa do pulmao",
+    {
+      "answer": "N\u00e3o encontrei informa\u00e7\u00f5es suficientes na base de conhecimento para responder essa pergunta. Tente reformular com mais detalhes \u2014 por exemplo, inclua a especialidade, o tipo de exame ou a regi\u00e3o anat\u00f4mica.",
+      "sources": [],
+      "tokens_used": 0
+    }
+  ],
+  [
+    13,
+    "celiaca",
+    {
+      "answer": "Sua pergunta \u00e9 muito gen\u00e9rica. Pode reformular? Por exemplo: \"Quais s\u00e3o os achados radiol\u00f3gicos da doen\u00e7a cel\u00edaca?\"\n\n\ud83d\udcda Fontes consultadas: [Fonte: Abdome_Livro_Textbook_Of_Gastrointestinal_Radiology_5e_2021_, p.441-441]; [Fonte: Abdome_Guideline_S\u00e9rie_Cbr_Gastrointestinal_Abdomen_Semautor, p.194-194]; [Fonte: Celiac disease | Radiology Reference Article.org, p.1-1]",
+      "sources": [
+        {
+          "title": "Abdome_Livro_Textbook_Of_Gastrointestinal_Radiology_5e_2021_Abd_Semautor_SemAno",
+          "page_start": 441,
+          "page_end": 441,
+          "score": 0.5774,
+          "excerpt": "CELIAC DISEASE\nCeliac disease (gluten-sensitive enteropathy or celiac sprue) is a \nchronic immunologic inflammatory disease in which the glia -\ndin fraction of wheat, barley, or rye gluten causes damage to the \nsmall bowel mucosa. Removal of wheat products from the diet \nreverses this damage.\nCeliac"
+        },
+        {
+          "title": "Abdome_Guideline_S\u00e9rie_Cbr_Gastrointestinal_Abdomen_Semautor_2011_Cbr_SemAno",
+          "page_start": 194,
+          "page_end": 194,
+          "score": 0.5131,
+          "excerpt": "111. DIAGN\u00d3STICO DIFERENCIAL \nE ntre as possibilidades diagn\u00f3sticas diferenciais devem ser \nconsiderados s\u00edndrome de Zollinger-Ellison, linfangectasia, \nlinfoma, doen\u00e7a celiacaeo utrascondi\u00e7\u00f5es mal absortivas. \n\u2022 4. Doen\u00e7a Cel\u00edaca (Enteropatia ao Gl\u00faten ou \nEspru N\u00e3o Tropical) \nI. INTRODU\u00c7\u00c3O \nGenera"
+        },
+        {
+          "title": "Celiac disease | Radiology Reference Article.org",
+          "page_start": 1,
+          "page_end": 1,
+          "score": 0.5116,
+          "excerpt": "Celiac disease | Radiology Reference Article | Radiopaedia.org \n\n \n \u2022 \n \u2022 \n\u2022 \u2022 \n\u2022 \n\n \n\n \n \n \n\n \n\u2022 \n\n\u2022 \n\n\u2022 \n\u2022 \n\u2022 \n\n\u2022 \n\n\u2022 \n\n\u2022 \n\n\u2022 \n\n \n\n \u2022 \n\n \n \n\n \n\n \n\n \n \u2022 \n\n \n \u2022 \n\n \n \n \n \n \n \n \u00d7\n \n \n \n \n \n \n \n \n \n \n \n \n\n \n\n \n About \n \n \n Articles \n \n\n \n Cases \n \n\n \n Courses \n \n\n \n Questions \n \n\n \n Quiz \n \n\n \n Recent"
+        },
+        {
+          "title": "Abdome_Livro_Abdominal_Imaging_Vol_1_Hamm_Bernd_Ros_Pablo_R_Jul_Semautor_SemAno",
+          "page_start": 660,
+          "page_end": 660,
+          "score": 0.5019,
+          "excerpt": "properly and if undiagnosed can lead to malnutrition.\nThe disease can develop at any point in life, from\ninfancy to late adulthood.\nThere isagenetic disposition and people who have\nafamily member with celiac disease are at greater risk\nfor developing the disease. The disorder is most common in Cauca"
+        },
+        {
+          "title": "Celiac disease | Radiology Reference Article.org",
+          "page_start": 9,
+          "page_end": 9,
+          "score": 0.4959,
+          "excerpt": "ifestations \n \n\u2022 \nhypertransaminasemia \n\u2022 \nusually mild but rarely can lead to liver failure \n \n \n\u2022 \n\nmusculoskeletal manifestations \n \n\u2022 \npoor growth \n\u2022 \n rickets (rare when celiac disease is recognized and treated) \n\u2022 \n osteoporosis (common in elderly) \n \n \n\u2022 \n\ndermatological manifestations \n \u2022 \nd"
+        },
+        {
+          "title": "Celiac disease | Radiology Reference Article.org",
+          "page_start": 15,
+          "page_end": 15,
+          "score": 0.4936,
+          "excerpt": "respond despite fastidious gluten-free nutrition, representing refractory celiac disease &nbsp; 15 . \n\n## Complications\n \n\u2022 \n\nincreased malignancy risk \n \n\u2022 \n small bowel lymphoma , in particular,&nbsp; enteropathy-associated T cell lymphoma , but also other non-Hodgkin lymphomas &nbsp; 11 \n\u2022 \n smal"
+        },
+        {
+          "title": "Neurorradiologia_Livro_Cerebro_E_Meninges_-_Anatomia_Normal_Forsting_SemAno",
+          "page_start": 852,
+          "page_end": 852,
+          "score": 0.4931,
+          "excerpt": "p\u00e1 tico cel\u00edaco podem ser extre\u00b7 \nma men te \u00fateis quandoopacie nte apresentar dor visceral \nprofun da, como comumente ocor re em decorr\u00eancia de \nc\u00e2ncer terminaldo p\u00e2nc reas, pancreatite cr\u00f4nica ou insufi\u00ad\nci\u00eancia arte rial visceraLOoperador posiciona uma agulha \nfi na em uma abordagem poster ior ou "
+        },
+        {
+          "title": "Abdome_Livro_Abdominal_Imaging_Vol_1_Hamm_Bernd_Ros_Pablo_R_Jul_Semautor_SemAno",
+          "page_start": 615,
+          "page_end": 615,
+          "score": 0.4775,
+          "excerpt": "c Disease\nThe most common disease that demonstrates mucous\nde\ufb01cit malabsorption is the celiac disease. This has\nbeen de\ufb01ned as one of the greatest mysteries of gastroenterology, both due to the frequency of atypical\npresentation and also for the dif\ufb01culty ofaprecise\nclinical diagnosis (Lionetti and "
+        },
+        {
+          "title": "Geral_Livro_Textbook_Of_Radiology_And_Imaging_Volume_1_Sutton_2003",
+          "page_start": 639,
+          "page_end": 639,
+          "score": 0.4764,
+          "excerpt": "\u0336\u0330\u03f4\u03e7\u03ed\u03ae\u0398\u0330\u03df\u038d\u03ae\u03b8\u03e7\n\u0336\u0397\u038d\u03ad\u038e\u03b8\u0398\u03e7\u038d\u03ea\u03b4\u03b3\u03ee\u03e3\n\u03b6\u03e7\u038d\u03a9\u03ad\u03ee\u03e7\nCoeliac disease (gluten-sensitive enteropathy) reflects hypersensitivity to the gliadin fractions of gluten (found in wheat, barley\nand rye). The histological hallmark is villous atrophy. which returns\nto normal afteragluten-free diet is instituted. The disease i"
+        },
+        {
+          "title": "Celiac disease | Radiology Reference Article.org",
+          "page_start": 2,
+          "page_end": 2,
+          "score": 0.4669,
+          "excerpt": "free thanks to our supporters and advertisers. \n Become a Gold Supporter and see no third-party ads. \n \n \n \n \n\n \n \n \n \n \n \n Articles \n \n \n Cases \n \n \n Courses \n \n \n Log In \n \n \n \n\n \n\n \n \n \n \n \n\n \u2022 Log in \u2022 Sign up \n \n \n\n \n \n \n \n \n Articles \n Cases \n Courses \n Quiz \n \n \n \n \n \n \n \n \n About \n \n \n Recen"
+        }
+      ],
+      "tokens_used": 3067
+    }
+  ],
+  [
+    14,
+    "meu exame deu ruim",
+    {
+      "answer": "Sua pergunta \u00e9 muito gen\u00e9rica. Pode reformular? Por exemplo: \"Quais s\u00e3o os achados mamogr\u00e1ficos do BI-RADS 4?\"\n\n\ud83d\udcda Fontes consultadas: [Fonte: Abdome_Guideline_S\u00e9rie_Cbr_Gastrointestinal_Abdomen_Semautor, p.67-67]; [Fonte: Geral_Livro_Tratado_De_Posicionamento_Radiografico_E_Anatomi, p.2206-2206]; [Fonte: Obstetricia_Livro_Callen_Ultrassonografia_Em_Obstetr\u00edcia_E_G, p.19-19]",
+      "sources": [
+        {
+          "title": "Abdome_Guideline_S\u00e9rie_Cbr_Gastrointestinal_Abdomen_Semautor_2011_Cbr_SemAno",
+          "page_start": 67,
+          "page_end": 67,
+          "score": 0.4717,
+          "excerpt": "Capftulo 1-4 Resson\u00e2ncia Magn\u00e9tica 53 \n~----------------\nFIGURA 1-4-7. Menina de 10 anos com abscesso p\u00e9lvico por apendicite aguda. Imagens de RM ponderadas em T2 no plano axial (A), sagital (B) e \ncoronal (C) e em T1 com supress\u00e3o de gordura ap\u00f3sainje\u00e7\u00e3o do contraste (D) demonstram volumosa cole\u00e7\u00e3o"
+        },
+        {
+          "title": "Geral_Livro_Tratado_De_Posicionamento_Radiografico_E_Anatomia_Bontrager_SemAno_DUP480",
+          "page_start": 2206,
+          "page_end": 2206,
+          "score": 0.4353,
+          "excerpt": "trabalham\tno\tdepartamento\tRM.\tComo\tprecau\u00e7\u00e3o,\talguns\tcentros\tde\tRM\tt\u00eam\trecomendado\tas\ttecn\u00f3logas\nque est\u00e3o gr\u00e1vidas permanecerem fora da sala de exame enquantoogradiente est\u00e1 pulsando.\nRadiobi\u00f3logos continuam investigandoapossibilidadeeocorr\u00eancia de efeitos adversos como um\nresultado\tde\tcampos\teletr"
+        },
+        {
+          "title": "Obstetricia_Livro_Callen_Ultrassonografia_Em_Obstetr\u00edcia_E_Ginecolog_Semautor_SemAno",
+          "page_start": 19,
+          "page_end": 19,
+          "score": 0.4036,
+          "excerpt": "EXAME UL TRASSONOGR\u00c1FICO OBST\u00c9TRICO 7 \nexames eram diferentes de m\u00e9dico para m\u00e9dico. Haviaapreocupa\u00e7\u00e3o de que comon\u00famero de exames aumentando dramaticamente, sua qualidade estivesse diminuindo. Em uma \ntentativa de atacar esse problema , a Comiss\u00e3o de Ultrassom \ndo Col\u00e9gio Americano de Radiologia , "
+        },
+        {
+          "title": "Obstetricia_Livro_Ultrassonografia_Em_Ginecologia_E_Obstetricia_Callen_2009",
+          "page_start": 19,
+          "page_end": 19,
+          "score": 0.4007,
+          "excerpt": "EXAME UL TRASSONOGR\u00c1FICO OBST\u00c9TRICO 7 \nexames eram diferentes de m\u00e9dico para m\u00e9dico. Haviaapre\u00ad\nocupa\u00e7\u00e3o de que comon\u00famero de exames aumentando dra\u00ad\nmaticamente, sua qualidade estivesse diminuindo. Em uma \ntentativa de atacar esse problema , a Comiss\u00e3o de Ultrassom \ndo Col\u00e9gio Americano de Radiologi"
+        },
+        {
+          "title": "Obstetricia_Livro_Ultrassonografia_Em_Ginecologia_E_Obstetricia_Callen_2009",
+          "page_start": 30,
+          "page_end": 30,
+          "score": 0.3935,
+          "excerpt": "18 EXAME UL TRASSONOGR\u00c1 FICO OBST\u00c9TRICO \npode submeterapacientearestn\u00e7oes importantes do estilo \nde vida que n\u00e3o ocorreriam se n\u00e3o houvesse uma placenta \npr\u00e9via. Entretanto , se depois de uma variedade de manobras \ne transdutores (posi\u00e7\u00e3o de Trendelenburg, esvaziamento da \nbexiga, exame transperinea"
+        },
+        {
+          "title": "Obstetricia_Livro_Ultrassonografia_Em_Ginecologia_E_Obstetricia_Callen_2009",
+          "page_start": 19,
+          "page_end": 19,
+          "score": 0.3917,
+          "excerpt": "etectar.46 \u00c9 importante \nassinalar que enquanto os indiv\u00edduos que fazem exames N\u00edvel \n2 s\u00e3o usualmente proficientes em avaliar pacientes quanto a \nanomalias cong\u00eanitas, isso n\u00e3o que dizer queoexaminador do \nN\u00edvel 1 n\u00e3o seja experiente. 46 Em um excelente editorial sobre \no assunto, Filly\"6 assinala "
+        },
+        {
+          "title": "Obstetricia_Livro_Callen_Ultrassonografia_Em_Obstetr\u00edcia_E_Ginecolog_Semautor_SemAno",
+          "page_start": 30,
+          "page_end": 30,
+          "score": 0.3916,
+          "excerpt": "18 EXAME UL TRASSONOGR\u00c1 FICO OBST\u00c9TRICO \npode submeterapacientearestn\u00e7oes importantes do estilo \nde vida que n\u00e3o ocorreriam se n\u00e3o houvesse uma placenta \npr\u00e9via. Entretanto , se depois de uma variedade de manobras \ne transdutores (posi\u00e7\u00e3o de Trendelenburg, esvaziamento da \nbexiga, exame transperinea"
+        },
+        {
+          "title": "Obstetricia_Livro_Callen_Ultrassonografia_Em_Obstetr\u00edcia_E_Ginecolog_Semautor_SemAno",
+          "page_start": 19,
+          "page_end": 19,
+          "score": 0.3914,
+          "excerpt": "e enquanto os indiv\u00edduos que fazem exames N\u00edvel \n2 s\u00e3o usualmente proficientes em avaliar pacientes quanto a \nanomalias cong\u00eanitas, isso n\u00e3o que dizer queoexaminador do \nN\u00edvel 1 n\u00e3o seja experiente. 46 Em um excelente editorial sobre \no assunto, Filly\"6 assinala que infelizmente alguns examinadores "
+        },
+        {
+          "title": "Obstetricia_Livro_Callen_Ultrassonografia_Em_Obstetr\u00edcia_E_Ginecolog_Semautor_SemAno",
+          "page_start": 32,
+          "page_end": 32,
+          "score": 0.4075,
+          "excerpt": "ente, tenho obsel-vado ultrassonografistasesonologistas \nternl\u00cdnarem um exameerapidamente marcar quadr\u00edculas \nem uma planilha, indicando que uma estrutura particular foi \nobservada ou estava normal . E inconceb\u00edvel pal-a minl, observandoavelocidade comaqualaplanilha \u00e9 completada, que \neles jamais se"
+        },
+        {
+          "title": "Obstetricia_Livro_Histerosalpingografia_-_Introducao_Ao_Estudo_Da_Ra_Maia_2009",
+          "page_start": 19,
+          "page_end": 19,
+          "score": 0.387,
+          "excerpt": "3) Dever\u00e1 ser afastada qualquer infec\u00e7\u00e3o vaginal ativa (infec\u00e7\u00e3o por\nGonococoseClam\u00eddia).\n4) Preparo psicol\u00f3gico, explicandoodesenrolar do exame que ser\u00e1\npraticamente in-dolor. Esta atitude \u00e9 importante principalmente\nnaquelas pacientes que est\u00e3o soboimpacto de informa\u00e7\u00f5es\nnegativas fornecidas por o"
+        }
+      ],
+      "tokens_used": 3321
+    }
+  ],
+  [
+    15,
+    "sindrome de sjogren o que e",
+    {
+      "answer": "A s\u00edndrome de Sj\u00f6gren \u00e9 uma doen\u00e7a autoimune caracterizada pela tr\u00edade: xerostomia (boca seca), ceratoconjuntivite seca (xeroftalmia) e outra doen\u00e7a autoimune associada. Os achados da doen\u00e7a s\u00e3o decorrentes do comprometimento das gl\u00e2ndulas ex\u00f3crinas, salivares (com redu\u00e7\u00e3o da produ\u00e7\u00e3o de saliva) e lacrimais (com redu\u00e7\u00e3o da produ\u00e7\u00e3o de l\u00e1grima) [Fonte: Cabeca_Pescoco_Guideline_Cbr_Cabe\u00e7a_E_Pesco\u00e7o_Radiologia_Semautor_2017_Cbr_SemAno, p.335-335].",
+      "sources": [
+        {
+          "title": "Cabeca_Pescoco_Guideline_Cbr_Cabe\u00e7a_E_Pesco\u00e7o_Radiologia_Semautor_2017_Cbr_SemAno",
+          "page_start": 335,
+          "page_end": 335,
+          "score": 0.7577,
+          "excerpt": "S\u00cdNDROME DE SJ\u00dcGREN \nA s\u00edndrome de Sjogren\u00e9uma doen\u00e7a autoimune caracterizada \npela tr\u00edade: xerostomia, ceratoconjuntivite seca (xeroftalmia) \ne outra doen\u00e7a autoimune associada. Os achados da doen\u00e7a \ns\u00e3o decorrentes do comprometimento das gl\u00e2ndulas ex\u00f3crinas, \nsalivares (com redu\u00e7\u00e3o da produ\u00e7\u00e3o da "
+        },
+        {
+          "title": "Cabeca_Pescoco_Guideline_Cbr_Cabe\u00e7a_E_Pesco\u00e7o_Radiologia_Semautor_2017_Cbr_SemAno",
+          "page_start": 811,
+          "page_end": 811,
+          "score": 0.7218,
+          "excerpt": "S\u00cdNDROME DE SJ\u00dcGREN \nA s\u00edndrome de Sjogren\u00e9um desarranjo autoimune cujos alvos \ns\u00e3o as gl\u00e2ndulas lacrimaisesalivares. As gl\u00e2ndulas inflamadas \nreduzemaprodu\u00e7\u00e3o de l\u00e1grimasesaliva, causando os princi\u00ad\npais sintomas da s\u00edndrome: bocaeolhos secos. Nas mulheres, \nmais comumente afetadas pela s\u00edndrome, p"
+        },
+        {
+          "title": "Cabeca_Pescoco_Livro_Ultrassonografia_De_Pequenas_Partes_Saito_SemAno_DUP524",
+          "page_start": 143,
+          "page_end": 143,
+          "score": 0.6002,
+          "excerpt": "'i!iiiMtill'fl+i\u00a7itl@MiiJhVJUi \nFig. 5-10. Sjogren agudo. Sjogren nas fases iniciais com gl\u00e2ndula \naumentada heterog\u00eaneaecom in\u00fameros microcistos no seu interior \ne trab\u00e9culas ecog\u00eanicas de permeio. \n\u2022 Grau IV: desaparecimento do par\u00eanquima com atrofia \nglandulareirregularidade de contornos (Fig. 5-"
+        },
+        {
+          "title": "Cabeca_Pescoco_Guideline_Cbr_Cabe\u00e7a_E_Pesco\u00e7o_Radiologia_Semautor_2017_Cbr_SemAno",
+          "page_start": 336,
+          "page_end": 336,
+          "score": 0.6477,
+          "excerpt": "comparado \u00e0 popula\u00e7\u00e3o geral; os subtipos de linfoma relacio\u00ad\nnados s\u00e3o os de c\u00e9lulasBe MALT (Mucosa-Associated Lym\u00ad\nphoid Tissue; tecido linfoide associadoamucosa). \nA doen\u00e7a acomete preferencialmente as mulheres (90%), \ngeralmente na quinta ou sexta d\u00e9cada de vida. As par\u00f3tidas es\u00ad\nt\u00e3o comprometida"
+        },
+        {
+          "title": "Cabeca_Pescoco_Livro_Ultrassonografia_De_Pequenas_Partes_Saito_SemAno_DUP524",
+          "page_start": 142,
+          "page_end": 142,
+          "score": 0.5671,
+          "excerpt": "140 \nA B \nFig. 5-9. Sialoadenite aguda. (AeB) Gl\u00e2ndula aumentada com m\u00faltiplas imagens micronodulares no seu interior (Microabscesso). \nq\u00fcentemente s\u00e3o encontradas m\u00faltiplas \u00e1reas micronodulares \nhipoecog\u00eanicas intraglandulareseque provavelmente corresponderiaafocos de microabscesso (Fig. 5-9).8 .1 "
+        },
+        {
+          "title": "Neurorradiologia_Livro_Encefalo_Imagem_Patologia_E_Anatomia_Osborn_2014",
+          "page_start": 1268,
+          "page_end": 1268,
+          "score": 0.5237,
+          "excerpt": "700\nSindrome dc PfeifTer, 1212\nSindrome de predisposi\u00e7\u00e3o ao c\u00e2ncer. Ver Sindromes neurocul\u00e1neas\nSindrome de predisposi\u00e7\u00e3o ao tumor rabdoide, 1172-1173\nassociada com papiloma de plexo coroide, 513-514\netiologia, 586-587\ngen\u00e9tica, 1172\ntumor at\u00edpico tcratoide/rabdoide na, 1172\ntumor rabdoide renal mal"
+        },
+        {
+          "title": "Torax_Guideline_Cbr_T\u00f3rax_Torax_Cbr_Col\u00e9gio_Bras_De_Radiol_Isabela_Cbr_SemAno",
+          "page_start": 1483,
+          "page_end": 1483,
+          "score": 0.6214,
+          "excerpt": "\u2022\n\u2022\n\u2022\n\u2022\n\u2022\nde anticorpos ao ant\u00edgeno nuclear extra\u00edvel (anti-nRNP). Os achados\nde l\u00fapus, esclerose sist\u00eamicaepolimiosite/dermatomiosite podem\nocorrer juntos ou evoluir sequencialmente.\nACHADOS DE IMAGEM\nRadiografiaeTomografia Computadorizada de T\u00f3rax\nAs manifesta\u00e7\u00f5es radiol\u00f3gicas da doen\u00e7a mista do t"
+        },
+        {
+          "title": "Torax_Livro_Tc_De_Alta_Resolucao_Do_Pulmao_Webb_SemAno",
+          "page_start": 265,
+          "page_end": 265,
+          "score": 0.5879,
+          "excerpt": "n \n\" l -\n\" 'S \nl-\n). \n4 \nD OEN\u00c7AS CARACTER IZADAS PRINCIPALMENTE POR OPAC IDADES LIN EARESERETICULARES 213 \nA \n\\ \nI \nB \nFIG. 4.35. TeAR de um paciente com doen\u00e7a mista do tecido conjuntivo, achados de faveolamen toecarcinoma pulmonar associa do. A: \u00c9 vis\u00edvel faveolamenlo na \nregi\u00e3o perif\u00e9rica subple"
+        },
+        {
+          "title": "Cabeca_Pescoco_Guideline_Cbr_Cabe\u00e7a_E_Pesco\u00e7o_Radiologia_Semautor_2017_Cbr_SemAno",
+          "page_start": 336,
+          "page_end": 336,
+          "score": 0.5643,
+          "excerpt": "4. Destrui\u00e7\u00e3o do par\u00eanquima glandular. \nA cintilografia demonstra quantitativamenteaatividade m\u00e1\u00ad\nxima do radiof\u00e1rmaco na gl\u00e2ndulaea taxa de decaimento da \natividade ap\u00f3soest\u00edmulo com subst\u00e2ncia \u00e1cida. \nAchados Histopatol\u00f3gicos \nO padr\u00e3o microsc\u00f3pico da s\u00edndrome de Sjogren\u00e9o de uma \nsialadenite linf"
+        },
+        {
+          "title": "Torax_Livro_Tc_De_Alta_Resolucao_Do_Pulmao_Webb_2010",
+          "page_start": 632,
+          "page_end": 632,
+          "score": 0.6146,
+          "excerpt": "S\u00cdNDROME DE SJ\u00d6GREN\nS\u00edndrome de Sj\u00f6gren\u00e9formada pela tr\u00edade cl\u00ednica de ceratoconjuntivite seca, xerostomiaeintumescimento\nrecorrente da par\u00f3tida. A s\u00edndrome de Sj\u00f6gren prim\u00e1ria ocorre em aproximadamente 0,5% da popula\u00e7\u00e3oe\napresenta raz\u00e3o mulher:homem de 9:0; essas caracter\u00edsticas s\u00e3o semelhantes \u00e0s "
+        }
+      ],
+      "tokens_used": 3604
+    }
+  ],
+  [
+    16,
+    "trombose pulmao",
+    {
+      "answer": "Sua pergunta \u00e9 muito gen\u00e9rica. Pode reformular? Por exemplo: \"Quais s\u00e3o os achados de imagem de um trombo no pulm\u00e3o?\"\n\n\ud83d\udcda Fontes consultadas: [Fonte: Vascular_Livro_Guia_Pratico_De_Ultrassonografia_Vascular_Eng, p.421-421]; [Fonte: Vascular_Livro_Tratado_De_Radiologia_Intervencionista_E_Ciru, p.1324-1324]; [Fonte: Vascular_Livro_Tratado_De_Radiologia_Intervencionista_E_Ciru, p.2110-2111]",
+      "sources": [
+        {
+          "title": "Vascular_Livro_Guia_Pratico_De_Ultrassonografia_Vascular_Engelham_SemAno_DUP520",
+          "page_start": 421,
+          "page_end": 421,
+          "score": 0.6054,
+          "excerpt": "CAP\u00cdTULO 33 Trombose venosa profunda aguda dos membros inferioreses\u00edndrome p\u00f3s-tromb\u00f3tica \n... Figura 33.13 Retrombose. A. Veia gemelar com \ntrom bo antigo recanalizado parcialmente. B. Retrombos e \ncom aumento do seu di\u00e2metroeaus\u00eancia de fluxo \nao Doppl er colorido. Observarapresen\u00e7a do trombo \nant"
+        },
+        {
+          "title": "Vascular_Livro_Tratado_De_Radiologia_Intervencionista_E_Cirurgia__Semautor_SemAno_DUP482",
+          "page_start": 1324,
+          "page_end": 1324,
+          "score": 0.5979,
+          "excerpt": "fibrinol\u00edticas para trombose venosa profunda.25\nEntretanto, para Bjarnason et al., o tromboembolismo pulmonar ocorreu em apenas dois\n(0,9%) dos 214pacientes avaliados com diagn\u00f3stico de TVP de membros inferiores submetidos\u00e0\nfibrin\u00f3lise direta por cat\u00e9ter. Mewissen et al. demonstraram que apenas seis"
+        },
+        {
+          "title": "Vascular_Livro_Tratado_De_Radiologia_Intervencionista_E_Cirurgia__Semautor_SemAno_DUP482",
+          "page_start": 2110,
+          "page_end": 2111,
+          "score": 0.6168,
+          "excerpt": "sobre TEP, 760\nsobre trombose arterial aguda, 762\nsobre TVP, 761\nde alta RPM, 500\ndispositivos, 763, 766, 768\nde aspira\u00e7\u00e3o, 766\nde fragmenta\u00e7\u00e3o, 763\nreol\u00edticos, 768\nTrellis, 765\nmedidas de seguran\u00e7a, 770\nadicionais, 770\nreol\u00edtica, 501\nTromboaspira\u00e7\u00e3o\ncat\u00e9teres para, 63\nTromb\u00f3lise\nanticoagula\u00e7\u00e3o, 497"
+        },
+        {
+          "title": "Vascular_Livro_Guia_Pratico_De_Ultrassonografia_Vascular_Engelham_SemAno_DUP520",
+          "page_start": 420,
+          "page_end": 420,
+          "score": 0.6156,
+          "excerpt": "CAP\u00cdTULO 33 Trombose venosa profunda aguda dos membros inferioreses\u00edndrome p\u00f3s-tromb\u00f3tica \n..,. Figura 33.12 An\u00e1lise ultrassonogr \u00e1fica vitual do trombo. \nA. Escala de cinza (modo B) demonstra um trombo na veia \nfemoral comum n\u00e3o aderido \u00e0 parede do vaso. B. A an\u00e1lise por \ncomputad or sugere queotro"
+        },
+        {
+          "title": "Vascular_Livro_Guia_Pratico_De_Ultrassonografia_Vascular_Engelham_SemAno_DUP520",
+          "page_start": 415,
+          "page_end": 416,
+          "score": 0.5942,
+          "excerpt": "CAP\u00cdTULO 33 Trombose venosa profunda aguda dos membros inferioreses\u00edndrome p\u00f3s-tromb\u00f3tica \n..,_ Figura 33.4 USV das veias muscu lares (anatomia ultrassonog r\u00e1fica). A. Posi\u00e7\u00e3o do pacienteedo transdutorparaoestudo das \nmuscu lares. B. Corte US transverso: m\u00fascu lo gast rocn\u00eam io em posi\u00e7\u00e3o anterior a"
+        },
+        {
+          "title": "Vascular_Livro_Eco_Doppler_Vascular_Guia_Pratico_2018_Long_Ultras_Semautor_SemAno",
+          "page_start": 219,
+          "page_end": 219,
+          "score": 0.5924,
+          "excerpt": "Eco-Doppler das veias dos membros inferiores 205 \nTrombose venosa em cateter \nEla ocorre em pacientes cr\u00edticos, portadores de cateteres centrais femo rais \nou de di\u00e1lise por via femo ral. No cateter\u00e9vis\u00edvelotrombo na forma de uma \nimagem hiperecog\u00eanica em trilho. \nTrombosevenosa superficial na fase "
+        },
+        {
+          "title": "Vascular_Livro_Angiografia_Por_Tc_E_Rm_Avalia\u00e7\u00e3o_Revisar_Semautor_Semautor_SemAno",
+          "page_start": 265,
+          "page_end": 265,
+          "score": 0.6092,
+          "excerpt": "254 Tromboembol1a \nFIGURA 9.4 \u00cambolo pulmonar agudo em mulher de 58 anos com dor tor\u00e1cicaedispneia, ap\u00f3s substitui\u00e7\u00e3o do quadril. A: Imagem \naxial de angioTC pulmonarmostra EP com grande n\u00famero de co\u00e1gulos que incluemaparte distal da art\u00e9ria pulmonar direitaeramos lobares \n(setas). Tamb\u00e9m s\u00e3o observ"
+        },
+        {
+          "title": "Vascular_Livro_Guia_Pratico_De_Ultrassonografia_Vascular_Engelham_SemAno_DUP520",
+          "page_start": 419,
+          "page_end": 419,
+          "score": 0.6062,
+          "excerpt": "CAP\u00cdTULO 33 Trombose venosa profunda aguda dos membros inferioreses\u00edndrome p\u00f3s-tromb\u00f3tica \nA presen\u00e7a de fluxo puls\u00e1til no interior do trombo ou \nadjacente \u00e0 parede venosa sugereaocorr\u00eancia de neovas\u00ad\nculariza\u00e7\u00e3oe\u00e9 descrita em casos de trombose em recana \u00ad\nliza\u00e7\u00e3o ou regi\u00f5es submetidasainterven\u00e7\u00e3o c"
+        },
+        {
+          "title": "Vascular_Livro_Guia_Pratico_De_Ultrassonografia_Vascular_Engelham_SemAno_DUP520",
+          "page_start": 417,
+          "page_end": 417,
+          "score": 0.5856,
+          "excerpt": "CAP\u00cdTULO 33 Trombose venosa profunda aguda dos membros inferioreses\u00edndrome p\u00f3s-tromb\u00f3tica \n..,_ Figura 33.8 USV das veias fibulares. A. Posi\u00e7\u00e3o do pacienteedo tran sdutor paraoestudo das veias fibulares. Deslizarotransdutor ao \nlongo do trajetovenoso (posterol atera l). B. Corte US transverso: ident"
+        },
+        {
+          "title": "Vascular_Livro_Angiografia_Por_Tc_E_Rm_Avalia\u00e7\u00e3o_Revisar_Semautor_Semautor_SemAno",
+          "page_start": 1009,
+          "page_end": 1009,
+          "score": 0.6373,
+          "excerpt": "Siste'Tla Venoso 999 \nFIGURA 24.53 Trombo na veia pulmonar superior direita oriundo de c\u00e2ncer do pulm\u00e3o . A: Imagem MIP de slab espesso coronal obl\u00edqua \ndo t\u00f3rax mostra uma grande massa no lobo superior direito do pulm\u00e3o(*). H\u00e1 um defeito de enchimento na veia pulmonar superior direita (seta \nbranca"
+        }
+      ],
+      "tokens_used": 3558
+    }
+  ]
+]

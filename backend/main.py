@@ -206,42 +206,20 @@ def list_specialties():
         raise HTTPException(status_code=500, detail=str(e))
 
 
+class ShiftUploadRequest(BaseModel):
+    images: list[str]  # base64 encoded images
+
 @app.post("/upload-shifts")
-async def upload_shifts(file: UploadFile = File(...)):
+async def upload_shifts(req: ShiftUploadRequest):
     """
-    Recebe um PDF com escala médica, extrai dados via GPT-4o vision,
+    Recebe imagens (base64) de escala médica, extrai dados via GPT-4o vision,
     e salva na tabela shifts do Supabase.
     """
-    contents = await file.read()
-
-    import fitz
-    import io
-    from PIL import Image
-
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
-        tmp.write(contents)
-        tmp_path = tmp.name
-
-    try:
-        doc = fitz.open(tmp_path)
-        images_b64 = []
-        for page_num in range(min(len(doc), 4)):
-            page = doc[page_num]
-            pix = page.get_pixmap(dpi=200)
-            img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
-            buf = io.BytesIO()
-            img.save(buf, format="JPEG", quality=85)
-            b64 = base64.b64encode(buf.getvalue()).decode()
-            images_b64.append(b64)
-        doc.close()
-    finally:
-        os.unlink(tmp_path)
-
-    if not images_b64:
-        raise HTTPException(status_code=400, detail="PDF vazio ou ilegível")
+    if not req.images:
+        raise HTTPException(status_code=400, detail="Nenhuma imagem fornecida")
 
     vision_messages = []
-    for i, b64 in enumerate(images_b64):
+    for b64 in req.images[:4]:  # max 4 pages
         vision_messages.append({
             "type": "image_url",
             "image_url": {"url": f"data:image/jpeg;base64,{b64}", "detail": "high"},
@@ -284,7 +262,7 @@ Exemplo:
         else:
             raise ValueError("No JSON array found in response")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao processar PDF: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro ao processar: {str(e)}")
 
     import httpx
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")

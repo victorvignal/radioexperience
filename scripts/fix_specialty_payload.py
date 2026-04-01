@@ -1,18 +1,25 @@
 """
 Fix specialty for chunks that were indexed before the path-based inference was added.
 Uses scroll to find null-specialty points and set_payload to update them.
+
+Reads credentials from ../.env (QDRANT_URL, QDRANT_API_KEY, QDRANT_COLLECTION).
 """
+import os
 import time
 from pathlib import Path
 from collections import defaultdict
+from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 
+env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(env_path)
+
 qdrant = QdrantClient(
-    url='https://664bcae7-7a94-4933-b917-69d01b830eb4.sa-east-1-0.aws.cloud.qdrant.io',
-    api_key='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.-tz-MHjwxomKu1Cb5-DjFl1qLi4qsgqa7_JbBveT5Hg',
+    url=os.getenv("QDRANT_URL"),
+    api_key=os.getenv("QDRANT_API_KEY"),
     check_compatibility=False, timeout=60
 )
-COLLECTION = 'radioexperience_knowledge'
+COLLECTION = os.getenv("QDRANT_COLLECTION", "radioexperience_knowledge")
 
 def infer_from_path(path_str):
     parts = Path(path_str).parts

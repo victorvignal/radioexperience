@@ -1,11 +1,23 @@
+"""
+Find and move duplicate PDF files (by SHA-256 hash) within the raw corpus.
+Reads RAG_BASE_PATH from ../.env (falls back to default if not set).
+
+Usage: python dedupe_and_cleanup.py
+"""
+import os
 from pathlib import Path
 import csv
 import shutil
 import hashlib
 from collections import defaultdict, Counter
+from dotenv import load_dotenv
 
-base = Path(r'C:\Users\vigna\.openclaw\workspace\RadioeXperienceRAG\raw')
-catalog = Path(r'C:\Users\vigna\.openclaw\workspace\RadioeXperienceRAG\catalog')
+env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(env_path)
+
+rag_base = os.getenv("RAG_BASE_PATH", r"C:\Users\vigna\.openclaw\workspace\RadioeXperienceRAG")
+base = Path(rag_base) / "raw"
+catalog = Path(rag_base) / "catalog"
 dups_dir = base / '_duplicates'
 dups_dir.mkdir(parents=True, exist_ok=True)
 

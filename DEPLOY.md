@@ -7,8 +7,8 @@
 3. Conecte o repositório `radioexperience`
 4. Adicione as variáveis de ambiente:
    - `OPENAI_API_KEY` = sua chave OpenAI
-   - `QDRANT_URL` = https://664bcae7-7a94-4933-b917-69d01b830eb4.sa-east-1-0.aws.cloud.qdrant.io
-   - `QDRANT_API_KEY` = (sua chave Qdrant)
+   - `QDRANT_URL` = URL do seu cluster Qdrant
+   - `QDRANT_API_KEY` = sua chave Qdrant
    - `QDRANT_COLLECTION` = radioexperience_knowledge
 5. Railway detecta o `Dockerfile` e faz deploy automático
 6. Copie a URL gerada (ex: `aria-backend.up.railway.app`)
@@ -39,10 +39,12 @@ fly deploy
 
 ## Variáveis necessárias
 
-| Variável | Valor |
-|----------|-------|
-| OPENAI_API_KEY | sk-... |
-| QDRANT_URL | https://664bcae7-...sa-east-1-0.aws.cloud.qdrant.io |
-| QDRANT_API_KEY | eyJhbG... |
-| QDRANT_COLLECTION | radioexperience_knowledge |
-| OPENAI_EMBED_MODEL | text-embedding-3-small |
+| Variável | Descrição |
+|----------|-----------|
+| OPENAI_API_KEY | Chave de API OpenAI (sk-...) |
+| QDRANT_URL | URL do cluster Qdrant Cloud |
+| QDRANT_API_KEY | Chave de API Qdrant |
+| QDRANT_COLLECTION | Nome da collection (padrão: radioexperience_knowledge) |
+| OPENAI_EMBED_MODEL | Modelo de embedding (padrão: text-embedding-3-small) |
+
+**Nunca commite chaves de API no repositório.** Use painéis de variáveis de ambiente do Railway/Render/Fly.
