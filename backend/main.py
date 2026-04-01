@@ -286,18 +286,26 @@ Exemplo:
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao processar PDF: {str(e)}")
 
-    from supabase import create_client
+    import httpx
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
     supabase_key = os.getenv("SUPABASE_SERVICE_KEY", os.getenv("SUPABASE_ANON_KEY", ""))
-    sb = create_client(supabase_url, supabase_key)
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal",
+    }
+    base = f"{supabase_url}/rest/v1"
 
-    sb.table("shifts").delete().neq("id", "00000000-0000-0000-0000-000000000000").execute()
+    # Clear old shifts
+    httpx.delete(f"{base}/shifts?id=neq.00000000-0000-0000-0000-000000000000", headers=headers)
 
+    # Insert in batches
     BATCH_SIZE = 100
     inserted = 0
     for i in range(0, len(shifts), BATCH_SIZE):
         batch = shifts[i:i + BATCH_SIZE]
-        sb.table("shifts").insert(batch).execute()
+        httpx.post(f"{base}/shifts", headers=headers, json=batch)
         inserted += len(batch)
 
     return {
@@ -311,21 +319,23 @@ Exemplo:
 @app.get("/shifts")
 def get_shifts(location: str | None = None, day: str | None = None, status: str | None = None):
     """Lista vagas com filtros opcionais."""
-    from supabase import create_client
+    import httpx
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
     supabase_key = os.getenv("SUPABASE_SERVICE_KEY", os.getenv("SUPABASE_ANON_KEY", ""))
-    sb = create_client(supabase_url, supabase_key)
-
-    query = sb.table("shifts").select("*")
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+    }
+    params = {"select": "*", "order": "location.asc,day_of_week.asc"}
     if location:
-        query = query.ilike("location", f"%{location}%")
+        params["location"] = f"ilike.*{location}*"
     if day:
-        query = query.eq("day_of_week", day.upper())
+        params["day_of_week"] = f"eq.{day.upper()}"
     if status:
-        query = query.eq("status", status)
-
-    result = query.order("location").order("day_of_week").execute()
-    return {"shifts": result.data, "total": len(result.data)}
+        params["status"] = f"eq.{status}"
+    
+    r = httpx.get(f"{supabase_url}/rest/v1/shifts", headers=headers, params=params)
+    return {"shifts": r.json(), "total": len(r.json())}
 
 
 @app.post("/chat", response_model=ChatResponse)
