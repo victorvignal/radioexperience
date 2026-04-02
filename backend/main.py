@@ -579,6 +579,115 @@ def chat(req: ChatRequest):
     )
 
 
+# ═══════════════════════════════════════════
+# Feed / Posts endpoints
+# ═══════════════════════════════════════════
+
+SUPABASE_URL = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjZGVxdXNpcGJreGNmZndlaW93Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDYzNjU4MSwiZXhwIjoyMDkwMjEyNTgxfQ.HxKGdH-kVL6p5knR2PgTgUl9OsIZ59G732StkQ8EXus")
+
+def _supabase_headers():
+    return {
+        "apikey": SUPABASE_SERVICE_KEY,
+        "Authorization": f"Bearer {SUPABASE_SERVICE_KEY}",
+        "Content-Type": "application/json",
+    }
+
+
+class ArticlePostRequest(BaseModel):
+    title: str
+    content: str
+    source_url: str | None = None
+    journal: str | None = None
+    specialty: str | None = None
+    image_url: str | None = None
+
+
+@app.post("/feed/articles")
+def post_article(req: ArticlePostRequest):
+    """Post an article to the community feed. Used by ARIA agent or staff."""
+    metadata = {
+        "source": "aria_agent",
+        "source_url": req.source_url,
+        "journal": req.journal,
+        "specialty": req.specialty,
+        "author_name": "ARIA",
+    }
+    payload = {
+        "type": "article",
+        "title": req.title,
+        "content": req.content,
+        "image_url": req.image_url,
+        "metadata": metadata,
+    }
+    try:
+        r = httpx.post(
+            f"{SUPABASE_URL}/rest/v1/posts",
+            headers={**_supabase_headers(), "Prefer": "return=representation"},
+            json=payload,
+            timeout=15,
+        )
+        if r.status_code in (200, 201):
+            return {"status": "ok", "post": r.json()}
+        raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class VagaPostRequest(BaseModel):
+    title: str
+    content: str
+    location: str | None = None
+    contact: str | None = None
+
+
+@app.post("/feed/vagas")
+def post_vaga(req: VagaPostRequest):
+    """Post a job vacancy to the community feed."""
+    metadata = {
+        "source": "backend",
+        "author_name": "Equipe RadioeXperience",
+        "location": req.location,
+        "contact": req.contact,
+    }
+    payload = {
+        "type": "vaga",
+        "title": req.title,
+        "content": req.content,
+        "metadata": metadata,
+    }
+    try:
+        r = httpx.post(
+            f"{SUPABASE_URL}/rest/v1/posts",
+            headers={**_supabase_headers(), "Prefer": "return=representation"},
+            json=payload,
+            timeout=15,
+        )
+        if r.status_code in (200, 201):
+            return {"status": "ok", "post": r.json()}
+        raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/feed/posts")
+def list_feed_posts(post_type: str | None = None, limit: int = 20):
+    """List posts from the feed. Optionally filter by type."""
+    params = {"select": "*", "order": "created_at.desc", "limit": str(limit)}
+    if post_type:
+        params["type"] = f"eq.{post_type}"
+    try:
+        r = httpx.get(
+            f"{SUPABASE_URL}/rest/v1/posts",
+            headers=_supabase_headers(),
+            params=params,
+            timeout=15,
+        )
+        return {"posts": r.json(), "count": len(r.json())}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", "8000"))

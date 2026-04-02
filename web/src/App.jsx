@@ -9,6 +9,8 @@ import Dashboard from "./pages/Dashboard";
 import ProfileSetup from "./pages/ProfileSetup";
 import Vagas from "./pages/Vagas";
 import AdminUpload from "./pages/AdminUpload";
+import ArticleAdmin from "./pages/ArticleAdmin";
+import Feed from "./pages/Feed";
 
 const C = {
 bg: "#001a2b", bgDeep: "#002233",
@@ -49,21 +51,25 @@ return (
 // ═══════════════════════════════════════════════════
 function AriaModal({ open, onClose }) {
   if (!open) return null;
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 720;
   return (
     <div style={{
       position: "fixed", inset: 0, zIndex: 500,
       background: "rgba(0,10,20,0.85)",
       backdropFilter: "blur(12px)",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      padding: 24,
+      display: "flex", alignItems: isMobile ? "stretch" : "center", justifyContent: "center",
+      padding: isMobile ? 0 : 24,
     }} onClick={onClose}>
       <div style={{
-        width: "100%", maxWidth: 750,
+        width: "100%", maxWidth: isMobile ? "100%" : 750,
+        height: isMobile ? "100vh" : "auto",
+        maxHeight: isMobile ? "100vh" : "90vh",
         background: "rgba(0,26,43,0.95)",
-        border: "1px solid rgba(221,255,85,0.2)",
-        borderRadius: 24,
+        border: isMobile ? "none" : "1px solid rgba(221,255,85,0.2)",
+        borderRadius: isMobile ? 0 : 24,
         overflow: "hidden",
-        boxShadow: "0 0 80px rgba(221,255,85,0.08)",
+        boxShadow: isMobile ? "none" : "0 0 80px rgba(221,255,85,0.08)",
+        display: "flex", flexDirection: "column",
       }} onClick={(e) => e.stopPropagation()}>
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -195,6 +201,7 @@ return (
 {/* Desktop links */}
 <div style={{ display: "flex", alignItems: "center", gap: 3 }} className="desktop-nav">
 {links.map(l => (<a key={l.id} href={`#${l.id}`} style={{ padding: "7px 13px", borderRadius: 8, fontSize: 12.5, fontWeight: 500, color: section === l.id ? C.accent : C.textMuted, background: section === l.id ? C.accentSoft : "transparent", textDecoration: "none", transition: "all 0.25s" }}>{l.l}</a>))}
+<Link to="/feed" style={{ padding: "7px 13px", borderRadius: 8, fontSize: 12.5, fontWeight: 600, color: C.textSoft, textDecoration: "none", background: "transparent", transition: "all 0.25s" }}>Feed</Link>
 <Link to="/vagas" style={{ padding: "7px 13px", borderRadius: 8, fontSize: 12.5, fontWeight: 600, color: C.textSoft, textDecoration: "none", background: "transparent", transition: "all 0.25s" }}>Vagas</Link>
 <div style={{ width: 1, height: 20, background: C.border, margin: "0 8px" }} />
 <Link to="/login" style={{ textDecoration: "none" }}><button style={{ padding: "7px 16px", borderRadius: 9, fontSize: 12.5, fontWeight: 500, color: C.textSoft, background: "transparent", border: `1px solid ${C.glassBorder}`, cursor: "pointer" }}>Entrar</button></Link>
@@ -211,6 +218,7 @@ return (
 {menuOpen && (
 <div className="mobile-menu" style={{ display: "none", flexDirection: "column", padding: "12px 16px 20px", borderTop: `1px solid ${C.border}`, background: "rgba(0,26,43,0.95)" }}>
 {links.map(l => (<a key={l.id} href={`#${l.id}`} onClick={() => setMenuOpen(false)} style={{ padding: "14px 0", borderRadius: 8, fontSize: 15, fontWeight: 500, color: section === l.id ? C.accent : C.textSoft, textDecoration: "none", borderBottom: `1px solid ${C.border}` }}>{l.l}</a>))}
+<Link to="/feed" onClick={() => setMenuOpen(false)} style={{ padding: "14px 0", borderRadius: 8, fontSize: 15, fontWeight: 600, color: C.textSoft, textDecoration: "none", borderBottom: `1px solid ${C.border}` }}>Feed</Link>
 <Link to="/vagas" onClick={() => setMenuOpen(false)} style={{ padding: "14px 0", borderRadius: 8, fontSize: 15, fontWeight: 600, color: C.textSoft, textDecoration: "none", borderBottom: `1px solid ${C.border}` }}>Vagas</Link>
 <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
 <Link to="/login" style={{ textDecoration: "none", flex: 1 }}><button onClick={() => setMenuOpen(false)} style={{ width: "100%", padding: "14px", borderRadius: 10, fontSize: 15, fontWeight: 500, color: C.textSoft, background: "transparent", border: `1px solid ${C.glassBorder}`, cursor: "pointer" }}>Entrar</button></Link>
@@ -533,13 +541,15 @@ return (
 }
 
 function ProfileGate({ children }) {
-  const { profileComplete } = useAuth();
+  const { profileComplete, loading } = useAuth();
+  if (loading) return null;
   if (!profileComplete) return <Navigate to="/profile-setup" replace />;
   return children;
 }
 
 function ProfileSetupGate() {
-  const { profileComplete } = useAuth();
+  const { profileComplete, loading } = useAuth();
+  if (loading) return null;
   if (profileComplete) return <Navigate to="/dashboard" replace />;
   return <ProfileSetup />;
 }
@@ -554,6 +564,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile-setup" element={<ProtectedRoute><ProfileSetupGate /></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><ProfileGate><Dashboard /></ProfileGate></ProtectedRoute>} />
+          <Route path="/feed" element={<Feed />} />
+          <Route path="/artigos" element={<ArticleAdmin />} />
           <Route path="/vagas" element={<Vagas />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
         </Routes>

@@ -57,7 +57,8 @@ export default function Vagas() {
       const data = await res.json();
       setShifts(data.shifts || []);
     } catch (e) {
-      setError("Não foi possível carregar as vagas agora.");
+      console.error("Fetch shifts error:", e);
+      setError(`Não foi possível carregar as vagas: ${e.message || "Erro de conexão"}`);
     } finally {
       setLoading(false);
     }
@@ -87,7 +88,16 @@ export default function Vagas() {
       }
       `}</style>
 
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "100px 20px 60px" }}>
+      {/* Nav */}
+      <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(0,26,43,0.9)", backdropFilter: "blur(16px)", borderBottom: `1px solid ${C.border}` }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 52, padding: "0 20px" }}>
+          <a href="/dashboard" style={{ fontSize: 13, color: C.textMuted, textDecoration: "none", fontWeight: 500 }}>← Dashboard</a>
+          <span style={{ fontSize: 12, color: C.green, fontWeight: 600 }}>💼 Vagas de Plantão</span>
+          <a href="/feed" style={{ fontSize: 13, color: C.textMuted, textDecoration: "none", fontWeight: 500 }}>Feed →</a>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "80px 20px 60px" }}>
         <div style={{ marginBottom: 24 }}>
           <h1 style={{ fontSize: 34, fontWeight: 800, color: C.text }}>Vagas de Plantão</h1>
           <p style={{ color: C.textMuted, marginTop: 8 }}>Filtre por unidade, dia e status para encontrar vagas disponíveis.</p>
@@ -127,7 +137,15 @@ export default function Vagas() {
 
         <div style={{ background: C.glass, border: `1px solid ${C.glassBorder}`, borderRadius: 18, padding: 18 }}>
           {loading && <div style={{ color: C.textMuted }}>Carregando...</div>}
-          {!loading && error && <div style={{ color: C.red }}>{error}</div>}
+          {!loading && error && (
+            <div style={{ textAlign: "center", padding: 20 }}>
+              <div style={{ color: C.red, marginBottom: 12 }}>{error}</div>
+              <button onClick={fetchShifts} style={{
+                padding: "10px 20px", borderRadius: 10, border: `1px solid ${C.glassBorder}`,
+                background: C.glass, color: C.textSoft, fontSize: 13, fontWeight: 600, cursor: "pointer",
+              }}>Tentar novamente</button>
+            </div>
+          )}
           {!loading && !error && shifts.length === 0 && (
             <div style={{ color: C.textMuted }}>Nenhuma vaga encontrada para os filtros selecionados.</div>
           )}

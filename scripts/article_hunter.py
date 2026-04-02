@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
+import httpx
 
 # ── Config ──
 WORKSPACE = Path("/root/.openclaw/workspace/radioexperience")
@@ -302,6 +303,57 @@ def index_chunks(chunks, meta):
         log(f"Index error: {e}")
         return 0
 
+
+# ══════════════════════════════════════════
+# Supabase Feed Integration
+# ══════════════════════════════════════════
+SUPABASE_URL = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjZGVxdXNpcGJreGNmZndlaW93Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDYzNjU4MSwiZXhwIjoyMDkwMjEyNTgxfQ.HxKGdH-kVL6p5knR2PgTgUl9OsIZ59G732StkQ8EXus")
+
+def _supabase_headers():
+    return {
+        "apikey": SUPABASE_SERVICE_KEY,
+        "Authorization": f"Bearer {SUPABASE_SERVICE_KEY}",
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal",
+    }
+
+def post_to_feed(title, text, source_url, journal, specialty, summary):
+    """Post an article to the Supabase feed."""
+    try:
+        # Truncate content for feed (keep it readable)
+        feed_content = summary or text[:500]
+        if len(feed_content) > 1000:
+            feed_content = feed_content[:997] + "..."
+
+        payload = {
+            "type": "article",
+            "title": title,
+            "content": feed_content,
+            "metadata": {
+                "source": "aria_agent",
+                "source_url": source_url,
+                "journal": journal,
+                "specialty": specialty,
+                "author_name": "ARIA",
+            },
+        }
+        r = httpx.post(
+            f"{SUPABASE_URL}/rest/v1/posts",
+            headers=_supabase_headers(),
+            json=payload,
+            timeout=15,
+        )
+        if r.status_code in (200, 201):
+            log(f"  -> Posted to feed ✅")
+            return True
+        else:
+            log(f"  -> Feed post failed: {r.status_code} {r.text[:100]}")
+            return False
+    except Exception as e:
+        log(f"  -> Feed post error: {e}")
+        return False
+
 # ══════════════════════════════════════════
 # Main Pipeline
 # ══════════════════════════════════════════
@@ -373,6 +425,15 @@ def run():
         if count > 0:
             new_count += 1
             log(f"  -> Indexed {count} chunks")
+            # Post to community feed
+            post_to_feed(
+                title=title,
+                text=text,
+                source_url=url,
+                journal=article["source"],
+                specialty=specialty,
+                summary=ev.get("resumo", ""),
+            )
             indexed[url] = {
                 "title": title, "specialty": specialty, "quality": quality,
                 "summary": ev.get("resumo"), "chunks": count,
