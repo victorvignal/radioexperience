@@ -298,13 +298,14 @@ function PostCard({ post, onLike, onBookmark }) {
       .select()
       .single();
     if (data) {
-      setComments([...comments, data]);
+      setComments(prev => [...prev, data]);
       setNewComment("");
-      setCommentsCount((prev) => prev + 1);
+      const nextCount = commentsCount + 1;
+      setCommentsCount(nextCount);
       // Update count
       await supabase
         .from("posts")
-        .update({ comments_count: (post.comments_count || 0) + 1 })
+        .update({ comments_count: nextCount })
         .eq("id", post.id);
     }
     setCommenting(false);
@@ -491,6 +492,7 @@ export default function Feed() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [filter, setFilter] = useState("all");
   const [topAuthors, setTopAuthors] = useState([]);
   const [page, setPage] = useState(0);
@@ -500,6 +502,7 @@ export default function Feed() {
 
   const fetchPosts = useCallback(async (pageNum = 0, typeFilter = filter) => {
     setLoading(true);
+    setError("");
     try {
       let query = supabase
         .from("posts")
@@ -538,6 +541,7 @@ export default function Feed() {
       setHasMore((data || []).length === POSTS_PER_PAGE);
     } catch (err) {
       console.error("Fetch posts error:", err);
+      setError("Não foi possível carregar o feed. Tente novamente.");
     }
     setLoading(false);
   }, [filter, user]);
@@ -637,6 +641,20 @@ export default function Feed() {
               <PostSkeleton />
               <PostSkeleton />
             </>
+          ) : !loading && error ? (
+            <div style={{
+              textAlign: "center", padding: "60px 20px",
+              background: C.glass, border: `1px solid ${C.glassBorder}`, borderRadius: 16,
+            }}>
+              <div style={{ fontSize: 40, marginBottom: 16 }}>⚠️</div>
+              <div style={{ fontSize: 16, fontWeight: 600, color: C.text, marginBottom: 8 }}>{error}</div>
+              <button onClick={() => fetchPosts(0, filter)} style={{
+                padding: "10px 20px", borderRadius: 10, border: `1px solid ${C.glassBorder}`,
+                background: C.glass, color: C.textSoft, fontSize: 13, fontWeight: 600, cursor: "pointer",
+              }}>
+                Tentar novamente
+              </button>
+            </div>
           ) : posts.length === 0 ? (
             <div style={{
               textAlign: "center", padding: "60px 20px",
