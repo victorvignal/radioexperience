@@ -31,6 +31,7 @@ import os
 import json
 import tempfile
 import base64
+import io
 from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, UploadFile, File
@@ -40,6 +41,7 @@ from openai import OpenAI
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
 import logging
+import httpx
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("aria")
@@ -57,6 +59,46 @@ qdrant = QdrantClient(
 COLLECTION = os.getenv("QDRANT_COLLECTION", "radioexperience_knowledge")
 EMBED_MODEL = os.getenv("OPENAI_EMBED_MODEL", "text-embedding-3-small")
 MIN_RELEVANCE_SCORE = float(os.getenv("MIN_RELEVANCE_SCORE", "0.55"))
+
+
+def search_similar_images(image_b64, top_k=5):
+    """Busca imagens similares no Qdrant via BiomedCLIP (HF Inference API)."""
+    # Send image to HF Inference API for embedding
+    try:
+        img_bytes = base64.b64decode(image_b64)
+        hf_response = httpx.post(
+            "https://api-inference.huggingface.co/models/microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224",
+            headers={"Content-Type": "application/octet-stream"},
+            content=img_bytes,
+            timeout=30,
+        )
+        embedding = hf_response.json()
+        if not isinstance(embedding, list) or len(embedding) != 512:
+            logger.warning(f"HF API returned unexpected embedding shape")
+            return "", []
+    except Exception as e:
+        logger.warning(f"HF Inference API failed: {e}")
+        return "", []
+
+    # Search Qdrant
+    results = qdrant.query_points(
+        collection_name="radioexperience_images",
+        query=embedding,
+        limit=top_k,
+        with_payload=True,
+    )
+
+    context_parts = []
+    sources = []
+    for hit in results.points:
+        p = hit.payload or {}
+        pdf_name = p.get("pdf_name", "")
+        page = p.get("page", 0)
+        context_parts.append(f"[Fonte: {pdf_name}, p.{page}] Imagem similar encontrada (score: {hit.score:.2f})")
+        sources.append({"title": pdf_name, "page": page, "score": hit.score})
+
+    return "\n\n---\n\n".join(context_parts[:5]), sources[:5]
+
 
 # ── App ──
 app = FastAPI(title="ARIA API", version="1.0.0")
@@ -323,6 +365,8 @@ def chat(req: ChatRequest):
     # 0. If image: first describe it to enhance the search query
     search_query = req.question
     image_description = None
+    image_context = ""
+    image_sources = []
     if req.image_base64:
         try:
             desc_response = openai_client.chat.completions.create(
@@ -343,6 +387,12 @@ def chat(req: ChatRequest):
             logger.info(f"Image description: {image_description[:200]}...")
         except Exception as e:
             logger.warning(f"Image description failed: {e}, falling back to text-only search")
+
+        # 0.5 BiomedCLIP: buscar imagens similares e contexto textual
+        try:
+            image_context, image_sources = search_similar_images(req.image_base64, top_k=5)
+        except Exception as e:
+            logger.warning(f"BiomedCLIP search failed: {e}")
 
     # 1. Embed the question (enhanced with image description if present)
     try:
@@ -453,10 +503,26 @@ def chat(req: ChatRequest):
 
     context = "\n\n---\n\n".join(context_parts)
 
+    # 3.2. Add BiomedCLIP image context (if available)
+    if image_context:
+        if context:
+            context = f"{image_context}\n\n---\n\n{context}"
+        else:
+            context = image_context
+        # Append image-derived sources (best-effort)
+        for s in image_sources:
+            sources.append(Source(
+                title=s.get("title", ""),
+                page_start=s.get("page"),
+                page_end=s.get("page"),
+                score=round(s.get("score", 0), 4),
+                excerpt="",
+            ))
+
     # 3.5. Score gate: reject if top result is below threshold
     # Use boosted score (keyword+semantic) for gate, not raw semantic score
     top_boosted_score = scored_hits[0][0] if scored_hits else 0.0
-    if top_boosted_score < MIN_RELEVANCE_SCORE:
+    if top_boosted_score < MIN_RELEVANCE_SCORE and not image_context:
         logger.info(f"Rejected: top_boosted_score={top_boosted_score:.3f} < {MIN_RELEVANCE_SCORE}")
         return ChatResponse(
             answer="Não encontrei informações suficientes na base de conhecimento para responder essa pergunta. Tente reformular com mais detalhes — por exemplo, inclua a especialidade, o tipo de exame ou a região anatômica.",
