@@ -778,9 +778,7 @@ export default function Dashboard() {
                   Gerenciar Vagas
                 </button>
                 <button
-                  onClick={() => {
-                    window.location.href = '/artigos'
-                  }}
+                  onClick={() => alert('Em breve')}
                   style={{
                     borderRadius: 12,
                     border: `1px solid ${C.glassBorder}`,
