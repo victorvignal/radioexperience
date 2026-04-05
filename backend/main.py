@@ -368,6 +368,11 @@ def chat(req: ChatRequest):
     image_context = ""
     image_sources = []
     if req.image_base64:
+        # Aceita base64 puro ou data URL completo (data:image/...;base64,XXX)
+        raw_b64 = req.image_base64
+        if raw_b64.startswith('data:'):
+            raw_b64 = raw_b64.split(',', 1)[1] if ',' in raw_b64 else raw_b64
+        image_data_url = f"data:image/jpeg;base64,{raw_b64}"
         try:
             desc_response = openai_client.chat.completions.create(
                 model="gpt-4o",
@@ -375,7 +380,7 @@ def chat(req: ChatRequest):
                     {"role": "system", "content": "You are a radiology education assistant. Describe the imaging findings visible in this medical image for educational purposes. Include: imaging modality, anatomical region, and visible findings. This is for a radiology study platform."},
                     {"role": "user", "content": [
                         {"type": "text", "text": "Describe the imaging findings in this medical image for educational purposes:"},
-                        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{req.image_base64}", "detail": "high"}},
+                        {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
                     ]},
                 ],
                 temperature=0.2,
@@ -540,7 +545,7 @@ def chat(req: ChatRequest):
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": [
                     {"type": "text", "text": f"PERGUNTA DO USUÁRIO:\n{req.question}{img_ctx}\n\nCONTEXTO DA BASE DE CONHECIMENTO:\n{context_text}"},
-                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{req.image_base64}", "detail": "high"}},
+                    {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
                 ]},
             ]
         else:
