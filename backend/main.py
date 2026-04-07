@@ -32,16 +32,30 @@ import json
 import tempfile
 import base64
 import io
+import uuid
+import threading
+import re
 from pathlib import Path
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams
+from qdrant_client.models import Distance, VectorParams, PointStruct
 import logging
 import httpx
+
+try:
+    from PyPDF2 import PdfReader
+    HAS_PDF2 = True
+except ImportError:
+    HAS_PDF2 = False
+    try:
+        from pdfminer.high_level import extract_text as pdfminer_extract
+        HAS_PDFMINER = True
+    except ImportError:
+        HAS_PDFMINER = False
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("aria")
@@ -59,6 +73,142 @@ qdrant = QdrantClient(
 COLLECTION = os.getenv("QDRANT_COLLECTION", "radioexperience_knowledge")
 EMBED_MODEL = os.getenv("OPENAI_EMBED_MODEL", "text-embedding-3-small")
 MIN_RELEVANCE_SCORE = float(os.getenv("MIN_RELEVANCE_SCORE", "0.55"))
+
+# ── Upload Progress Tracker ──
+upload_progress: dict[str, dict] = {}
+
+
+def extract_text_from_pdf_bytes(pdf_bytes: bytes) -> list[dict]:
+    """Extract text from PDF bytes, returning list of {page_num, text}."""
+    pages = []
+    if HAS_PDF2:
+        reader = PdfReader(io.BytesIO(pdf_bytes))
+        for i, page in enumerate(reader.pages, 1):
+            text = page.extract_text() or ""
+            pages.append({"page_num": i, "text": text.strip()})
+    elif HAS_PDFMINER:
+        full_text = pdfminer_extract(io.BytesIO(pdf_bytes))
+        parts = full_text.split("\f")
+        for i, part in enumerate(parts, 1):
+            pages.append({"page_num": i, "text": part.strip()})
+    else:
+        raise RuntimeError("Nenhuma biblioteca PDF disponivel. Instale PyPDF2 ou pdfminer.six.")
+    return pages
+
+
+def chunk_text(text: str, chunk_size: int = 700, overlap: int = 100) -> list[str]:
+    """Split text into chunks of ~chunk_size tokens with overlap."""
+    max_chars = chunk_size * 4
+    overlap_chars = overlap * 4
+    if len(text) <= max_chars:
+        return [text] if text.strip() else []
+    chunks = []
+    start = 0
+    while start < len(text):
+        end = start + max_chars
+        chunk = text[start:end].strip()
+        if chunk:
+            chunks.append(chunk)
+        start += max_chars - overlap_chars
+    return chunks
+
+
+def _process_upload(doc_id: str, file_bytes: bytes, filename: str, metadata: dict):
+    """Background task: extract text, chunk, embed, store in Qdrant."""
+    try:
+        upload_progress[doc_id]["status"] = "extracting"
+        upload_progress[doc_id]["progress"] = 10
+
+        file_lower = filename.lower()
+        if file_lower.endswith(".pdf"):
+            pages = extract_text_from_pdf_bytes(file_bytes)
+        elif file_lower.endswith(".txt"):
+            text = file_bytes.decode("utf-8", errors="replace")
+            pages = [{"page_num": 1, "text": text}]
+        elif file_lower.endswith(".md"):
+            text = file_bytes.decode("utf-8", errors="replace")
+            pages = [{"page_num": 1, "text": text}]
+        else:
+            raise ValueError(f"Formato nao suportado: {filename}")
+
+        upload_progress[doc_id]["status"] = "chunking"
+        upload_progress[doc_id]["progress"] = 30
+
+        all_chunks = []
+        for page in pages:
+            page_text = page["text"]
+            if not page_text:
+                continue
+            section_title = ""
+            for line in page_text.split("\n")[:5]:
+                line_s = line.strip()
+                if line_s.startswith("#") or re.match(r'^\d+\.?\s+[A-Z]', line_s):
+                    section_title = line_s.lstrip("# ").strip()
+                    break
+            page_chunks = chunk_text(page_text)
+            for chunk in page_chunks:
+                all_chunks.append({
+                    "text": chunk,
+                    "page_ref": page["page_num"],
+                    "section_title": section_title,
+                })
+
+        upload_progress[doc_id]["total_chunks"] = len(all_chunks)
+        upload_progress[doc_id]["status"] = "embedding"
+        upload_progress[doc_id]["progress"] = 40
+
+        if not all_chunks:
+            raise ValueError("Nenhum texto extraido do documento.")
+
+        batch_size = 50
+        points = []
+        for batch_start in range(0, len(all_chunks), batch_size):
+            batch = all_chunks[batch_start:batch_start + batch_size]
+            texts = [c["text"] for c in batch]
+            emb_response = openai_client.embeddings.create(
+                input=texts, model=EMBED_MODEL,
+            )
+            embeddings = [d.embedding for d in emb_response.data]
+            for j, emb in enumerate(embeddings):
+                chunk = batch[j]
+                points.append(PointStruct(
+                    id=str(uuid.uuid4()),
+                    vector=emb,
+                    payload={
+                        "document_id": doc_id,
+                        "title": metadata.get("title", ""),
+                        "specialty": metadata.get("specialty", ""),
+                        "document_type": metadata.get("document_type", ""),
+                        "source_tier": metadata.get("source_tier", ""),
+                        "chapter_title": metadata.get("chapter_title", ""),
+                        "section_title": chunk["section_title"],
+                        "page_ref": chunk["page_ref"],
+                        "excerpt": chunk["text"][:500],
+                        "published_at": metadata.get("published_at", ""),
+                        "confidence_weight": metadata.get("confidence_weight", 1.0),
+                        "text": chunk["text"],
+                        "author": metadata.get("author", ""),
+                        "journal": metadata.get("journal", ""),
+                        "modality": metadata.get("modality", ""),
+                    },
+                ))
+            pct = 40 + int(50 * (batch_start + len(batch)) / len(all_chunks))
+            upload_progress[doc_id]["progress"] = pct
+            upload_progress[doc_id]["chunks_done"] = batch_start + len(batch)
+
+        upload_progress[doc_id]["status"] = "storing"
+        upload_progress[doc_id]["progress"] = 92
+
+        qdrant.upsert(collection_name=COLLECTION, points=points, wait=True)
+
+        upload_progress[doc_id]["status"] = "done"
+        upload_progress[doc_id]["progress"] = 100
+        upload_progress[doc_id]["chunks_indexed"] = len(points)
+        logger.info(f"Upload {doc_id}: {len(points)} chunks indexed for '{metadata.get('title', '')}'")
+    except Exception as e:
+        upload_progress[doc_id]["status"] = "error"
+        upload_progress[doc_id]["error"] = str(e)
+        logger.error(f"Upload {doc_id} failed: {e}")
 
 
 def search_similar_images(image_b64, top_k=5):
@@ -773,6 +923,112 @@ def list_feed_posts(post_type: str | None = None, limit: int = 20):
         return {"posts": r.json(), "count": len(r.json())}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# ═══════════════════════════════════════════
+# Post Management (edit/delete)
+# ═══════════════════════════════════════════
+
+class PostUpdateRequest(BaseModel):
+    title: str | None = None
+    content: str | None = None
+    type: str | None = None
+    image_url: str | None = None
+    source_url: str | None = None
+    journal: str | None = None
+    metadata: dict | None = None
+
+
+@app.patch("/posts/{post_id}")
+def update_post(post_id: str, req: PostUpdateRequest):
+    """Update a post (admin/staff only)."""
+    payload = {k: v for k, v in req.model_dump().items() if v is not None}
+    if "metadata" in payload:
+        payload["metadata"] = json.dumps(payload["metadata"]) if isinstance(payload["metadata"], dict) else payload["metadata"]
+    if not payload:
+        raise HTTPException(status_code=400, detail="Nenhum campo para atualizar")
+    try:
+        r = httpx.patch(
+            f"{SUPABASE_URL}/rest/v1/posts?id=eq.{post_id}",
+            headers={**_supabase_headers(), "Prefer": "return=representation"},
+            json=payload,
+            timeout=15,
+        )
+        if r.status_code >= 400:
+            raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
+        data = r.json() if r.text else []
+        return {"ok": True, "post": data[0] if data else None}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.delete("/posts/{post_id}")
+def delete_post(post_id: str):
+    """Delete a post (admin/staff only)."""
+    try:
+        r = httpx.delete(
+            f"{SUPABASE_URL}/rest/v1/posts?id=eq.{post_id}",
+            headers=_supabase_headers(),
+            timeout=15,
+        )
+        if r.status_code >= 400:
+            raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
+        return {"ok": True, "deleted": post_id}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ═══════════════════════════════════════════
+# ARIA RAG Article/Book Uploader
+# ═══════════════════════════════════════════
+
+@app.post("/admin/upload-article")
+async def upload_article(
+    file: UploadFile = File(...),
+    title: str = Form(...),
+    author: str = Form(""),
+    journal: str = Form(""),
+    specialty: str = Form(""),
+    modality: str = Form(""),
+    source_tier: str = Form(""),
+    published_at: str = Form(""),
+    document_type: str = Form(""),
+    chapter_title: str = Form(""),
+    confidence_weight: float = Form(1.0),
+):
+    """Upload a document (PDF, TXT, MD) for RAG indexing."""
+    allowed_exts = {".pdf", ".txt", ".md"}
+    file_ext = Path(file.filename or "").suffix.lower()
+    if file_ext not in allowed_exts:
+        raise HTTPException(status_code=400, detail=f"Tipo de arquivo nao suportado: {file_ext}. Use PDF, TXT ou MD.")
+    if not title.strip():
+        raise HTTPException(status_code=400, detail="Titulo e obrigatorio.")
+    file_bytes = await file.read()
+    if len(file_bytes) > 50 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="Arquivo muito grande (max 50MB).")
+    doc_id = str(uuid.uuid4())
+    metadata = {
+        "title": title.strip(), "author": author.strip(), "journal": journal.strip(),
+        "specialty": specialty.strip(), "modality": modality.strip(),
+        "source_tier": source_tier.strip(), "published_at": published_at.strip(),
+        "document_type": document_type.strip(), "chapter_title": chapter_title.strip(),
+        "confidence_weight": confidence_weight,
+    }
+    upload_progress[doc_id] = {
+        "document_id": doc_id, "status": "queued", "progress": 0,
+        "title": title.strip(), "filename": file.filename,
+    }
+    thread = threading.Thread(target=_process_upload, args=(doc_id, file_bytes, file.filename, metadata), daemon=True)
+    thread.start()
+    return {"document_id": doc_id, "status": "queued", "message": f"Upload iniciado para '{title.strip()}'"}
+
+
+@app.get("/admin/upload-status/{document_id}")
+def get_upload_status(document_id: str):
+    """Get the progress of a document upload."""
+    if document_id not in upload_progress:
+        raise HTTPException(status_code=404, detail="Document ID nao encontrado.")
+    return upload_progress[document_id]
 
 
 if __name__ == "__main__":
