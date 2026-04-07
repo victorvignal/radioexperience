@@ -109,6 +109,8 @@ app.add_middleware(
         "https://victorvignal.github.io",
         "https://victorvignal.me",
         "https://www.victorvignal.me",
+        "https://radioexperience.com.br",
+        "https://www.radioexperience.com.br",
         "http://localhost:5173",
         "http://localhost:3000",
         "http://localhost:4173",
@@ -261,10 +263,11 @@ async def upload_shifts(req: ShiftUploadRequest):
         raise HTTPException(status_code=400, detail="Nenhuma imagem fornecida")
 
     vision_messages = []
-    for b64 in req.images[:4]:  # max 4 pages
+    for image_value in req.images[:4]:  # max 4 pages
+        image_url = image_value if image_value.startswith("data:") else f"data:image/jpeg;base64,{image_value}"
         vision_messages.append({
             "type": "image_url",
-            "image_url": {"url": f"data:image/jpeg;base64,{b64}", "detail": "high"},
+            "image_url": {"url": image_url, "detail": "high"},
         })
 
     extraction_prompt = """Analise esta imagem de escala médica de radiologia.
