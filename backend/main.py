@@ -32,6 +32,7 @@ import json
 import tempfile
 import base64
 import io
+from datetime import datetime, timezone
 import uuid
 import threading
 import re
@@ -473,7 +474,6 @@ Exemplo:
     supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
     if not supabase_key:
         raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY/SUPABASE_SERVICE_ROLE_KEY não configurada")
-
     headers = {
         "apikey": supabase_key,
         "Authorization": f"Bearer {supabase_key}",
@@ -556,6 +556,65 @@ def get_shifts(location: str | None = None, day: str | None = None, status: str 
     
     r = httpx.get(f"{supabase_url}/rest/v1/shifts", headers=headers, params=params)
     return {"shifts": r.json(), "total": len(r.json())}
+
+
+def _parse_iso_date(date_str: str) -> str:
+    try:
+        normalized = date_str.replace("Z", "+00:00")
+        dt = datetime.fromisoformat(normalized)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Data inválida. Use ISO (YYYY-MM-DD ou YYYY-MM-DDTHH:MM:SSZ).")
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.isoformat()
+
+
+@app.delete("/shifts/{shift_id}")
+def delete_shift(shift_id: str):
+    """Remove uma vaga por ID."""
+    import httpx
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY/SUPABASE_SERVICE_ROLE_KEY não configurada")
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+        "Prefer": "return=representation",
+    }
+    params = {"id": f"eq.{shift_id}"}
+    r = httpx.delete(f"{supabase_url}/rest/v1/shifts", headers=headers, params=params)
+    if r.status_code >= 400:
+        raise HTTPException(status_code=500, detail="Falha ao remover vaga")
+    data = r.json() if r.text else []
+    return {"deleted": len(data)}
+
+
+@app.delete("/shifts")
+def delete_shifts(before: str | None = None, after: str | None = None):
+    """Remove vagas por intervalo de created_at (data de envio)."""
+    if not before and not after:
+        raise HTTPException(status_code=400, detail="Informe before e/ou after")
+    import httpx
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY/SUPABASE_SERVICE_ROLE_KEY não configurada")
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+        "Prefer": "return=representation",
+    }
+    params = {}
+    if before:
+        params["created_at"] = f"lt.{_parse_iso_date(before)}"
+    if after:
+        params["created_at"] = f"gte.{_parse_iso_date(after)}"
+    r = httpx.delete(f"{supabase_url}/rest/v1/shifts", headers=headers, params=params)
+    if r.status_code >= 400:
+        raise HTTPException(status_code=500, detail="Falha ao remover vagas")
+    data = r.json() if r.text else []
+    return {"deleted": len(data)}
 
 
 @app.post("/chat", response_model=ChatResponse)
@@ -789,7 +848,7 @@ def chat(req: ChatRequest):
 # ═══════════════════════════════════════════
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
-SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjZGVxdXNpcGJreGNmZndlaW93Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDYzNjU4MSwiZXhwIjoyMDkwMjEyNTgxfQ.HxKGdH-kVL6p5knR2PgTgUl9OsIZ59G732StkQ8EXus")
+SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("SUPABASE_ANON_KEY", "")
 
 def _supabase_headers():
     return {
