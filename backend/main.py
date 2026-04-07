@@ -253,6 +253,15 @@ def list_specialties():
 class ShiftUploadRequest(BaseModel):
     images: list[str]  # base64 encoded images
 
+class ShiftUpdateRequest(BaseModel):
+    location: str | None = None
+    room: str | None = None
+    day_of_week: str | None = None
+    time_slot: str | None = None
+    doctor_name: str | None = None
+    status: str | None = None
+    specialty: str | None = None
+
 @app.post("/upload-shifts")
 async def upload_shifts(req: ShiftUploadRequest):
     """
@@ -344,6 +353,35 @@ Exemplo:
         "available": sum(1 for s in shifts if s.get("status") == "available"),
         "total": inserted,
     }
+
+
+@app.patch("/shifts/{shift_id}")
+def update_shift(shift_id: str, req: ShiftUpdateRequest):
+    import httpx
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY/SUPABASE_SERVICE_ROLE_KEY não configurada")
+
+    payload = {k: v for k, v in req.model_dump().items() if v is not None}
+
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+        "Content-Type": "application/json",
+        "Prefer": "return=representation",
+    }
+
+    resp = httpx.patch(
+        f"{supabase_url}/rest/v1/shifts?id=eq.{shift_id}",
+        headers=headers,
+        json=payload,
+        timeout=30,
+    )
+    if resp.status_code >= 400:
+        raise HTTPException(status_code=500, detail=f"Erro ao atualizar shift: {resp.status_code} {resp.text}")
+    data = resp.json() if resp.text else []
+    return {"ok": True, "shift": data[0] if data else None}
 
 
 @app.get("/shifts")
