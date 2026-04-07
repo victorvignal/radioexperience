@@ -687,6 +687,38 @@ def post_vaga(req: VagaPostRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+class SocialPostRequest(BaseModel):
+    title: str
+    content: str
+
+
+@app.post("/feed/social")
+def post_social(req: SocialPostRequest):
+    """Post a generic social update to the community feed."""
+    metadata = {
+        "source": "backend",
+        "author_name": "Comunidade",
+    }
+    payload = {
+        "type": "post",
+        "title": req.title,
+        "content": req.content,
+        "metadata": metadata,
+    }
+    try:
+        r = httpx.post(
+            f"{SUPABASE_URL}/rest/v1/posts",
+            headers={**_supabase_headers(), "Prefer": "return=representation"},
+            json=payload,
+            timeout=15,
+        )
+        if r.status_code in (200, 201):
+            return {"status": "ok", "post": r.json()}
+        raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.get("/feed/posts")
 def list_feed_posts(post_type: str | None = None, limit: int = 20):
     """List posts from the feed. Optionally filter by type."""
