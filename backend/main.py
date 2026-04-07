@@ -311,7 +311,10 @@ Exemplo:
 
     import httpx
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
-    supabase_key = os.getenv("SUPABASE_SERVICE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjZGVxdXNpcGJreGNmZndlaW93Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDYzNjU4MSwiZXhwIjoyMDkwMjEyNTgxfQ.HxKGdH-kVL6p5knR2PgTgUl9OsIZ59G732StkQ8EXus")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY/SUPABASE_SERVICE_ROLE_KEY não configurada")
+
     headers = {
         "apikey": supabase_key,
         "Authorization": f"Bearer {supabase_key}",
@@ -321,14 +324,18 @@ Exemplo:
     base = f"{supabase_url}/rest/v1"
 
     # Clear old shifts
-    httpx.delete(f"{base}/shifts?id=neq.00000000-0000-0000-0000-000000000000", headers=headers)
+    delete_resp = httpx.delete(f"{base}/shifts?id=neq.00000000-0000-0000-0000-000000000000", headers=headers, timeout=30)
+    if delete_resp.status_code >= 400:
+        raise HTTPException(status_code=500, detail=f"Erro ao limpar shifts no Supabase: {delete_resp.status_code} {delete_resp.text}")
 
     # Insert in batches
     BATCH_SIZE = 100
     inserted = 0
     for i in range(0, len(shifts), BATCH_SIZE):
         batch = shifts[i:i + BATCH_SIZE]
-        httpx.post(f"{base}/shifts", headers=headers, json=batch)
+        insert_resp = httpx.post(f"{base}/shifts", headers=headers, json=batch, timeout=30)
+        if insert_resp.status_code >= 400:
+            raise HTTPException(status_code=500, detail=f"Erro ao inserir shifts no Supabase: {insert_resp.status_code} {insert_resp.text}")
         inserted += len(batch)
 
     return {
@@ -344,7 +351,9 @@ def get_shifts(location: str | None = None, day: str | None = None, status: str 
     """Lista vagas com filtros opcionais."""
     import httpx
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
-    supabase_key = os.getenv("SUPABASE_SERVICE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjZGVxdXNpcGJreGNmZndlaW93Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDYzNjU4MSwiZXhwIjoyMDkwMjEyNTgxfQ.HxKGdH-kVL6p5knR2PgTgUl9OsIZ59G732StkQ8EXus")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY/SUPABASE_SERVICE_ROLE_KEY não configurada")
     headers = {
         "apikey": supabase_key,
         "Authorization": f"Bearer {supabase_key}",
