@@ -844,6 +844,159 @@ def chat(req: ChatRequest):
 
 
 # ═══════════════════════════════════════════
+# eX StudyLab – ARIA generation endpoints
+# ═══════════════════════════════════════════
+
+SCRIPT_SYSTEM_PROMPT = """Você é ARIA — Assistente de Radiologia por IA da plataforma RadioeXperience. Sua tarefa é gerar um SCRIPT DE AULA completo sobre o tema fornecido pelo usuário.
+
+Use exclusivamente as informações do CONTEXTO DA BASE DE CONHECIMENTO abaixo para gerar o conteúdo. Não invente informações fora do contexto.
+
+## FORMATO OBRIGATÓRIO DO SCRIPT:
+
+===HOOK===
+[Frase de abertura cativante que prenda a atenção — pode ser uma pergunta provocativa, um dado impactante, ou uma situação clínica breve. 2-3 frases.]
+
+===DESENVOLVIMENTO===
+[Conteúdo principal da aula em formato de texto corrido estruturado. Use subtítulos em **negrito** para organizar os tópicos. Inclua: definição e conceito, epidemiologia e relevância, achados de imagem característicos, diagnósticos diferenciais, conduta e tratamento. Mínimo 400 palavras. Use terminologia técnica de radiologia.]
+
+===CASO CLÍNICO===
+[Apresente um caso clínico realista: dados do paciente, achados de imagem relevantes, raciocínio diagnóstico e desfecho.]
+
+===CONCLUSÃO===
+[Resumo dos 3-5 pontos-chave da aula]
+
+===CTA===
+[Convide o aluno a praticar com questões, explorar mais na plataforma, ou seguir para a próxima leitura.]
+
+## REGRAS:
+1. Responda SOMENTE no formato especificado acima (cada seção preceded by the tag)
+2. Use português brasileiro
+3. Cite as fontes usando [Fonte: Nome, p.X] quando usar informações do contexto
+4. Se o contexto for insuficiente, use seu conhecimento de radiologia
+5. Tom didático e acessível, como um professor de radiologia
+
+CONTEXTO DA BASE DE CONHECIMENTO:
+{context}"""
+
+QUESTOES_SYSTEM_PROMPT = """Você é ARIA — Assistente de Radiologia por IA da plataforma RadioeXperience. Sua tarefa é gerar 5 QUESTÕES DE MÚLTIPLA ESCOLHA sobre o tema fornecido pelo usuário, no formato StudyLab.
+
+Use SOMENTE as informações do CONTEXTO DA BASE DE CONHECIMENTO abaixo para gerar as questões. Não invente informações fora do contexto.
+
+## FORMATO DE CADA QUESTÃO:
+
+**QUESTÃO {N}:** [enunciado claro e objetivo]
+
+A) [alternativa A]
+B) [alternativa B]
+C) [alternativa C]
+D) [alternativa D]
+
+**Resposta Correta:** [letra]
+**Explicação:** [2-3 frases explicando por que a correta é a correta e por que as outras estão erradas, usando informações do contexto]
+**Fonte:** [Fonte: Nome, p.X]
+
+## REGRAS:
+1. Gere exatamente 5 questões
+2. Questões desafiadoras, nível residência médica (R1/R2)
+3. Alternativas plausíveis e bem construídas (evite 'nenhuma das anteriores')
+4. Use português brasileiro
+5. Inclua ao menos 2 questões sobre achados de imagem
+6. Cite fontes na explicação
+7. Se o contexto for insuficiente, use seu conhecimento de radiologia
+
+CONTEXTO DA BASE DE CONHECIMENTO:
+{context}"""
+
+class GenerateRequest(BaseModel):
+    topic: str
+    template: str  # "script" or "questoes" — also passed as path param
+    top_k: int = 10
+
+@app.post("/criar/{template}")
+def criar_content(template: str, req: GenerateRequest):
+    """Generate study content (script or questions) using ARIA RAG pipeline."""
+    if template not in ("script", "questoes"):
+        raise HTTPException(status_code=400, detail="template must be 'script' or 'questoes'")
+
+    logger.info(f"Generate request: template={template}, topic={req.topic[:80]}")
+
+    # 1. Embed the topic
+    try:
+        embedding = openai_client.embeddings.create(
+            input=[req.topic],
+            model=EMBED_MODEL,
+        ).data[0].embedding
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Embedding error: {e}")
+
+    # 2. Search Qdrant
+    try:
+        results = qdrant.query_points(
+            collection_name=COLLECTION,
+            query=embedding,
+            limit=req.top_k,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Search error: {e}")
+
+    # 3. Build context
+    context_parts = []
+    sources = []
+    for i, hit in enumerate(results.points, 1):
+        p = hit.payload
+        excerpt = p.get("text", "")[:800]
+        title = p.get("title", "Desconhecido")
+        page_start = p.get("page_start")
+        page_end = p.get("page_end")
+        context_parts.append(
+            f"[Fonte {i}: {title}, p.{page_start}-{page_end}]\n{excerpt}"
+        )
+        sources.append(Source(
+            title=title,
+            page_start=page_start,
+            page_end=page_end,
+            score=round(hit.score, 4),
+            excerpt=excerpt[:300],
+        ))
+
+    context = "\n\n---\n\n".join(context_parts)
+
+    # 4. Select system prompt
+    if template == "script":
+        system_prompt = SCRIPT_SYSTEM_PROMPT.format(
+            context=context or "Contexto não disponível. Use seu conhecimento de radiologia."
+        )
+    else:
+        system_prompt = QUESTOES_SYSTEM_PROMPT.format(
+            context=context or "Contexto não disponível. Use seu conhecimento de radiologia."
+        )
+
+    # 5. Generate
+    try:
+        response = openai_client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": req.topic},
+            ],
+            temperature=0.4,
+            max_tokens=2500,
+        )
+        content = response.choices[0].message.content
+        tokens_used = response.usage.total_tokens if response.usage else 0
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Generation error: {e}")
+
+    return {
+        "content": content,
+        "sources": [s.model_dump() for s in sources],
+        "tokens_used": tokens_used,
+        "template": template,
+        "topic": req.topic,
+    }
+
+
+# ═══════════════════════════════════════════
 # Feed / Posts endpoints
 # ═══════════════════════════════════════════
 
