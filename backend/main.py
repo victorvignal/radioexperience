@@ -32,6 +32,7 @@ import json
 import tempfile
 import base64
 import io
+import hashlib
 from datetime import datetime, timezone
 import uuid
 import threading
@@ -77,6 +78,55 @@ MIN_RELEVANCE_SCORE = float(os.getenv("MIN_RELEVANCE_SCORE", "0.55"))
 
 # ── Upload Progress Tracker ──
 upload_progress: dict[str, dict] = {}
+
+
+def _normalize_shift_value(value: str | None) -> str:
+    if value is None:
+        return ""
+    normalized = str(value).strip().upper()
+    normalized = re.sub(r"\s+", " ", normalized)
+    return normalized
+
+
+def _normalize_time_slot(value: str | None) -> str:
+    normalized = _normalize_shift_value(value)
+    normalized = normalized.replace(" ÀS ", "-")
+    normalized = normalized.replace(" AS ", "-")
+    normalized = normalized.replace("–", "-")
+    normalized = normalized.replace("—", "-")
+    normalized = normalized.replace(" ", "")
+    return normalized
+
+
+def build_shift_identity_key(shift: dict) -> str:
+    parts = [
+        _normalize_shift_value(shift.get("location")),
+        _normalize_shift_value(shift.get("room")),
+        _normalize_shift_value(shift.get("day_of_week")),
+        _normalize_time_slot(shift.get("time_slot")),
+        _normalize_shift_value(shift.get("specialty") or "USG"),
+    ]
+    raw_key = "|".join(parts)
+    return hashlib.sha256(raw_key.encode("utf-8")).hexdigest()
+
+
+def prepare_shift_payload(shift: dict, source_batch_id: str, seen_at_iso: str) -> dict:
+    payload = {
+        "location": (shift.get("location") or "").strip(),
+        "room": (shift.get("room") or None),
+        "day_of_week": _normalize_shift_value(shift.get("day_of_week")),
+        "time_slot": (shift.get("time_slot") or None),
+        "doctor_name": (shift.get("doctor_name") or None),
+        "status": shift.get("status") or "available",
+        "specialty": (shift.get("specialty") or "USG").strip(),
+        "is_active": True,
+        "last_seen_at": seen_at_iso,
+        "closed_at": None,
+        "source_batch_id": source_batch_id,
+        "updated_at": seen_at_iso,
+    }
+    payload["identity_key"] = build_shift_identity_key(payload)
+    return payload
 
 
 def extract_text_from_pdf_bytes(pdf_bytes: bytes) -> list[dict]:
@@ -403,6 +453,8 @@ def list_specialties():
 
 class ShiftUploadRequest(BaseModel):
     images: list[str]  # base64 encoded images
+    fileName: str | None = None
+    pageCount: int | None = None
 
 class ShiftUpdateRequest(BaseModel):
     location: str | None = None
@@ -417,7 +469,7 @@ class ShiftUpdateRequest(BaseModel):
 async def upload_shifts(req: ShiftUploadRequest):
     """
     Recebe imagens (base64) de escala médica, extrai dados via GPT-4o vision,
-    e salva na tabela shifts do Supabase.
+    e sincroniza a tabela shifts no Supabase sem duplicar vagas equivalentes.
     """
     if not req.images:
         raise HTTPException(status_code=400, detail="Nenhuma imagem fornecida")
@@ -440,6 +492,11 @@ Extraia TODOS os dados em formato JSON. Para cada entrada, inclua:
 - status: "available" se "vago", "reserved" se "(RESERVADO)", "occupied" caso contrário
 - specialty: "USG" por padrão
 
+Regras importantes:
+- Considere a mesma vaga quando coincidirem local + sala + dia da semana + horário + especialidade.
+- NÃO use doctor_name para identificar a vaga, porque o médico/status pode mudar e isso deve atualizar a mesma vaga.
+- Se algum campo vier vazio, devolva null quando apropriado.
+
 Responda APENAS com um JSON array, sem texto adicional.
 Exemplo:
 [
@@ -459,49 +516,149 @@ Exemplo:
         )
         raw_response = response.choices[0].message.content
 
-        import json
         json_start = raw_response.find('[')
         json_end = raw_response.rfind(']') + 1
         if json_start >= 0 and json_end > json_start:
-            shifts = json.loads(raw_response[json_start:json_end])
+            extracted_shifts = json.loads(raw_response[json_start:json_end])
         else:
             raise ValueError("No JSON array found in response")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao processar: {str(e)}")
 
-    import httpx
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
     supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
     if not supabase_key:
         raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY/SUPABASE_SERVICE_ROLE_KEY não configurada")
+
+    seen_at_iso = datetime.now(timezone.utc).isoformat()
+    source_batch_id = str(uuid.uuid4())
+    prepared_shifts = [prepare_shift_payload(shift, source_batch_id, seen_at_iso) for shift in extracted_shifts]
+
+    deduped_by_key: dict[str, dict] = {}
+    duplicates_in_payload = 0
+    for shift in prepared_shifts:
+        key = shift["identity_key"]
+        if key in deduped_by_key:
+            duplicates_in_payload += 1
+        deduped_by_key[key] = shift
+    prepared_shifts = list(deduped_by_key.values())
+
     headers = {
         "apikey": supabase_key,
         "Authorization": f"Bearer {supabase_key}",
         "Content-Type": "application/json",
-        "Prefer": "return=minimal",
+        "Prefer": "return=representation",
     }
     base = f"{supabase_url}/rest/v1"
 
-    # Clear old shifts
-    delete_resp = httpx.delete(f"{base}/shifts?id=neq.00000000-0000-0000-0000-000000000000", headers=headers, timeout=30)
-    if delete_resp.status_code >= 400:
-        raise HTTPException(status_code=500, detail=f"Erro ao limpar shifts no Supabase: {delete_resp.status_code} {delete_resp.text}")
+    fetch_params = {
+        "select": "id,identity_key,location,room,day_of_week,time_slot,doctor_name,status,specialty,is_active,created_at,updated_at,last_seen_at,source_batch_id,closed_at",
+        "order": "updated_at.desc.nullslast,created_at.desc.nullslast",
+    }
+    existing_resp = httpx.get(f"{base}/shifts", headers=headers, params=fetch_params, timeout=30)
+    if existing_resp.status_code >= 400:
+        raise HTTPException(status_code=500, detail=f"Erro ao carregar shifts atuais do Supabase: {existing_resp.status_code} {existing_resp.text}")
 
-    # Insert in batches
+    existing_rows = existing_resp.json() if existing_resp.text else []
+    active_by_key: dict[str, dict] = {}
+    duplicate_active_ids: list[str] = []
+    for row in existing_rows:
+        identity_key = row.get("identity_key") or build_shift_identity_key(row)
+        if row.get("is_active", True):
+            if identity_key in active_by_key:
+                duplicate_active_ids.append(row["id"])
+                continue
+            active_by_key[identity_key] = row
+
+    summary = {
+        "created": 0,
+        "updated": 0,
+        "deactivated": 0,
+        "reactivated": 0,
+        "unchanged": 0,
+        "duplicates_in_payload": duplicates_in_payload,
+        "duplicates_cleaned": 0,
+    }
+
+    def patch_shift_row(shift_id: str, payload: dict):
+        payload = {**payload, "updated_at": seen_at_iso}
+        resp = httpx.patch(
+            f"{base}/shifts?id=eq.{shift_id}",
+            headers=headers,
+            json=payload,
+            timeout=30,
+        )
+        if resp.status_code >= 400:
+            raise HTTPException(status_code=500, detail=f"Erro ao atualizar shift {shift_id}: {resp.status_code} {resp.text}")
+        return resp.json() if resp.text else []
+
+    for duplicate_id in duplicate_active_ids:
+        patch_shift_row(duplicate_id, {
+            "is_active": False,
+            "closed_at": seen_at_iso,
+            "last_seen_at": seen_at_iso,
+            "source_batch_id": source_batch_id,
+        })
+        summary["duplicates_cleaned"] += 1
+        summary["deactivated"] += 1
+
+    created_payloads = []
+    incoming_keys = set()
+    for shift in prepared_shifts:
+        identity_key = shift["identity_key"]
+        incoming_keys.add(identity_key)
+        existing = active_by_key.get(identity_key)
+        if existing:
+            changed_fields = {}
+            for field in ["location", "room", "day_of_week", "time_slot", "doctor_name", "status", "specialty", "identity_key"]:
+                if existing.get(field) != shift.get(field):
+                    changed_fields[field] = shift.get(field)
+            changed_fields["last_seen_at"] = seen_at_iso
+            changed_fields["source_batch_id"] = source_batch_id
+            if existing.get("is_active") is not True:
+                changed_fields["is_active"] = True
+                changed_fields["closed_at"] = None
+                summary["reactivated"] += 1
+            if len(changed_fields) > 2 or changed_fields.get("is_active") is True:
+                patch_shift_row(existing["id"], changed_fields)
+                summary["updated"] += 1
+            else:
+                patch_shift_row(existing["id"], {"last_seen_at": seen_at_iso, "source_batch_id": source_batch_id})
+                summary["unchanged"] += 1
+        else:
+            created_payloads.append(shift)
+
     BATCH_SIZE = 100
-    inserted = 0
-    for i in range(0, len(shifts), BATCH_SIZE):
-        batch = shifts[i:i + BATCH_SIZE]
+    for i in range(0, len(created_payloads), BATCH_SIZE):
+        batch = created_payloads[i:i + BATCH_SIZE]
         insert_resp = httpx.post(f"{base}/shifts", headers=headers, json=batch, timeout=30)
         if insert_resp.status_code >= 400:
             raise HTTPException(status_code=500, detail=f"Erro ao inserir shifts no Supabase: {insert_resp.status_code} {insert_resp.text}")
-        inserted += len(batch)
+        summary["created"] += len(batch)
+
+    stale_active_rows = [
+        row for key, row in active_by_key.items()
+        if key not in incoming_keys
+    ]
+    for row in stale_active_rows:
+        patch_shift_row(row["id"], {
+            "is_active": False,
+            "closed_at": seen_at_iso,
+            "last_seen_at": seen_at_iso,
+            "source_batch_id": source_batch_id,
+        })
+        summary["deactivated"] += 1
 
     return {
-        "message": f"{inserted} vagas processadas com sucesso",
-        "locations": list(set(s.get("location", "") for s in shifts)),
-        "available": sum(1 for s in shifts if s.get("status") == "available"),
-        "total": inserted,
+        "message": f"Sincronização concluída: {summary['created']} novas, {summary['updated']} atualizadas, {summary['deactivated']} desativadas.",
+        "file_name": req.fileName,
+        "page_count": req.pageCount,
+        "batch_id": source_batch_id,
+        "identity_key": "location + room + day_of_week + time_slot + specialty",
+        "locations": sorted(list(set(s.get("location", "") for s in prepared_shifts if s.get("location")))),
+        "available": sum(1 for s in prepared_shifts if s.get("status") == "available"),
+        "total": len(prepared_shifts),
+        "summary": summary,
     }
 
 
@@ -522,6 +679,22 @@ def update_shift(shift_id: str, req: ShiftUpdateRequest):
         "Prefer": "return=representation",
     }
 
+    current_resp = httpx.get(
+        f"{supabase_url}/rest/v1/shifts",
+        headers=headers,
+        params={"id": f"eq.{shift_id}", "select": "*", "limit": 1},
+        timeout=30,
+    )
+    if current_resp.status_code >= 400:
+        raise HTTPException(status_code=500, detail=f"Erro ao carregar shift atual: {current_resp.status_code} {current_resp.text}")
+    current_rows = current_resp.json() if current_resp.text else []
+    if not current_rows:
+        raise HTTPException(status_code=404, detail="Shift não encontrado")
+
+    merged = {**current_rows[0], **payload}
+    payload["identity_key"] = build_shift_identity_key(merged)
+    payload["updated_at"] = datetime.now(timezone.utc).isoformat()
+
     resp = httpx.patch(
         f"{supabase_url}/rest/v1/shifts?id=eq.{shift_id}",
         headers=headers,
@@ -535,7 +708,7 @@ def update_shift(shift_id: str, req: ShiftUpdateRequest):
 
 
 @app.get("/shifts")
-def get_shifts(location: str | None = None, day: str | None = None, status: str | None = None):
+def get_shifts(location: str | None = None, day: str | None = None, status: str | None = None, include_inactive: bool = False):
     """Lista vagas com filtros opcionais."""
     import httpx
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
@@ -546,14 +719,16 @@ def get_shifts(location: str | None = None, day: str | None = None, status: str 
         "apikey": supabase_key,
         "Authorization": f"Bearer {supabase_key}",
     }
-    params = {"select": "*", "order": "location.asc,day_of_week.asc"}
+    params = {"select": "*", "order": "location.asc,day_of_week.asc,time_slot.asc.nullslast,room.asc.nullslast"}
     if location:
         params["location"] = f"ilike.*{location}*"
     if day:
         params["day_of_week"] = f"eq.{day.upper()}"
     if status:
         params["status"] = f"eq.{status}"
-    
+    if not include_inactive:
+        params["is_active"] = "eq.true"
+
     r = httpx.get(f"{supabase_url}/rest/v1/shifts", headers=headers, params=params)
     return {"shifts": r.json(), "total": len(r.json())}
 
