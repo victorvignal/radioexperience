@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
-import httpx
+from curated_articles import fetch_curated_article_urls, now_iso, upsert_curated_article
 
 # ── Config ──
 WORKSPACE = Path("/root/.openclaw/workspace/radioexperience")
@@ -305,54 +305,22 @@ def index_chunks(chunks, meta):
 
 
 # ══════════════════════════════════════════
-# Supabase Feed Integration
+# Curated Articles Editorial Queue
 # ══════════════════════════════════════════
-SUPABASE_URL = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
-SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjZGVxdXNpcGJreGNmZndlaW93Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDYzNjU4MSwiZXhwIjoyMDkwMjEyNTgxfQ.HxKGdH-kVL6p5knR2PgTgUl9OsIZ59G732StkQ8EXus")
-
-def _supabase_headers():
-    return {
-        "apikey": SUPABASE_SERVICE_KEY,
-        "Authorization": f"Bearer {SUPABASE_SERVICE_KEY}",
-        "Content-Type": "application/json",
-        "Prefer": "return=minimal",
+def queue_curated_article(title, source_url, journal, specialty, summary, chunks, status="indexed"):
+    payload = {
+        "source_url": source_url,
+        "title": title,
+        "summary": (summary or "").strip(),
+        "specialty": specialty,
+        "source": journal,
+        "status": status,
+        "indexed_at": now_iso(),
+        "published_to_feed_at": None,
+        "qdrant_ref": source_url if status == "indexed" else None,
+        "chunk_count": chunks if status == "indexed" else None,
     }
-
-def post_to_feed(title, text, source_url, journal, specialty, summary):
-    """Post an article to the Supabase feed."""
-    try:
-        # Truncate content for feed (keep it readable)
-        feed_content = summary or text[:500]
-        if len(feed_content) > 1000:
-            feed_content = feed_content[:997] + "..."
-
-        payload = {
-            "type": "article",
-            "title": title,
-            "content": feed_content,
-            "metadata": {
-                "source": "aria_agent",
-                "source_url": source_url,
-                "journal": journal,
-                "specialty": specialty,
-                "author_name": "ARIA",
-            },
-        }
-        r = httpx.post(
-            f"{SUPABASE_URL}/rest/v1/posts",
-            headers=_supabase_headers(),
-            json=payload,
-            timeout=15,
-        )
-        if r.status_code in (200, 201):
-            log(f"  -> Posted to feed ✅")
-            return True
-        else:
-            log(f"  -> Feed post failed: {r.status_code} {r.text[:100]}")
-            return False
-    except Exception as e:
-        log(f"  -> Feed post error: {e}")
-        return False
+    return upsert_curated_article(payload)
 
 # ══════════════════════════════════════════
 # Main Pipeline
@@ -365,6 +333,13 @@ def run():
     indexed = load_indexed()
     new_count = 0
     evaluated = 0
+
+    try:
+        curated_urls = fetch_curated_article_urls()
+        log(f"Curated articles already in Supabase: {len(curated_urls)}")
+    except Exception as e:
+        curated_urls = set()
+        log(f"Could not load curated_articles from Supabase, falling back to local cache: {e}")
     
     # Discover
     articles = discover_radiopaedia() + discover_radiology_assistant()
@@ -372,6 +347,9 @@ def run():
     
     for article in articles:
         url = article["url"]
+        if url in curated_urls:
+            indexed.setdefault(url, {"status": "tracked_in_supabase", "date": now_iso()})
+            continue
         if url in indexed:
             continue
         
@@ -389,7 +367,12 @@ def run():
         
         if len(text) < 300:
             log(f"  Too short ({len(text)} chars), skipping")
-            indexed[url] = {"title": title, "status": "short", "date": datetime.now().isoformat()}
+            try:
+                queue_curated_article(title, url, article["source"], None, "Conteúdo curto demais para indexação.", 0, status="skipped")
+                curated_urls.add(url)
+            except Exception as e:
+                log(f"  -> Could not save skipped article to curated_articles: {e}")
+            indexed[url] = {"title": title, "status": "short", "date": now_iso()}
             continue
         
         log(f"  Title: {title[:70]}")
@@ -401,7 +384,12 @@ def run():
         
         if not ev or not ev.get("relevante"):
             log(f"  -> Not relevant")
-            indexed[url] = {"title": title, "status": "irrelevant", "date": datetime.now().isoformat()}
+            try:
+                queue_curated_article(title, url, article["source"], None, "Conteúdo avaliado como não relevante para a curadoria.", 0, status="skipped")
+                curated_urls.add(url)
+            except Exception as e:
+                log(f"  -> Could not save skipped article to curated_articles: {e}")
+            indexed[url] = {"title": title, "status": "irrelevant", "date": now_iso()}
             continue
         
         quality = ev.get("qualidade", "baixa")
@@ -409,7 +397,12 @@ def run():
         
         if quality == "baixa":
             log(f"  -> Low quality")
-            indexed[url] = {"title": title, "status": "low_quality", "date": datetime.now().isoformat()}
+            try:
+                queue_curated_article(title, url, article["source"], specialty, "Conteúdo relevante, mas abaixo do corte de qualidade editorial.", 0, status="skipped")
+                curated_urls.add(url)
+            except Exception as e:
+                log(f"  -> Could not save skipped article to curated_articles: {e}")
+            indexed[url] = {"title": title, "status": "low_quality", "date": now_iso()}
             continue
         
         log(f"  -> RELEVANT | {specialty} | {quality}")
@@ -425,22 +418,31 @@ def run():
         if count > 0:
             new_count += 1
             log(f"  -> Indexed {count} chunks")
-            # Post to community feed
-            post_to_feed(
-                title=title,
-                text=text,
-                source_url=url,
-                journal=article["source"],
-                specialty=specialty,
-                summary=ev.get("resumo", ""),
-            )
-            indexed[url] = {
-                "title": title, "specialty": specialty, "quality": quality,
-                "summary": ev.get("resumo"), "chunks": count,
-                "status": "indexed", "date": datetime.now().isoformat(),
-            }
+            try:
+                queue_curated_article(
+                    title=title,
+                    source_url=url,
+                    journal=article["source"],
+                    specialty=specialty,
+                    summary=ev.get("resumo", ""),
+                    chunks=count,
+                )
+                curated_urls.add(url)
+                log("  -> Added to curated_articles editorial queue ✅")
+                indexed[url] = {
+                    "title": title, "specialty": specialty, "quality": quality,
+                    "summary": ev.get("resumo"), "chunks": count,
+                    "status": "indexed", "date": now_iso(),
+                }
+            except Exception as e:
+                log(f"  -> Curated queue save failed: {e}")
+                indexed[url] = {
+                    "title": title, "specialty": specialty, "quality": quality,
+                    "summary": ev.get("resumo"), "chunks": count,
+                    "status": "queue_fail", "date": now_iso(),
+                }
         else:
-            indexed[url] = {"title": title, "status": "index_fail", "date": datetime.now().isoformat()}
+            indexed[url] = {"title": title, "status": "index_fail", "date": now_iso()}
         
         time.sleep(3)  # Rate limit
     
