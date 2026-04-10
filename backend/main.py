@@ -562,15 +562,29 @@ Exemplo:
         raise HTTPException(status_code=500, detail=f"Erro na chamada OpenAI vision: {type(e).__name__}: {str(e)}")
 
     try:
-        json_start = raw_response.find('[')
-        json_end = raw_response.rfind(']') + 1
+        # Strip markdown code blocks if present
+        cleaned = raw_response
+        if "```" in cleaned:
+            cleaned = re.sub(r"```(?:json)?\s*", "", cleaned)
+            cleaned = cleaned.replace("```", "")
+        cleaned = cleaned.strip()
+        # Try to find JSON array
+        json_start = cleaned.find('[')
+        json_end = cleaned.rfind(']') + 1
         if json_start >= 0 and json_end > json_start:
-            extracted_shifts = json.loads(raw_response[json_start:json_end])
+            extracted_shifts = json.loads(cleaned[json_start:json_end])
         else:
-            raise ValueError("No JSON array found in response")
+            # Fallback: try regex for array
+            m = re.search(r'\[.*\]', cleaned, re.DOTALL)
+            if m:
+                extracted_shifts = json.loads(m.group())
+            else:
+                raise ValueError(f"No JSON array found. Response starts with: {cleaned[:200]}")
+        if not isinstance(extracted_shifts, list):
+            raise ValueError(f"Response is not a list: {type(extracted_shifts).__name__}")
         logger.info("Extracted %d shifts from vision response", len(extracted_shifts))
     except Exception as e:
-        logger.error("Failed to parse GPT-4o JSON response: %s | raw=%s", str(e), raw_response[:500] if raw_response else "None")
+        logger.error("Failed to parse GPT-4o JSON response: %s | raw=%s", str(e), raw_response[:800] if raw_response else "None")
         raise HTTPException(status_code=500, detail=f"Erro ao parsear resposta do GPT-4o: {str(e)}")
 
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
