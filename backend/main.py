@@ -1086,6 +1086,47 @@ def delete_shift(shift_id: str):
     return {"deleted": len(data)}
 
 
+class BulkDeleteRequest(BaseModel):
+    location: str | None = None
+    specialty: str | None = None
+    source_batch_id: str | None = None
+    before_date: str | None = None
+    is_active_only: bool | None = None
+
+
+@app.delete("/shifts/bulk")
+def bulk_delete_shifts(req: BulkDeleteRequest):
+    """Remove vagas em lote com filtros opcionais."""
+    if not any([req.location, req.specialty, req.source_batch_id, req.before_date]):
+        raise HTTPException(status_code=400, detail="Pelo menos um filtro é obrigatório (location, specialty, source_batch_id, before_date).")
+    import httpx
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY/SUPABASE_SERVICE_ROLE_KEY não configurada")
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+        "Prefer": "return=representation",
+    }
+    params = {}
+    if req.location:
+        params["location"] = f"ilike.*{req.location}*"
+    if req.specialty:
+        params["specialty"] = f"ilike.*{req.specialty}*"
+    if req.source_batch_id:
+        params["source_batch_id"] = f"eq.{req.source_batch_id}"
+    if req.before_date:
+        params["source_date"] = f"lt.{req.before_date}"
+    if req.is_active_only:
+        params["is_active"] = "eq.true"
+    r = httpx.delete(f"{supabase_url}/rest/v1/shifts", headers=headers, params=params)
+    if r.status_code >= 400:
+        raise HTTPException(status_code=500, detail=f"Falha ao remover vagas em lote: {r.status_code} {r.text}")
+    data = r.json() if r.text else []
+    return {"deleted": len(data), "filters": {k: v for k, v in req.model_dump().items() if v is not None}}
+
+
 @app.delete("/shifts")
 def delete_shifts(before: str | None = None, after: str | None = None):
     """Remove vagas por intervalo de created_at (data de envio)."""
