@@ -113,12 +113,12 @@ def build_shift_identity_key(shift: dict) -> str:
 def prepare_shift_payload(shift: dict, source_batch_id: str, seen_at_iso: str) -> dict:
     payload = {
         "location": (shift.get("location") or "").strip(),
-        "room": (shift.get("room") or None),
+        "room": ((shift.get("room") or "").strip() or None),
         "day_of_week": _normalize_shift_value(shift.get("day_of_week")),
-        "time_slot": (shift.get("time_slot") or None),
-        "doctor_name": (shift.get("doctor_name") or None),
-        "status": shift.get("status") or "available",
-        "specialty": (shift.get("specialty") or "USG").strip(),
+        "time_slot": ((shift.get("time_slot") or "").strip() or None),
+        "doctor_name": ((shift.get("doctor_name") or "").strip() or None),
+        "status": (shift.get("status") or "available").strip().lower(),
+        "specialty": ((shift.get("specialty") or "USG").strip() or "USG"),
         "is_active": True,
         "last_seen_at": seen_at_iso,
         "closed_at": None,
@@ -465,6 +465,38 @@ class ShiftUpdateRequest(BaseModel):
     status: str | None = None
     specialty: str | None = None
 
+
+def _clip_text(value, limit: int = 500) -> str:
+    text = "" if value is None else str(value)
+    return text if len(text) <= limit else f"{text[:limit]}…"
+
+
+def _summarize_supabase_response(resp: httpx.Response | None):
+    if resp is None:
+        return {"status_code": None, "text": None}
+    return {
+        "status_code": resp.status_code,
+        "text": _clip_text(resp.text, 800),
+        "headers": {
+            "content-range": resp.headers.get("content-range"),
+            "x-request-id": resp.headers.get("x-request-id"),
+        },
+    }
+
+
+def _raise_shift_sync_error(stage: str, message: str, *, response: httpx.Response | None = None, extra: dict | None = None):
+    detail = {
+        "stage": stage,
+        "message": message,
+    }
+    if response is not None:
+        detail["supabase"] = _summarize_supabase_response(response)
+    if extra:
+        detail["context"] = extra
+    logger.error("Shift sync failed at %s: %s | extra=%s | response=%s", stage, message, extra, detail.get("supabase"))
+    raise HTTPException(status_code=500, detail=detail)
+
+
 @app.post("/upload-shifts")
 async def upload_shifts(req: ShiftUploadRequest):
     """
@@ -532,122 +564,183 @@ Exemplo:
 
     seen_at_iso = datetime.now(timezone.utc).isoformat()
     source_batch_id = str(uuid.uuid4())
-    prepared_shifts = [prepare_shift_payload(shift, source_batch_id, seen_at_iso) for shift in extracted_shifts]
 
-    deduped_by_key: dict[str, dict] = {}
-    duplicates_in_payload = 0
-    for shift in prepared_shifts:
-        key = shift["identity_key"]
-        if key in deduped_by_key:
-            duplicates_in_payload += 1
-        deduped_by_key[key] = shift
-    prepared_shifts = list(deduped_by_key.values())
+    try:
+        prepared_shifts = [prepare_shift_payload(shift, source_batch_id, seen_at_iso) for shift in extracted_shifts]
 
-    headers = {
-        "apikey": supabase_key,
-        "Authorization": f"Bearer {supabase_key}",
-        "Content-Type": "application/json",
-        "Prefer": "return=representation",
-    }
-    base = f"{supabase_url}/rest/v1"
-
-    fetch_params = {
-        "select": "id,identity_key,location,room,day_of_week,time_slot,doctor_name,status,specialty,is_active,created_at,updated_at,last_seen_at,source_batch_id,closed_at",
-        "order": "updated_at.desc.nullslast,created_at.desc.nullslast",
-    }
-    existing_resp = httpx.get(f"{base}/shifts", headers=headers, params=fetch_params, timeout=30)
-    if existing_resp.status_code >= 400:
-        raise HTTPException(status_code=500, detail=f"Erro ao carregar shifts atuais do Supabase: {existing_resp.status_code} {existing_resp.text}")
-
-    existing_rows = existing_resp.json() if existing_resp.text else []
-    active_by_key: dict[str, dict] = {}
-    duplicate_active_ids: list[str] = []
-    for row in existing_rows:
-        identity_key = row.get("identity_key") or build_shift_identity_key(row)
-        if row.get("is_active", True):
-            if identity_key in active_by_key:
-                duplicate_active_ids.append(row["id"])
-                continue
-            active_by_key[identity_key] = row
-
-    summary = {
-        "created": 0,
-        "updated": 0,
-        "deactivated": 0,
-        "reactivated": 0,
-        "unchanged": 0,
-        "duplicates_in_payload": duplicates_in_payload,
-        "duplicates_cleaned": 0,
-    }
-
-    def patch_shift_row(shift_id: str, payload: dict):
-        payload = {**payload, "updated_at": seen_at_iso}
-        resp = httpx.patch(
-            f"{base}/shifts?id=eq.{shift_id}",
-            headers=headers,
-            json=payload,
-            timeout=30,
+        deduped_by_key: dict[str, dict] = {}
+        duplicates_in_payload = 0
+        for shift in prepared_shifts:
+            key = shift["identity_key"]
+            if key in deduped_by_key:
+                duplicates_in_payload += 1
+            deduped_by_key[key] = shift
+        prepared_shifts = list(deduped_by_key.values())
+        logger.info(
+            "Shift sync start batch=%s file=%s extracted=%s deduped=%s duplicates_in_payload=%s",
+            source_batch_id,
+            req.fileName,
+            len(extracted_shifts),
+            len(prepared_shifts),
+            duplicates_in_payload,
         )
-        if resp.status_code >= 400:
-            raise HTTPException(status_code=500, detail=f"Erro ao atualizar shift {shift_id}: {resp.status_code} {resp.text}")
-        return resp.json() if resp.text else []
 
-    for duplicate_id in duplicate_active_ids:
-        patch_shift_row(duplicate_id, {
-            "is_active": False,
-            "closed_at": seen_at_iso,
-            "last_seen_at": seen_at_iso,
-            "source_batch_id": source_batch_id,
-        })
-        summary["duplicates_cleaned"] += 1
-        summary["deactivated"] += 1
+        headers = {
+            "apikey": supabase_key,
+            "Authorization": f"Bearer {supabase_key}",
+            "Content-Type": "application/json",
+            "Prefer": "return=representation",
+        }
+        base = f"{supabase_url}/rest/v1"
 
-    created_payloads = []
-    incoming_keys = set()
-    for shift in prepared_shifts:
-        identity_key = shift["identity_key"]
-        incoming_keys.add(identity_key)
-        existing = active_by_key.get(identity_key)
-        if existing:
-            changed_fields = {}
-            for field in ["location", "room", "day_of_week", "time_slot", "doctor_name", "status", "specialty", "identity_key"]:
-                if existing.get(field) != shift.get(field):
-                    changed_fields[field] = shift.get(field)
-            changed_fields["last_seen_at"] = seen_at_iso
-            changed_fields["source_batch_id"] = source_batch_id
-            if existing.get("is_active") is not True:
-                changed_fields["is_active"] = True
-                changed_fields["closed_at"] = None
-                summary["reactivated"] += 1
-            if len(changed_fields) > 2 or changed_fields.get("is_active") is True:
-                patch_shift_row(existing["id"], changed_fields)
-                summary["updated"] += 1
+        fetch_params = {
+            "select": "id,identity_key,location,room,day_of_week,time_slot,doctor_name,status,specialty,is_active,created_at,updated_at,last_seen_at,source_batch_id,closed_at",
+            "order": "updated_at.desc.nullslast,created_at.desc.nullslast",
+        }
+        logger.info("Shift sync stage=fetch_existing batch=%s", source_batch_id)
+        existing_resp = httpx.get(f"{base}/shifts", headers=headers, params=fetch_params, timeout=30)
+        if existing_resp.status_code >= 400:
+            _raise_shift_sync_error("fetch_existing", "Erro ao carregar shifts atuais do Supabase", response=existing_resp)
+
+        existing_rows = existing_resp.json() if existing_resp.text else []
+        active_by_key: dict[str, dict] = {}
+        duplicate_active_ids: list[str] = []
+        rows_needing_identity_backfill: list[dict] = []
+        for row in existing_rows:
+            normalized_row = {
+                **row,
+                "identity_key": row.get("identity_key") or build_shift_identity_key(row),
+                "room": ((row.get("room") or "").strip() or None),
+                "time_slot": ((row.get("time_slot") or "").strip() or None),
+                "doctor_name": ((row.get("doctor_name") or "").strip() or None),
+                "status": ((row.get("status") or "available").strip().lower()),
+                "specialty": ((row.get("specialty") or "USG").strip() or "USG"),
+            }
+            if not row.get("identity_key"):
+                rows_needing_identity_backfill.append(normalized_row)
+            if normalized_row.get("is_active", True):
+                if normalized_row["identity_key"] in active_by_key:
+                    duplicate_active_ids.append(normalized_row["id"])
+                    continue
+                active_by_key[normalized_row["identity_key"]] = normalized_row
+
+        logger.info(
+            "Shift sync fetched batch=%s existing=%s active=%s duplicate_active=%s backfill_identity=%s",
+            source_batch_id,
+            len(existing_rows),
+            len(active_by_key),
+            len(duplicate_active_ids),
+            len(rows_needing_identity_backfill),
+        )
+
+        summary = {
+            "created": 0,
+            "updated": 0,
+            "deactivated": 0,
+            "reactivated": 0,
+            "unchanged": 0,
+            "duplicates_in_payload": duplicates_in_payload,
+            "duplicates_cleaned": 0,
+            "identity_backfilled": 0,
+        }
+
+        def patch_shift_row(shift_id: str, payload: dict, *, stage: str, key: str | None = None):
+            payload = {**payload, "updated_at": seen_at_iso}
+            logger.info(
+                "Shift sync stage=%s batch=%s shift_id=%s identity_key=%s payload=%s",
+                stage,
+                source_batch_id,
+                shift_id,
+                key,
+                _clip_text(json.dumps(payload, ensure_ascii=False), 1200),
+            )
+            resp = httpx.patch(
+                f"{base}/shifts?id=eq.{shift_id}",
+                headers=headers,
+                json=payload,
+                timeout=30,
+            )
+            if resp.status_code >= 400:
+                _raise_shift_sync_error(stage, f"Erro ao atualizar shift {shift_id}", response=resp, extra={"shift_id": shift_id, "identity_key": key, "payload": payload})
+            logger.info("Shift sync stage=%s_ok batch=%s shift_id=%s status=%s", stage, source_batch_id, shift_id, resp.status_code)
+            return resp.json() if resp.text else []
+
+        duplicate_active_id_set = set(duplicate_active_ids)
+        for duplicate_id in duplicate_active_ids:
+            patch_shift_row(duplicate_id, {
+                "is_active": False,
+                "closed_at": seen_at_iso,
+                "last_seen_at": seen_at_iso,
+                "source_batch_id": source_batch_id,
+            }, stage="dedupe_cleanup")
+            summary["duplicates_cleaned"] += 1
+            summary["deactivated"] += 1
+
+        for row in rows_needing_identity_backfill:
+            if row["id"] in duplicate_active_id_set:
+                continue
+            patch_shift_row(row["id"], {"identity_key": row["identity_key"], "last_seen_at": row.get("last_seen_at") or seen_at_iso}, stage="identity_backfill", key=row["identity_key"])
+            summary["identity_backfilled"] += 1
+
+        created_payloads = []
+        incoming_keys = set()
+        for shift in prepared_shifts:
+            identity_key = shift["identity_key"]
+            incoming_keys.add(identity_key)
+            existing = active_by_key.get(identity_key)
+            if existing:
+                changed_fields = {}
+                for field in ["location", "room", "day_of_week", "time_slot", "doctor_name", "status", "specialty", "identity_key"]:
+                    if existing.get(field) != shift.get(field):
+                        changed_fields[field] = shift.get(field)
+                changed_fields["last_seen_at"] = seen_at_iso
+                changed_fields["source_batch_id"] = source_batch_id
+                if existing.get("is_active") is not True:
+                    changed_fields["is_active"] = True
+                    changed_fields["closed_at"] = None
+                    summary["reactivated"] += 1
+                if any(field in changed_fields for field in ["location", "room", "day_of_week", "time_slot", "doctor_name", "status", "specialty", "identity_key", "is_active", "closed_at"]):
+                    patch_shift_row(existing["id"], changed_fields, stage="update_existing", key=identity_key)
+                    summary["updated"] += 1
+                else:
+                    patch_shift_row(existing["id"], {"last_seen_at": seen_at_iso, "source_batch_id": source_batch_id}, stage="touch_existing", key=identity_key)
+                    summary["unchanged"] += 1
             else:
-                patch_shift_row(existing["id"], {"last_seen_at": seen_at_iso, "source_batch_id": source_batch_id})
-                summary["unchanged"] += 1
-        else:
-            created_payloads.append(shift)
+                created_payloads.append(shift)
 
-    BATCH_SIZE = 100
-    for i in range(0, len(created_payloads), BATCH_SIZE):
-        batch = created_payloads[i:i + BATCH_SIZE]
-        insert_resp = httpx.post(f"{base}/shifts", headers=headers, json=batch, timeout=30)
-        if insert_resp.status_code >= 400:
-            raise HTTPException(status_code=500, detail=f"Erro ao inserir shifts no Supabase: {insert_resp.status_code} {insert_resp.text}")
-        summary["created"] += len(batch)
+        BATCH_SIZE = 100
+        for i in range(0, len(created_payloads), BATCH_SIZE):
+            batch = created_payloads[i:i + BATCH_SIZE]
+            logger.info("Shift sync stage=insert_new batch=%s size=%s sample_keys=%s", source_batch_id, len(batch), [item.get("identity_key") for item in batch[:5]])
+            insert_resp = httpx.post(f"{base}/shifts", headers=headers, json=batch, timeout=30)
+            if insert_resp.status_code >= 400:
+                _raise_shift_sync_error("insert_new", "Erro ao inserir shifts no Supabase", response=insert_resp, extra={"batch_size": len(batch), "sample_identity_keys": [item.get("identity_key") for item in batch[:10]]})
+            summary["created"] += len(batch)
 
-    stale_active_rows = [
-        row for key, row in active_by_key.items()
-        if key not in incoming_keys
-    ]
-    for row in stale_active_rows:
-        patch_shift_row(row["id"], {
-            "is_active": False,
-            "closed_at": seen_at_iso,
-            "last_seen_at": seen_at_iso,
-            "source_batch_id": source_batch_id,
+        stale_active_rows = [
+            row for key, row in active_by_key.items()
+            if key not in incoming_keys
+        ]
+        logger.info("Shift sync stage=deactivate_stale batch=%s count=%s", source_batch_id, len(stale_active_rows))
+        for row in stale_active_rows:
+            patch_shift_row(row["id"], {
+                "is_active": False,
+                "closed_at": seen_at_iso,
+                "last_seen_at": seen_at_iso,
+                "source_batch_id": source_batch_id,
+            }, stage="deactivate_stale", key=row.get("identity_key"))
+            summary["deactivated"] += 1
+
+        logger.info("Shift sync completed batch=%s summary=%s", source_batch_id, summary)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.exception("Shift sync unexpected failure batch=%s", source_batch_id)
+        raise HTTPException(status_code=500, detail={
+            "stage": "unexpected",
+            "message": str(e),
+            "batch_id": source_batch_id,
         })
-        summary["deactivated"] += 1
 
     return {
         "message": f"Sincronização concluída: {summary['created']} novas, {summary['updated']} atualizadas, {summary['deactivated']} desativadas.",
