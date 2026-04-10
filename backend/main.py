@@ -10,7 +10,17 @@ CREATE TABLE IF NOT EXISTS public.shifts (
   status text NOT NULL DEFAULT 'available',
   specialty text DEFAULT 'USG',
   created_at timestamptz DEFAULT now(),
-  updated_at timestamptz DEFAULT now()
+  updated_at timestamptz DEFAULT now(),
+  identity_key text,
+  is_active boolean DEFAULT true,
+  last_seen_at timestamptz,
+  source_batch_id text,
+  closed_at timestamptz,
+  reservation_note boolean DEFAULT false,
+  time_note text,
+  frequency_note text,
+  source_file text,
+  source_date date
 );
 
 ALTER TABLE public.shifts ENABLE ROW LEVEL SECURITY;
@@ -88,6 +98,85 @@ logger.info("Startup env check: OPENAI_API_KEY=%s, SUPABASE_SERVICE_KEY=%s, QDRA
 upload_progress: dict[str, dict] = {}
 
 
+def parse_doctor_notes(raw_name: str) -> tuple[str, dict]:
+    """Parse embedded notes from a doctor name string.
+    
+    Returns (clean_name, notes_dict).
+    Handles patterns like (até 13 h), (15/15 dias), (Fixo), (Alt), etc.
+    """
+    if not raw_name or raw_name.strip().lower() in ("vago", "vacante", ""):
+        return (raw_name or "", {
+            "reservation": False,
+            "time_note": None,
+            "frequency_note": None,
+            "is_fixed": False,
+            "is_alt": False,
+            "is_scheduled": False,
+            "is_rotation": False,
+            "paaf": False,
+        })
+
+    notes = {
+        "reservation": False,
+        "time_note": None,
+        "frequency_note": None,
+        "is_fixed": False,
+        "is_alt": False,
+        "is_scheduled": False,
+        "is_rotation": False,
+        "paaf": False,
+    }
+
+    # Extract all parenthesized notes
+    note_pattern = re.compile(r'\(([^)]+)\)')
+    remaining = raw_name
+
+    for match in note_pattern.finditer(raw_name):
+        note_text = match.group(1).strip()
+        note_lower = note_text.lower()
+
+        # Time limits: (até 13 h), (até 14 h30), (até 13:30 h), (início 12:20 h)
+        if re.match(r'(até|inicio|início)\s+\d{1,2}[:h]\d{0,2}\s*h?', note_lower):
+            notes["time_note"] = note_text
+
+        # Frequency: (15/15 dias), (1 x mês)
+        elif re.match(r'\d+\s*/\s*\d+\s*dias?', note_lower) or re.match(r'\d+\s*x\s*m[eê]s', note_lower):
+            notes["frequency_note"] = note_text
+
+        # Fixed assignment
+        elif note_lower in ("fixo", "fixa"):
+            notes["is_fixed"] = True
+
+        # Alternate
+        elif note_lower == "alt":
+            notes["is_alt"] = True
+
+        # Scheduled rotation
+        elif note_lower == "escala":
+            notes["is_scheduled"] = True
+
+        # Rodízio (rotation)
+        elif note_lower in ("rodízio", "rodizio"):
+            notes["is_rotation"] = True
+
+        # Reserved
+        elif note_lower == "reservado":
+            notes["reservation"] = True
+
+        # PAAF capability
+        elif note_lower == "paaf":
+            notes["paaf"] = True
+
+    # Remove all notes from the name
+    clean_name = note_pattern.sub("", raw_name).strip()
+    # Clean up extra whitespace
+    clean_name = re.sub(r"\s+", " ", clean_name).strip()
+    # Remove trailing/leading punctuation artifacts
+    clean_name = clean_name.strip(" ,;-")
+
+    return (clean_name, notes)
+
+
 def _normalize_shift_value(value: str | None) -> str:
     if value is None:
         return ""
@@ -118,20 +207,34 @@ def build_shift_identity_key(shift: dict) -> str:
     return hashlib.sha256(raw_key.encode("utf-8")).hexdigest()
 
 
-def prepare_shift_payload(shift: dict, source_batch_id: str, seen_at_iso: str) -> dict:
+def prepare_shift_payload(shift: dict, source_batch_id: str, seen_at_iso: str, source_file: str | None = None) -> dict:
+    raw_name = (shift.get("doctor_name") or "").strip()
+    clean_name, notes = parse_doctor_notes(raw_name)
+    
+    # Override status if GPT missed the reserved flag but notes caught it
+    status = (shift.get("status") or "available").strip().lower()
+    if notes["reservation"] and status != "occupied":
+        status = "reserved"
+    
     payload = {
         "location": (shift.get("location") or "").strip(),
         "room": ((shift.get("room") or "").strip() or None),
         "day_of_week": _normalize_shift_value(shift.get("day_of_week")),
         "time_slot": ((shift.get("time_slot") or "").strip() or None),
-        "doctor_name": ((shift.get("doctor_name") or "").strip() or None),
-        "status": (shift.get("status") or "available").strip().lower(),
+        "doctor_name": clean_name if clean_name else None,
+        "status": status,
         "specialty": ((shift.get("specialty") or "USG").strip() or "USG"),
         "is_active": True,
         "last_seen_at": seen_at_iso,
         "closed_at": None,
         "source_batch_id": source_batch_id,
         "updated_at": seen_at_iso,
+        # New note columns
+        "reservation_note": notes["reservation"],
+        "time_note": notes["time_note"],
+        "frequency_note": notes["frequency_note"],
+        "source_file": source_file,
+        "source_date": None,
     }
     payload["identity_key"] = build_shift_identity_key(payload)
     return payload
@@ -524,23 +627,25 @@ async def upload_shifts(req: ShiftUploadRequest):
 
     extraction_prompt = """Analise esta imagem de escala médica de radiologia.
 Extraia TODOS os dados em formato JSON. Para cada entrada, inclua:
-- location: nome do local (ex: "LA ARPOADOR", "LA BOTAFOGO", "LA MEGA BARRA")
-- room: sala (ex: "USG - Sala 1")
+- location: nome do local (ex: "LA ARPOADOR", "LA BOTAFOGO", "LA MEGA BARRA", "BR MEGA COPA", "BARRA PLAZA")
+- room: sala completa (ex: "USG - Sala 1", "Cardio - Sala 2", "Sala Híbrida")
 - day_of_week: dia da semana (ex: "SEG", "TER", "QUA", "QUI", "SEX", "SÁB")
 - time_slot: horário se houver (ex: "08:00-12:00", "14:00-18:00"), ou null
-- doctor_name: nome do médico, ou "vago" se vazio
+- doctor_name: nome do médico INCLUINDO notas entre parênteses como aparecem no original (ex: "Sergio Gaspar (até 13 h)" ou "Maria Silva (Fixo)"). Use "vago" se vazio.
 - status: "available" se "vago", "reserved" se "(RESERVADO)", "occupied" caso contrário
-- specialty: "USG" por padrão
+- specialty: extraia do nome da sala. Exemplos: "Cardio - Sala 1" → "Cardio", "USG - Sala 3" → "USG", "ECO+CAROT - Sala 1" → "ECO+CAROT", "VASC - Sala 2" → "VASC", "PAAF - Sala 1" → "PAAF", "Sala Híbrida" → "Sala Híbrida". Se não conseguir identificar, use "USG".
 
 Regras importantes:
 - Considere a mesma vaga quando coincidirem local + sala + dia da semana + horário + especialidade.
 - NÃO use doctor_name para identificar a vaga, porque o médico/status pode mudar e isso deve atualizar a mesma vaga.
+- Preserve TODAS as notas entre parênteses no campo doctor_name. Exemplos: "(até 13 h)", "(15/15 dias)", "(Fixo)", "(Alt)", "(Escala)", "(RESERVADO)", "(1 x mês)", "(Rodízio)", "( início 12:20 h)"
 - Se algum campo vier vazio, devolva null quando apropriado.
 
 Responda APENAS com um JSON array, sem texto adicional.
 Exemplo:
 [
-  {"location": "LA ARPOADOR", "room": "USG - Sala 1", "day_of_week": "SEG", "time_slot": null, "doctor_name": "Dirceu B. G. Junior", "status": "occupied", "specialty": "USG"},
+  {"location": "LA ARPOADOR", "room": "USG - Sala 1", "day_of_week": "SEG", "time_slot": null, "doctor_name": "Dirceu B. G. Junior (Fixo)", "status": "occupied", "specialty": "USG"},
+  {"location": "LA ARPOADOR", "room": "Cardio - Sala 2", "day_of_week": "TER", "time_slot": "08:00-12:00", "doctor_name": "Sergio Gaspar (até 13 h)", "status": "occupied", "specialty": "Cardio"},
   {"location": "LA ARPOADOR", "room": "USG - Sala 4", "day_of_week": "SEG", "time_slot": null, "doctor_name": "vago", "status": "available", "specialty": "USG"}
 ]"""
 
@@ -618,7 +723,7 @@ Exemplo:
     source_batch_id = str(uuid.uuid4())
 
     try:
-        prepared_shifts = [prepare_shift_payload(shift, source_batch_id, seen_at_iso) for shift in extracted_shifts]
+        prepared_shifts = [prepare_shift_payload(shift, source_batch_id, seen_at_iso, source_file=req.fileName) for shift in extracted_shifts]
 
         deduped_by_key: dict[str, dict] = {}
         duplicates_in_payload = 0
@@ -646,7 +751,7 @@ Exemplo:
         base = f"{supabase_url}/rest/v1"
 
         fetch_params = {
-            "select": "id,identity_key,location,room,day_of_week,time_slot,doctor_name,status,specialty,is_active,created_at,updated_at,last_seen_at,source_batch_id,closed_at",
+            "select": "id,identity_key,location,room,day_of_week,time_slot,doctor_name,status,specialty,is_active,created_at,updated_at,last_seen_at,source_batch_id,closed_at,reservation_note,time_note,frequency_note,source_file,source_date",
             "order": "updated_at.desc.nullslast,created_at.desc.nullslast",
         }
         logger.info("Shift sync stage=fetch_existing batch=%s", source_batch_id)
@@ -769,11 +874,21 @@ Exemplo:
                 _raise_shift_sync_error("insert_new", "Erro ao inserir shifts no Supabase", response=insert_resp, extra={"batch_size": len(batch), "sample_identity_keys": [item.get("identity_key") for item in batch[:10]]})
             summary["created"] += len(batch)
 
+        # SCOPED deactivation: only deactivate entries that share the same
+        # location AND specialty as entries in the current batch.
+        # This prevents one location's upload from killing another location's data.
+        batch_locations = set(s.get("location", "").strip().upper() for s in prepared_shifts if s.get("location"))
+        batch_specialties = set(s.get("specialty", "").strip().upper() for s in prepared_shifts if s.get("specialty"))
+        logger.info("Shift sync scope batch=%s locations=%s specialties=%s", source_batch_id, batch_locations, batch_specialties)
+
         stale_active_rows = [
             row for key, row in active_by_key.items()
             if key not in incoming_keys
+            and _normalize_shift_value(row.get("location")) in batch_locations
+            and _normalize_shift_value(row.get("specialty") or "USG") in batch_specialties
         ]
-        logger.info("Shift sync stage=deactivate_stale batch=%s count=%s", source_batch_id, len(stale_active_rows))
+        logger.info("Shift sync stage=deactivate_stale batch=%s count=%s (scoped to locations=%s specialties=%s)",
+            source_batch_id, len(stale_active_rows), batch_locations, batch_specialties)
         for row in stale_active_rows:
             patch_shift_row(row["id"], {
                 "is_active": False,
@@ -801,6 +916,7 @@ Exemplo:
         "batch_id": source_batch_id,
         "identity_key": "location + room + day_of_week + time_slot + specialty",
         "locations": sorted(list(set(s.get("location", "") for s in prepared_shifts if s.get("location")))),
+        "specialties": sorted(list(set(s.get("specialty", "") for s in prepared_shifts if s.get("specialty")))),
         "available": sum(1 for s in prepared_shifts if s.get("status") == "available"),
         "total": len(prepared_shifts),
         "summary": summary,
