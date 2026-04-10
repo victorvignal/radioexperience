@@ -577,6 +577,103 @@ class ShiftUpdateRequest(BaseModel):
     specialty: str | None = None
 
 
+def _extract_json_objects_brace_counting(text: str) -> list[dict]:
+    """Extract JSON objects from text by counting braces. Handles nested braces."""
+    objects = []
+    i = 0
+    while i < len(text):
+        if text[i] == '{':
+            depth = 0
+            start = i
+            while i < len(text):
+                if text[i] == '{':
+                    depth += 1
+                elif text[i] == '}':
+                    depth -= 1
+                    if depth == 0:
+                        candidate = text[start:i + 1]
+                        try:
+                            obj = json.loads(candidate)
+                            if isinstance(obj, dict) and 'location' in obj:
+                                objects.append(obj)
+                        except (json.JSONDecodeError, ValueError):
+                            pass
+                        break
+                elif text[i] == '"':
+                    # Skip strings
+                    i += 1
+                    while i < len(text) and text[i] != '"':
+                        if text[i] == '\\':
+                            i += 1  # skip escaped char
+                        i += 1
+                i += 1
+        i += 1
+    return objects
+
+
+def _parse_shifts_json(raw_response: str) -> list[dict]:
+    """Parse GPT-4o vision response into a list of shift dicts.
+    
+    Handles: markdown fences, text before/after JSON, truncated arrays,
+    single objects, nested braces, and malformed JSON.
+    """
+    if not raw_response or not raw_response.strip():
+        raise ValueError("GPT-4o returned an empty response. A imagem pode estar ilegível.")
+
+    cleaned = raw_response.strip()
+
+    # Strip markdown code fences
+    if "```" in cleaned:
+        cleaned = re.sub(r"```(?:json)?\s*", "", cleaned)
+        cleaned = cleaned.replace("```", "")
+        cleaned = cleaned.strip()
+
+    # Strategy 1: Find JSON array and parse directly
+    json_start = cleaned.find('[')
+    json_end = cleaned.rfind(']') + 1
+    if json_start >= 0 and json_end > json_start:
+        try:
+            result = json.loads(cleaned[json_start:json_end])
+            if isinstance(result, list) and result:
+                return result
+        except json.JSONDecodeError:
+            pass  # fall through to strategy 2
+
+    # Strategy 2: Find a single JSON object (wrap in array)
+    brace_start = cleaned.find('{')
+    brace_end = cleaned.rfind('}') + 1
+    if brace_start >= 0 and brace_end > brace_start:
+        try:
+            obj = json.loads(cleaned[brace_start:brace_end])
+            if isinstance(obj, dict) and 'location' in obj:
+                return [obj]
+        except json.JSONDecodeError:
+            pass  # fall through to strategy 3
+
+    # Strategy 3: Brace-counting extraction (handles truncated, nested, mixed text)
+    objects = _extract_json_objects_brace_counting(cleaned)
+    if objects:
+        logger.warning("Recovered %d shifts via brace counting from malformed response", len(objects))
+        return objects
+
+    # Strategy 4: Regex extraction (handles simple flat objects)
+    objects = []
+    for m in re.finditer(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', cleaned, re.DOTALL):
+        try:
+            obj = json.loads(m.group())
+            if isinstance(obj, dict) and 'location' in obj:
+                objects.append(obj)
+        except (json.JSONDecodeError, ValueError):
+            pass
+    if objects:
+        logger.warning("Recovered %d shifts via regex from malformed response", len(objects))
+        return objects
+
+    # All strategies failed
+    preview = cleaned[:300]
+    raise ValueError(f"Nenhum JSON válido encontrado na resposta do GPT-4o. Resposta começa com: {preview}")
+
+
 def _clip_text(value, limit: int = 500) -> str:
     text = "" if value is None else str(value)
     return text if len(text) <= limit else f"{text[:limit]}…"
@@ -667,47 +764,10 @@ Exemplo:
         raise HTTPException(status_code=500, detail=f"Erro na chamada OpenAI vision: {type(e).__name__}: {str(e)}")
 
     try:
-        # Strip markdown code blocks if present
-        cleaned = raw_response
-        if "```" in cleaned:
-            cleaned = re.sub(r"```(?:json)?\s*", "", cleaned)
-            cleaned = cleaned.replace("```", "")
-        cleaned = cleaned.strip()
-        # Try to find JSON array
-        json_start = cleaned.find('[')
-        json_end = cleaned.rfind(']') + 1
-        if json_start >= 0 and json_end > json_start:
-            try:
-                extracted_shifts = json.loads(cleaned[json_start:json_end])
-            except json.JSONDecodeError:
-                # Truncated response: extract complete objects and close array
-                logger.warning("JSON parse failed, attempting truncation repair")
-                objects_str = cleaned[json_start + 1:].rstrip()
-                objects = []
-                for m in re.finditer(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', objects_str, re.DOTALL):
-                    try:
-                        obj = json.loads(m.group())
-                        if isinstance(obj, dict) and 'location' in obj:
-                            objects.append(obj)
-                    except json.JSONDecodeError:
-                        pass
-                if objects:
-                    extracted_shifts = objects
-                    logger.warning("Recovered %d shifts from truncated response", len(objects))
-                else:
-                    raise ValueError(f"Truncated response, no valid objects recovered. Response ends with: {cleaned[-300:]}")
-        else:
-            # Fallback: try regex for array
-            m = re.search(r'\[.*\]', cleaned, re.DOTALL)
-            if m:
-                extracted_shifts = json.loads(m.group())
-            else:
-                raise ValueError(f"No JSON array found. Response starts with: {cleaned[:200]}")
-        if not isinstance(extracted_shifts, list):
-            raise ValueError(f"Response is not a list: {type(extracted_shifts).__name__}")
+        extracted_shifts = _parse_shifts_json(raw_response)
         logger.info("Extracted %d shifts from vision response", len(extracted_shifts))
     except Exception as e:
-        logger.error("Failed to parse GPT-4o JSON response: %s | raw=%s", str(e), raw_response[:800] if raw_response else "None")
+        logger.error("Failed to parse GPT-4o JSON response: %s | raw=%s", str(e), raw_response[:1000] if raw_response else "None")
         raise HTTPException(status_code=500, detail=f"Erro ao parsear resposta do GPT-4o: {str(e)}")
 
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
