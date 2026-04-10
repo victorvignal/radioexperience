@@ -131,6 +131,7 @@ def create_feed_post(*, title: str, summary: str | None, source_url: str, journa
         "type": "article",
         "title": title,
         "content": build_feed_content(summary, specialty),
+        "is_agent": True,
         "metadata": {
             "source": curated_source(),
             "source_url": source_url,
