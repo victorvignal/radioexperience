@@ -59,7 +59,7 @@ except ImportError:
     except ImportError:
         HAS_PDFMINER = False
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(levelname)s %(message)s')
 logger = logging.getLogger("aria")
 
 # Load env from parent directory
@@ -75,6 +75,14 @@ qdrant = QdrantClient(
 COLLECTION = os.getenv("QDRANT_COLLECTION", "radioexperience_knowledge")
 EMBED_MODEL = os.getenv("OPENAI_EMBED_MODEL", "text-embedding-3-small")
 MIN_RELEVANCE_SCORE = float(os.getenv("MIN_RELEVANCE_SCORE", "0.55"))
+
+# Log env var status at startup (mask keys)
+_openai_key = os.getenv("OPENAI_API_KEY", "")
+_supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY") or ""
+logger.info("Startup env check: OPENAI_API_KEY=%s, SUPABASE_SERVICE_KEY=%s, QDRANT_URL=%s",
+    "SET" if _openai_key else "MISSING",
+    "SET" if _supabase_key else "MISSING",
+    "SET" if os.getenv("QDRANT_URL") else "MISSING")
 
 # ── Upload Progress Tracker ──
 upload_progress: dict[str, dict] = {}
@@ -537,6 +545,7 @@ Exemplo:
 ]"""
 
     try:
+        logger.info("Upload shifts: calling GPT-4o vision with %d image(s), file=%s", len(req.images[:4]), req.fileName)
         response = openai_client.chat.completions.create(
             model="gpt-4o",
             messages=[
@@ -547,20 +556,31 @@ Exemplo:
             max_tokens=4000,
         )
         raw_response = response.choices[0].message.content
+        logger.info("GPT-4o vision response length=%d chars", len(raw_response) if raw_response else 0)
+    except Exception as e:
+        logger.exception("GPT-4o vision API call failed")
+        raise HTTPException(status_code=500, detail=f"Erro na chamada OpenAI vision: {type(e).__name__}: {str(e)}")
 
+    try:
         json_start = raw_response.find('[')
         json_end = raw_response.rfind(']') + 1
         if json_start >= 0 and json_end > json_start:
             extracted_shifts = json.loads(raw_response[json_start:json_end])
         else:
             raise ValueError("No JSON array found in response")
+        logger.info("Extracted %d shifts from vision response", len(extracted_shifts))
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao processar: {str(e)}")
+        logger.error("Failed to parse GPT-4o JSON response: %s | raw=%s", str(e), raw_response[:500] if raw_response else "None")
+        raise HTTPException(status_code=500, detail=f"Erro ao parsear resposta do GPT-4o: {str(e)}")
 
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
     supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    logger.info("Upload shifts: SUPABASE_URL=%s, key_source=%s", supabase_url,
+        "SUPABASE_SERVICE_KEY" if os.getenv("SUPABASE_SERVICE_KEY") else
+        "SUPABASE_SERVICE_ROLE_KEY" if os.getenv("SUPABASE_SERVICE_ROLE_KEY") else "MISSING")
     if not supabase_key:
-        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY/SUPABASE_SERVICE_ROLE_KEY não configurada")
+        logger.error("No Supabase service key configured! Set SUPABASE_SERVICE_KEY on Railway.")
+        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY não configurada no servidor. Verifique as variáveis de ambiente no Railway.")
 
     seen_at_iso = datetime.now(timezone.utc).isoformat()
     source_batch_id = str(uuid.uuid4())
