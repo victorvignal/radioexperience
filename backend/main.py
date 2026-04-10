@@ -553,7 +553,7 @@ Exemplo:
                 {"role": "user", "content": vision_messages},
             ],
             temperature=0.1,
-            max_tokens=4000,
+            max_tokens=16000,
         )
         raw_response = response.choices[0].message.content
         logger.info("GPT-4o vision response length=%d chars", len(raw_response) if raw_response else 0)
@@ -572,7 +572,25 @@ Exemplo:
         json_start = cleaned.find('[')
         json_end = cleaned.rfind(']') + 1
         if json_start >= 0 and json_end > json_start:
-            extracted_shifts = json.loads(cleaned[json_start:json_end])
+            try:
+                extracted_shifts = json.loads(cleaned[json_start:json_end])
+            except json.JSONDecodeError:
+                # Truncated response: extract complete objects and close array
+                logger.warning("JSON parse failed, attempting truncation repair")
+                objects_str = cleaned[json_start + 1:].rstrip()
+                objects = []
+                for m in re.finditer(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', objects_str, re.DOTALL):
+                    try:
+                        obj = json.loads(m.group())
+                        if isinstance(obj, dict) and 'location' in obj:
+                            objects.append(obj)
+                    except json.JSONDecodeError:
+                        pass
+                if objects:
+                    extracted_shifts = objects
+                    logger.warning("Recovered %d shifts from truncated response", len(objects))
+                else:
+                    raise ValueError(f"Truncated response, no valid objects recovered. Response ends with: {cleaned[-300:]}")
         else:
             # Fallback: try regex for array
             m = re.search(r'\[.*\]', cleaned, re.DOTALL)
