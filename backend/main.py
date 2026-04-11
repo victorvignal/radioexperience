@@ -1170,6 +1170,34 @@ def delete_shifts(before: str | None = None, after: str | None = None):
 def chat(req: ChatRequest):
     logger.info(f"Chat request: question_len={len(req.question)}, top_k={req.top_k}, specialty={req.specialty}, has_image={bool(req.image_base64)}")
 
+    # 0. Handle conversational/small talk messages before Qdrant search
+    import re
+
+    SMALL_TALK_PATTERNS = [
+        r'^\s*(oi|olá|ola|hey|hello|e aí|eai|eai|fala)\s*[!.?]*\s*$',
+        r'^\s*(tudo bem|tudo bom|tudo certo|como vai|como vc tá|como você está)\s*[!.?]*\s*$',
+        r'^\s*(bom dia|boa tarde|boa noite|boa madrugada)\s*[!.?]*\s*$',
+        r'^\s*(obrigado|obrigada|valeu|vlw|thanks|brigad[ao])\s*[!.?]*\s*$',
+        r'^\s*(tchau|bye|até mais|até logo|flw|fui)\s*[!.?]*\s*$',
+        r'^\s*(quem é você|quem é vc|o que vc faz|o que você faz|qual seu nome)\s*[!.?]*\s*$',
+    ]
+
+    is_small_talk = any(re.match(p, req.question.strip().lower()) for p in SMALL_TALK_PATTERNS)
+    if is_small_talk:
+        q_lower = req.question.strip().lower()
+        if any(w in q_lower for w in ['obrigado', 'obrigada', 'valeu', 'vlw', 'thanks']):
+            reply = 'Por nada! 😊 Se precisar de ajuda com radiologia, exames por imagem ou qualquer dúvida técnica, é só perguntar. Estou aqui!'
+        elif any(w in q_lower for w in ['tchau', 'bye', 'até mais', 'até logo', 'flw', 'fui']):
+            reply = 'Até mais! 👋 Foi um prazer ajudar. Volte sempre que precisar — estou sempre disponível para Radiologia e Diagnóstico por Imagem.'
+        elif any(w in q_lower for w in ['bom dia', 'boa tarde', 'boa noite']):
+            greeting = 'Bom dia' if 'bom dia' in q_lower else 'Boa tarde' if 'boa tarde' in q_lower else 'Boa noite'
+            reply = f'{greeting}! 😊 Eu sou a **ARIA**, assistente de radiologia da RadioeXperience. Posso ajudar com dúvidas sobre radiologia, diagnóstico por imagem, protocolos e classificações (BI-RADS, TI-RADS, Fleischner...). O que você quer saber?'
+        elif any(w in q_lower for w in ['quem é', 'o que vc faz', 'o que você faz', 'qual seu nome']):
+            reply = 'Eu sou a **ARIA** — Assistente de Radiologia por IA, parte da plataforma **RadioeXperience**. Fui treinada com uma vasta base de conhecimento em Radiologia e Diagnóstico por Imagem, incluindo livros, artigos e guidelines internacionais. Posso ajudar com dúvidas técnicas, classificações (BI-RADS, TI-RADS, Fleischner), protocolos de exame e muito mais. Como posso ajudar?'
+        else:
+            reply = 'Oi! 😊 Eu sou a **ARIA**, assistente de radiologia da RadioeXperience. Posso ajudar com dúvidas sobre radiologia, diagnóstico por imagem, protocolos e classificações. O que você gostaria de saber?'
+        return ChatResponse(answer=reply, sources=[], tokens_used=0)
+
     # 0. If image: first describe it to enhance the search query
     search_query = req.question
     image_description = None
@@ -1338,7 +1366,7 @@ def chat(req: ChatRequest):
     if top_boosted_score < MIN_RELEVANCE_SCORE and not image_context:
         logger.info(f"Rejected: top_boosted_score={top_boosted_score:.3f} < {MIN_RELEVANCE_SCORE}")
         return ChatResponse(
-            answer="Não encontrei informações suficientes na base de conhecimento para responder essa pergunta. Tente reformular com mais detalhes — por exemplo, inclua a especialidade, o tipo de exame ou a região anatômica.",
+            answer=f"Hmm, não encontrei referências suficientes na minha base de conhecimento para responder com segurança sobre isso. 😅\n\nPode tentar:\n- Ser mais específico (ex: incluir a **especialidade**, **região anatômica** ou **tipo de exame**)\n- Perguntar sobre um tema específico de radiologia (ex: "Classificação BI-RADS 4", "Protocolo de TC para AVC")\n- Mandar uma **imagem** para eu analisar os achados",
             sources=[],
             tokens_used=0,
         )
