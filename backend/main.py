@@ -49,7 +49,7 @@ import threading
 import re
 from pathlib import Path
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, UploadFile, File, Form
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
@@ -705,24 +705,26 @@ def _raise_shift_sync_error(stage: str, message: str, *, response: httpx.Respons
     raise HTTPException(status_code=500, detail=detail)
 
 
-@app.post("/upload-shifts")
-async def upload_shifts(req: ShiftUploadRequest):
-    """
-    Recebe imagens (base64) de escala médica, extrai dados via GPT-4o vision,
-    e sincroniza a tabela shifts no Supabase sem duplicar vagas equivalentes.
-    """
-    if not req.images:
-        raise HTTPException(status_code=400, detail="Nenhuma imagem fornecida")
+# ── Async upload job store ──
+_upload_jobs: dict[str, dict] = {}
 
-    vision_messages = []
-    for image_value in req.images[:4]:  # max 4 pages
-        image_url = image_value if image_value.startswith("data:") else f"data:image/jpeg;base64,{image_value}"
-        vision_messages.append({
-            "type": "image_url",
-            "image_url": {"url": image_url, "detail": "high"},
-        })
 
-    extraction_prompt = """Analise esta imagem de escala médica de radiologia.
+def _run_upload_job(job_id: str, images: list[str], file_name: str | None, page_count: int | None):
+    """Heavy processing in background thread for /upload-shifts."""
+    global _upload_jobs
+    try:
+        _upload_jobs[job_id]["status"] = "processing"
+
+        req_images = images
+        vision_messages = []
+        for image_value in req_images[:4]:  # max 4 pages
+            image_url = image_value if image_value.startswith("data:") else f"data:image/jpeg;base64,{image_value}"
+            vision_messages.append({
+                "type": "image_url",
+                "image_url": {"url": image_url, "detail": "high"},
+            })
+
+        extraction_prompt = """Analise esta imagem de escala médica de radiologia.
 Extraia TODOS os dados em formato JSON. Para cada entrada, inclua:
 - location: nome do local (ex: "LA ARPOADOR", "LA BOTAFOGO", "LA MEGA BARRA", "BR MEGA COPA", "BARRA PLAZA")
 - room: sala completa (ex: "USG - Sala 1", "Cardio - Sala 2", "Sala Híbrida")
@@ -746,8 +748,7 @@ Exemplo:
   {"location": "LA ARPOADOR", "room": "USG - Sala 4", "day_of_week": "SEG", "time_slot": null, "doctor_name": "vago", "status": "available", "specialty": "USG"}
 ]"""
 
-    try:
-        logger.info("Upload shifts: calling GPT-4o vision with %d image(s), file=%s", len(req.images[:4]), req.fileName)
+        logger.info("Upload shifts: calling GPT-4o vision with %d image(s), file=%s", len(req_images[:4]), file_name)
         response = openai_client.chat.completions.create(
             model="gpt-4o",
             messages=[
@@ -759,31 +760,22 @@ Exemplo:
         )
         raw_response = response.choices[0].message.content
         logger.info("GPT-4o vision response length=%d chars", len(raw_response) if raw_response else 0)
-    except Exception as e:
-        logger.exception("GPT-4o vision API call failed")
-        raise HTTPException(status_code=500, detail=f"Erro na chamada OpenAI vision: {type(e).__name__}: {str(e)}")
 
-    try:
         extracted_shifts = _parse_shifts_json(raw_response)
         logger.info("Extracted %d shifts from vision response", len(extracted_shifts))
-    except Exception as e:
-        logger.error("Failed to parse GPT-4o JSON response: %s | raw=%s", str(e), raw_response[:1000] if raw_response else "None")
-        raise HTTPException(status_code=500, detail=f"Erro ao parsear resposta do GPT-4o: {str(e)}")
 
-    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
-    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
-    logger.info("Upload shifts: SUPABASE_URL=%s, key_source=%s", supabase_url,
-        "SUPABASE_SERVICE_KEY" if os.getenv("SUPABASE_SERVICE_KEY") else
-        "SUPABASE_SERVICE_ROLE_KEY" if os.getenv("SUPABASE_SERVICE_ROLE_KEY") else "MISSING")
-    if not supabase_key:
-        logger.error("No Supabase service key configured! Set SUPABASE_SERVICE_KEY on Railway.")
-        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY não configurada no servidor. Verifique as variáveis de ambiente no Railway.")
+        supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+        supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+        logger.info("Upload shifts: SUPABASE_URL=%s, key_source=%s", supabase_url,
+            "SUPABASE_SERVICE_KEY" if os.getenv("SUPABASE_SERVICE_KEY") else
+            "SUPABASE_SERVICE_ROLE_KEY" if os.getenv("SUPABASE_SERVICE_ROLE_KEY") else "MISSING")
+        if not supabase_key:
+            raise RuntimeError("SUPABASE_SERVICE_KEY não configurada no servidor. Verifique as variáveis de ambiente no Railway.")
 
-    seen_at_iso = datetime.now(timezone.utc).isoformat()
-    source_batch_id = str(uuid.uuid4())
+        seen_at_iso = datetime.now(timezone.utc).isoformat()
+        source_batch_id = str(uuid.uuid4())
 
-    try:
-        prepared_shifts = [prepare_shift_payload(shift, source_batch_id, seen_at_iso, source_file=req.fileName) for shift in extracted_shifts]
+        prepared_shifts = [prepare_shift_payload(shift, source_batch_id, seen_at_iso, source_file=file_name) for shift in extracted_shifts]
 
         deduped_by_key: dict[str, dict] = {}
         duplicates_in_payload = 0
@@ -796,7 +788,7 @@ Exemplo:
         logger.info(
             "Shift sync start batch=%s file=%s extracted=%s deduped=%s duplicates_in_payload=%s",
             source_batch_id,
-            req.fileName,
+            file_name,
             len(extracted_shifts),
             len(prepared_shifts),
             duplicates_in_payload,
@@ -959,28 +951,65 @@ Exemplo:
             summary["deactivated"] += 1
 
         logger.info("Shift sync completed batch=%s summary=%s", source_batch_id, summary)
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.exception("Shift sync unexpected failure batch=%s", source_batch_id)
-        raise HTTPException(status_code=500, detail={
-            "stage": "unexpected",
-            "message": str(e),
+        result = {
+            "message": f"Sincronização concluída: {summary['created']} novas, {summary['updated']} atualizadas, {summary['deactivated']} desativadas.",
+            "file_name": file_name,
+            "page_count": page_count,
             "batch_id": source_batch_id,
-        })
+            "identity_key": "location + room + day_of_week + time_slot + specialty",
+            "locations": sorted(list(set(s.get("location", "") for s in prepared_shifts if s.get("location")))),
+            "specialties": sorted(list(set(s.get("specialty", "") for s in prepared_shifts if s.get("specialty")))),
+            "available": sum(1 for s in prepared_shifts if s.get("status") == "available"),
+            "total": len(prepared_shifts),
+            "summary": summary,
+        }
+        _upload_jobs[job_id] = {
+            "status": "completed",
+            "result": result,
+            "error": None,
+            "file_name": file_name,
+        }
+    except Exception as e:
+        logger.exception("Upload job %s failed", job_id)
+        _upload_jobs[job_id] = {
+            "status": "failed",
+            "result": None,
+            "error": str(e),
+            "file_name": file_name,
+        }
 
-    return {
-        "message": f"Sincronização concluída: {summary['created']} novas, {summary['updated']} atualizadas, {summary['deactivated']} desativadas.",
+
+@app.get("/upload-shifts/status/{job_id}")
+def get_upload_job_status(job_id: str):
+    job = _upload_jobs.get(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Job não encontrado")
+    return job
+
+
+@app.post("/upload-shifts", status_code=202)
+async def upload_shifts(req: ShiftUploadRequest, background_tasks: BackgroundTasks):
+    """
+    Recebe imagens (base64) de escala médica, dispara processamento em background
+    e retorna um job_id para polling de status.
+    """
+    if not req.images:
+        raise HTTPException(status_code=400, detail="Nenhuma imagem fornecida")
+
+    job_id = str(uuid.uuid4())
+    _upload_jobs[job_id] = {
+        "status": "pending",
+        "result": None,
+        "error": None,
         "file_name": req.fileName,
-        "page_count": req.pageCount,
-        "batch_id": source_batch_id,
-        "identity_key": "location + room + day_of_week + time_slot + specialty",
-        "locations": sorted(list(set(s.get("location", "") for s in prepared_shifts if s.get("location")))),
-        "specialties": sorted(list(set(s.get("specialty", "") for s in prepared_shifts if s.get("specialty")))),
-        "available": sum(1 for s in prepared_shifts if s.get("status") == "available"),
-        "total": len(prepared_shifts),
-        "summary": summary,
     }
+    thread = threading.Thread(
+        target=_run_upload_job,
+        args=(job_id, req.images, req.fileName, req.pageCount),
+        daemon=True,
+    )
+    thread.start()
+    return {"job_id": job_id, "status": "pending"}
 
 
 @app.patch("/shifts/{shift_id}")
