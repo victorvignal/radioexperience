@@ -1395,7 +1395,7 @@ def chat(req: ChatRequest):
     if top_boosted_score < MIN_RELEVANCE_SCORE and not image_context:
         logger.info(f"Rejected: top_boosted_score={top_boosted_score:.3f} < {MIN_RELEVANCE_SCORE}")
         return ChatResponse(
-            answer=f"Hmm, não encontrei referências suficientes na minha base de conhecimento para responder com segurança sobre isso. 😅\n\nPode tentar:\n- Ser mais específico (ex: incluir a **especialidade**, **região anatômica** ou **tipo de exame**)\n- Perguntar sobre um tema específico de radiologia (ex: "Classificação BI-RADS 4", "Protocolo de TC para AVC")\n- Mandar uma **imagem** para eu analisar os achados",
+            answer="Hmm, não encontrei referências suficientes na minha base de conhecimento para responder com segurança sobre isso. \U0001f605\n\nPode tentar:\n- Ser mais específico (ex: incluir a **especialidade**, **região anatômica** ou **tipo de exame**)\n- Perguntar sobre um tema específico de radiologia (ex: 'Classificação BI-RADS 4', 'Protocolo de TC para AVC')\n- Mandar uma **imagem** para eu analisar os achados",
             sources=[],
             tokens_used=0,
         )
