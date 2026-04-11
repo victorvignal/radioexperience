@@ -1117,7 +1117,7 @@ def bulk_delete_shifts(req: BulkDeleteRequest):
     if req.source_batch_id:
         params["source_batch_id"] = f"eq.{req.source_batch_id}"
     if req.before_date:
-        params["source_date"] = f"lt.{req.before_date}"
+        params["created_at"] = f"lt.{req.before_date}T23:59:59Z"
     if req.is_active_only:
         params["is_active"] = "eq.true"
     r = httpx.delete(f"{supabase_url}/rest/v1/shifts", headers=headers, params=params)
