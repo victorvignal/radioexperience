@@ -954,6 +954,414 @@ def list_feed_posts(post_type: str | None = None, limit: int = 20):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# ═══════════════════════════════════════════
+# ARIA Challenge endpoints
+# ═══════════════════════════════════════════
+
+CHALLENGE_SYSTEM_PROMPT = """You are ARIA Challenge, a radiology quiz generator. Based on the context below, generate a challenging but fair multiple choice question for radiologists.
+
+Context:
+{context}
+
+Rules:
+1. Question must be answerable ONLY from the provided context
+2. Generate 4 options (A, B, C, D)
+3. Only one correct answer
+4. Include a brief explanation of why the answer is correct
+5. Also include ARIA's answer (which is the correct answer)
+6. Return JSON only:
+{{
+  "question_text": "...",
+  "options": {{"A": "...", "B": "...", "C": "...", "D": "..."}},
+  "correct_answer": "A",
+  "explanation": "...",
+  "source_title": "..."
+}}"""
+
+
+class ChallengeStartRequest(BaseModel):
+    specialty: str = "Geral"
+    num_questions: int = 10
+    time_per_question: int = 60
+
+
+class ChallengeAnswerRequest(BaseModel):
+    challenge_id: str
+    question_id: str
+    user_answer: str
+    time_taken_seconds: int = 0
+
+
+class ChallengeFinishRequest(BaseModel):
+    challenge_id: str
+
+
+def _get_challenge_context(specialty: str) -> str:
+    """Get relevant context chunks from Qdrant for question generation."""
+    query_filter = None
+    if specialty and specialty != "Geral":
+        from qdrant_client.models import FieldCondition, MatchValue, Filter
+        query_filter = Filter(
+            must=[FieldCondition(key="specialty", match=MatchValue(value=specialty))]
+        )
+
+    # Use a generic radiology query to get diverse content
+    search_terms = f"radiologia {specialty} diagnóstico imagem"
+    try:
+        embedding = openai_client.embeddings.create(
+            input=[search_terms], model=EMBED_MODEL,
+        ).data[0].embedding
+
+        results = qdrant.query_points(
+            collection_name=COLLECTION,
+            query=embedding,
+            limit=8,
+            query_filter=query_filter,
+        )
+
+        context_parts = []
+        for hit in results.points[:5]:
+            p = hit.payload or {}
+            text = p.get("text", "")[:600]
+            title = p.get("title", "")
+            page = p.get("page_start", 0)
+            if text:
+                context_parts.append(f"[Fonte: {title}, p.{page}]\n{text}")
+
+        return "\n\n---\n\n".join(context_parts) if context_parts else ""
+    except Exception as e:
+        logger.warning(f"Challenge context fetch failed: {e}")
+        return ""
+
+
+def _generate_question(context: str) -> dict:
+    """Generate a single question from context using GPT-4o."""
+    prompt = CHALLENGE_SYSTEM_PROMPT.format(context=context)
+    response = openai_client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": prompt},
+            {"role": "user", "content": "Generate one radiology multiple choice question based on the context provided."},
+        ],
+        temperature=0.7,
+        max_tokens=600,
+        response_format={"type": "json_object"},
+    )
+    raw = response.choices[0].message.content.strip()
+    return json.loads(raw)
+
+
+@app.post("/challenge/start")
+def challenge_start(req: ChallengeStartRequest):
+    """Create a new challenge and generate questions from RAG."""
+    user_id = "anonymous"  # Will be set by frontend via auth
+
+    # Create challenge in Supabase
+    challenge_payload = {
+        "user_id": user_id,
+        "specialty": req.specialty,
+        "num_questions": req.num_questions,
+        "time_per_question": req.time_per_question,
+        "status": "in_progress",
+    }
+
+    try:
+        r = httpx.post(
+            f"{SUPABASE_URL}/rest/v1/challenges",
+            headers={**_supabase_headers(), "Prefer": "return=representation"},
+            json=challenge_payload,
+            timeout=15,
+        )
+        if r.status_code not in (200, 201):
+            raise HTTPException(status_code=500, detail=f"Failed to create challenge: {r.text}")
+        challenge = r.json()[0]
+        challenge_id = challenge["id"]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Challenge creation error: {str(e)}")
+
+    # Generate questions
+    questions = []
+    for i in range(req.num_questions):
+        try:
+            context = _get_challenge_context(req.specialty)
+            if not context:
+                logger.warning(f"No context for question {i+1}, skipping")
+                continue
+
+            q_data = _generate_question(context)
+
+            # Store question in Supabase
+            q_payload = {
+                "challenge_id": challenge_id,
+                "question_number": i + 1,
+                "question_text": q_data.get("question_text", ""),
+                "question_type": "multiple_choice",
+                "options": q_data.get("options", {}),
+                "correct_answer": q_data.get("correct_answer", ""),
+                "ai_answer": q_data.get("correct_answer", ""),
+                "explanation": q_data.get("explanation", ""),
+                "source_title": q_data.get("source_title", ""),
+                "context_chunk": context[:500],
+            }
+
+            qr = httpx.post(
+                f"{SUPABASE_URL}/rest/v1/challenge_questions",
+                headers={**_supabase_headers(), "Prefer": "return=representation"},
+                json=q_payload,
+                timeout=15,
+            )
+            if qr.status_code in (200, 201):
+                saved_q = qr.json()[0]
+                # Return to client WITHOUT correct_answer
+                questions.append({
+                    "id": saved_q["id"],
+                    "question_number": saved_q["question_number"],
+                    "question_text": saved_q["question_text"],
+                    "question_type": saved_q["question_type"],
+                    "options": saved_q["options"],
+                    "time_per_question": req.time_per_question,
+                })
+        except Exception as e:
+            logger.warning(f"Failed to generate question {i+1}: {e}")
+            continue
+
+    if not questions:
+        raise HTTPException(status_code=500, detail="Could not generate any questions. Try a different specialty.")
+
+    return {
+        "challenge_id": challenge_id,
+        "questions": questions,
+    }
+
+
+@app.post("/challenge/answer")
+def challenge_answer(req: ChallengeAnswerRequest):
+    """Submit an answer to a challenge question."""
+    # Get the question from Supabase
+    try:
+        qr = httpx.get(
+            f"{SUPABASE_URL}/rest/v1/challenge_questions",
+            headers=_supabase_headers(),
+            params={"id": f"eq.{req.question_id}", "select": "*"},
+            timeout=15,
+        )
+        if qr.status_code != 200 or not qr.json():
+            raise HTTPException(status_code=404, detail="Question not found")
+        question = qr.json()[0]
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching question: {str(e)}")
+
+    # Check answer (case-insensitive)
+    correct = question["correct_answer"].strip().upper() == req.user_answer.strip().upper()
+
+    # Calculate points
+    base_points = 100 if correct else 0
+    time_limit = question.get("time_per_question", 60) or 60
+    # Speed bonus: up to 50 points for fast answers
+    if correct and req.time_taken_seconds > 0:
+        speed_ratio = max(0, 1 - (req.time_taken_seconds / time_limit))
+        speed_bonus = int(50 * speed_ratio)
+    else:
+        speed_bonus = 0
+    points_earned = base_points + speed_bonus
+
+    # Store response
+    response_payload = {
+        "question_id": req.question_id,
+        "challenge_id": req.challenge_id,
+        "user_id": "anonymous",
+        "user_answer": req.user_answer,
+        "time_taken_seconds": req.time_taken_seconds,
+        "is_correct": correct,
+        "points_earned": points_earned,
+    }
+
+    try:
+        httpx.post(
+            f"{SUPABASE_URL}/rest/v1/challenge_responses",
+            headers={**_supabase_headers(), "Prefer": "return=minimal"},
+            json=response_payload,
+            timeout=15,
+        )
+    except Exception as e:
+        logger.warning(f"Failed to save response: {e}")
+
+    # Update challenge scores
+    try:
+        # Get current scores
+        cr = httpx.get(
+            f"{SUPABASE_URL}/rest/v1/challenges",
+            headers=_supabase_headers(),
+            params={"id": f"eq.{req.challenge_id}", "select": "user_score,ai_score,total_time_seconds"},
+            timeout=15,
+        )
+        if cr.status_code == 200 and cr.json():
+            ch = cr.json()[0]
+            new_user_score = (ch.get("user_score") or 0) + points_earned
+            # AI always gets 100 base (it knows the answer)
+            new_ai_score = (ch.get("ai_score") or 0) + 100
+            new_total_time = (ch.get("total_time_seconds") or 0) + req.time_taken_seconds
+
+            httpx.patch(
+                f"{SUPABASE_URL}/rest/v1/challenges?id=eq.{req.challenge_id}",
+                headers={**_supabase_headers(), "Prefer": "return=minimal"},
+                json={
+                    "user_score": new_user_score,
+                    "ai_score": new_ai_score,
+                    "total_time_seconds": new_total_time,
+                },
+                timeout=15,
+            )
+        else:
+            new_user_score = points_earned
+            new_ai_score = 100
+    except Exception as e:
+        logger.warning(f"Failed to update challenge scores: {e}")
+        new_user_score = points_earned
+        new_ai_score = 100
+
+    return {
+        "is_correct": correct,
+        "correct_answer": question["correct_answer"],
+        "ai_answer": question.get("ai_answer", question["correct_answer"]),
+        "explanation": question.get("explanation", ""),
+        "points_earned": points_earned,
+        "user_score": new_user_score,
+        "ai_score": new_ai_score,
+    }
+
+
+@app.post("/challenge/finish")
+def challenge_finish(req: ChallengeFinishRequest):
+    """Finish a challenge and return final results."""
+    # Update challenge status
+    try:
+        httpx.patch(
+            f"{SUPABASE_URL}/rest/v1/challenges?id=eq.{req.challenge_id}",
+            headers={**_supabase_headers(), "Prefer": "return=representation"},
+            json={"status": "finished", "finished_at": datetime.now(timezone.utc).isoformat()},
+            timeout=15,
+        )
+    except Exception as e:
+        logger.warning(f"Failed to finish challenge: {e}")
+
+    # Get challenge details
+    try:
+        cr = httpx.get(
+            f"{SUPABASE_URL}/rest/v1/challenges",
+            headers=_supabase_headers(),
+            params={"id": f"eq.{req.challenge_id}", "select": "*"},
+            timeout=15,
+        )
+        challenge = cr.json()[0] if cr.status_code == 200 and cr.json() else {}
+    except Exception:
+        challenge = {}
+
+    # Get all questions and responses
+    try:
+        qr = httpx.get(
+            f"{SUPABASE_URL}/rest/v1/challenge_questions",
+            headers=_supabase_headers(),
+            params={"challenge_id": f"eq.{req.challenge_id}", "select": "*", "order": "question_number.asc"},
+            timeout=15,
+        )
+        questions = qr.json() if qr.status_code == 200 else []
+
+        rr = httpx.get(
+            f"{SUPABASE_URL}/rest/v1/challenge_responses",
+            headers=_supabase_headers(),
+            params={"challenge_id": f"eq.{req.challenge_id}", "select": "*"},
+            timeout=15,
+        )
+        responses = rr.json() if rr.status_code == 200 else []
+    except Exception:
+        questions = []
+        responses = []
+
+    # Build detail list
+    resp_map = {r["question_id"]: r for r in responses}
+    questions_detail = []
+    for q in questions:
+        resp = resp_map.get(q["id"], {})
+        questions_detail.append({
+            "question_number": q["question_number"],
+            "question_text": q["question_text"],
+            "options": q["options"],
+            "correct_answer": q["correct_answer"],
+            "ai_answer": q.get("ai_answer", q["correct_answer"]),
+            "user_answer": resp.get("user_answer"),
+            "is_correct": resp.get("is_correct", False),
+            "time_taken_seconds": resp.get("time_taken_seconds", 0),
+            "points_earned": resp.get("points_earned", 0),
+            "explanation": q.get("explanation", ""),
+        })
+
+    return {
+        "challenge_id": req.challenge_id,
+        "user_score": challenge.get("user_score", 0),
+        "ai_score": challenge.get("ai_score", 0),
+        "total_time": challenge.get("total_time_seconds", 0),
+        "questions_detail": questions_detail,
+    }
+
+
+@app.get("/challenge/leaderboard")
+def challenge_leaderboard(specialty: str | None = None, limit: int = 20):
+    """Get challenge leaderboard."""
+    params = {
+        "select": "id,user_id,specialty,user_score,ai_score,num_questions,total_time_seconds,created_at",
+        "status": "eq.finished",
+        "order": "user_score.desc,total_time_seconds.asc",
+        "limit": str(min(limit, 50)),
+    }
+    if specialty:
+        params["specialty"] = f"eq.{specialty}"
+
+    try:
+        r = httpx.get(
+            f"{SUPABASE_URL}/rest/v1/challenges",
+            headers=_supabase_headers(),
+            params=params,
+            timeout=15,
+        )
+        if r.status_code == 200:
+            return {"leaderboard": r.json(), "count": len(r.json())}
+        raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/challenge/history")
+def challenge_history(user_id: str | None = None):
+    """Get user's challenge history."""
+    params = {
+        "select": "*",
+        "order": "created_at.desc",
+        "limit": "50",
+    }
+    if user_id:
+        params["user_id"] = f"eq.{user_id}"
+
+    try:
+        r = httpx.get(
+            f"{SUPABASE_URL}/rest/v1/challenges",
+            headers=_supabase_headers(),
+            params=params,
+            timeout=15,
+        )
+        if r.status_code == 200:
+            return {"challenges": r.json(), "count": len(r.json())}
+        raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", "8000"))
