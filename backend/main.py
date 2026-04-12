@@ -321,12 +321,19 @@ Exemplo:
         raw_response = response.choices[0].message.content
 
         import json
-        json_start = raw_response.find('[')
-        json_end = raw_response.rfind(']') + 1
+        # Strip markdown code blocks if present
+        clean = raw_response.strip()
+        if clean.startswith('```'):
+            clean = clean.split('\n', 1)[1] if '\n' in clean else clean[3:]
+        if clean.endswith('```'):
+            clean = clean.rsplit('```', 1)[0]
+        clean = clean.strip()
+        json_start = clean.find('[')
+        json_end = clean.rfind(']') + 1
         if json_start >= 0 and json_end > json_start:
-            shifts = json.loads(raw_response[json_start:json_end])
+            shifts = json.loads(clean[json_start:json_end])
         else:
-            raise ValueError(f"No JSON array found. Raw response: {raw_response[:500]}")
+            raise ValueError(f"No JSON array found. Raw response: {clean[:500]}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao processar: {str(e)}")
 
