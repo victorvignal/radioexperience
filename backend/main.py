@@ -326,7 +326,7 @@ Exemplo:
         if json_start >= 0 and json_end > json_start:
             shifts = json.loads(raw_response[json_start:json_end])
         else:
-            raise ValueError("No JSON array found in response")
+            raise ValueError(f"No JSON array found. Raw response: {raw_response[:500]}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao processar: {str(e)}")
 
