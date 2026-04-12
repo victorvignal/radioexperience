@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 const DEFAULT_API = "https://aria-backend-production-176b.up.railway.app/chat";
 const API_URL = (() => {
@@ -9,86 +9,83 @@ const API_URL = (() => {
   return import.meta.env.VITE_ARIA_API || DEFAULT_API;
 })();
 
-const formatTime = (date = new Date()) =>
-  date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
-
 export default function AriaChat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [image, setImage] = useState(null);
   const [busy, setBusy] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null);
-  const [imageBase64, setImageBase64] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
   const chatRef = useRef(null);
   const fileInputRef = useRef(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(max-width: 720px)");
-    const update = () => setIsMobile(mq.matches);
-    update();
-    if (mq.addEventListener) mq.addEventListener("change", update);
-    else mq.addListener(update);
-    return () => {
-      if (mq.removeEventListener) mq.removeEventListener("change", update);
-      else mq.removeListener(update);
-    };
-  }, []);
 
   const scrollToBottom = () => {
     if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight;
   };
 
-  const send = async () => {
-    const q = input.trim();
-    if (!q || busy) return;
-    const imageToSend = imagePreview;
-    const imagePayload = imageBase64;
-    const ts = formatTime();
-    setBusy(true);
-    setInput("");
-    setImagePreview(null);
-    setImageBase64(null);
-    if (fileInputRef.current) fileInputRef.current.value = "";
-    setMessages(prev => [...prev, { role: "user", text: q, image: imageToSend, ts }]);
-    setTimeout(scrollToBottom, 50);
-
-    try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: q, top_k: 5, image_base64: imagePayload || undefined }),
-      });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        setMessages(prev => [...prev, { role: "bot", text: `Erro: ${err.detail || "Falha na conexão"}`, ts: formatTime() }]);
-      } else {
-        const data = await res.json();
-        setMessages(prev => [...prev, { role: "bot", text: data.answer, sources: data.sources, ts: formatTime() }]);
-      }
-    } catch {
-      setMessages(prev => [...prev, { role: "bot", text: "Não foi possível conectar ao servidor ARIA.", ts: formatTime() }]);
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImage(e.target.files[0]);
     }
-    setBusy(false);
-    setTimeout(scrollToBottom, 50);
-  };
-
-  const handleImageSelect = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      setImagePreview(ev.target.result);
-      const base64 = ev.target.result.split(",")[1];
-      setImageBase64(base64);
-    };
-    reader.readAsDataURL(file);
   };
 
   const clearImage = () => {
-    setImagePreview(null);
-    setImageBase64(null);
+    setImage(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const send = async () => {
+    const q = input.trim();
+    if ((!q && !image) || busy) return;
+    setBusy(true);
+    
+    const currentImage = image;
+    const currentText = q;
+    
+    setInput("");
+    setImage(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+
+    const userMsg = {
+      role: "user",
+      text: currentText,
+      hasImage: !!currentImage,
+      imageName: currentImage?.name
+    };
+    setMessages(prev => [...prev, userMsg]);
+    setTimeout(scrollToBottom, 50);
+
+    try {
+      let body;
+      let headers = {};
+      
+      if (currentImage) {
+        const formData = new FormData();
+        if (currentText) formData.append("question", currentText);
+        formData.append("image", currentImage);
+        formData.append("top_k", "5");
+        body = formData;
+      } else {
+        headers["Content-Type"] = "application/json";
+        body = JSON.stringify({ question: currentText, top_k: 5 });
+      }
+
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers,
+        body,
+      });
+      
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        setMessages(prev => [...prev, { role: "bot", text: `Erro: ${err.detail || "Falha na conexão"}` }]);
+      } else {
+        const data = await res.json();
+        setMessages(prev => [...prev, { role: "bot", text: data.answer, sources: data.sources }]);
+      }
+    } catch {
+      setMessages(prev => [...prev, { role: "bot", text: "Não foi possível conectar ao servidor ARIA." }]);
+    }
+    setBusy(false);
+    setTimeout(scrollToBottom, 50);
   };
 
   const handleKey = (e) => {
@@ -98,117 +95,81 @@ export default function AriaChat() {
   const suggestions = ["O que é BI-RADS?", "Anatomia da mama", "Técnica radiológica do tórax", "Categorias do BI-RADS"];
 
   const styles = {
+    imagePreview: {
+      margin: "8px 14px 0",
+      padding: "8px 12px",
+      background: "rgba(0,26,43,0.4)",
+      borderRadius: 8,
+      display: "flex",
+      alignItems: "center",
+      gap: 8,
+      fontSize: 12,
+      color: "#8ba8c4",
+      border: "1px solid rgba(192,214,234,0.1)",
+    },
+    imageHint: {
+      fontSize: 11,
+      color: "#DDFF55",
+      fontStyle: "italic",
+      marginBottom: 4,
+    },
+    removeImage: {
+      background: "none",
+      border: "none",
+      color: "#ff6b6b",
+      cursor: "pointer",
+      fontSize: 16,
+      padding: "0 4px",
+      lineHeight: 1,
+    },
+    uploadBtn: {
+      background: "rgba(192,214,234,0.08)",
+      border: "1px solid rgba(192,214,234,0.15)",
+      borderRadius: 10,
+      padding: "10px 12px",
+      color: "#F6F2E8",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: 16,
+    },
     wrapper: {
       background: "rgba(0,26,43,0.6)",
       border: "1px solid rgba(192,214,234,0.15)",
-      borderRadius: isMobile ? 0 : 20,
+      borderRadius: 20,
       overflow: "hidden",
-      maxWidth: isMobile ? "100%" : 700,
-      width: "100%",
-      margin: isMobile ? 0 : "24px auto 0",
+      maxWidth: 700,
+      margin: "24px auto 0",
       backdropFilter: "blur(20px)",
-      display: "flex",
-      flexDirection: "column",
-      height: isMobile ? "100vh" : "auto",
     },
     messages: {
-      flex: 1,
+      height: 340,
       overflowY: "auto",
-      padding: isMobile ? 16 : 18,
+      padding: 18,
       display: "flex",
       flexDirection: "column",
       gap: 10,
-      minHeight: isMobile ? "calc(100vh - 170px)" : 340,
     },
     welcome: {
       textAlign: "center",
       color: "#8ba8c4",
-      padding: isMobile ? "32px 16px" : "24px 12px",
+      padding: "24px 12px",
       fontSize: 14,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: 8,
-    },
-    welcomeAvatar: {
-      width: 72,
-      height: 72,
-      borderRadius: "50%",
-      background: "rgba(221,255,85,0.08)",
-      border: "1px solid rgba(221,255,85,0.35)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: "#DDFF55",
-      fontWeight: 800,
-      fontSize: 18,
-      boxShadow: "0 8px 24px rgba(0,0,0,0.35)",
-    },
-    welcomeTitle: {
-      fontWeight: 800,
-      color: "#F6F2E8",
-      fontSize: 20,
-      letterSpacing: 0.4,
-    },
-    welcomeSubtitle: {
-      color: "#8ba8c4",
-      fontSize: 14,
-      marginTop: -2,
     },
     msg: (role) => ({
       maxWidth: "85%",
-      padding: "12px 16px",
-      borderRadius: 16,
-      fontSize: isMobile ? 15 : 13.5,
+      padding: "10px 14px",
+      borderRadius: role === "user" ? "12px 12px 4px 12px" : "12px 12px 12px 4px",
+      fontSize: 13.5,
       lineHeight: 1.6,
       whiteSpace: "pre-wrap",
       wordWrap: "break-word",
       alignSelf: role === "user" ? "flex-end" : "flex-start",
-      background: role === "user" ? "#DDFF55" : "rgba(192,214,234,0.12)",
+      background: role === "user" ? "#DDFF55" : "rgba(192,214,234,0.08)",
       color: role === "user" ? "#001a2b" : "#F6F2E8",
-      border: role === "user" ? "none" : "1px solid rgba(192,214,234,0.18)",
-      boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
+      border: role === "user" ? "none" : "1px solid rgba(192,214,234,0.12)",
     }),
-    msgMeta: {
-      marginTop: 6,
-      fontSize: 11,
-      color: "rgba(139,168,196,0.75)",
-      textAlign: "right",
-    },
-    markdown: {
-      display: "flex",
-      flexDirection: "column",
-      gap: 8,
-    },
-    paragraph: {
-      margin: 0,
-      lineHeight: 1.6,
-    },
-    header: {
-      fontSize: 16,
-      fontWeight: 800,
-      margin: 0,
-      letterSpacing: 0.2,
-    },
-    bold: {
-      fontWeight: 800,
-    },
-    list: {
-      margin: "2px 0 0 18px",
-      padding: 0,
-      display: "flex",
-      flexDirection: "column",
-      gap: 6,
-    },
-    listItem: {
-      margin: 0,
-      lineHeight: 1.6,
-    },
-    citation: {
-      fontSize: 12,
-      color: "#8ba8c4",
-      fontStyle: "italic",
-    },
     sources: {
       marginTop: 8,
       paddingTop: 8,
@@ -218,19 +179,9 @@ export default function AriaChat() {
     },
     typing: {
       display: "flex",
-      flexDirection: "column",
-      gap: 6,
+      gap: 4,
       padding: "10px 14px",
       alignSelf: "flex-start",
-    },
-    typingDots: {
-      display: "flex",
-      gap: 4,
-    },
-    typingText: {
-      fontSize: 12,
-      color: "#8ba8c4",
-      fontStyle: "italic",
     },
     dot: (i) => ({
       width: 7,
@@ -243,204 +194,52 @@ export default function AriaChat() {
     inputRow: {
       display: "flex",
       gap: 8,
-      padding: isMobile ? "12px 12px" : "12px 14px",
+      padding: "12px 14px",
       borderTop: "1px solid rgba(192,214,234,0.12)",
-      background: "rgba(0,34,51,0.7)",
-      position: isMobile ? "sticky" : "relative",
-      bottom: isMobile ? 0 : "auto",
-      zIndex: 2,
+      background: "rgba(0,34,51,0.5)",
     },
     input: {
       flex: 1,
       background: "rgba(0,26,43,0.6)",
       border: "1px solid rgba(192,214,234,0.15)",
-      borderRadius: 12,
-      padding: "12px 14px",
+      borderRadius: 10,
+      padding: "10px 12px",
       color: "#F6F2E8",
-      fontSize: isMobile ? 15 : 13.5,
+      fontSize: 13.5,
       fontFamily: "inherit",
       resize: "none",
       outline: "none",
-      minHeight: 48,
-      maxHeight: 120,
+      minHeight: 40,
+      maxHeight: 100,
     },
     sendBtn: {
       background: "#DDFF55",
       border: "none",
-      borderRadius: 12,
-      minWidth: 48,
-      minHeight: 48,
-      padding: "0 16px",
-      color: "#001a2b",
-      fontSize: 16,
-      fontWeight: 800,
-      cursor: busy ? "not-allowed" : "pointer",
-      opacity: busy ? 0.5 : 1,
-      alignSelf: "flex-end",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    uploadBtn: {
-      background: "#DDFF55",
-      border: "none",
-      borderRadius: 12,
-      minWidth: 48,
-      minHeight: 48,
-      padding: "0 12px",
-      color: "#001a2b",
-      fontSize: 18,
-      fontWeight: 800,
-      cursor: busy ? "not-allowed" : "pointer",
-      opacity: busy ? 0.5 : 1,
-      alignSelf: "flex-end",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    previewRow: {
-      display: "flex",
-      alignItems: "center",
-      gap: 10,
-      padding: "10px 14px 0",
-      flexDirection: "column",
-      alignItems: "flex-start",
-    },
-    previewBox: {
-      display: "flex",
-      alignItems: "center",
-      gap: 8,
-      padding: 6,
-      borderRadius: 12,
-      background: "rgba(0,34,51,0.5)",
-      border: "1px solid rgba(192,214,234,0.12)",
-      width: "100%",
-    },
-    previewImg: {
-      height: 80,
-      width: "auto",
-      maxWidth: "100%",
-      borderRadius: 8,
-      border: "1px solid rgba(192,214,234,0.2)",
-    },
-    previewRemove: {
-      background: "rgba(221,255,85,0.2)",
-      border: "none",
-      borderRadius: 8,
-      padding: "6px 10px",
-      color: "#DDFF55",
-      cursor: "pointer",
-      fontWeight: 800,
-      minHeight: 36,
-    },
-    previewTip: {
-      fontSize: 12,
-      color: "#8ba8c4",
-      fontStyle: "italic",
-      paddingLeft: 4,
-    },
-    msgImage: {
-      display: "block",
-      maxHeight: 180,
-      maxWidth: "100%",
       borderRadius: 10,
-      marginBottom: 6,
-      border: "1px solid rgba(192,214,234,0.2)",
+      padding: "10px 16px",
+      color: "#001a2b",
+      fontSize: 15,
+      fontWeight: 700,
+      cursor: busy ? "not-allowed" : "pointer",
+      opacity: busy ? 0.5 : 1,
+      alignSelf: "flex-end",
     },
     sugRow: {
       display: "flex",
       flexWrap: "wrap",
-      gap: 8,
+      gap: 6,
       justifyContent: "center",
-      padding: "8px 14px 0",
+      padding: "0 14px 14px",
     },
     sug: {
       background: "rgba(221,255,85,0.08)",
       border: "1px solid rgba(221,255,85,0.2)",
       color: "#DDFF55",
-      padding: "8px 14px",
-      borderRadius: 999,
+      padding: "6px 12px",
+      borderRadius: 20,
       fontSize: 12,
       cursor: "pointer",
     },
-  };
-
-  const renderInline = (text, baseKey) => {
-    const parts = text.split(/(\[Fonte:[^\]]+\])/g);
-    const nodes = [];
-    parts.forEach((part, idx) => {
-      if (!part) return;
-      if (/^\[Fonte:[^\]]+\]$/.test(part)) {
-        nodes.push(
-          <span key={`${baseKey}-c-${idx}`} style={styles.citation}>{part}</span>
-        );
-        return;
-      }
-      const boldParts = part.split(/(\*\*.+?\*\*)/g);
-      boldParts.forEach((bp, j) => {
-        if (!bp) return;
-        if (/^\*\*.+\*\*$/.test(bp)) {
-          nodes.push(
-            <strong key={`${baseKey}-b-${idx}-${j}`} style={styles.bold}>{bp.slice(2, -2)}</strong>
-          );
-        } else {
-          nodes.push(<span key={`${baseKey}-t-${idx}-${j}`}>{bp}</span>);
-        }
-      });
-    });
-    return nodes;
-  };
-
-  const renderMarkdown = (text, keyBase) => {
-    const lines = text.split(/\r?\n/);
-    const blocks = [];
-    let listItems = [];
-    const flushList = () => {
-      if (listItems.length > 0) {
-        blocks.push(
-          <ul key={`${keyBase}-ul-${blocks.length}`} style={styles.list}>
-            {listItems}
-          </ul>
-        );
-        listItems = [];
-      }
-    };
-
-    lines.forEach((line, idx) => {
-      if (!line.trim()) {
-        flushList();
-        return;
-      }
-      const headerMatch = line.match(/^###\s+(.*)/);
-      const boldHeaderMatch = line.match(/^\*\*(.+)\*\*$/);
-      if (headerMatch || boldHeaderMatch) {
-        flushList();
-        const content = headerMatch ? headerMatch[1] : boldHeaderMatch[1];
-        blocks.push(
-          <div key={`${keyBase}-h-${idx}`} style={styles.header}>
-            {renderInline(content, `${keyBase}-h-${idx}`)}
-          </div>
-        );
-        return;
-      }
-      const listMatch = line.match(/^[-*•]\s+(.*)/);
-      if (listMatch) {
-        listItems.push(
-          <li key={`${keyBase}-li-${idx}`} style={styles.listItem}>
-            {renderInline(listMatch[1], `${keyBase}-li-${idx}`)}
-          </li>
-        );
-        return;
-      }
-      flushList();
-      blocks.push(
-        <p key={`${keyBase}-p-${idx}`} style={styles.paragraph}>
-          {renderInline(line, `${keyBase}-p-${idx}`)}
-        </p>
-      );
-    });
-    flushList();
-    return blocks;
   };
 
   return (
@@ -449,12 +248,9 @@ export default function AriaChat() {
       <div ref={chatRef} style={styles.messages}>
         {messages.length === 0 && (
           <div style={styles.welcome}>
-            <div style={styles.welcomeAvatar}>ARIA</div>
-            <div style={styles.welcomeTitle}>ARIA</div>
-            <div style={styles.welcomeSubtitle}>Assistente de Radiologia por IA</div>
-            <div style={{ color: "#8ba8c4", fontSize: 13 }}>
-              Pergunte sobre anatomia, técnicas, patologias ou diagnóstico por imagem.
-            </div>
+            <p style={{ fontSize: 24, marginBottom: 6 }}>🩻</p>
+            <p style={{ fontWeight: 700, color: "#F6F2E8", marginBottom: 4 }}>ARIA — Assistente de Radiologia por IA</p>
+            <p>Pergunte sobre anatomia, técnicas, patologias ou diagnóstico por imagem.</p>
             <div style={styles.sugRow}>
               {suggestions.map((s, i) => (
                 <button key={i} style={styles.sug} onClick={() => { setInput(s); }}>{s}</button>
@@ -464,55 +260,58 @@ export default function AriaChat() {
         )}
         {messages.map((m, i) => (
           <div key={i} style={styles.msg(m.role)}>
-            {m.image && <img src={m.image} alt="Imagem enviada" style={styles.msgImage} />}
-            <div style={styles.markdown}>{renderMarkdown(m.text, `msg-${i}`)}</div>
+            {m.text}
             {m.sources && m.sources.length > 0 && (
               <div style={styles.sources}>
                 <strong>📚 Fontes:</strong>
                 {m.sources.slice(0, 3).map((s, j) => {
                   // Clean up filename: remove prefixes, suffixes, replace underscores
                   let title = s.title
-                    .replace(/^(Mama|Neurorradiologia|Abdome|Torax|Pediatria|Geral|Ms|intervencao|Vascular|radioprotecao|Cabeca_Pescoco|Obstetricia|Urgencia)_Livro_/i, "")
-                    .replace(/^(Mama|Neurorradiologia|Abdome|Torax|Pediatria|Geral|Ms|intervencao|Vascular|radioprotecao|Cabeca_Pescoco|Obstetricia|Urgencia)_Artigo_/i, "")
-                    .replace(/_Semautor_SemAno.*$/i, "")
-                    .replace(/_DUP\d+$/i, "")
-                    .replace(/_Revisar/gi, "")
-                    .replace(/_/g, " ")
-                    .replace(/\s+/g, " ")
+                    .replace(/^(Mama|Neurorradiologia|Abdome|Torax|Pediatria|Geral|Ms|intervencao|Vascular|radioprotecao|Cabeca_Pescoco|Obstetricia|Urgencia)_Livro_/i, '')
+                    .replace(/^(Mama|Neurorradiologia|Abdome|Torax|Pediatria|Geral|Ms|intervencao|Vascular|radioprotecao|Cabeca_Pescoco|Obstetricia|Urgencia)_Artigo_/i, '')
+                    .replace(/_Semautor_SemAno.*$/i, '')
+                    .replace(/_DUP\d+$/i, '')
+                    .replace(/_Revisar/gi, '')
+                    .replace(/_/g, ' ')
+                    .replace(/\s+/g, ' ')
                     .trim();
                   const pg = s.page_start ? ` (p. ${s.page_start}${s.page_end && s.page_end !== s.page_start ? `-${s.page_end}` : ""})` : "";
                   return <div key={j}>• {title}{pg}</div>;
                 })}
               </div>
             )}
-            {m.ts && <div style={styles.msgMeta}>{m.ts}</div>}
           </div>
         ))}
         {busy && (
           <div style={styles.typing}>
-            <div style={styles.typingDots}>
-              {[0, 1, 2].map(i => <span key={i} style={styles.dot(i)} />)}
-            </div>
-            <div style={styles.typingText}>ARIA está pensando...</div>
+            {[0, 1, 2].map(i => <span key={i} style={styles.dot(i)} />)}
           </div>
         )}
       </div>
-      {imagePreview && (
-        <div style={styles.previewRow}>
-          <div style={styles.previewBox}>
-            <img src={imagePreview} alt="Prévia" style={styles.previewImg} />
-            <button style={styles.previewRemove} onClick={clearImage}>X</button>
-          </div>
-          <div style={styles.previewTip}>Adicione informações do caso para uma análise mais precisa</div>
+      {image && (
+        <div style={styles.imagePreview}>
+          <span style={{flex: 1}}>
+            <div style={styles.imageHint}>Adicione informações do caso pra aprimorar os resultados</div>
+            📎 {image.name}
+          </span>
+          <button style={styles.removeImage} onClick={clearImage} title="Remover imagem">✕</button>
         </div>
       )}
       <div style={styles.inputRow}>
-        <button
-          style={styles.uploadBtn}
-          onClick={() => fileInputRef.current && fileInputRef.current.click()}
-          disabled={busy}
-          aria-label="Enviar imagem"
-        >📷</button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleImageChange}
+          accept="image/*"
+          style={{ display: "none" }}
+        />
+        <button 
+          style={styles.uploadBtn} 
+          onClick={() => fileInputRef.current?.click()} 
+          title="Anexar imagem"
+        >
+          📎
+        </button>
         <textarea
           style={styles.input}
           value={input}
@@ -522,13 +321,6 @@ export default function AriaChat() {
           rows={1}
         />
         <button style={styles.sendBtn} onClick={send} disabled={busy}>➤</button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          style={{ display: "none" }}
-          onChange={handleImageSelect}
-        />
       </div>
     </div>
   );

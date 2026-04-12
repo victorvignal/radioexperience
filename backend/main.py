@@ -9,19 +9,15 @@ CREATE TABLE IF NOT EXISTS public.shifts (
   doctor_name text,
   status text NOT NULL DEFAULT 'available',
   specialty text DEFAULT 'USG',
-  created_at timestamptz DEFAULT now(),
-  updated_at timestamptz DEFAULT now(),
-  identity_key text,
-  is_active boolean DEFAULT true,
-  last_seen_at timestamptz,
-  source_batch_id text,
-  closed_at timestamptz,
-  reservation_note boolean DEFAULT false,
-  time_note text,
-  frequency_note text,
+  batch_id text,
   source_file text,
-  source_date date
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
 );
+
+-- Se a tabela já existe, adicione as colunas:
+-- ALTER TABLE public.shifts ADD COLUMN IF NOT EXISTS batch_id text;
+-- ALTER TABLE public.shifts ADD COLUMN IF NOT EXISTS source_file text;
 
 ALTER TABLE public.shifts ENABLE ROW LEVEL SECURITY;
 
@@ -42,34 +38,19 @@ import json
 import tempfile
 import base64
 import io
-import hashlib
 from datetime import datetime, timezone
-import uuid
-import threading
-import re
 from pathlib import Path
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, UploadFile, File, Form, BackgroundTasks
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams, PointStruct
+from qdrant_client.models import Distance, VectorParams
 import logging
 import httpx
 
-try:
-    from PyPDF2 import PdfReader
-    HAS_PDF2 = True
-except ImportError:
-    HAS_PDF2 = False
-    try:
-        from pdfminer.high_level import extract_text as pdfminer_extract
-        HAS_PDFMINER = True
-    except ImportError:
-        HAS_PDFMINER = False
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)s %(levelname)s %(message)s')
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("aria")
 
 # Load env from parent directory
@@ -85,292 +66,6 @@ qdrant = QdrantClient(
 COLLECTION = os.getenv("QDRANT_COLLECTION", "radioexperience_knowledge")
 EMBED_MODEL = os.getenv("OPENAI_EMBED_MODEL", "text-embedding-3-small")
 MIN_RELEVANCE_SCORE = float(os.getenv("MIN_RELEVANCE_SCORE", "0.55"))
-
-# Log env var status at startup (mask keys)
-_openai_key = os.getenv("OPENAI_API_KEY", "")
-_supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY") or ""
-logger.info("Startup env check: OPENAI_API_KEY=%s, SUPABASE_SERVICE_KEY=%s, QDRANT_URL=%s",
-    "SET" if _openai_key else "MISSING",
-    "SET" if _supabase_key else "MISSING",
-    "SET" if os.getenv("QDRANT_URL") else "MISSING")
-
-# ── Upload Progress Tracker ──
-upload_progress: dict[str, dict] = {}
-
-
-def parse_doctor_notes(raw_name: str) -> tuple[str, dict]:
-    """Parse embedded notes from a doctor name string.
-    
-    Returns (clean_name, notes_dict).
-    Handles patterns like (até 13 h), (15/15 dias), (Fixo), (Alt), etc.
-    """
-    if not raw_name or raw_name.strip().lower() in ("vago", "vacante", ""):
-        return (raw_name or "", {
-            "reservation": False,
-            "time_note": None,
-            "frequency_note": None,
-            "is_fixed": False,
-            "is_alt": False,
-            "is_scheduled": False,
-            "is_rotation": False,
-            "paaf": False,
-        })
-
-    notes = {
-        "reservation": False,
-        "time_note": None,
-        "frequency_note": None,
-        "is_fixed": False,
-        "is_alt": False,
-        "is_scheduled": False,
-        "is_rotation": False,
-        "paaf": False,
-    }
-
-    # Extract all parenthesized notes
-    note_pattern = re.compile(r'\(([^)]+)\)')
-    remaining = raw_name
-
-    for match in note_pattern.finditer(raw_name):
-        note_text = match.group(1).strip()
-        note_lower = note_text.lower()
-
-        # Time limits: (até 13 h), (até 14 h30), (até 13:30 h), (início 12:20 h)
-        if re.match(r'(até|inicio|início)\s+\d{1,2}[:h]\d{0,2}\s*h?', note_lower):
-            notes["time_note"] = note_text
-
-        # Frequency: (15/15 dias), (1 x mês)
-        elif re.match(r'\d+\s*/\s*\d+\s*dias?', note_lower) or re.match(r'\d+\s*x\s*m[eê]s', note_lower):
-            notes["frequency_note"] = note_text
-
-        # Fixed assignment
-        elif note_lower in ("fixo", "fixa"):
-            notes["is_fixed"] = True
-
-        # Alternate
-        elif note_lower == "alt":
-            notes["is_alt"] = True
-
-        # Scheduled rotation
-        elif note_lower == "escala":
-            notes["is_scheduled"] = True
-
-        # Rodízio (rotation)
-        elif note_lower in ("rodízio", "rodizio"):
-            notes["is_rotation"] = True
-
-        # Reserved
-        elif note_lower == "reservado":
-            notes["reservation"] = True
-
-        # PAAF capability
-        elif note_lower == "paaf":
-            notes["paaf"] = True
-
-    # Remove all notes from the name
-    clean_name = note_pattern.sub("", raw_name).strip()
-    # Clean up extra whitespace
-    clean_name = re.sub(r"\s+", " ", clean_name).strip()
-    # Remove trailing/leading punctuation artifacts
-    clean_name = clean_name.strip(" ,;-")
-
-    return (clean_name, notes)
-
-
-def _normalize_shift_value(value: str | None) -> str:
-    if value is None:
-        return ""
-    normalized = str(value).strip().upper()
-    normalized = re.sub(r"\s+", " ", normalized)
-    return normalized
-
-
-def _normalize_time_slot(value: str | None) -> str:
-    normalized = _normalize_shift_value(value)
-    normalized = normalized.replace(" ÀS ", "-")
-    normalized = normalized.replace(" AS ", "-")
-    normalized = normalized.replace("–", "-")
-    normalized = normalized.replace("—", "-")
-    normalized = normalized.replace(" ", "")
-    return normalized
-
-
-def build_shift_identity_key(shift: dict) -> str:
-    parts = [
-        _normalize_shift_value(shift.get("location")),
-        _normalize_shift_value(shift.get("room")),
-        _normalize_shift_value(shift.get("day_of_week")),
-        _normalize_time_slot(shift.get("time_slot")),
-        _normalize_shift_value(shift.get("specialty") or "USG"),
-    ]
-    raw_key = "|".join(parts)
-    return hashlib.sha256(raw_key.encode("utf-8")).hexdigest()
-
-
-def prepare_shift_payload(shift: dict, source_batch_id: str, seen_at_iso: str, source_file: str | None = None) -> dict:
-    raw_name = (shift.get("doctor_name") or "").strip()
-    clean_name, notes = parse_doctor_notes(raw_name)
-    
-    # Override status if GPT missed the reserved flag but notes caught it
-    status = (shift.get("status") or "available").strip().lower()
-    if notes["reservation"] and status != "occupied":
-        status = "reserved"
-    
-    payload = {
-        "location": (shift.get("location") or "").strip(),
-        "room": ((shift.get("room") or "").strip() or None),
-        "day_of_week": _normalize_shift_value(shift.get("day_of_week")),
-        "time_slot": ((shift.get("time_slot") or "").strip() or None),
-        "doctor_name": clean_name if clean_name else None,
-        "status": status,
-        "specialty": ((shift.get("specialty") or "USG").strip() or "USG"),
-        "is_active": True,
-        "last_seen_at": seen_at_iso,
-        "closed_at": None,
-        "source_batch_id": source_batch_id,
-        "updated_at": seen_at_iso,
-        # New note columns
-        "reservation_note": notes["reservation"],
-        "time_note": notes["time_note"],
-        "frequency_note": notes["frequency_note"],
-        "source_file": source_file,
-        "source_date": None,
-    }
-    payload["identity_key"] = build_shift_identity_key(payload)
-    return payload
-
-
-def extract_text_from_pdf_bytes(pdf_bytes: bytes) -> list[dict]:
-    """Extract text from PDF bytes, returning list of {page_num, text}."""
-    pages = []
-    if HAS_PDF2:
-        reader = PdfReader(io.BytesIO(pdf_bytes))
-        for i, page in enumerate(reader.pages, 1):
-            text = page.extract_text() or ""
-            pages.append({"page_num": i, "text": text.strip()})
-    elif HAS_PDFMINER:
-        full_text = pdfminer_extract(io.BytesIO(pdf_bytes))
-        parts = full_text.split("\f")
-        for i, part in enumerate(parts, 1):
-            pages.append({"page_num": i, "text": part.strip()})
-    else:
-        raise RuntimeError("Nenhuma biblioteca PDF disponivel. Instale PyPDF2 ou pdfminer.six.")
-    return pages
-
-
-def chunk_text(text: str, chunk_size: int = 700, overlap: int = 100) -> list[str]:
-    """Split text into chunks of ~chunk_size tokens with overlap."""
-    max_chars = chunk_size * 4
-    overlap_chars = overlap * 4
-    if len(text) <= max_chars:
-        return [text] if text.strip() else []
-    chunks = []
-    start = 0
-    while start < len(text):
-        end = start + max_chars
-        chunk = text[start:end].strip()
-        if chunk:
-            chunks.append(chunk)
-        start += max_chars - overlap_chars
-    return chunks
-
-
-def _process_upload(doc_id: str, file_bytes: bytes, filename: str, metadata: dict):
-    """Background task: extract text, chunk, embed, store in Qdrant."""
-    try:
-        upload_progress[doc_id]["status"] = "extracting"
-        upload_progress[doc_id]["progress"] = 10
-
-        file_lower = filename.lower()
-        if file_lower.endswith(".pdf"):
-            pages = extract_text_from_pdf_bytes(file_bytes)
-        elif file_lower.endswith(".txt"):
-            text = file_bytes.decode("utf-8", errors="replace")
-            pages = [{"page_num": 1, "text": text}]
-        elif file_lower.endswith(".md"):
-            text = file_bytes.decode("utf-8", errors="replace")
-            pages = [{"page_num": 1, "text": text}]
-        else:
-            raise ValueError(f"Formato nao suportado: {filename}")
-
-        upload_progress[doc_id]["status"] = "chunking"
-        upload_progress[doc_id]["progress"] = 30
-
-        all_chunks = []
-        for page in pages:
-            page_text = page["text"]
-            if not page_text:
-                continue
-            section_title = ""
-            for line in page_text.split("\n")[:5]:
-                line_s = line.strip()
-                if line_s.startswith("#") or re.match(r'^\d+\.?\s+[A-Z]', line_s):
-                    section_title = line_s.lstrip("# ").strip()
-                    break
-            page_chunks = chunk_text(page_text)
-            for chunk in page_chunks:
-                all_chunks.append({
-                    "text": chunk,
-                    "page_ref": page["page_num"],
-                    "section_title": section_title,
-                })
-
-        upload_progress[doc_id]["total_chunks"] = len(all_chunks)
-        upload_progress[doc_id]["status"] = "embedding"
-        upload_progress[doc_id]["progress"] = 40
-
-        if not all_chunks:
-            raise ValueError("Nenhum texto extraido do documento.")
-
-        batch_size = 50
-        points = []
-        for batch_start in range(0, len(all_chunks), batch_size):
-            batch = all_chunks[batch_start:batch_start + batch_size]
-            texts = [c["text"] for c in batch]
-            emb_response = openai_client.embeddings.create(
-                input=texts, model=EMBED_MODEL,
-            )
-            embeddings = [d.embedding for d in emb_response.data]
-            for j, emb in enumerate(embeddings):
-                chunk = batch[j]
-                points.append(PointStruct(
-                    id=str(uuid.uuid4()),
-                    vector=emb,
-                    payload={
-                        "document_id": doc_id,
-                        "title": metadata.get("title", ""),
-                        "specialty": metadata.get("specialty", ""),
-                        "document_type": metadata.get("document_type", ""),
-                        "source_tier": metadata.get("source_tier", ""),
-                        "chapter_title": metadata.get("chapter_title", ""),
-                        "section_title": chunk["section_title"],
-                        "page_ref": chunk["page_ref"],
-                        "excerpt": chunk["text"][:500],
-                        "published_at": metadata.get("published_at", ""),
-                        "confidence_weight": metadata.get("confidence_weight", 1.0),
-                        "text": chunk["text"],
-                        "author": metadata.get("author", ""),
-                        "journal": metadata.get("journal", ""),
-                        "modality": metadata.get("modality", ""),
-                    },
-                ))
-            pct = 40 + int(50 * (batch_start + len(batch)) / len(all_chunks))
-            upload_progress[doc_id]["progress"] = pct
-            upload_progress[doc_id]["chunks_done"] = batch_start + len(batch)
-
-        upload_progress[doc_id]["status"] = "storing"
-        upload_progress[doc_id]["progress"] = 92
-
-        qdrant.upsert(collection_name=COLLECTION, points=points, wait=True)
-
-        upload_progress[doc_id]["status"] = "done"
-        upload_progress[doc_id]["progress"] = 100
-        upload_progress[doc_id]["chunks_indexed"] = len(points)
-        logger.info(f"Upload {doc_id}: {len(points)} chunks indexed for '{metadata.get('title', '')}'")
-    except Exception as e:
-        upload_progress[doc_id]["status"] = "error"
-        upload_progress[doc_id]["error"] = str(e)
-        logger.error(f"Upload {doc_id} failed: {e}")
 
 
 def search_similar_images(image_b64, top_k=5):
@@ -564,8 +259,11 @@ def list_specialties():
 
 class ShiftUploadRequest(BaseModel):
     images: list[str]  # base64 encoded images
-    fileName: str | None = None
-    pageCount: int | None = None
+    source_file: str | None = None  # original filename for batch tracking
+
+class ShiftBatchRequest(BaseModel):
+    batch_id: str
+
 
 class ShiftUpdateRequest(BaseModel):
     location: str | None = None
@@ -576,179 +274,41 @@ class ShiftUpdateRequest(BaseModel):
     status: str | None = None
     specialty: str | None = None
 
-
-def _extract_json_objects_brace_counting(text: str) -> list[dict]:
-    """Extract JSON objects from text by counting braces. Handles nested braces."""
-    objects = []
-    i = 0
-    while i < len(text):
-        if text[i] == '{':
-            depth = 0
-            start = i
-            while i < len(text):
-                if text[i] == '{':
-                    depth += 1
-                elif text[i] == '}':
-                    depth -= 1
-                    if depth == 0:
-                        candidate = text[start:i + 1]
-                        try:
-                            obj = json.loads(candidate)
-                            if isinstance(obj, dict) and 'location' in obj:
-                                objects.append(obj)
-                        except (json.JSONDecodeError, ValueError):
-                            pass
-                        break
-                elif text[i] == '"':
-                    # Skip strings
-                    i += 1
-                    while i < len(text) and text[i] != '"':
-                        if text[i] == '\\':
-                            i += 1  # skip escaped char
-                        i += 1
-                i += 1
-        i += 1
-    return objects
-
-
-def _parse_shifts_json(raw_response: str) -> list[dict]:
-    """Parse GPT-4o vision response into a list of shift dicts.
-    
-    Handles: markdown fences, text before/after JSON, truncated arrays,
-    single objects, nested braces, and malformed JSON.
+@app.post("/upload-shifts")
+async def upload_shifts(req: ShiftUploadRequest):
     """
-    if not raw_response or not raw_response.strip():
-        raise ValueError("GPT-4o returned an empty response. A imagem pode estar ilegível.")
+    Recebe imagens (base64) de escala médica, extrai dados via GPT-4o vision,
+    e salva na tabela shifts do Supabase.
+    """
+    if not req.images:
+        raise HTTPException(status_code=400, detail="Nenhuma imagem fornecida")
 
-    cleaned = raw_response.strip()
+    vision_messages = []
+    for image_value in req.images[:4]:  # max 4 pages
+        image_url = image_value if image_value.startswith("data:") else f"data:image/jpeg;base64,{image_value}"
+        vision_messages.append({
+            "type": "image_url",
+            "image_url": {"url": image_url, "detail": "high"},
+        })
 
-    # Strip markdown code fences
-    if "```" in cleaned:
-        cleaned = re.sub(r"```(?:json)?\s*", "", cleaned)
-        cleaned = cleaned.replace("```", "")
-        cleaned = cleaned.strip()
-
-    # Strategy 1: Find JSON array and parse directly
-    json_start = cleaned.find('[')
-    json_end = cleaned.rfind(']') + 1
-    if json_start >= 0 and json_end > json_start:
-        try:
-            result = json.loads(cleaned[json_start:json_end])
-            if isinstance(result, list) and result:
-                return result
-        except json.JSONDecodeError:
-            pass  # fall through to strategy 2
-
-    # Strategy 2: Find a single JSON object (wrap in array)
-    brace_start = cleaned.find('{')
-    brace_end = cleaned.rfind('}') + 1
-    if brace_start >= 0 and brace_end > brace_start:
-        try:
-            obj = json.loads(cleaned[brace_start:brace_end])
-            if isinstance(obj, dict) and 'location' in obj:
-                return [obj]
-        except json.JSONDecodeError:
-            pass  # fall through to strategy 3
-
-    # Strategy 3: Brace-counting extraction (handles truncated, nested, mixed text)
-    objects = _extract_json_objects_brace_counting(cleaned)
-    if objects:
-        logger.warning("Recovered %d shifts via brace counting from malformed response", len(objects))
-        return objects
-
-    # Strategy 4: Regex extraction (handles simple flat objects)
-    objects = []
-    for m in re.finditer(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', cleaned, re.DOTALL):
-        try:
-            obj = json.loads(m.group())
-            if isinstance(obj, dict) and 'location' in obj:
-                objects.append(obj)
-        except (json.JSONDecodeError, ValueError):
-            pass
-    if objects:
-        logger.warning("Recovered %d shifts via regex from malformed response", len(objects))
-        return objects
-
-    # All strategies failed
-    preview = cleaned[:300]
-    raise ValueError(f"Nenhum JSON válido encontrado na resposta do GPT-4o. Resposta começa com: {preview}")
-
-
-def _clip_text(value, limit: int = 500) -> str:
-    text = "" if value is None else str(value)
-    return text if len(text) <= limit else f"{text[:limit]}…"
-
-
-def _summarize_supabase_response(resp: httpx.Response | None):
-    if resp is None:
-        return {"status_code": None, "text": None}
-    return {
-        "status_code": resp.status_code,
-        "text": _clip_text(resp.text, 800),
-        "headers": {
-            "content-range": resp.headers.get("content-range"),
-            "x-request-id": resp.headers.get("x-request-id"),
-        },
-    }
-
-
-def _raise_shift_sync_error(stage: str, message: str, *, response: httpx.Response | None = None, extra: dict | None = None):
-    detail = {
-        "stage": stage,
-        "message": message,
-    }
-    if response is not None:
-        detail["supabase"] = _summarize_supabase_response(response)
-    if extra:
-        detail["context"] = extra
-    logger.error("Shift sync failed at %s: %s | extra=%s | response=%s", stage, message, extra, detail.get("supabase"))
-    raise HTTPException(status_code=500, detail=detail)
-
-
-# ── Async upload job store ──
-_upload_jobs: dict[str, dict] = {}
-
-
-def _run_upload_job(job_id: str, images: list[str], file_name: str | None, page_count: int | None):
-    """Heavy processing in background thread for /upload-shifts."""
-    global _upload_jobs
-    try:
-        _upload_jobs[job_id]["status"] = "processing"
-
-        req_images = images
-        vision_messages = []
-        for image_value in req_images[:4]:  # max 4 pages
-            image_url = image_value if image_value.startswith("data:") else f"data:image/jpeg;base64,{image_value}"
-            vision_messages.append({
-                "type": "image_url",
-                "image_url": {"url": image_url, "detail": "high"},
-            })
-
-        extraction_prompt = """Analise esta imagem de escala médica de radiologia.
+    extraction_prompt = """Analise esta imagem de escala médica de radiologia.
 Extraia TODOS os dados em formato JSON. Para cada entrada, inclua:
-- location: nome do local (ex: "LA ARPOADOR", "LA BOTAFOGO", "LA MEGA BARRA", "BR MEGA COPA", "BARRA PLAZA")
-- room: sala completa (ex: "USG - Sala 1", "Cardio - Sala 2", "Sala Híbrida")
+- location: nome do local (ex: "LA ARPOADOR", "LA BOTAFOGO", "LA MEGA BARRA")
+- room: sala (ex: "USG - Sala 1")
 - day_of_week: dia da semana (ex: "SEG", "TER", "QUA", "QUI", "SEX", "SÁB")
 - time_slot: horário se houver (ex: "08:00-12:00", "14:00-18:00"), ou null
-- doctor_name: nome do médico INCLUINDO notas entre parênteses como aparecem no original (ex: "Sergio Gaspar (até 13 h)" ou "Maria Silva (Fixo)"). Use "vago" se vazio.
+- doctor_name: nome do médico, ou "vago" se vazio
 - status: "available" se "vago", "reserved" se "(RESERVADO)", "occupied" caso contrário
-- specialty: extraia do nome da sala. Exemplos: "Cardio - Sala 1" → "Cardio", "USG - Sala 3" → "USG", "ECO+CAROT - Sala 1" → "ECO+CAROT", "VASC - Sala 2" → "VASC", "PAAF - Sala 1" → "PAAF", "Sala Híbrida" → "Sala Híbrida". Se não conseguir identificar, use "USG".
-
-Regras importantes:
-- Considere a mesma vaga quando coincidirem local + sala + dia da semana + horário + especialidade.
-- NÃO use doctor_name para identificar a vaga, porque o médico/status pode mudar e isso deve atualizar a mesma vaga.
-- Preserve TODAS as notas entre parênteses no campo doctor_name. Exemplos: "(até 13 h)", "(15/15 dias)", "(Fixo)", "(Alt)", "(Escala)", "(RESERVADO)", "(1 x mês)", "(Rodízio)", "( início 12:20 h)"
-- Se algum campo vier vazio, devolva null quando apropriado.
+- specialty: "USG" por padrão
 
 Responda APENAS com um JSON array, sem texto adicional.
 Exemplo:
 [
-  {"location": "LA ARPOADOR", "room": "USG - Sala 1", "day_of_week": "SEG", "time_slot": null, "doctor_name": "Dirceu B. G. Junior (Fixo)", "status": "occupied", "specialty": "USG"},
-  {"location": "LA ARPOADOR", "room": "Cardio - Sala 2", "day_of_week": "TER", "time_slot": "08:00-12:00", "doctor_name": "Sergio Gaspar (até 13 h)", "status": "occupied", "specialty": "Cardio"},
+  {"location": "LA ARPOADOR", "room": "USG - Sala 1", "day_of_week": "SEG", "time_slot": null, "doctor_name": "Dirceu B. G. Junior", "status": "occupied", "specialty": "USG"},
   {"location": "LA ARPOADOR", "room": "USG - Sala 4", "day_of_week": "SEG", "time_slot": null, "doctor_name": "vago", "status": "available", "specialty": "USG"}
 ]"""
 
-        logger.info("Upload shifts: calling GPT-4o vision with %d image(s), file=%s", len(req_images[:4]), file_name)
+    try:
         response = openai_client.chat.completions.create(
             model="gpt-4o",
             messages=[
@@ -756,260 +316,67 @@ Exemplo:
                 {"role": "user", "content": vision_messages},
             ],
             temperature=0.1,
-            max_tokens=16000,
+            max_tokens=4000,
         )
         raw_response = response.choices[0].message.content
-        logger.info("GPT-4o vision response length=%d chars", len(raw_response) if raw_response else 0)
 
-        extracted_shifts = _parse_shifts_json(raw_response)
-        logger.info("Extracted %d shifts from vision response", len(extracted_shifts))
-
-        supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
-        supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
-        logger.info("Upload shifts: SUPABASE_URL=%s, key_source=%s", supabase_url,
-            "SUPABASE_SERVICE_KEY" if os.getenv("SUPABASE_SERVICE_KEY") else
-            "SUPABASE_SERVICE_ROLE_KEY" if os.getenv("SUPABASE_SERVICE_ROLE_KEY") else "MISSING")
-        if not supabase_key:
-            raise RuntimeError("SUPABASE_SERVICE_KEY não configurada no servidor. Verifique as variáveis de ambiente no Railway.")
-
-        seen_at_iso = datetime.now(timezone.utc).isoformat()
-        source_batch_id = str(uuid.uuid4())
-
-        prepared_shifts = [prepare_shift_payload(shift, source_batch_id, seen_at_iso, source_file=file_name) for shift in extracted_shifts]
-
-        deduped_by_key: dict[str, dict] = {}
-        duplicates_in_payload = 0
-        for shift in prepared_shifts:
-            key = shift["identity_key"]
-            if key in deduped_by_key:
-                duplicates_in_payload += 1
-            deduped_by_key[key] = shift
-        prepared_shifts = list(deduped_by_key.values())
-        logger.info(
-            "Shift sync start batch=%s file=%s extracted=%s deduped=%s duplicates_in_payload=%s",
-            source_batch_id,
-            file_name,
-            len(extracted_shifts),
-            len(prepared_shifts),
-            duplicates_in_payload,
-        )
-
-        headers = {
-            "apikey": supabase_key,
-            "Authorization": f"Bearer {supabase_key}",
-            "Content-Type": "application/json",
-            "Prefer": "return=representation",
-        }
-        base = f"{supabase_url}/rest/v1"
-
-        fetch_params = {
-            "select": "id,identity_key,location,room,day_of_week,time_slot,doctor_name,status,specialty,is_active,created_at,updated_at,last_seen_at,source_batch_id,closed_at,reservation_note,time_note,frequency_note,source_file,source_date",
-            "order": "updated_at.desc.nullslast,created_at.desc.nullslast",
-        }
-        logger.info("Shift sync stage=fetch_existing batch=%s", source_batch_id)
-        existing_resp = httpx.get(f"{base}/shifts", headers=headers, params=fetch_params, timeout=30)
-        if existing_resp.status_code >= 400:
-            _raise_shift_sync_error("fetch_existing", "Erro ao carregar shifts atuais do Supabase", response=existing_resp)
-
-        existing_rows = existing_resp.json() if existing_resp.text else []
-        active_by_key: dict[str, dict] = {}
-        duplicate_active_ids: list[str] = []
-        rows_needing_identity_backfill: list[dict] = []
-        for row in existing_rows:
-            normalized_row = {
-                **row,
-                "identity_key": row.get("identity_key") or build_shift_identity_key(row),
-                "room": ((row.get("room") or "").strip() or None),
-                "time_slot": ((row.get("time_slot") or "").strip() or None),
-                "doctor_name": ((row.get("doctor_name") or "").strip() or None),
-                "status": ((row.get("status") or "available").strip().lower()),
-                "specialty": ((row.get("specialty") or "USG").strip() or "USG"),
-            }
-            if not row.get("identity_key"):
-                rows_needing_identity_backfill.append(normalized_row)
-            if normalized_row.get("is_active", True):
-                if normalized_row["identity_key"] in active_by_key:
-                    duplicate_active_ids.append(normalized_row["id"])
-                    continue
-                active_by_key[normalized_row["identity_key"]] = normalized_row
-
-        logger.info(
-            "Shift sync fetched batch=%s existing=%s active=%s duplicate_active=%s backfill_identity=%s",
-            source_batch_id,
-            len(existing_rows),
-            len(active_by_key),
-            len(duplicate_active_ids),
-            len(rows_needing_identity_backfill),
-        )
-
-        summary = {
-            "created": 0,
-            "updated": 0,
-            "deactivated": 0,
-            "reactivated": 0,
-            "unchanged": 0,
-            "duplicates_in_payload": duplicates_in_payload,
-            "duplicates_cleaned": 0,
-            "identity_backfilled": 0,
-        }
-
-        def patch_shift_row(shift_id: str, payload: dict, *, stage: str, key: str | None = None):
-            payload = {**payload, "updated_at": seen_at_iso}
-            logger.info(
-                "Shift sync stage=%s batch=%s shift_id=%s identity_key=%s payload=%s",
-                stage,
-                source_batch_id,
-                shift_id,
-                key,
-                _clip_text(json.dumps(payload, ensure_ascii=False), 1200),
-            )
-            resp = httpx.patch(
-                f"{base}/shifts?id=eq.{shift_id}",
-                headers=headers,
-                json=payload,
-                timeout=30,
-            )
-            if resp.status_code >= 400:
-                _raise_shift_sync_error(stage, f"Erro ao atualizar shift {shift_id}", response=resp, extra={"shift_id": shift_id, "identity_key": key, "payload": payload})
-            logger.info("Shift sync stage=%s_ok batch=%s shift_id=%s status=%s", stage, source_batch_id, shift_id, resp.status_code)
-            return resp.json() if resp.text else []
-
-        duplicate_active_id_set = set(duplicate_active_ids)
-        for duplicate_id in duplicate_active_ids:
-            patch_shift_row(duplicate_id, {
-                "is_active": False,
-                "closed_at": seen_at_iso,
-                "last_seen_at": seen_at_iso,
-                "source_batch_id": source_batch_id,
-            }, stage="dedupe_cleanup")
-            summary["duplicates_cleaned"] += 1
-            summary["deactivated"] += 1
-
-        for row in rows_needing_identity_backfill:
-            if row["id"] in duplicate_active_id_set:
-                continue
-            patch_shift_row(row["id"], {"identity_key": row["identity_key"], "last_seen_at": row.get("last_seen_at") or seen_at_iso}, stage="identity_backfill", key=row["identity_key"])
-            summary["identity_backfilled"] += 1
-
-        created_payloads = []
-        incoming_keys = set()
-        for shift in prepared_shifts:
-            identity_key = shift["identity_key"]
-            incoming_keys.add(identity_key)
-            existing = active_by_key.get(identity_key)
-            if existing:
-                changed_fields = {}
-                for field in ["location", "room", "day_of_week", "time_slot", "doctor_name", "status", "specialty", "identity_key"]:
-                    if existing.get(field) != shift.get(field):
-                        changed_fields[field] = shift.get(field)
-                changed_fields["last_seen_at"] = seen_at_iso
-                changed_fields["source_batch_id"] = source_batch_id
-                if existing.get("is_active") is not True:
-                    changed_fields["is_active"] = True
-                    changed_fields["closed_at"] = None
-                    summary["reactivated"] += 1
-                if any(field in changed_fields for field in ["location", "room", "day_of_week", "time_slot", "doctor_name", "status", "specialty", "identity_key", "is_active", "closed_at"]):
-                    patch_shift_row(existing["id"], changed_fields, stage="update_existing", key=identity_key)
-                    summary["updated"] += 1
-                else:
-                    patch_shift_row(existing["id"], {"last_seen_at": seen_at_iso, "source_batch_id": source_batch_id}, stage="touch_existing", key=identity_key)
-                    summary["unchanged"] += 1
-            else:
-                created_payloads.append(shift)
-
-        BATCH_SIZE = 100
-        for i in range(0, len(created_payloads), BATCH_SIZE):
-            batch = created_payloads[i:i + BATCH_SIZE]
-            logger.info("Shift sync stage=insert_new batch=%s size=%s sample_keys=%s", source_batch_id, len(batch), [item.get("identity_key") for item in batch[:5]])
-            insert_resp = httpx.post(f"{base}/shifts", headers=headers, json=batch, timeout=30)
-            if insert_resp.status_code >= 400:
-                _raise_shift_sync_error("insert_new", "Erro ao inserir shifts no Supabase", response=insert_resp, extra={"batch_size": len(batch), "sample_identity_keys": [item.get("identity_key") for item in batch[:10]]})
-            summary["created"] += len(batch)
-
-        # SCOPED deactivation: only deactivate entries that share the same
-        # location AND specialty as entries in the current batch.
-        # This prevents one location's upload from killing another location's data.
-        batch_locations = set(s.get("location", "").strip().upper() for s in prepared_shifts if s.get("location"))
-        batch_specialties = set(s.get("specialty", "").strip().upper() for s in prepared_shifts if s.get("specialty"))
-        logger.info("Shift sync scope batch=%s locations=%s specialties=%s", source_batch_id, batch_locations, batch_specialties)
-
-        stale_active_rows = [
-            row for key, row in active_by_key.items()
-            if key not in incoming_keys
-            and _normalize_shift_value(row.get("location")) in batch_locations
-            and _normalize_shift_value(row.get("specialty") or "USG") in batch_specialties
-        ]
-        logger.info("Shift sync stage=deactivate_stale batch=%s count=%s (scoped to locations=%s specialties=%s)",
-            source_batch_id, len(stale_active_rows), batch_locations, batch_specialties)
-        for row in stale_active_rows:
-            patch_shift_row(row["id"], {
-                "is_active": False,
-                "closed_at": seen_at_iso,
-                "last_seen_at": seen_at_iso,
-                "source_batch_id": source_batch_id,
-            }, stage="deactivate_stale", key=row.get("identity_key"))
-            summary["deactivated"] += 1
-
-        logger.info("Shift sync completed batch=%s summary=%s", source_batch_id, summary)
-        result = {
-            "message": f"Sincronização concluída: {summary['created']} novas, {summary['updated']} atualizadas, {summary['deactivated']} desativadas.",
-            "file_name": file_name,
-            "page_count": page_count,
-            "batch_id": source_batch_id,
-            "identity_key": "location + room + day_of_week + time_slot + specialty",
-            "locations": sorted(list(set(s.get("location", "") for s in prepared_shifts if s.get("location")))),
-            "specialties": sorted(list(set(s.get("specialty", "") for s in prepared_shifts if s.get("specialty")))),
-            "available": sum(1 for s in prepared_shifts if s.get("status") == "available"),
-            "total": len(prepared_shifts),
-            "summary": summary,
-        }
-        _upload_jobs[job_id] = {
-            "status": "completed",
-            "result": result,
-            "error": None,
-            "file_name": file_name,
-        }
+        import json
+        json_start = raw_response.find('[')
+        json_end = raw_response.rfind(']') + 1
+        if json_start >= 0 and json_end > json_start:
+            shifts = json.loads(raw_response[json_start:json_end])
+        else:
+            raise ValueError("No JSON array found in response")
     except Exception as e:
-        logger.exception("Upload job %s failed", job_id)
-        _upload_jobs[job_id] = {
-            "status": "failed",
-            "result": None,
-            "error": str(e),
-            "file_name": file_name,
-        }
+        raise HTTPException(status_code=500, detail=f"Erro ao processar: {str(e)}")
 
-
-@app.get("/upload-shifts/status/{job_id}")
-def get_upload_job_status(job_id: str):
-    job = _upload_jobs.get(job_id)
-    if not job:
-        raise HTTPException(status_code=404, detail="Job não encontrado")
-    return job
-
-
-@app.post("/upload-shifts", status_code=202)
-async def upload_shifts(req: ShiftUploadRequest, background_tasks: BackgroundTasks):
-    """
-    Recebe imagens (base64) de escala médica, dispara processamento em background
-    e retorna um job_id para polling de status.
-    """
-    if not req.images:
-        raise HTTPException(status_code=400, detail="Nenhuma imagem fornecida")
-
-    job_id = str(uuid.uuid4())
-    _upload_jobs[job_id] = {
-        "status": "pending",
-        "result": None,
-        "error": None,
-        "file_name": req.fileName,
+    import httpx
+    import uuid
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY/SUPABASE_SERVICE_ROLE_KEY não configurada")
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal",
     }
-    thread = threading.Thread(
-        target=_run_upload_job,
-        args=(job_id, req.images, req.fileName, req.pageCount),
-        daemon=True,
-    )
-    thread.start()
-    return {"job_id": job_id, "status": "pending"}
+    base = f"{supabase_url}/rest/v1"
+
+    # Generate batch_id from filename
+    import hashlib
+    source_file = getattr(req, 'source_file', None) or "upload"
+    batch_id = f"{source_file}_{hashlib.md5(f'{source_file}_{datetime.now().isoformat()}'.encode()).hexdigest()[:8]}"
+
+    # Tag each shift with batch info
+    for s in shifts:
+        s["batch_id"] = batch_id
+        s["source_file"] = source_file
+
+    # Clear old shifts
+    delete_resp = httpx.delete(f"{base}/shifts?id=neq.00000000-0000-0000-0000-000000000000", headers=headers, timeout=30)
+    if delete_resp.status_code >= 400:
+        raise HTTPException(status_code=500, detail=f"Erro ao limpar shifts no Supabase: {delete_resp.status_code} {delete_resp.text}")
+
+    # Insert in batches
+    BATCH_SIZE = 100
+    inserted = 0
+    for i in range(0, len(shifts), BATCH_SIZE):
+        batch = shifts[i:i + BATCH_SIZE]
+        insert_resp = httpx.post(f"{base}/shifts", headers=headers, json=batch, timeout=30)
+        if insert_resp.status_code >= 400:
+            raise HTTPException(status_code=500, detail=f"Erro ao inserir shifts no Supabase: {insert_resp.status_code} {insert_resp.text}")
+        inserted += len(batch)
+
+    return {
+        "message": f"{inserted} vagas processadas com sucesso",
+        "locations": list(set(s.get("location", "") for s in shifts)),
+        "available": sum(1 for s in shifts if s.get("status") == "available"),
+        "total": inserted,
+        "batch_id": batch_id,
+        "source_file": source_file,
+    }
 
 
 @app.patch("/shifts/{shift_id}")
@@ -1029,22 +396,6 @@ def update_shift(shift_id: str, req: ShiftUpdateRequest):
         "Prefer": "return=representation",
     }
 
-    current_resp = httpx.get(
-        f"{supabase_url}/rest/v1/shifts",
-        headers=headers,
-        params={"id": f"eq.{shift_id}", "select": "*", "limit": 1},
-        timeout=30,
-    )
-    if current_resp.status_code >= 400:
-        raise HTTPException(status_code=500, detail=f"Erro ao carregar shift atual: {current_resp.status_code} {current_resp.text}")
-    current_rows = current_resp.json() if current_resp.text else []
-    if not current_rows:
-        raise HTTPException(status_code=404, detail="Shift não encontrado")
-
-    merged = {**current_rows[0], **payload}
-    payload["identity_key"] = build_shift_identity_key(merged)
-    payload["updated_at"] = datetime.now(timezone.utc).isoformat()
-
     resp = httpx.patch(
         f"{supabase_url}/rest/v1/shifts?id=eq.{shift_id}",
         headers=headers,
@@ -1058,7 +409,7 @@ def update_shift(shift_id: str, req: ShiftUpdateRequest):
 
 
 @app.get("/shifts")
-def get_shifts(location: str | None = None, day: str | None = None, status: str | None = None, include_inactive: bool = False):
+def get_shifts(location: str | None = None, day: str | None = None, status: str | None = None):
     """Lista vagas com filtros opcionais."""
     import httpx
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
@@ -1069,16 +420,14 @@ def get_shifts(location: str | None = None, day: str | None = None, status: str 
         "apikey": supabase_key,
         "Authorization": f"Bearer {supabase_key}",
     }
-    params = {"select": "*", "order": "location.asc,day_of_week.asc,time_slot.asc.nullslast,room.asc.nullslast"}
+    params = {"select": "*", "order": "location.asc,day_of_week.asc"}
     if location:
         params["location"] = f"ilike.*{location}*"
     if day:
         params["day_of_week"] = f"eq.{day.upper()}"
     if status:
         params["status"] = f"eq.{status}"
-    if not include_inactive:
-        params["is_active"] = "eq.true"
-
+    
     r = httpx.get(f"{supabase_url}/rest/v1/shifts", headers=headers, params=params)
     return {"shifts": r.json(), "total": len(r.json())}
 
@@ -1094,52 +443,9 @@ def _parse_iso_date(date_str: str) -> str:
     return dt.isoformat()
 
 
-class BulkDeleteRequest(BaseModel):
-    location: str | None = None
-    specialty: str | None = None
-    source_batch_id: str | None = None
-    before_date: str | None = None
-    is_active_only: bool | None = None
-
-
-@app.delete("/shifts/bulk")
-def bulk_delete_shifts(req: BulkDeleteRequest):
-    """Remove vagas em lote com filtros opcionais."""
-    if not any([req.location, req.specialty, req.source_batch_id, req.before_date]):
-        raise HTTPException(status_code=400, detail="Pelo menos um filtro é obrigatório (location, specialty, source_batch_id, before_date).")
-    import httpx
-    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
-    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
-    if not supabase_key:
-        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY/SUPABASE_SERVICE_ROLE_KEY não configurada")
-    headers = {
-        "apikey": supabase_key,
-        "Authorization": f"Bearer {supabase_key}",
-        "Prefer": "return=representation",
-    }
-    params = {}
-    if req.location:
-        params["location"] = f"ilike.*{req.location}*"
-    if req.specialty:
-        params["specialty"] = f"ilike.*{req.specialty}*"
-    if req.source_batch_id:
-        params["source_batch_id"] = f"eq.{req.source_batch_id}"
-    if req.before_date:
-        params["created_at"] = f"lt.{req.before_date}T23:59:59Z"
-    if req.is_active_only:
-        params["is_active"] = "eq.true"
-    r = httpx.delete(f"{supabase_url}/rest/v1/shifts", headers=headers, params=params)
-    if r.status_code >= 400:
-        raise HTTPException(status_code=500, detail=f"Falha ao remover vagas em lote: {r.status_code} {r.text}")
-    data = r.json() if r.text else []
-    return {"deleted": len(data), "filters": {k: v for k, v in req.model_dump().items() if v is not None}}
-
-
 @app.delete("/shifts/{shift_id}")
 def delete_shift(shift_id: str):
-    """Remove vagas em lote com filtros opcionais."""
-    if not any([req.location, req.specialty, req.source_batch_id, req.before_date]):
-        raise HTTPException(status_code=400, detail="Pelo menos um filtro é obrigatório (location, specialty, source_batch_id, before_date).")
+    """Remove uma vaga por ID."""
     import httpx
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
     supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
@@ -1150,29 +456,19 @@ def delete_shift(shift_id: str):
         "Authorization": f"Bearer {supabase_key}",
         "Prefer": "return=representation",
     }
-    params = {}
-    if req.location:
-        params["location"] = f"ilike.*{req.location}*"
-    if req.specialty:
-        params["specialty"] = f"ilike.*{req.specialty}*"
-    if req.source_batch_id:
-        params["source_batch_id"] = f"eq.{req.source_batch_id}"
-    if req.before_date:
-        params["created_at"] = f"lt.{req.before_date}T23:59:59Z"
-    if req.is_active_only:
-        params["is_active"] = "eq.true"
+    params = {"id": f"eq.{shift_id}"}
     r = httpx.delete(f"{supabase_url}/rest/v1/shifts", headers=headers, params=params)
     if r.status_code >= 400:
-        raise HTTPException(status_code=500, detail=f"Falha ao remover vagas em lote: {r.status_code} {r.text}")
+        raise HTTPException(status_code=500, detail="Falha ao remover vaga")
     data = r.json() if r.text else []
-    return {"deleted": len(data), "filters": {k: v for k, v in req.model_dump().items() if v is not None}}
+    return {"deleted": len(data)}
 
 
 @app.delete("/shifts")
-def delete_shifts(before: str | None = None, after: str | None = None):
-    """Remove vagas por intervalo de created_at (data de envio)."""
-    if not before and not after:
-        raise HTTPException(status_code=400, detail="Informe before e/ou after")
+def delete_shifts(before: str | None = None, after: str | None = None, batch_id: str | None = None, location: str | None = None):
+    """Remove vagas por intervalo de created_at, batch_id ou location."""
+    if not before and not after and not batch_id and not location:
+        raise HTTPException(status_code=400, detail="Informe before, after, batch_id ou location")
     import httpx
     supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
     supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
@@ -1184,6 +480,10 @@ def delete_shifts(before: str | None = None, after: str | None = None):
         "Prefer": "return=representation",
     }
     params = {}
+    if batch_id:
+        params["batch_id"] = f"eq.{batch_id}"
+    if location:
+        params["location"] = f"eq.{location}"
     if before:
         params["created_at"] = f"lt.{_parse_iso_date(before)}"
     if after:
@@ -1195,37 +495,46 @@ def delete_shifts(before: str | None = None, after: str | None = None):
     return {"deleted": len(data)}
 
 
+@app.get("/shifts/batches")
+def list_batches():
+    """Lista todos os lotes de upload (agrupados por batch_id)."""
+    import httpx
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY/SUPABASE_SERVICE_ROLE_KEY não configurada")
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+    }
+    # Get all shifts with batch info
+    r = httpx.get(
+        f"{supabase_url}/rest/v1/shifts",
+        headers=headers,
+        params={"select": "batch_id,source_file,created_at", "order": "created_at.desc"},
+        timeout=30,
+    )
+    if r.status_code >= 400:
+        raise HTTPException(status_code=500, detail="Erro ao listar lotes")
+    shifts = r.json()
+    # Group by batch_id
+    batches = {}
+    for s in shifts:
+        bid = s.get("batch_id") or "legacy"
+        if bid not in batches:
+            batches[bid] = {
+                "batch_id": bid,
+                "source_file": s.get("source_file", "upload antigo"),
+                "count": 0,
+                "created_at": s.get("created_at"),
+            }
+        batches[bid]["count"] += 1
+    return {"batches": list(batches.values()), "total_shifts": len(shifts)}
+
+
 @app.post("/chat", response_model=ChatResponse)
 def chat(req: ChatRequest):
     logger.info(f"Chat request: question_len={len(req.question)}, top_k={req.top_k}, specialty={req.specialty}, has_image={bool(req.image_base64)}")
-
-    # 0. Handle conversational/small talk messages before Qdrant search
-    import re
-
-    SMALL_TALK_PATTERNS = [
-        r'^\s*(oi|olá|ola|hey|hello|e aí|eai|eai|fala)\s*[!.?]*\s*$',
-        r'^\s*(tudo bem|tudo bom|tudo certo|como vai|como vc tá|como você está)\s*[!.?]*\s*$',
-        r'^\s*(bom dia|boa tarde|boa noite|boa madrugada)\s*[!.?]*\s*$',
-        r'^\s*(obrigado|obrigada|valeu|vlw|thanks|brigad[ao])\s*[!.?]*\s*$',
-        r'^\s*(tchau|bye|até mais|até logo|flw|fui)\s*[!.?]*\s*$',
-        r'^\s*(quem é você|quem é vc|o que vc faz|o que você faz|qual seu nome)\s*[!.?]*\s*$',
-    ]
-
-    is_small_talk = any(re.match(p, req.question.strip().lower()) for p in SMALL_TALK_PATTERNS)
-    if is_small_talk:
-        q_lower = req.question.strip().lower()
-        if any(w in q_lower for w in ['obrigado', 'obrigada', 'valeu', 'vlw', 'thanks']):
-            reply = 'Por nada! 😊 Se precisar de ajuda com radiologia, exames por imagem ou qualquer dúvida técnica, é só perguntar. Estou aqui!'
-        elif any(w in q_lower for w in ['tchau', 'bye', 'até mais', 'até logo', 'flw', 'fui']):
-            reply = 'Até mais! 👋 Foi um prazer ajudar. Volte sempre que precisar — estou sempre disponível para Radiologia e Diagnóstico por Imagem.'
-        elif any(w in q_lower for w in ['bom dia', 'boa tarde', 'boa noite']):
-            greeting = 'Bom dia' if 'bom dia' in q_lower else 'Boa tarde' if 'boa tarde' in q_lower else 'Boa noite'
-            reply = f'{greeting}! 😊 Eu sou a **ARIA**, assistente de radiologia da RadioeXperience. Posso ajudar com dúvidas sobre radiologia, diagnóstico por imagem, protocolos e classificações (BI-RADS, TI-RADS, Fleischner...). O que você quer saber?'
-        elif any(w in q_lower for w in ['quem é', 'o que vc faz', 'o que você faz', 'qual seu nome']):
-            reply = 'Eu sou a **ARIA** — Assistente de Radiologia por IA, parte da plataforma **RadioeXperience**. Fui treinada com uma vasta base de conhecimento em Radiologia e Diagnóstico por Imagem, incluindo livros, artigos e guidelines internacionais. Posso ajudar com dúvidas técnicas, classificações (BI-RADS, TI-RADS, Fleischner), protocolos de exame e muito mais. Como posso ajudar?'
-        else:
-            reply = 'Oi! 😊 Eu sou a **ARIA**, assistente de radiologia da RadioeXperience. Posso ajudar com dúvidas sobre radiologia, diagnóstico por imagem, protocolos e classificações. O que você gostaria de saber?'
-        return ChatResponse(answer=reply, sources=[], tokens_used=0)
 
     # 0. If image: first describe it to enhance the search query
     search_query = req.question
@@ -1395,7 +704,7 @@ def chat(req: ChatRequest):
     if top_boosted_score < MIN_RELEVANCE_SCORE and not image_context:
         logger.info(f"Rejected: top_boosted_score={top_boosted_score:.3f} < {MIN_RELEVANCE_SCORE}")
         return ChatResponse(
-            answer="Hmm, não encontrei referências suficientes na minha base de conhecimento para responder com segurança sobre isso. \U0001f605\n\nPode tentar:\n- Ser mais específico (ex: incluir a **especialidade**, **região anatômica** ou **tipo de exame**)\n- Perguntar sobre um tema específico de radiologia (ex: 'Classificação BI-RADS 4', 'Protocolo de TC para AVC')\n- Mandar uma **imagem** para eu analisar os achados",
+            answer="Não encontrei informações suficientes na base de conhecimento para responder essa pergunta. Tente reformular com mais detalhes — por exemplo, inclua a especialidade, o tipo de exame ou a região anatômica.",
             sources=[],
             tokens_used=0,
         )
@@ -1447,159 +756,6 @@ def chat(req: ChatRequest):
         sources=sources,
         tokens_used=tokens_used,
     )
-
-
-# ═══════════════════════════════════════════
-# eX StudyLab – ARIA generation endpoints
-# ═══════════════════════════════════════════
-
-SCRIPT_SYSTEM_PROMPT = """Você é ARIA — Assistente de Radiologia por IA da plataforma RadioeXperience. Sua tarefa é gerar um SCRIPT DE AULA completo sobre o tema fornecido pelo usuário.
-
-Use exclusivamente as informações do CONTEXTO DA BASE DE CONHECIMENTO abaixo para gerar o conteúdo. Não invente informações fora do contexto.
-
-## FORMATO OBRIGATÓRIO DO SCRIPT:
-
-===HOOK===
-[Frase de abertura cativante que prenda a atenção — pode ser uma pergunta provocativa, um dado impactante, ou uma situação clínica breve. 2-3 frases.]
-
-===DESENVOLVIMENTO===
-[Conteúdo principal da aula em formato de texto corrido estruturado. Use subtítulos em **negrito** para organizar os tópicos. Inclua: definição e conceito, epidemiologia e relevância, achados de imagem característicos, diagnósticos diferenciais, conduta e tratamento. Mínimo 400 palavras. Use terminologia técnica de radiologia.]
-
-===CASO CLÍNICO===
-[Apresente um caso clínico realista: dados do paciente, achados de imagem relevantes, raciocínio diagnóstico e desfecho.]
-
-===CONCLUSÃO===
-[Resumo dos 3-5 pontos-chave da aula]
-
-===CTA===
-[Convide o aluno a praticar com questões, explorar mais na plataforma, ou seguir para a próxima leitura.]
-
-## REGRAS:
-1. Responda SOMENTE no formato especificado acima (cada seção preceded by the tag)
-2. Use português brasileiro
-3. Cite as fontes usando [Fonte: Nome, p.X] quando usar informações do contexto
-4. Se o contexto for insuficiente, use seu conhecimento de radiologia
-5. Tom didático e acessível, como um professor de radiologia
-
-CONTEXTO DA BASE DE CONHECIMENTO:
-{context}"""
-
-QUESTOES_SYSTEM_PROMPT = """Você é ARIA — Assistente de Radiologia por IA da plataforma RadioeXperience. Sua tarefa é gerar 5 QUESTÕES DE MÚLTIPLA ESCOLHA sobre o tema fornecido pelo usuário, no formato StudyLab.
-
-Use SOMENTE as informações do CONTEXTO DA BASE DE CONHECIMENTO abaixo para gerar as questões. Não invente informações fora do contexto.
-
-## FORMATO DE CADA QUESTÃO:
-
-**QUESTÃO {N}:** [enunciado claro e objetivo]
-
-A) [alternativa A]
-B) [alternativa B]
-C) [alternativa C]
-D) [alternativa D]
-
-**Resposta Correta:** [letra]
-**Explicação:** [2-3 frases explicando por que a correta é a correta e por que as outras estão erradas, usando informações do contexto]
-**Fonte:** [Fonte: Nome, p.X]
-
-## REGRAS:
-1. Gere exatamente 5 questões
-2. Questões desafiadoras, nível residência médica (R1/R2)
-3. Alternativas plausíveis e bem construídas (evite 'nenhuma das anteriores')
-4. Use português brasileiro
-5. Inclua ao menos 2 questões sobre achados de imagem
-6. Cite fontes na explicação
-7. Se o contexto for insuficiente, use seu conhecimento de radiologia
-
-CONTEXTO DA BASE DE CONHECIMENTO:
-{context}"""
-
-class GenerateRequest(BaseModel):
-    topic: str
-    template: str  # "script" or "questoes" — also passed as path param
-    top_k: int = 10
-
-@app.post("/criar/{template}")
-def criar_content(template: str, req: GenerateRequest):
-    """Generate study content (script or questions) using ARIA RAG pipeline."""
-    if template not in ("script", "questoes"):
-        raise HTTPException(status_code=400, detail="template must be 'script' or 'questoes'")
-
-    logger.info(f"Generate request: template={template}, topic={req.topic[:80]}")
-
-    # 1. Embed the topic
-    try:
-        embedding = openai_client.embeddings.create(
-            input=[req.topic],
-            model=EMBED_MODEL,
-        ).data[0].embedding
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Embedding error: {e}")
-
-    # 2. Search Qdrant
-    try:
-        results = qdrant.query_points(
-            collection_name=COLLECTION,
-            query=embedding,
-            limit=req.top_k,
-        )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Search error: {e}")
-
-    # 3. Build context
-    context_parts = []
-    sources = []
-    for i, hit in enumerate(results.points, 1):
-        p = hit.payload
-        excerpt = p.get("text", "")[:800]
-        title = p.get("title", "Desconhecido")
-        page_start = p.get("page_start")
-        page_end = p.get("page_end")
-        context_parts.append(
-            f"[Fonte {i}: {title}, p.{page_start}-{page_end}]\n{excerpt}"
-        )
-        sources.append(Source(
-            title=title,
-            page_start=page_start,
-            page_end=page_end,
-            score=round(hit.score, 4),
-            excerpt=excerpt[:300],
-        ))
-
-    context = "\n\n---\n\n".join(context_parts)
-
-    # 4. Select system prompt
-    if template == "script":
-        system_prompt = SCRIPT_SYSTEM_PROMPT.format(
-            context=context or "Contexto não disponível. Use seu conhecimento de radiologia."
-        )
-    else:
-        system_prompt = QUESTOES_SYSTEM_PROMPT.format(
-            context=context or "Contexto não disponível. Use seu conhecimento de radiologia."
-        )
-
-    # 5. Generate
-    try:
-        response = openai_client.chat.completions.create(
-            model="gpt-4o",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": req.topic},
-            ],
-            temperature=0.4,
-            max_tokens=2500,
-        )
-        content = response.choices[0].message.content
-        tokens_used = response.usage.total_tokens if response.usage else 0
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Generation error: {e}")
-
-    return {
-        "content": content,
-        "sources": [s.model_dump() for s in sources],
-        "tokens_used": tokens_used,
-        "template": template,
-        "topic": req.topic,
-    }
 
 
 # ═══════════════════════════════════════════
@@ -1741,112 +897,6 @@ def list_feed_posts(post_type: str | None = None, limit: int = 20):
         return {"posts": r.json(), "count": len(r.json())}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-
-# ═══════════════════════════════════════════
-# Post Management (edit/delete)
-# ═══════════════════════════════════════════
-
-class PostUpdateRequest(BaseModel):
-    title: str | None = None
-    content: str | None = None
-    type: str | None = None
-    image_url: str | None = None
-    source_url: str | None = None
-    journal: str | None = None
-    metadata: dict | None = None
-
-
-@app.patch("/posts/{post_id}")
-def update_post(post_id: str, req: PostUpdateRequest):
-    """Update a post (admin/staff only)."""
-    payload = {k: v for k, v in req.model_dump().items() if v is not None}
-    if "metadata" in payload:
-        payload["metadata"] = json.dumps(payload["metadata"]) if isinstance(payload["metadata"], dict) else payload["metadata"]
-    if not payload:
-        raise HTTPException(status_code=400, detail="Nenhum campo para atualizar")
-    try:
-        r = httpx.patch(
-            f"{SUPABASE_URL}/rest/v1/posts?id=eq.{post_id}",
-            headers={**_supabase_headers(), "Prefer": "return=representation"},
-            json=payload,
-            timeout=15,
-        )
-        if r.status_code >= 400:
-            raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
-        data = r.json() if r.text else []
-        return {"ok": True, "post": data[0] if data else None}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.delete("/posts/{post_id}")
-def delete_post(post_id: str):
-    """Delete a post (admin/staff only)."""
-    try:
-        r = httpx.delete(
-            f"{SUPABASE_URL}/rest/v1/posts?id=eq.{post_id}",
-            headers=_supabase_headers(),
-            timeout=15,
-        )
-        if r.status_code >= 400:
-            raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
-        return {"ok": True, "deleted": post_id}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-# ═══════════════════════════════════════════
-# ARIA RAG Article/Book Uploader
-# ═══════════════════════════════════════════
-
-@app.post("/admin/upload-article")
-async def upload_article(
-    file: UploadFile = File(...),
-    title: str = Form(...),
-    author: str = Form(""),
-    journal: str = Form(""),
-    specialty: str = Form(""),
-    modality: str = Form(""),
-    source_tier: str = Form(""),
-    published_at: str = Form(""),
-    document_type: str = Form(""),
-    chapter_title: str = Form(""),
-    confidence_weight: float = Form(1.0),
-):
-    """Upload a document (PDF, TXT, MD) for RAG indexing."""
-    allowed_exts = {".pdf", ".txt", ".md"}
-    file_ext = Path(file.filename or "").suffix.lower()
-    if file_ext not in allowed_exts:
-        raise HTTPException(status_code=400, detail=f"Tipo de arquivo nao suportado: {file_ext}. Use PDF, TXT ou MD.")
-    if not title.strip():
-        raise HTTPException(status_code=400, detail="Titulo e obrigatorio.")
-    file_bytes = await file.read()
-    if len(file_bytes) > 50 * 1024 * 1024:
-        raise HTTPException(status_code=400, detail="Arquivo muito grande (max 50MB).")
-    doc_id = str(uuid.uuid4())
-    metadata = {
-        "title": title.strip(), "author": author.strip(), "journal": journal.strip(),
-        "specialty": specialty.strip(), "modality": modality.strip(),
-        "source_tier": source_tier.strip(), "published_at": published_at.strip(),
-        "document_type": document_type.strip(), "chapter_title": chapter_title.strip(),
-        "confidence_weight": confidence_weight,
-    }
-    upload_progress[doc_id] = {
-        "document_id": doc_id, "status": "queued", "progress": 0,
-        "title": title.strip(), "filename": file.filename,
-    }
-    thread = threading.Thread(target=_process_upload, args=(doc_id, file_bytes, file.filename, metadata), daemon=True)
-    thread.start()
-    return {"document_id": doc_id, "status": "queued", "message": f"Upload iniciado para '{title.strip()}'"}
-
-
-@app.get("/admin/upload-status/{document_id}")
-def get_upload_status(document_id: str):
-    """Get the progress of a document upload."""
-    if document_id not in upload_progress:
-        raise HTTPException(status_code=404, detail="Document ID nao encontrado.")
-    return upload_progress[document_id]
 
 
 if __name__ == "__main__":
