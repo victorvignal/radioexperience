@@ -334,9 +334,21 @@ Exemplo:
             try:
                 shifts = json.loads(clean[json_start:json_end])
             except json.JSONDecodeError:
-                # Try appending ']' to fix truncated response
-                repaired = clean[json_start:json_end] + ']'
+                # Truncated JSON - try repairing
+                repaired = clean[json_start:json_end]
+                repaired = repaired.rstrip(', \n')
+                if not repaired.endswith(']'):
+                    repaired += ']'
                 shifts = json.loads(repaired)
+        elif json_start >= 0:
+            # No closing ']' at all - truncate happened before any ']' was written
+            repaired = clean[json_start:].rstrip(', \n\t')
+            # Remove incomplete trailing object (find last complete '}')
+            last_brace = repaired.rfind('}')
+            if last_brace > 0:
+                repaired = repaired[:last_brace + 1]
+            repaired += ']'
+            shifts = json.loads(repaired)
         else:
             raise ValueError(f"No JSON array found. Raw response: {clean[:500]}")
     except Exception as e:
