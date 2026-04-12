@@ -980,6 +980,7 @@ Rules:
 
 
 class ChallengeStartRequest(BaseModel):
+    user_id: str | None = None
     specialty: str = "Geral"
     num_questions: int = 10
     time_per_question: int = 60
@@ -990,6 +991,7 @@ class ChallengeAnswerRequest(BaseModel):
     question_id: str
     user_answer: str
     time_taken_seconds: int = 0
+    user_id: str | None = None
 
 
 class ChallengeFinishRequest(BaseModel):
@@ -1054,7 +1056,7 @@ def _generate_question(context: str) -> dict:
 @app.post("/challenge/start")
 def challenge_start(req: ChallengeStartRequest):
     """Create a new challenge and generate questions from RAG."""
-    user_id = "anonymous"  # Will be set by frontend via auth
+    user_id = req.user_id or str(uuid.uuid4())
 
     # Create challenge in Supabase
     challenge_payload = {
@@ -1171,7 +1173,7 @@ def challenge_answer(req: ChallengeAnswerRequest):
     response_payload = {
         "question_id": req.question_id,
         "challenge_id": req.challenge_id,
-        "user_id": "anonymous",
+        "user_id": req.user_id or str(uuid.uuid4()),
         "user_answer": req.user_answer,
         "time_taken_seconds": req.time_taken_seconds,
         "is_correct": correct,
