@@ -316,7 +316,7 @@ Exemplo:
                 {"role": "user", "content": vision_messages},
             ],
             temperature=0.1,
-            max_tokens=4000,
+            max_tokens=12000,
         )
         raw_response = response.choices[0].message.content
 
@@ -331,7 +331,12 @@ Exemplo:
         json_start = clean.find('[')
         json_end = clean.rfind(']') + 1
         if json_start >= 0 and json_end > json_start:
-            shifts = json.loads(clean[json_start:json_end])
+            try:
+                shifts = json.loads(clean[json_start:json_end])
+            except json.JSONDecodeError:
+                # Try appending ']' to fix truncated response
+                repaired = clean[json_start:json_end] + ']'
+                shifts = json.loads(repaired)
         else:
             raise ValueError(f"No JSON array found. Raw response: {clean[:500]}")
     except Exception as e:
