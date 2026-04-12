@@ -467,6 +467,37 @@ def _parse_iso_date(date_str: str) -> str:
     return dt.isoformat()
 
 
+@app.delete("/shifts/bulk")
+def bulk_delete_shifts(body: dict = {}):
+    """Remove vagas em lote por batch_id, location, specialty ou data."""
+    import httpx
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="SUPABASE_SERVICE_KEY não configurada")
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+        "Prefer": "return=representation",
+    }
+    params = {}
+    if body.get("batch_id"):
+        params["batch_id"] = f"eq.{body['batch_id']}"
+    if body.get("location"):
+        params["location"] = f"eq.{body['location']}"
+    if body.get("specialty"):
+        params["specialty"] = f"eq.{body['specialty']}"
+    if body.get("before_date"):
+        params["created_at"] = f"lt.{_parse_iso_date(body['before_date'])}"
+    if not params:
+        raise HTTPException(status_code=400, detail="Nenhum filtro fornecido")
+    r = httpx.delete(f"{supabase_url}/rest/v1/shifts", headers=headers, params=params)
+    if r.status_code >= 400:
+        raise HTTPException(status_code=500, detail=f"Falha ao remover: {r.text}")
+    data = r.json() if r.text else []
+    return {"deleted": len(data)}
+
+
 @app.delete("/shifts/{shift_id}")
 def delete_shift(shift_id: str):
     """Remove uma vaga por ID."""
