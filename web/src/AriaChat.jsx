@@ -57,7 +57,7 @@ const ARIA_CHAT_STORAGE_KEY = 'aria_chat_messages';
 
 function loadStoredMessages() {
   try {
-    const stored = sessionStorage.getItem(ARIA_CHAT_STORAGE_KEY);
+    const stored = localStorage.getItem(ARIA_CHAT_STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored);
       if (Array.isArray(parsed) && parsed.length > 0) return parsed;
@@ -72,12 +72,12 @@ function saveStoredMessages(messages) {
       ...m,
       image: m.image ? '[image]' : null,
     }));
-    sessionStorage.setItem(ARIA_CHAT_STORAGE_KEY, JSON.stringify(toSave));
+    localStorage.setItem(ARIA_CHAT_STORAGE_KEY, JSON.stringify(toSave));
   } catch {}
 }
 
 function clearStoredMessages() {
-  try { sessionStorage.removeItem(ARIA_CHAT_STORAGE_KEY); } catch {}
+  try { localStorage.removeItem(ARIA_CHAT_STORAGE_KEY); } catch {}
 }
 
 export default function AriaChat() {
