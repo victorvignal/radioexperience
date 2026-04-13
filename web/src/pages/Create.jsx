@@ -333,7 +333,7 @@ export default function Create() {
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic: topic.trim(), template, top_k: 10, specialty: specialty || null, level: level || null }),
+        body: JSON.stringify({ topic: topic.trim(), template, top_k: 10, ...(specialty ? { specialty } : {}), ...(level ? { level } : {}) }),
       })
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}))
@@ -685,7 +685,7 @@ export default function Create() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M13 3L4 14h7l-2 7 9-11h-7l2-7z" fill={C.bgDeep} stroke={C.bgDeep} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                Gerar {typeLabel}
+                Gerar
               </>
             )}
           </button>
