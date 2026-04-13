@@ -1868,7 +1868,7 @@ def generate_image_for_content(topic: str, content: str, template_type: str) -> 
         return None
     try:
         response = openai_client.images.generate(
-            model="gpt-image-1",
+            model="gpt-image-1.5",
             prompt=prompt,
             n=1,
             size="1536x1024",
