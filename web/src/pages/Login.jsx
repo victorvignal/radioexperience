@@ -30,7 +30,7 @@ function EX({ color = C.accent, size = 16 }) {
 
 function Logo({ size = 20, showIcon = true }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+    <Link to='/' style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', textDecoration: 'none' }}>
       {showIcon && (
         <div
           style={{
@@ -69,7 +69,7 @@ function Logo({ size = 20, showIcon = true }) {
       >
         Radio<EX color={C.accent} size={size} />perience
       </span>
-    </div>
+    </Link>
   )
 }
 
@@ -193,6 +193,7 @@ function ScanLines() {
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [rememberMe, setRememberMe] = useState(true)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [focus, setFocus] = useState({ email: false, password: false })
@@ -204,6 +205,8 @@ export default function Login() {
     setError('')
     setLoading(true)
     try {
+      // Salva preferência antes do login (supabase.js lê isso no init)
+      localStorage.setItem('rx_remember_me', rememberMe ? 'true' : 'false')
       await signIn(email, password)
       navigate('/dashboard')
     } catch (err) {
@@ -216,9 +219,13 @@ export default function Login() {
   const handleGoogleSignIn = async () => {
     setError('')
     try {
+      // Salva preferência antes do redirect OAuth
+      localStorage.setItem('rx_remember_me', rememberMe ? 'true' : 'false')
+      const canonicalOrigin = 'https://www.radioexperience.com.br'
+
       await supabase.auth.signInWithOAuth({
         provider: 'google',
-        options: { redirectTo: window.location.origin + '/dashboard' },
+        options: { redirectTo: canonicalOrigin + '/dashboard' },
       })
     } catch (err) {
       setError(err?.message || 'Erro ao entrar com Google. Tente novamente.')
@@ -343,10 +350,26 @@ export default function Login() {
               style={inputStyle(focus.password)}
             />
 
-            <div style={{ marginTop: 6, display: 'flex', justifyContent: 'space-between' }}>
-              <Link to="/signup" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none' }}>
-                Criar conta
-              </Link>
+            <div style={{ marginTop: 8, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 7, cursor: 'pointer', userSelect: 'none' }}>
+                <div
+                  onClick={() => setRememberMe(r => !r)}
+                  style={{
+                    width: 16, height: 16, borderRadius: 4,
+                    border: `1.5px solid ${rememberMe ? C.accent : C.glassBorder}`,
+                    background: rememberMe ? C.accentSoft : 'transparent',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'all 0.15s', cursor: 'pointer',
+                  }}
+                >
+                  {rememberMe && (
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                      <path d="M2 5l2.5 2.5L8 3" stroke={C.accent} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
+                </div>
+                <span style={{ fontSize: 12, color: C.textMuted }}>Lembrar de mim</span>
+              </label>
               <a href="#" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none' }}>
                 Esqueceu senha?
               </a>

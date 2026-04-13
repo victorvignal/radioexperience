@@ -1,7 +1,9 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
 
 const AuthContext = createContext(null)
+const ADMIN_EMAILS = ['radioexperience.project@gmail.com', 'vignal27@gmail.com']
+const STAFF_EMAILS = ['vignal27@gmail.com']
 
 export const AuthProvider = ({ children }) => {
   const [session, setSession] = useState(null)
@@ -9,62 +11,92 @@ export const AuthProvider = ({ children }) => {
   const [profileComplete, setProfileComplete] = useState(false)
   const [userRole, setUserRole] = useState('user')
   const [loading, setLoading] = useState(true)
+  const [profileLoading, setProfileLoading] = useState(true)
+
+  const fetchProfileData = useCallback(async (userId, email) => {
+    if (!userId) return
+    const isAdminEmail = ADMIN_EMAILS.includes(email)
+    const isStaffEmail = STAFF_EMAILS.includes(email)
+    setProfileLoading(true)
+    try {
+      const { data } = await supabase
+        .from('profiles')
+        .select('profile_complete, role')
+        .eq('id', userId)
+        .maybeSingle()
+      
+      if (data) {
+        const resolvedRole = isAdminEmail ? 'admin' : isStaffEmail ? 'staff' : (data.role || 'user')
+        setProfileComplete(data.profile_complete || false)
+        setUserRole(resolvedRole)
+      } else {
+        // Auto-create profile for known staff/admin emails
+        if (isAdminEmail || isStaffEmail) {
+          const role = isAdminEmail ? 'admin' : 'staff'
+          await supabase.from('profiles').upsert({
+            id: userId,
+            email,
+            full_name: email,
+            role,
+            profile_complete: true,
+          }, { onConflict: 'id' })
+          setProfileComplete(true)
+          setUserRole(role)
+        } else {
+          setProfileComplete(false)
+          setUserRole('user')
+        }
+      }
+    } catch (e) {
+      console.error('[Auth] Profile fetch error:', e)
+      setProfileComplete(false)
+      setUserRole(isAdminEmail ? 'admin' : isStaffEmail ? 'staff' : 'user')
+    } finally {
+      setProfileLoading(false)
+    }
+  }, [])
 
   useEffect(() => {
     let mounted = true
 
-    const fetchProfileComplete = async (activeSession) => {
-      if (!activeSession?.user) {
-        if (mounted) setProfileComplete(false)
-        return
-      }
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('profile_complete')
-        .eq('id', activeSession.user.id)
-        .single()
-      if (error) {
-        console.error(error)
-      }
-      if (mounted) {
-        setProfileComplete(data?.profile_complete || false)
-      }
-    }
+    const applySession = async (newSession) => {
+      if (!mounted) return
+      setSession(newSession)
+      setUser(newSession?.user ?? null)
 
-    const fetchUserRole = async (activeSession) => {
-      if (!activeSession?.user) return
-      const { data } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', activeSession.user.id)
-        .single()
-      if (mounted) {
-        setUserRole(data?.role || 'user')
+      if (newSession?.user) {
+        fetchProfileData(newSession.user.id, newSession.user.email)
+      } else {
+        setProfileComplete(false)
+        setUserRole('user')
+        setProfileLoading(false)
       }
     }
 
     const init = async () => {
-      const { data, error } = await supabase.auth.getSession()
-      if (error) {
-        console.error(error)
+      try {
+        let resolvedSession = null
+
+        for (let attempt = 0; attempt < 4; attempt++) {
+          const { data } = await supabase.auth.getSession()
+          resolvedSession = data?.session ?? null
+          if (resolvedSession) break
+          await new Promise((r) => setTimeout(r, 600))
+        }
+
+        await applySession(resolvedSession)
+      } catch (e) {
+        console.error('[Auth] Init error:', e)
+      } finally {
+        if (mounted) setLoading(false)
       }
-      if (!mounted) return
-      setSession(data?.session ?? null)
-      setUser(data?.session?.user ?? null)
-      await fetchProfileComplete(data?.session)
-      await fetchUserRole(data?.session)
-      if (mounted) setLoading(false)
     }
 
     init()
 
     const { data: listener } = supabase.auth.onAuthStateChange(async (_event, newSession) => {
       if (!mounted) return
-      setLoading(true)
-      setSession(newSession)
-      setUser(newSession?.user ?? null)
-      await fetchProfileComplete(newSession)
-      await fetchUserRole(newSession)
+      await applySession(newSession)
       if (mounted) setLoading(false)
     })
 
@@ -72,41 +104,62 @@ export const AuthProvider = ({ children }) => {
       mounted = false
       listener?.subscription?.unsubscribe()
     }
-  }, [])
+  }, [fetchProfileData])
 
-  const signIn = async (email, password) => {
+  const signIn = useCallback(async (email, password) => {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) throw error
     return data
-  }
+  }, [])
 
-  const signUp = async (email, password) => {
-    const { data, error } = await supabase.auth.signUp({ email, password })
+  const signUp = useCallback(async (email, password, fullName) => {
+    const { data, error } = await supabase.auth.signUp({ 
+      email, 
+      password,
+      options: {
+        data: { full_name: fullName }
+      }
+    })
     if (error) throw error
+    
+    // Create profile entry
+    if (data?.user) {
+      await supabase.from('profiles').upsert({
+        id: data.user.id,
+        email: data.user.email,
+        full_name: fullName,
+        role: 'user',
+        profile_complete: false
+      }, { onConflict: 'id' })
+    }
+    
     return data
-  }
+  }, [])
 
-  const signOut = async () => {
+  const signOut = useCallback(async () => {
     const { error } = await supabase.auth.signOut()
     if (error) throw error
-  }
+    setSession(null)
+    setUser(null)
+    setProfileComplete(false)
+    setUserRole('user')
+  }, [])
 
-  const refreshProfile = async () => {
-    if (!session?.user) return
-    const { data } = await supabase
-      .from('profiles')
-      .select('profile_complete')
-      .eq('id', session.user.id)
-      .single()
-    setProfileComplete(data?.profile_complete || false)
-  }
+  const refreshProfile = useCallback(async () => {
+    if (session?.user) {
+      await fetchProfileData(session.user.id, session.user.email)
+    }
+  }, [session?.user?.id, session?.user?.email, fetchProfileData])
 
   const value = {
     session,
     user,
     profileComplete,
     userRole,
+    isAdmin: userRole === 'admin',
+    isStaff: userRole === 'staff' || userRole === 'admin',
     loading,
+    profileLoading,
     refreshProfile,
     signIn,
     signUp,

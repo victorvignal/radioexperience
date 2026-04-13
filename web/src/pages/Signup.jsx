@@ -30,7 +30,7 @@ function EX({ color = C.accent, size = 16 }) {
 
 function Logo({ size = 20, showIcon = true }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+    <Link to='/' style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', textDecoration: 'none' }}>
       {showIcon && (
         <div
           style={{
@@ -69,7 +69,7 @@ function Logo({ size = 20, showIcon = true }) {
       >
         Radio<EX color={C.accent} size={size} />perience
       </span>
-    </div>
+    </Link>
   )
 }
 
@@ -211,13 +211,16 @@ export default function Signup() {
       return
     }
 
+    if (password.length < 6) {
+      setError('A senha deve ter pelo menos 6 caracteres.')
+      return
+    }
+
     setLoading(true)
     try {
-      const { data } = await signUp(email, password)
-      if (name && data?.user?.id) {
-        await supabase.auth.updateUser({ data: { full_name: name } })
-      }
-      setSuccess('Conta criada. Confira seu email para confirmar o acesso.')
+      await signUp(email, password, name)
+      setSuccess('Conta criada com sucesso! Redirecionando...')
+      setTimeout(() => window.location.href = '/dashboard', 1500)
     } catch (err) {
       setError(err?.message || 'Erro ao criar conta. Tente novamente.')
     } finally {
@@ -231,7 +234,7 @@ export default function Signup() {
     try {
       await supabase.auth.signInWithOAuth({
         provider: 'google',
-        options: { redirectTo: window.location.origin + '/dashboard' },
+        options: { redirectTo: 'https://www.radioexperience.com.br/dashboard' },
       })
     } catch (err) {
       setError(err?.message || 'Erro ao entrar com Google. Tente novamente.')

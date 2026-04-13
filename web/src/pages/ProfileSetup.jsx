@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
 
@@ -45,7 +45,7 @@ function EX({ color = C.accent, size = 16 }) {
 
 function Logo({ size = 20, showIcon = true }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+    <Link to='/' style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', textDecoration: 'none' }}>
       {showIcon && (
         <div
           style={{
@@ -84,7 +84,7 @@ function Logo({ size = 20, showIcon = true }) {
       >
         Radio<EX color={C.accent} size={size} />perience
       </span>
-    </div>
+    </Link>
   )
 }
 
