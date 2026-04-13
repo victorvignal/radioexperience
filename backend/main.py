@@ -316,7 +316,7 @@ Exemplo:
                 {"role": "user", "content": vision_messages},
             ],
             temperature=0.1,
-            max_tokens=12000,
+            max_completion_tokens=12000,
         )
         raw_response = response.choices[0].message.content
 
@@ -613,7 +613,7 @@ def chat(req: ChatRequest):
                     ]},
                 ],
                 temperature=0.2,
-                max_tokens=500,
+                max_completion_tokens=500,
             )
             image_description = desc_response.choices[0].message.content
             # Combine user question with image description for better search
@@ -788,7 +788,7 @@ def chat(req: ChatRequest):
             model=model,
             messages=messages,
             temperature=0.3,
-            max_tokens=1500,
+            max_completion_tokens=1500,
         )
         answer = response.choices[0].message.content
         tokens_used = response.usage.total_tokens if response.usage else 0
@@ -1065,7 +1065,7 @@ def _generate_question(context: str) -> dict:
             {"role": "user", "content": "Gere uma questão de múltipla escolha de radiologia em PORTUGUÊS com base no contexto fornecido."},
         ],
         temperature=0.7,
-        max_tokens=600,
+        max_completion_tokens=600,
         response_format={"type": "json_object"},
     )
     raw = response.choices[0].message.content.strip()
@@ -1836,7 +1836,7 @@ def criar_content(template_type: str, req: CriarRequest):
                 {"role": "user", "content": f"Tema: {req.topic}\n\n{f'N�vel: {req.level}' if req.level else ''}\n{f'Especialidade: {req.specialty}' if req.specialty else ''}\n\nContexto cient�fico dispon�vel:\n{context_text}"},
             ],
             temperature=0.7,
-            max_tokens=4000,
+            max_completion_tokens=4000,
         )
         content = response.choices[0].message.content
     except Exception as e:
