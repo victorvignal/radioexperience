@@ -294,6 +294,35 @@ function PreviewModal({ content, topic, template, typeLabel, imagePreview, onClo
 }
 
 // ── Main Create Page ─────────────────────────────────────────────────────────
+function SlideRenderer({ content }) {
+  const slides = content.split(/(?=## SLIDE \d+|## SLIDE)/i).filter(s => s.trim())
+  if (slides.length < 2) return <pre style={{ whiteSpace: 'pre-wrap', fontSize: 14, color: C.textSoft, lineHeight: 1.7 }}>{content}</pre>
+  
+  return (
+    <div style={{ display: 'grid', gap: 16 }}>
+      {slides.map((slide, i) => {
+        const lines = slide.trim().split('\n')
+        const titleLine = lines[0] || ''
+        const title = titleLine.replace(/^#+\s*/, '').replace(/\*\*/g, '')
+        const body = lines.slice(1).join('\n').trim()
+        return (
+          <div key={i} style={{
+            background: 'linear-gradient(135deg, #0a1628, #0d1f3c)',
+            border: '1px solid ' + C.glassBorder,
+            borderRadius: 14,
+            padding: '20px 24px',
+            minHeight: 120,
+          }}>
+            <div style={{ fontSize: 11, color: C.accent, fontWeight: 700, marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Slide {i + 1}</div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: C.text, marginBottom: 12 }}>{title}</div>
+            <pre style={{ whiteSpace: 'pre-wrap', fontSize: 13, color: C.textSoft, lineHeight: 1.7, fontFamily: 'inherit', margin: 0 }}>{body}</pre>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 export default function Create() {
   const { user } = useAuth()
   const navigate = useNavigate()
