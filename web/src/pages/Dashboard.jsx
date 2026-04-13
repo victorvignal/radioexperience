@@ -778,6 +778,23 @@ export default function Dashboard() {
                   Gerenciar Vagas
                 </button>
                 <button
+                  onClick={() => {
+                    window.location.href = '/challenge'
+                  }}
+                  style={{
+                    borderRadius: 12,
+                    border: `1px solid ${C.glassBorder}`,
+                    background: 'transparent',
+                    color: C.textSoft,
+                    padding: '12px 16px',
+                    fontSize: 13,
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                  }}
+                >
+                  ARIA Challenge
+                </button>
+                <button
                   onClick={() => alert('Em breve')}
                   style={{
                     borderRadius: 12,

@@ -27,7 +27,7 @@ const API_BASE = "https://aria-backend-production-176b.up.railway.app";
 export default function AdminUpload() {
   const { userRole } = useAuth();
   const isStaff = userRole === "staff" || userRole === "admin";
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [dragging, setDragging] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -54,8 +54,9 @@ export default function AdminUpload() {
     );
   }
 
-  const onSelect = (f) => {
-    setFile(f);
+  const onSelect = (incoming) => {
+    const nextFiles = Array.from(incoming || []).filter(Boolean);
+    setFiles(nextFiles);
     setResult(null);
     setError("");
   };
@@ -63,45 +64,62 @@ export default function AdminUpload() {
   const onDrop = (e) => {
     e.preventDefault();
     setDragging(false);
-    const f = e.dataTransfer.files?.[0];
-    if (f) onSelect(f);
+    const dropped = Array.from(e.dataTransfer.files || []).filter((f) => f.type === "application/pdf");
+    if (dropped.length) onSelect(dropped);
   };
 
   const upload = async () => {
-    if (!file) return;
+    if (!files.length) return;
     setLoading(true);
     setError("");
     setResult(null);
     try {
-      // Convert PDF to images
-      const arrayBuffer = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-      const images = [];
-      const maxPages = Math.min(pdf.numPages, 4);
+      let total = 0;
+      let available = 0;
+      const locations = new Set();
+      const processedFiles = [];
 
-      for (let i = 1; i <= maxPages; i++) {
-        const page = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale: 2 });
-        const canvas = document.createElement("canvas");
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        const ctx = canvas.getContext("2d");
-        await page.render({ canvasContext: ctx, viewport }).promise;
-        const base64 = canvas.toDataURL("image/jpeg", 0.85).split(",")[1];
-        images.push(base64);
+      for (const file of files) {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        const images = [];
+        const maxPages = Math.min(pdf.numPages, 4);
+
+        for (let i = 1; i <= maxPages; i++) {
+          const page = await pdf.getPage(i);
+          const viewport = page.getViewport({ scale: 2 });
+          const canvas = document.createElement("canvas");
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          const ctx = canvas.getContext("2d");
+          await page.render({ canvasContext: ctx, viewport }).promise;
+          const base64 = canvas.toDataURL("image/jpeg", 0.85).split(",")[1];
+          images.push(base64);
+        }
+
+        const res = await fetch(`${API_BASE}/upload-shifts`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ images }),
+        });
+        if (!res.ok) throw new Error("Falha ao processar");
+        const data = await res.json();
+
+        total += Number(data.total || 0);
+        available += Number(data.available || 0);
+        (data.locations || []).forEach((loc) => locations.add(loc));
+        processedFiles.push(file.name);
       }
 
-      // Send images to backend
-      const res = await fetch(`${API_BASE}/upload-shifts`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ images }),
+      setResult({
+        message: files.length > 1 ? `${files.length} escalas processadas com sucesso.` : "Escala processada com sucesso.",
+        total,
+        available,
+        locations: Array.from(locations),
+        files: processedFiles,
       });
-      if (!res.ok) throw new Error("Falha ao processar");
-      const data = await res.json();
-      setResult(data);
     } catch (e) {
-      setError("Não foi possível processar o PDF agora.");
+      setError("Não foi possível processar os PDFs agora.");
     } finally {
       setLoading(false);
     }
@@ -139,38 +157,43 @@ export default function AdminUpload() {
             ref={inputRef}
             type="file"
             accept="application/pdf"
-            onChange={(e) => onSelect(e.target.files?.[0] || null)}
+            multiple
+            onChange={(e) => onSelect(e.target.files || [])}
             style={{ display: "none" }}
           />
           <div style={{ fontSize: 28, marginBottom: 10 }}>📄</div>
           <div style={{ fontSize: 16, fontWeight: 700, color: C.textSoft }}>Arraste o PDF aqui ou clique para selecionar</div>
-          <div style={{ fontSize: 12, color: C.textDim, marginTop: 6 }}>Somente PDF</div>
-          {file && (
-            <div style={{ marginTop: 14, fontSize: 13, color: C.accent }}>{file.name}</div>
+          <div style={{ fontSize: 12, color: C.textDim, marginTop: 6 }}>Um ou vários PDFs</div>
+          {files.length > 0 && (
+            <div style={{ marginTop: 14, fontSize: 13, color: C.accent, display: 'grid', gap: 4 }}>
+              {files.map((file) => (
+                <div key={file.name}>{file.name}</div>
+              ))}
+            </div>
           )}
         </div>
 
         <div style={{ marginTop: 18, display: "flex", gap: 12, flexWrap: "wrap" }}>
           <button
             onClick={upload}
-            disabled={!file || loading}
+            disabled={!files.length || loading}
             style={{
               padding: "12px 24px",
               borderRadius: 12,
               border: "none",
-              cursor: !file || loading ? "not-allowed" : "pointer",
+              cursor: !files.length || loading ? "not-allowed" : "pointer",
               fontWeight: 700,
               color: C.bgDeep,
               background: C.accent,
               boxShadow: `0 0 20px ${C.accentGlow}`,
-              opacity: !file || loading ? 0.6 : 1,
+              opacity: !files.length || loading ? 0.6 : 1,
             }}
           >
-            {loading ? "Enviando..." : "Enviar PDF"}
+            {loading ? "Enviando..." : files.length > 1 ? "Enviar Escalas" : "Enviar PDF"}
           </button>
-          {file && !loading && (
+          {files.length > 0 && !loading && (
             <button
-              onClick={() => onSelect(null)}
+              onClick={() => onSelect([])}
               style={{
                 padding: "12px 20px",
                 borderRadius: 12,
@@ -194,6 +217,11 @@ export default function AdminUpload() {
           <div style={{ marginTop: 24, background: C.glass, border: `1px solid ${C.glassBorder}`, borderRadius: 18, padding: 18 }}>
             <div style={{ fontWeight: 700, color: C.green }}>{result.message}</div>
             <div style={{ color: C.textMuted, marginTop: 8 }}>Total: {result.total} | Disponíveis: {result.available}</div>
+            {result.files && result.files.length > 0 && (
+              <div style={{ marginTop: 12, color: C.textSoft }}>
+                <strong>Arquivos:</strong> {result.files.join(", ")}
+              </div>
+            )}
             {result.locations && result.locations.length > 0 && (
               <div style={{ marginTop: 12, color: C.textSoft }}>
                 <strong>Locais:</strong> {result.locations.join(", ")}

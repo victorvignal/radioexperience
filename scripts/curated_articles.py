@@ -56,13 +56,15 @@ def today_start_iso() -> str:
     return start.isoformat()
 
 
-def build_feed_content(summary: str | None, specialty: str | None):
+def build_feed_content(summary: str | None, specialty: str | None, source_url: str | None = None):
     parts = []
     clean_summary = (summary or "").strip()
     clean_specialty = (specialty or "Geral").strip() or "Geral"
     if clean_summary:
         parts.append(clean_summary)
     parts.append(f"Por que importa: conteúdo relevante para {clean_specialty}.")
+    if source_url:
+        parts.append(f"Artigo original: {source_url}")
     content = "\n\n".join(parts).strip()
     return content[:997] + "..." if len(content) > 1000 else content
 
@@ -126,11 +128,30 @@ def get_next_curated_article():
     return rows[0] if rows else None
 
 
+def _localized_title(title: str | None, summary: str | None, specialty: str | None) -> str:
+    clean_title = (title or "").strip()
+    clean_summary = (summary or "").strip()
+    clean_specialty = (specialty or "Geral").strip() or "Geral"
+
+    if clean_title and any(ch in clean_title for ch in "ãáàâéêíóôõúç"):
+        return clean_title
+
+    if clean_summary:
+        first_sentence = clean_summary.split(".")[0].strip()
+        if len(first_sentence) >= 12:
+            return first_sentence[:117] + "..." if len(first_sentence) > 120 else first_sentence
+
+    if clean_title:
+        return f"Artigo selecionado para {clean_specialty}: {clean_title}"
+
+    return f"Artigo selecionado para {clean_specialty}"
+
+
 def create_feed_post(*, title: str, summary: str | None, source_url: str, journal: str | None, specialty: str | None):
     payload = {
         "type": "article",
-        "title": title,
-        "content": build_feed_content(summary, specialty),
+        "title": _localized_title(title, summary, specialty),
+        "content": build_feed_content(summary, specialty, source_url),
         "is_agent": True,
         "metadata": {
             "source": curated_source(),
