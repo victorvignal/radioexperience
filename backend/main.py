@@ -1058,12 +1058,134 @@ def _generate_question(context: str) -> dict:
     return json.loads(raw)
 
 
+def _get_seen_pool_ids(user_id: str) -> set:
+    """Get pool question IDs the user has already answered."""
+    try:
+        rr = httpx.get(
+            f"{SUPABASE_URL}/rest/v1/challenge_responses",
+            headers=_supabase_headers(),
+            params={"user_id": f"eq.{user_id}", "select": "question_id"},
+            timeout=15,
+        )
+        if rr.status_code != 200:
+            return set()
+        answered_ids = [r["question_id"] for r in rr.json() if r.get("question_id")]
+        if not answered_ids:
+            return set()
+        seen = set()
+        for i in range(0, len(answered_ids), 50):
+            batch = answered_ids[i:i+50]
+            ids_filter = ",".join(batch)
+            qr = httpx.get(
+                f"{SUPABASE_URL}/rest/v1/challenge_questions",
+                headers=_supabase_headers(),
+                params={"id": f"in.({ids_filter})", "select": "id,pool_id"},
+                timeout=15,
+            )
+            if qr.status_code == 200:
+                for q in qr.json():
+                    if q.get("pool_id"):
+                        seen.add(q["pool_id"])
+        return seen
+    except Exception as e:
+        logger.warning(f"Failed to get seen pool IDs: {e}")
+        return set()
+
+
+def _get_pool_questions(specialty: str, num: int, exclude_ids: set) -> list:
+    """Get questions from the pool, excluding already-seen ones."""
+    try:
+        params = {
+            "select": "*",
+            "specialty": f"eq.{specialty}",
+            "order": "times_used.asc,created_at.asc",
+            "limit": str(num * 3),
+        }
+        if exclude_ids:
+            ids_str = ",".join(exclude_ids)
+            params["id"] = f"not.in.({ids_str})"
+        r = httpx.get(
+            f"{SUPABASE_URL}/rest/v1/challenge_question_pool",
+            headers=_supabase_headers(),
+            params=params,
+            timeout=15,
+        )
+        if r.status_code == 200:
+            return r.json()[:num]
+        return []
+    except Exception as e:
+        logger.warning(f"Pool fetch failed: {e}")
+        return []
+
+
+def _save_to_pool(specialty: str, q_data: dict):
+    """Save a generated question to the pool for reuse."""
+    try:
+        pool_payload = {
+            "specialty": specialty,
+            "question_text": q_data.get("question_text", ""),
+            "question_type": "multiple_choice",
+            "options": q_data.get("options", {}),
+            "correct_answer": q_data.get("correct_answer", ""),
+            "explanation": q_data.get("explanation", ""),
+            "source_title": q_data.get("source_title", ""),
+            "difficulty": "medium",
+            "times_used": 0,
+        }
+        httpx.post(
+            f"{SUPABASE_URL}/rest/v1/challenge_question_pool",
+            headers={**_supabase_headers(), "Prefer": "return=minimal"},
+            json=pool_payload,
+            timeout=15,
+        )
+    except Exception as e:
+        logger.warning(f"Failed to save to pool: {e}")
+
+
+def _copy_pool_to_challenge(challenge_id: str, pool_q: dict, question_number: int) -> dict | None:
+    """Copy a pool question into challenge_questions for a specific challenge."""
+    try:
+        q_payload = {
+            "challenge_id": challenge_id,
+            "question_number": question_number,
+            "question_text": pool_q["question_text"],
+            "question_type": pool_q.get("question_type", "multiple_choice"),
+            "options": pool_q["options"],
+            "correct_answer": pool_q["correct_answer"],
+            "ai_answer": pool_q["correct_answer"],
+            "explanation": pool_q.get("explanation", ""),
+            "source_title": pool_q.get("source_title", ""),
+            "pool_id": pool_q["id"],
+        }
+        qr = httpx.post(
+            f"{SUPABASE_URL}/rest/v1/challenge_questions",
+            headers={**_supabase_headers(), "Prefer": "return=representation"},
+            json=q_payload,
+            timeout=15,
+        )
+        if qr.status_code in (200, 201):
+            saved = qr.json()[0]
+            try:
+                httpx.patch(
+                    f"{SUPABASE_URL}/rest/v1/challenge_question_pool?id=eq.{pool_q['id']}",
+                    headers={**_supabase_headers(), "Prefer": "return=minimal"},
+                    json={"times_used": (pool_q.get("times_used", 0) or 0) + 1},
+                    timeout=10,
+                )
+            except Exception:
+                pass
+            return saved
+        return None
+    except Exception as e:
+        logger.warning(f"Failed to copy pool question: {e}")
+        return None
+
+
 @app.post("/challenge/start")
 def challenge_start(req: ChallengeStartRequest):
-    """Create a new challenge and generate questions from RAG."""
+    """Create a new challenge using question pool (with GPT-4o fallback)."""
+    import random
     user_id = req.user_id or str(uuid.uuid4())
-
-    # Create challenge in Supabase
     challenge_payload = {
         "user_id": user_id,
         "specialty": req.specialty,
@@ -1071,7 +1193,6 @@ def challenge_start(req: ChallengeStartRequest):
         "time_per_question": req.time_per_question,
         "status": "in_progress",
     }
-
     try:
         r = httpx.post(
             f"{SUPABASE_URL}/rest/v1/challenges",
@@ -1085,56 +1206,75 @@ def challenge_start(req: ChallengeStartRequest):
         challenge_id = challenge["id"]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Challenge creation error: {str(e)}")
-
-    # Generate questions
-    questions = []
-    for i in range(req.num_questions):
-        try:
-            context = _get_challenge_context(req.specialty)
-            if not context:
-                logger.warning(f"No context for question {i+1}, skipping")
+    seen_ids = _get_seen_pool_ids(user_id)
+    logger.info(f"Challenge start: user={user_id[:8]}... seen={len(seen_ids)} pool questions")
+    pool_questions = _get_pool_questions(req.specialty, req.num_questions, seen_ids)
+    logger.info(f"Pool returned {len(pool_questions)} questions for {req.specialty}")
+    questions_to_use = list(pool_questions)
+    if len(questions_to_use) < req.num_questions:
+        needed = req.num_questions - len(questions_to_use)
+        logger.info(f"Generating {needed} new questions with GPT-4o")
+        for i in range(needed):
+            try:
+                context = _get_challenge_context(req.specialty)
+                if not context:
+                    logger.warning(f"No context for new question {i+1}, skipping")
+                    continue
+                q_data = _generate_question(context)
+                _save_to_pool(req.specialty, q_data)
+                q_data["_generated"] = True
+                questions_to_use.append(q_data)
+            except Exception as e:
+                logger.warning(f"Failed to generate question {i+1}: {e}")
                 continue
-
-            q_data = _generate_question(context)
-
-            # Store question in Supabase
-            q_payload = {
-                "challenge_id": challenge_id,
-                "question_number": i + 1,
-                "question_text": q_data.get("question_text", ""),
-                "question_type": "multiple_choice",
-                "options": q_data.get("options", {}),
-                "correct_answer": q_data.get("correct_answer", ""),
-                "ai_answer": q_data.get("correct_answer", ""),
-                "explanation": q_data.get("explanation", ""),
-                "source_title": q_data.get("source_title", ""),
-                "context_chunk": context[:500],
-            }
-
-            qr = httpx.post(
-                f"{SUPABASE_URL}/rest/v1/challenge_questions",
-                headers={**_supabase_headers(), "Prefer": "return=representation"},
-                json=q_payload,
-                timeout=15,
-            )
-            if qr.status_code in (200, 201):
-                saved_q = qr.json()[0]
-                # Return to client WITHOUT correct_answer
-                questions.append({
-                    "id": saved_q["id"],
-                    "question_number": saved_q["question_number"],
-                    "question_text": saved_q["question_text"],
-                    "question_type": saved_q["question_type"],
-                    "options": saved_q["options"],
-                    "time_per_question": req.time_per_question,
-                })
+    random.shuffle(questions_to_use)
+    questions = []
+    for i, q in enumerate(questions_to_use[:req.num_questions]):
+        try:
+            if q.get("_generated"):
+                q_payload = {
+                    "challenge_id": challenge_id,
+                    "question_number": i + 1,
+                    "question_text": q.get("question_text", ""),
+                    "question_type": "multiple_choice",
+                    "options": q.get("options", {}),
+                    "correct_answer": q.get("correct_answer", ""),
+                    "ai_answer": q.get("correct_answer", ""),
+                    "explanation": q.get("explanation", ""),
+                    "source_title": q.get("source_title", ""),
+                }
+                qr = httpx.post(
+                    f"{SUPABASE_URL}/rest/v1/challenge_questions",
+                    headers={**_supabase_headers(), "Prefer": "return=representation"},
+                    json=q_payload,
+                    timeout=15,
+                )
+                if qr.status_code in (200, 201):
+                    saved_q = qr.json()[0]
+                    questions.append({
+                        "id": saved_q["id"],
+                        "question_number": saved_q["question_number"],
+                        "question_text": saved_q["question_text"],
+                        "question_type": saved_q["question_type"],
+                        "options": saved_q["options"],
+                        "time_per_question": req.time_per_question,
+                    })
+            else:
+                saved = _copy_pool_to_challenge(challenge_id, q, i + 1)
+                if saved:
+                    questions.append({
+                        "id": saved["id"],
+                        "question_number": saved["question_number"],
+                        "question_text": saved["question_text"],
+                        "question_type": saved["question_type"],
+                        "options": saved["options"],
+                        "time_per_question": req.time_per_question,
+                    })
         except Exception as e:
-            logger.warning(f"Failed to generate question {i+1}: {e}")
+            logger.warning(f"Failed to save question {i+1}: {e}")
             continue
-
     if not questions:
-        raise HTTPException(status_code=500, detail="Could not generate any questions. Try a different specialty.")
-
+        raise HTTPException(status_code=500, detail="Could not prepare questions. Try a different specialty.")
     return {
         "challenge_id": challenge_id,
         "questions": questions,
@@ -1315,17 +1455,25 @@ def challenge_finish(req: ChallengeFinishRequest):
 
 
 @app.get("/challenge/leaderboard")
-def challenge_leaderboard(specialty: str | None = None, limit: int = 20):
-    """Get challenge leaderboard."""
+def challenge_leaderboard(specialty: str | None = None, period: str = "weekly", limit: int = 20):
+    """Get challenge leaderboard with period filter (weekly/monthly/all)."""
+    from datetime import timedelta
     params = {
         "select": "id,user_id,specialty,user_score,ai_score,num_questions,total_time_seconds,created_at",
         "status": "eq.finished",
         "order": "user_score.desc,total_time_seconds.asc",
-        "limit": str(min(limit, 50)),
+        "limit": str(min(limit * 5, 200)),
     }
     if specialty:
         params["specialty"] = f"eq.{specialty}"
-
+    # Date filter
+    if period == "weekly":
+        cutoff = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
+        params["created_at"] = f"gte.{cutoff}"
+    elif period == "monthly":
+        cutoff = (datetime.now(timezone.utc) - timedelta(days=30)).isoformat()
+        params["created_at"] = f"gte.{cutoff}"
+    # period == "all" -> no date filter
     try:
         r = httpx.get(
             f"{SUPABASE_URL}/rest/v1/challenges",
@@ -1333,9 +1481,38 @@ def challenge_leaderboard(specialty: str | None = None, limit: int = 20):
             params=params,
             timeout=15,
         )
-        if r.status_code == 200:
-            return {"leaderboard": r.json(), "count": len(r.json())}
-        raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
+        if r.status_code != 200:
+            raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
+        challenges = r.json()
+        # Aggregate by user_id
+        from collections import defaultdict
+        user_stats = defaultdict(lambda: {"best_score": 0, "scores": [], "total": 0, "specialties": set(), "last_date": ""})
+        for c in challenges:
+            uid = c.get("user_id", "unknown")
+            s = user_stats[uid]
+            s["best_score"] = max(s["best_score"], c.get("user_score", 0))
+            s["scores"].append(c.get("user_score", 0))
+            s["total"] += 1
+            if c.get("specialty"):
+                s["specialties"].add(c["specialty"])
+            if c.get("created_at", "") > s["last_date"]:
+                s["last_date"] = c["created_at"]
+        rankings = []
+        for uid, s in user_stats.items():
+            short_id = uid[:4].upper() if len(uid) > 4 else uid.upper()
+            rankings.append({
+                "user_id": uid,
+                "user_name": f"Jogador {short_id}",
+                "best_score": s["best_score"],
+                "avg_score": round(sum(s["scores"]) / len(s["scores"]), 1),
+                "total_challenges": s["total"],
+                "specialty": ", ".join(list(s["specialties"])[:3]) or "Geral",
+                "last_challenge": s["last_date"],
+            })
+        rankings.sort(key=lambda x: (-x["best_score"], -x["total_challenges"]))
+        for i, r_item in enumerate(rankings[:limit]):
+            r_item["rank"] = i + 1
+        return {"rankings": rankings[:limit], "period": period, "total_players": len(user_stats)}
     except HTTPException:
         raise
     except Exception as e:
