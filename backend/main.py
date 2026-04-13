@@ -1497,12 +1497,29 @@ def challenge_leaderboard(specialty: str | None = None, period: str = "weekly", 
                 s["specialties"].add(c["specialty"])
             if c.get("created_at", "") > s["last_date"]:
                 s["last_date"] = c["created_at"]
+        # Fetch user names from profiles
+        user_names = {}
+        unique_uids = list(user_stats.keys())
+        for uid in unique_uids:
+            try:
+                pr = httpx.get(
+                    f"{SUPABASE_URL}/rest/v1/profiles",
+                    headers=_supabase_headers(),
+                    params={"select": "id,full_name", "id": f"eq.{uid}"},
+                    timeout=5,
+                )
+                if pr.status_code == 200 and pr.json():
+                    user_names[uid] = pr.json()[0].get("full_name") or f"Jogador {uid[:4].upper()}"
+                else:
+                    user_names[uid] = f"Jogador {uid[:4].upper()}"
+            except Exception:
+                user_names[uid] = f"Jogador {uid[:4].upper()}"
+
         rankings = []
         for uid, s in user_stats.items():
-            short_id = uid[:4].upper() if len(uid) > 4 else uid.upper()
             rankings.append({
                 "user_id": uid,
-                "user_name": f"Jogador {short_id}",
+                "user_name": user_names.get(uid, f"Jogador {uid[:4].upper()}"),
                 "best_score": s["best_score"],
                 "avg_score": round(sum(s["scores"]) / len(s["scores"]), 1),
                 "total_challenges": s["total"],
