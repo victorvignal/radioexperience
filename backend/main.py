@@ -1842,13 +1842,47 @@ def criar_content(template_type: str, req: CriarRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro na geracao: {e}")
 
+    # Generate image for visual templates
+    image_url = None
+    if template_type in ("mapa_mental", "slides"):
+        image_url = generate_image_for_content(req.topic, content, template_type)
+
     return {
         "content": content,
         "template": template_type,
         "label": prompt_config["label"],
         "credits": prompt_config["credits"],
         "sources_count": len(context_chunks),
+        "image_url": image_url,
     }
+
+
+def generate_image_for_content(topic: str, content: str, template_type: str) -> str | None:
+    """Generate an image using gpt-image-1.5 for visual content types."""
+    image_prompts = {
+        "mapa_mental": f"Crie um mapa mental visual profissional sobre radiologia: {topic}. Use hierarquia clara com ramos coloridos, ícones médicos (raio-X, ultrassom, ressonância), e texto legível. Fundo escuro (#001a2b), cores vibrantes. Estudo médico brasileiro.",
+        "slides": f"Crie uma imagem de slide didático de radiologia sobre: {topic}. Título grande no topo, 4-5 bullet points visuais com ícones, gráficos simples. Fundo escuro profissional, cores azul e verde. Formato apresentação médica.",
+    }
+    prompt = image_prompts.get(template_type)
+    if not prompt:
+        return None
+    try:
+        response = openai_client.images.generate(
+            model="gpt-image-1.5",
+            prompt=prompt,
+            n=1,
+            size="1536x1024",
+            quality="medium",
+        )
+        import base64
+        image_base64 = response.data[0].b64_json
+        if image_base64:
+            return f"data:image/png;base64,{image_base64}"
+        url = response.data[0].url
+        return url
+    except Exception as e:
+        logger.warning(f"Image generation failed: {e}")
+        return None
 
 if __name__ == "__main__":
     import uvicorn
