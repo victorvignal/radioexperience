@@ -1605,118 +1605,118 @@ class CriarRequest(BaseModel):
 
 CRIAR_PROMPTS = {
     "script": {
-        "system": """Voc� � um especialista em educa��o m�dica em radiologia. Crie um SCRIPT DE AULA completo e estruturado sobre o tema fornecido.
+        "system": """Você é um especialista em educação médica em radiologia. Crie um SCRIPT DE AULA completo e estruturado sobre o tema fornecido.
 
-Use o contexto RAG fornecido como base cient�fica. O script deve seguir esta estrutura:
+Use o contexto RAG fornecido como base científica. O script deve seguir esta estrutura:
 
 # {topic}
 
-## ?? Hook (30 segundos)
-[Abertura envolvente com caso cl�nico ou dado surpreendente]
+## 🎯 Hook (30 segundos)
+[Abertura envolvente com caso clínico ou dado surpreendente]
 
-## ?? Desenvolvimento
-[Conceitos fundamentais, classifica��es, crit�rios diagn�sticos por modalidade]
+## 📚 Desenvolvimento
+[Conceitos fundamentais, classificações, critérios diagnósticos por modalidade]
 
-## ?? Caso Cl�nico Integrado
+## 🩺 Caso Clínico Integrado
 [Caso real/anonimizado que ilustra os conceitos]
 
-## ? Pontos-Chave
+## ✅ Pontos-Chave
 [Resumo em bullet points dos takeaways principais]
 
-## ?? Refer�ncias
-[Fontes bibliogr�ficas do contexto RAG]
+## 📖 Referências
+[Fontes bibliográficas do contexto RAG]
 
-Seja preciso cientificamente, use terminologia adequada e inclua crit�rios de imagem quando relevante. Escreva em portugu�s brasileiro.""",
+Seja preciso cientificamente, use terminologia adequada e inclua critérios de imagem quando relevante. Escreva em português brasileiro.""",
         "label": "Script de Aula",
         "credits": 50,
     },
     "slides": {
-        "system": """Voc� � um especialista em educa��o m�dica em radiologia. Crie um conjunto de SLIDES DID�TICOS sobre o tema fornecido.
+        "system": """Você é um especialista em educação médica em radiologia. Crie um conjunto de SLIDES DIDÁTICOS sobre o tema fornecido.
 
-Use o contexto RAG fornecido como base cient�fica. Formate como:
+Use o contexto RAG fornecido como base científica. Formate como:
 
-## SLIDE 1 � T�tulo
+## SLIDE 1 – Título
 **{topic}**
-[Subt�tulo / contexto]
+[Subtítulo / contexto]
 
-## SLIDE 2 � Objetivos
+## SLIDE 2 – Objetivos
 - Objetivo 1
 - Objetivo 2
 - Objetivo 3
 
-## SLIDES 3-8 � Conte�do
-[Cada slide com t�tulo claro e 3-5 bullet points m�x. Inclua tabelas comparativas quando relevante]
+## SLIDES 3-8 – Conteúdo
+[Cada slide com título claro e 3-5 bullet points máx. Inclua tabelas comparativas quando relevante]
 
-## SLIDE Final � Take-Home Points
+## SLIDE Final – Take-Home Points
 - Resumo dos pontos-chave
-- Aplica��o cl�nica pr�tica
+- Aplicação clínica prática
 
-M�nimo 6 slides, m�ximo 12. Cada slide deve ser autocontido e visualmente descritivo. Portugu�s brasileiro.""",
-        "label": "Slides Did�ticos",
+Mínimo 6 slides, máximo 12. Cada slide deve ser autocontido e visualmente descritivo. Português brasileiro.""",
+        "label": "Slides Didáticos",
         "credits": 80,
     },
     "mapa_mental": {
-        "system": """Voc� � um especialista em educa��o m�dica em radiologia. Crie um MAPA MENTAL HIER�RQUICO sobre o tema fornecido.
+        "system": """Você é um especialista em educação médica em radiologia. Crie um MAPA MENTAL HIERÁRQUICO sobre o tema fornecido.
 
-Use o contexto RAG fornecido como base cient�fica. Formate como �rvore hier�rquica em markdown:
+Use o contexto RAG fornecido como base científica. Formate como árvore hierárquica em markdown:
 
 # {topic}
 
 ## Ramo 1: [Categoria Principal]
 ### 1.1 [Subcategoria]
-- Caracter�stica / achado 1
-- Caracter�stica / achado 2
+- Característica / achado 1
+- Característica / achado 2
 ### 1.2 [Subcategoria]
-- Crit�rio A
-- Crit�rio B
+- Critério A
+- Critério B
 
 ## Ramo 2: [Categoria Principal]
 ...
 
-## Ramo 3: Diagn�stico Diferencial
+## Ramo 3: Diagnóstico Diferencial
 ...
 
-## Ramo 4: Conduta / Classifica��o
+## Ramo 4: Conduta / Classificação
 ...
 
-Organize de forma l�gica: defini��o ? classifica��o ? achados por modalidade ? diagn�stico diferencial ? conduta. Use no m�ximo 4 n�veis de hierarquia. Portugu�s brasileiro.""",
+Organize de forma lógica: definição → classificação → achados por modalidade → diagnóstico diferencial → conduta. Use no máximo 4 níveis de hierarquia. Português brasileiro.""",
         "label": "Mapa Mental",
         "credits": 60,
     },
     "tabela": {
-        "system": """Voc� � um especialista em educa��o m�dica em radiologia. Crie uma TABELA COMPARATIVA detalhada sobre o tema fornecido.
+        "system": """Você é um especialista em educação médica em radiologia. Crie uma TABELA COMPARATIVA detalhada sobre o tema fornecido.
 
-Use o contexto RAG fornecido como base cient�fica. Formate em markdown table:
+Use o contexto RAG fornecido como base científica. Formate em markdown table:
 
 # Tabela Comparativa: {topic}
 
 ## Por Modalidade de Imagem
-| Caracter�stica | Ultrassonografia | Tomografia | Resson�ncia Magn�tica |
+| Característica | Ultrassonografia | Tomografia | Ressonância Magnética |
 |---|---|---|---|
-| [crit�rio 1] | [achado] | [achado] | [achado] |
-| [crit�rio 2] | [achado] | [achado] | [achado] |
+| [critério 1] | [achado] | [achado] | [achado] |
+| [critério 2] | [achado] | [achado] | [achado] |
 
-## Classifica��o / Estadiamento (se aplic�vel)
-| Categoria | Crit�rios | Conduta |
+## Classificação / Estadiamento (se aplicável)
+| Categoria | Critérios | Conduta |
 |---|---|---|
 | ... | ... | ... |
 
-## Diagn�stico Diferencial
-| Diagn�stico | Achado Caracter�stico | Diferencial Principal |
+## Diagnóstico Diferencial
+| Diagnóstico | Achado Característico | Diferencial Principal |
 |---|---|---|
 | ... | ... | ... |
 
-Inclua BIRADS, TI-RADS, LI-RADS ou outra classifica��o relevante quando aplic�vel. Seja conciso e clinicamente �til. Portugu�s brasileiro.""",
+Inclua BIRADS, TI-RADS, LI-RADS ou outra classificação relevante quando aplicável. Seja conciso e clinicamente útil. Português brasileiro.""",
         "label": "Tabela Comparativa",
         "credits": 60,
     },
     "questoes": {
-        "system": """Voc� � um especialista em educa��o m�dica em radiologia. Crie 5 QUEST�ES DE M�LTIPLA ESCOLHA sobre o tema fornecido.
+        "system": """Você é um especialista em educação médica em radiologia. Crie 5 QUESTÕES DE MÚLTIPLA ESCOLHA sobre o tema fornecido.
 
-Use o contexto RAG fornecido como base cient�fica. Formate cada quest�o assim:
+Use o contexto RAG fornecido como base científica. Formate cada questão assim:
 
-**QUEST�O 1:**
-[Enunciado cl�nico com contexto de caso]
+**QUESTÃO 1:**
+[Enunciado clínico com contexto de caso]
 
 A) [Alternativa]
 B) [Alternativa]
@@ -1725,58 +1725,58 @@ D) [Alternativa]
 
 **Resposta Correta:** [Letra]
 
-**Explica��o:**
-[Explica��o detalhada de por que a resposta est� correta e por que as outras est�o erradas]
+**Explicação:**
+[Explicação detalhada de por que a resposta está correta e por que as outras estão erradas]
 
-**Fonte:** [Refer�ncia bibliogr�fica]
+**Fonte:** [Referência bibliográfica]
 
 Regras:
-- Cada quest�o deve ter exatamente 4 alternativas (A-D)
+- Cada questão deve ter exatamente 4 alternativas (A-D)
 - Apenas UMA alternativa correta
-- Enunciado deve ser no formato de caso cl�nico quando poss�vel
-- Explica��es devem ser educativas e detalhadas
-- Alternativas erradas devem ser plaus�veis (distratores de qualidade)
-- Portugu�s brasileiro""",
-        "label": "Quest�es de Estudo",
+- Enunciado deve ser no formato de caso clínico quando possível
+- Explicações devem ser educativas e detalhadas
+- Alternativas erradas devem ser plausíveis (distratores de qualidade)
+- Português brasileiro""",
+        "label": "Questões de Estudo",
         "credits": 30,
     },
     "caso_clinico": {
-        "system": """Voc� � um especialista em educa��o m�dica em radiologia. Crie um CASO CL�NICO COMPLETO para apresenta��o acad�mica sobre o tema fornecido.
+        "system": """Você é um especialista em educação médica em radiologia. Crie um CASO CLÍNICO COMPLETO para apresentação acadêmica sobre o tema fornecido.
 
-Use o contexto RAG fornecido como base cient�fica. Formate assim:
+Use o contexto RAG fornecido como base científica. Formate assim:
 
-# Caso Cl�nico: {topic}
+# Caso Clínico: {topic}
 
-## ?? Anamnese
+## 📋 Anamnese
 - **Idade/Sexo:** [dados]
 - **Queixa principal:** [sintomas]
-- **Hist�ria da doen�a atual:** [evolu��o]
-- **Antecedentes relevantes:** [comorbidades, cirurgias pr�vias]
+- **História da doença atual:** [evolução]
+- **Antecedentes relevantes:** [comorbidades, cirurgias prévias]
 
-## ?? Exame F�sico
-[Achados relevantes ao exame f�sico]
+## 🩺 Exame Físico
+[Achados relevantes ao exame físico]
 
-## ??? Exames de Imagem
+## 🔬 Exames de Imagem
 ### Modalidade 1 (US/TC/RX/RM)
-**T�cnica:** [protocolo utilizado]
+**Técnica:** [protocolo utilizado]
 **Achados:**
-- [Descri��o detalhada dos achados]
-- [Medidas, caracter�sticas, padr�es]
+- [Descrição detalhada dos achados]
+- [Medidas, características, padrões]
 
-### Modalidade 2 (se aplic�vel)
+### Modalidade 2 (se aplicável)
 [...]
 
-## ?? Discuss�o
-[An�lise dos achados, diagn�stico diferencial, crit�rios diagn�sticos]
+## 💬 Discussão
+[Análise dos achados, diagnóstico diferencial, critérios diagnósticos]
 
-## ? Diagn�stico Final
-[Diagn�stico definitivo com classifica��o]
+## ✅ Diagnóstico Final
+[Diagnóstico definitivo com classificação]
 
-## ?? Refer�ncias
-[Fontes bibliogr�ficas]
+## 📖 Referências
+[Fontes bibliográficas]
 
-Seja cientificamente rigoroso e use terminologia adequada. Portugu�s brasileiro.""",
-        "label": "Caso Cl�nico",
+Seja cientificamente rigoroso e use terminologia adequada. Português brasileiro.""",
+        "label": "Caso Clínico",
         "credits": 100,
     },
 }
@@ -1799,9 +1799,9 @@ def _clean_generated_content(content: str) -> str:
 
 @app.post("/criar/{template_type}")
 def criar_content(template_type: str, req: CriarRequest):
-    """Gera conte�do para o eX StudyLab usando RAG + GPT-4o."""
+    """Gera conteúdo para o eX StudyLab usando RAG + GPT-4o."""
     if template_type not in CRIAR_PROMPTS:
-        raise HTTPException(status_code=400, detail=f"Template inv�lido. Use: {', '.join(CRIAR_PROMPTS.keys())}")
+        raise HTTPException(status_code=400, detail=f"Template inválido. Use: {', '.join(CRIAR_PROMPTS.keys())}")
 
     prompt_config = CRIAR_PROMPTS[template_type]
     system_prompt = prompt_config["system"].replace("{topic}", req.topic)
@@ -1840,7 +1840,7 @@ def criar_content(template_type: str, req: CriarRequest):
         context_text = "\n\n---\n\n".join(context_chunks[:8])
     except Exception as e:
         logger.warning(f"Qdrant search failed for criar: {e}")
-        context_text = "Contexto RAG indispon�vel no momento."
+        context_text = "Contexto RAG indisponível no momento."
 
     # 2. Generate with GPT-4o
     try:
@@ -1848,7 +1848,7 @@ def criar_content(template_type: str, req: CriarRequest):
             model="gpt-5.4-mini",
             messages=[
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": f"Tema: {req.topic}\n\n{f'N�vel: {req.level}' if req.level else ''}\n{f'Especialidade: {req.specialty}' if req.specialty else ''}\n\nContexto cient�fico dispon�vel:\n{context_text}"},
+                {"role": "user", "content": f"Tema: {req.topic}\n\n{f'Nível: {req.level}' if req.level else ''}\n{f'Especialidade: {req.specialty}' if req.specialty else ''}\n\nContexto científico disponível:\n{context_text}"},
             ],
             temperature=0.7,
             max_completion_tokens=4000,
