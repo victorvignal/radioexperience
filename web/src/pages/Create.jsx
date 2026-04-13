@@ -813,6 +813,24 @@ export default function Create() {
                   whiteSpace: 'pre-wrap',
                 }}
               />
+            ) : ['slides', 'mapa_mental', 'tabela', 'caso_clinico'].includes(template) ? (
+              <div>
+                <SlideRenderer content={editedContent} />
+                <textarea
+                  value={editedContent}
+                  onChange={e => setEditedContent(e.target.value)}
+                  rows={8}
+                  style={{
+                    ...inputStyle,
+                    marginTop: 16,
+                    minHeight: 200,
+                    fontSize: 12,
+                    lineHeight: 1.5,
+                    fontFamily: "'Courier New', monospace",
+                    opacity: 0.7,
+                  }}
+                />
+              </div>
             ) : (
               <div>
                 {questions.length > 0 ? (
