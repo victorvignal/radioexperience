@@ -1782,6 +1782,21 @@ Seja cientificamente rigoroso e use terminologia adequada. Portugu�s brasileir
 }
 
 
+import re as _re
+
+def _clean_generated_content(content: str) -> str:
+    """Remove common boilerplate that GPT models add at the end of generated content."""
+    patterns = [
+        r"Se quiser,?\s*posso transformar.*?(?:\n|$)",
+        r"Se desejar,?\s*posso.*?(?:\n|$)",
+        r"Gostaria que eu.*?(?:\n|$)",
+        r"Posso também.*?(?:transformar|criar|fazer).*?(?:\n|$)",
+        r"Deseja que eu.*?(?:\n|$)",
+    ]
+    for pattern in patterns:
+        content = _re.sub(pattern, "", content, flags=_re.IGNORECASE)
+    return content.strip()
+
 @app.post("/criar/{template_type}")
 def criar_content(template_type: str, req: CriarRequest):
     """Gera conte�do para o eX StudyLab usando RAG + GPT-4o."""
@@ -1842,7 +1857,7 @@ def criar_content(template_type: str, req: CriarRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro na geracao: {e}")
 
-    content = clean_generated_content(content)
+    content = _clean_generated_content(content)
 
     # Generate image for visual templates
     image_url = None
