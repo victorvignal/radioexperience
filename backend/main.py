@@ -1069,7 +1069,23 @@ def _generate_question(context: str) -> dict:
         response_format={"type": "json_object"},
     )
     raw = response.choices[0].message.content.strip()
-    return json.loads(raw)
+    data = json.loads(raw)
+
+    # Shuffle options so correct answer isn't always the same letter
+    options = data.get("options", {})
+    correct_letter = data.get("correct_answer", "A")
+    letters = ["A", "B", "C", "D"]
+    if len(options) == 4 and all(l in options for l in letters):
+        texts = [options[l] for l in letters]
+        random.shuffle(texts)
+        new_options = {letters[i]: texts[i] for i in range(4)}
+        # Find which letter now has the correct answer
+        correct_text = options[correct_letter]
+        new_correct = letters[texts.index(correct_text)]
+        data["options"] = new_options
+        data["correct_answer"] = new_correct
+
+    return data
 
 
 def _get_seen_pool_ids(user_id: str) -> set:
