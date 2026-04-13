@@ -1005,40 +1005,54 @@ class ChallengeFinishRequest(BaseModel):
 
 def _get_challenge_context(specialty: str) -> str:
     """Get relevant context chunks from Qdrant for question generation."""
-    query_filter = None
-    if specialty and specialty != "Geral":
-        from qdrant_client.models import FieldCondition, MatchValue, Filter
-        query_filter = Filter(
-            must=[FieldCondition(key="specialty", match=MatchValue(value=specialty))]
-        )
+    from qdrant_client.models import FieldCondition, MatchValue, Filter
 
-    # Use a generic radiology query to get diverse content
-    search_terms = f"radiologia {specialty} diagnóstico imagem"
+    search_terms = f"radiologia {specialty} diagnóstico imagem achados"
     try:
         embedding = openai_client.embeddings.create(
             input=[search_terms], model=EMBED_MODEL,
         ).data[0].embedding
-
-        results = qdrant.query_points(
-            collection_name=COLLECTION,
-            query=embedding,
-            limit=8,
-            query_filter=query_filter,
-        )
-
-        context_parts = []
-        for hit in results.points[:5]:
-            p = hit.payload or {}
-            text = p.get("text", "")[:600]
-            title = p.get("title", "")
-            page = p.get("page_start", 0)
-            if text:
-                context_parts.append(f"[Fonte: {title}, p.{page}]\n{text}")
-
-        return "\n\n---\n\n".join(context_parts) if context_parts else ""
     except Exception as e:
-        logger.warning(f"Challenge context fetch failed: {e}")
+        logger.warning(f"Embedding failed: {e}")
         return ""
+
+    # Try with specialty filter first
+    results = None
+    if specialty and specialty.lower() != "geral":
+        try:
+            query_filter = Filter(
+                must=[FieldCondition(key="specialty", match=MatchValue(value=specialty))]
+            )
+            results = qdrant.query_points(
+                collection_name=COLLECTION,
+                query=embedding, limit=8, query_filter=query_filter,
+            )
+            if len(results.points) < 3:
+                results = None  # Not enough, try without filter
+        except Exception:
+            results = None
+
+    # Fallback: no specialty filter
+    if results is None or len(results.points) < 3:
+        try:
+            results = qdrant.query_points(
+                collection_name=COLLECTION,
+                query=embedding, limit=8,
+            )
+        except Exception as e:
+            logger.warning(f"Qdrant query failed: {e}")
+            return ""
+
+    context_parts = []
+    for hit in results.points[:5]:
+        p = hit.payload or {}
+        text = p.get("text", "")[:600]
+        title = p.get("title", "")
+        page = p.get("page_start", 0)
+        if text:
+            context_parts.append(f"[Fonte: {title}, p.{page}]\n{text}")
+
+    return "\n\n---\n\n".join(context_parts) if context_parts else ""
 
 
 def _generate_question(context: str) -> dict:
@@ -1225,7 +1239,7 @@ def challenge_start(req: ChallengeStartRequest):
                 q_data["_generated"] = True
                 questions_to_use.append(q_data)
             except Exception as e:
-                logger.warning(f"Failed to generate question {i+1}: {e}")
+                logger.warning(f"Failed to generate question {i+1}: {e} | context_len={len(context) if context else 0}")
                 continue
     random.shuffle(questions_to_use)
     questions = []
