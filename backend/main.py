@@ -1842,6 +1842,8 @@ def criar_content(template_type: str, req: CriarRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro na geracao: {e}")
 
+    content = clean_generated_content(content)
+
     # Generate image for visual templates
     image_url = None
     if template_type in ("mapa_mental", "slides"):

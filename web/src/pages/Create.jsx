@@ -356,6 +356,7 @@ export default function Create() {
     setError('')
     setGeneratedContent('')
     setEditedContent('')
+    setAiImage('')
     setPublishSuccess(false)
 
     try {
@@ -372,6 +373,7 @@ export default function Create() {
       const data = await res.json()
       setGeneratedContent(data.content || '')
       setEditedContent(data.content || '')
+      setAiImage(data.image_url || '')
     } catch (e) {
       console.error('Generate error:', e)
       setError(`Erro ao gerar conteúdo: ${e.message}`)
@@ -798,6 +800,12 @@ export default function Create() {
               </div>
             </div>
 
+            {aiImage && (
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: 12, color: C.textDim, marginBottom: 6 }}>Visualização gerada por IA</div>
+                <img src={aiImage} alt="Gerado por IA" style={{ width: '100%', borderRadius: 12, border: '1px solid ' + C.glassBorder, maxHeight: 500, objectFit: 'contain' }} />
+              </div>
+            )}
             {/* Editable content */}
             {template === 'script' ? (
               <textarea
