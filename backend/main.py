@@ -958,18 +958,23 @@ def list_feed_posts(post_type: str | None = None, limit: int = 20):
 # ARIA Challenge endpoints
 # ═══════════════════════════════════════════
 
-CHALLENGE_SYSTEM_PROMPT = """You are ARIA Challenge, a radiology quiz generator. Based on the context below, generate a challenging but fair multiple choice question for radiologists.
+CHALLENGE_SYSTEM_PROMPT = """Você é ARIA Challenge, um gerador de questões de radiologia. Com base no contexto abaixo, gere uma questão de múltipla escolha desafiadora e justa para radiologistas.
+
+OBRIGATÓRIO: TODA a questão, opções, explicações e títulos devem ser em PORTUGUÊS BRASILEIRO. Nunca use inglês.
 
 Context:
 {context}
 
-Rules:
-1. Question must be answerable ONLY from the provided context
-2. Generate 4 options (A, B, C, D)
-3. Only one correct answer
-4. Include a brief explanation of why the answer is correct
-5. Also include ARIA's answer (which is the correct answer)
-6. Return JSON only:
+Contexto:
+{context}
+
+Regras:
+1. A questão deve ser respondível APENAS com base no contexto fornecido
+2. Gere 4 opções (A, B, C, D)
+3. Apenas uma resposta correta
+4. Inclua uma breve explicação do porquê a resposta está correta
+5. Inclua também a resposta da ARIA (que é a resposta correta)
+6. Retorne apenas JSON:
 {{
   "question_text": "...",
   "options": {{"A": "...", "B": "...", "C": "...", "D": "..."}},
@@ -1043,7 +1048,7 @@ def _generate_question(context: str) -> dict:
         model="gpt-4o",
         messages=[
             {"role": "system", "content": prompt},
-            {"role": "user", "content": "Generate one radiology multiple choice question based on the context provided."},
+            {"role": "user", "content": "Gere uma questão de múltipla escolha de radiologia em PORTUGUÊS com base no contexto fornecido."},
         ],
         temperature=0.7,
         max_tokens=600,
