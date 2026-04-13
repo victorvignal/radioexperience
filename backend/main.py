@@ -1593,6 +1593,265 @@ def challenge_history(user_id: str | None = None):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+
+# -- eX StudyLab: Modulo Criar -------------------------------------------------
+
+from pydantic import BaseModel
+
+class CriarRequest(BaseModel):
+    topic: str
+    template: str  # script | slides | mapa_mental | tabela | questoes | caso_clinico
+    specialty: str | None = None
+    level: str | None = None  # R1 | R2 | R3 | R4 | staff
+    top_k: int = 10
+
+CRIAR_PROMPTS = {
+    "script": {
+        "system": """Você é um especialista em educação médica em radiologia. Crie um SCRIPT DE AULA completo e estruturado sobre o tema fornecido.
+
+Use o contexto RAG fornecido como base científica. O script deve seguir esta estrutura:
+
+# {topic}
+
+## ?? Hook (30 segundos)
+[Abertura envolvente com caso clínico ou dado surpreendente]
+
+## ?? Desenvolvimento
+[Conceitos fundamentais, classificações, critérios diagnósticos por modalidade]
+
+## ?? Caso Clínico Integrado
+[Caso real/anonimizado que ilustra os conceitos]
+
+## ? Pontos-Chave
+[Resumo em bullet points dos takeaways principais]
+
+## ?? Referências
+[Fontes bibliográficas do contexto RAG]
+
+Seja preciso cientificamente, use terminologia adequada e inclua critérios de imagem quando relevante. Escreva em português brasileiro.""",
+        "label": "Script de Aula",
+        "credits": 50,
+    },
+    "slides": {
+        "system": """Você é um especialista em educação médica em radiologia. Crie um conjunto de SLIDES DIDÁTICOS sobre o tema fornecido.
+
+Use o contexto RAG fornecido como base científica. Formate como:
+
+## SLIDE 1 — Título
+**{topic}**
+[Subtítulo / contexto]
+
+## SLIDE 2 — Objetivos
+- Objetivo 1
+- Objetivo 2
+- Objetivo 3
+
+## SLIDES 3-8 — Conteúdo
+[Cada slide com título claro e 3-5 bullet points máx. Inclua tabelas comparativas quando relevante]
+
+## SLIDE Final — Take-Home Points
+- Resumo dos pontos-chave
+- Aplicação clínica prática
+
+Mínimo 6 slides, máximo 12. Cada slide deve ser autocontido e visualmente descritivo. Português brasileiro.""",
+        "label": "Slides Didáticos",
+        "credits": 80,
+    },
+    "mapa_mental": {
+        "system": """Você é um especialista em educação médica em radiologia. Crie um MAPA MENTAL HIERÁRQUICO sobre o tema fornecido.
+
+Use o contexto RAG fornecido como base científica. Formate como árvore hierárquica em markdown:
+
+# {topic}
+
+## Ramo 1: [Categoria Principal]
+### 1.1 [Subcategoria]
+- Característica / achado 1
+- Característica / achado 2
+### 1.2 [Subcategoria]
+- Critério A
+- Critério B
+
+## Ramo 2: [Categoria Principal]
+...
+
+## Ramo 3: Diagnóstico Diferencial
+...
+
+## Ramo 4: Conduta / Classificação
+...
+
+Organize de forma lógica: definição ? classificação ? achados por modalidade ? diagnóstico diferencial ? conduta. Use no máximo 4 níveis de hierarquia. Português brasileiro.""",
+        "label": "Mapa Mental",
+        "credits": 60,
+    },
+    "tabela": {
+        "system": """Você é um especialista em educação médica em radiologia. Crie uma TABELA COMPARATIVA detalhada sobre o tema fornecido.
+
+Use o contexto RAG fornecido como base científica. Formate em markdown table:
+
+# Tabela Comparativa: {topic}
+
+## Por Modalidade de Imagem
+| Característica | Ultrassonografia | Tomografia | Ressonância Magnética |
+|---|---|---|---|
+| [critério 1] | [achado] | [achado] | [achado] |
+| [critério 2] | [achado] | [achado] | [achado] |
+
+## Classificação / Estadiamento (se aplicável)
+| Categoria | Critérios | Conduta |
+|---|---|---|
+| ... | ... | ... |
+
+## Diagnóstico Diferencial
+| Diagnóstico | Achado Característico | Diferencial Principal |
+|---|---|---|
+| ... | ... | ... |
+
+Inclua BIRADS, TI-RADS, LI-RADS ou outra classificação relevante quando aplicável. Seja conciso e clinicamente útil. Português brasileiro.""",
+        "label": "Tabela Comparativa",
+        "credits": 60,
+    },
+    "questoes": {
+        "system": """Você é um especialista em educação médica em radiologia. Crie 5 QUESTÕES DE MÚLTIPLA ESCOLHA sobre o tema fornecido.
+
+Use o contexto RAG fornecido como base científica. Formate cada questão assim:
+
+**QUESTÃO 1:**
+[Enunciado clínico com contexto de caso]
+
+A) [Alternativa]
+B) [Alternativa]
+C) [Alternativa]
+D) [Alternativa]
+
+**Resposta Correta:** [Letra]
+
+**Explicação:**
+[Explicação detalhada de por que a resposta está correta e por que as outras estão erradas]
+
+**Fonte:** [Referência bibliográfica]
+
+Regras:
+- Cada questão deve ter exatamente 4 alternativas (A-D)
+- Apenas UMA alternativa correta
+- Enunciado deve ser no formato de caso clínico quando possível
+- Explicações devem ser educativas e detalhadas
+- Alternativas erradas devem ser plausíveis (distratores de qualidade)
+- Português brasileiro""",
+        "label": "Questões de Estudo",
+        "credits": 30,
+    },
+    "caso_clinico": {
+        "system": """Você é um especialista em educação médica em radiologia. Crie um CASO CLÍNICO COMPLETO para apresentação acadêmica sobre o tema fornecido.
+
+Use o contexto RAG fornecido como base científica. Formate assim:
+
+# Caso Clínico: {topic}
+
+## ?? Anamnese
+- **Idade/Sexo:** [dados]
+- **Queixa principal:** [sintomas]
+- **História da doença atual:** [evolução]
+- **Antecedentes relevantes:** [comorbidades, cirurgias prévias]
+
+## ?? Exame Físico
+[Achados relevantes ao exame físico]
+
+## ??? Exames de Imagem
+### Modalidade 1 (US/TC/RX/RM)
+**Técnica:** [protocolo utilizado]
+**Achados:**
+- [Descrição detalhada dos achados]
+- [Medidas, características, padrões]
+
+### Modalidade 2 (se aplicável)
+[...]
+
+## ?? Discussão
+[Análise dos achados, diagnóstico diferencial, critérios diagnósticos]
+
+## ? Diagnóstico Final
+[Diagnóstico definitivo com classificação]
+
+## ?? Referências
+[Fontes bibliográficas]
+
+Seja cientificamente rigoroso e use terminologia adequada. Português brasileiro.""",
+        "label": "Caso Clínico",
+        "credits": 100,
+    },
+}
+
+
+@app.post("/criar/{template_type}")
+def criar_content(template_type: str, req: CriarRequest):
+    """Gera conteúdo para o eX StudyLab usando RAG + GPT-4o."""
+    if template_type not in CRIAR_PROMPTS:
+        raise HTTPException(status_code=400, detail=f"Template inválido. Use: {', '.join(CRIAR_PROMPTS.keys())}")
+
+    prompt_config = CRIAR_PROMPTS[template_type]
+    system_prompt = prompt_config["system"].replace("{topic}", req.topic)
+
+    # 1. Search RAG for context
+    try:
+        embedding = openai_client.embeddings.create(
+            input=[req.topic],
+            model=EMBED_MODEL,
+        ).data[0].embedding
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro de embedding: {e}")
+
+    query_filter = None
+    if req.specialty:
+        from qdrant_client.models import FieldCondition, MatchValue, Filter
+        query_filter = Filter(
+            must=[FieldCondition(key="specialty", match=MatchValue(value=req.specialty))]
+        )
+
+    try:
+        results = qdrant.query_points(
+            collection_name=COLLECTION,
+            query=embedding,
+            limit=req.top_k,
+            with_payload=True,
+            query_filter=query_filter,
+        )
+        context_chunks = []
+        for pt in results.points:
+            payload = pt.payload or {}
+            text = payload.get("text", payload.get("content", ""))
+            source = payload.get("source", payload.get("title", ""))
+            if text:
+                context_chunks.append(f"[Fonte: {source}]\n{text[:800]}")
+        context_text = "\n\n---\n\n".join(context_chunks[:8])
+    except Exception as e:
+        logger.warning(f"Qdrant search failed for criar: {e}")
+        context_text = "Contexto RAG indisponível no momento."
+
+    # 2. Generate with GPT-4o
+    try:
+        response = openai_client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": f"Tema: {req.topic}\n\n{f'Nível: {req.level}' if req.level else ''}\n{f'Especialidade: {req.specialty}' if req.specialty else ''}\n\nContexto científico disponível:\n{context_text}"},
+            ],
+            temperature=0.7,
+            max_tokens=4000,
+        )
+        content = response.choices[0].message.content
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro na geração: {e}")
+
+    return {
+        "content": content,
+        "template": template_type,
+        "label": prompt_config["label"],
+        "credits": prompt_config["credits"],
+        "sources_count": len(context_chunks),
+    }
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", "8000"))
