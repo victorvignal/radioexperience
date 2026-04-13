@@ -310,6 +310,8 @@ export default function Create() {
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState('')
   const [publishSuccess, setPublishSuccess] = useState(false)
+  const [specialty, setSpecialty] = useState('')
+  const [level, setLevel] = useState('')
 
   const typeLabel = template === 'script' ? 'Script de Aula' : 'Questões de Estudo'
 
@@ -331,7 +333,7 @@ export default function Create() {
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic: topic.trim(), template, top_k: 10 }),
+        body: JSON.stringify({ topic: topic.trim(), template, top_k: 10, specialty: specialty || null, level: level || null }),
       })
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}))
@@ -352,7 +354,8 @@ export default function Create() {
     if (!user) return
     setPublishing(true)
     try {
-      const postType = template === 'script' ? 'aula' : 'questoes'
+      const postTypeMap = { script: 'aula', slides: 'slides', mapa_mental: 'mapa_mental', tabela: 'tabela', questoes: 'questoes', caso_clinico: 'caso_clinico' }
+      const postType = postTypeMap[template] || template
       let imageUrl = null
       if (imageFile) imageUrl = await uploadPostImage(imageFile, user.id)
       const { error: err } = await supabase.from('posts').insert({
@@ -384,7 +387,8 @@ export default function Create() {
     if (!user) return
     setPublishing(true)
     try {
-      const postType = template === 'script' ? 'aula' : 'questoes'
+      const postTypeMap = { script: 'aula', slides: 'slides', mapa_mental: 'mapa_mental', tabela: 'tabela', questoes: 'questoes', caso_clinico: 'caso_clinico' }
+      const postType = postTypeMap[template] || template
       let imageUrl = null
       if (imageFile) imageUrl = await uploadPostImage(imageFile, user.id)
       const { error: err } = await supabase.from('posts').insert({
@@ -565,16 +569,19 @@ export default function Create() {
             <label style={{ display: 'block', color: C.textSoft, fontSize: 13, fontWeight: 600, marginBottom: 10 }}>
               Tipo de conteúdo
             </label>
-            <div style={{ display: 'flex', gap: 12 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
               {[
-                { value: 'script', label: '📝 Script de Aula', desc: 'Hook, Desenvolvimento, Caso, Conclusão', color: C.blue, glow: C.blueGlow },
-                { value: 'questoes', label: '❓ Questões', desc: '5 questões de múltipla escolha', color: C.green, glow: C.greenGlow },
+                { value: 'script', label: '📝 Script de Aula', desc: 'Aula estruturada completa', color: C.blue, glow: C.blueGlow },
+                { value: 'slides', label: '📊 Slides', desc: '6-12 slides didáticos', color: C.blue, glow: C.blueGlow },
+                { value: 'mapa_mental', label: '🧠 Mapa Mental', desc: 'Hierarquia visual', color: '#b388ff', glow: 'rgba(179,136,255,0.12)' },
+                { value: 'tabela', label: '📋 Tabela', desc: 'Comparação por modalidade', color: '#ffd166', glow: 'rgba(255,209,102,0.12)' },
+                { value: 'questoes', label: '❓ Questões', desc: '5 questões múltipla escolha', color: C.green, glow: C.greenGlow },
+                { value: 'caso_clinico', label: '🔬 Caso Clínico', desc: 'Caso completo para apresentação', color: '#ff6b6b', glow: 'rgba(255,107,107,0.12)' },
               ].map(opt => (
                 <button
                   key={opt.value}
                   onClick={() => setTemplate(opt.value)}
                   style={{
-                    flex: 1,
                     background: template === opt.value ? opt.glow : 'transparent',
                     border: `1px solid ${template === opt.value ? opt.color : C.border}`,
                     borderRadius: 12,
@@ -592,6 +599,41 @@ export default function Create() {
                   </div>
                 </button>
               ))}
+            </div>
+
+            {/* Specialty and Level */}
+            <div style={{ marginTop: 18, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div>
+                <label style={{ display: 'block', color: C.textSoft, fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
+                  Especialidade (opcional)
+                </label>
+                <select value={specialty} onChange={e => setSpecialty(e.target.value)} style={{ ...inputStyle, cursor: 'pointer' }}>
+                  <option value="">Todas</option>
+                  <option value="Mama">Mama</option>
+                  <option value="Abdome">Abdome</option>
+                  <option value="Tórax">Tórax</option>
+                  <option value="Neuroimagem">Neuroimagem</option>
+                  <option value="Músculo Esquelético">Músculo Esquelético</option>
+                  <option value="Pediatria">Pediatria</option>
+                  <option value="Urgência">Urgência</option>
+                  <option value="Vascular">Vascular</option>
+                  <option value="Obstetrícia">Obstetrícia</option>
+                  <option value="Cabeça e Pescoço">Cabeça e Pescoço</option>
+                </select>
+              </div>
+              <div>
+                <label style={{ display: 'block', color: C.textSoft, fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
+                  Nível (opcional)
+                </label>
+                <select value={level} onChange={e => setLevel(e.target.value)} style={{ ...inputStyle, cursor: 'pointer' }}>
+                  <option value="">Todos</option>
+                  <option value="R1">R1 — Residente 1º ano</option>
+                  <option value="R2">R2 — Residente 2º ano</option>
+                  <option value="R3">R3 — Residente 3º ano</option>
+                  <option value="R4">R4 — Residente 4º ano</option>
+                  <option value="staff">Staff — Especialista</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -676,7 +718,7 @@ export default function Create() {
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
                   <span style={{ fontSize: 14 }}>
-                    {template === 'script' ? '📝' : '❓'}
+                    {{ script: '📝', slides: '📊', mapa_mental: '🧠', tabela: '📋', questoes: '❓', caso_clinico: '🔬' }[template] || '📝'}
                   </span>
                 </div>
                 <div>
