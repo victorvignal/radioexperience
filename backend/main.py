@@ -1596,8 +1596,6 @@ def challenge_history(user_id: str | None = None):
 
 # -- eX StudyLab: Modulo Criar -------------------------------------------------
 
-from pydantic import BaseModel
-
 class CriarRequest(BaseModel):
     topic: str
     template: str  # script | slides | mapa_mental | tabela | questoes | caso_clinico
@@ -1607,118 +1605,118 @@ class CriarRequest(BaseModel):
 
 CRIAR_PROMPTS = {
     "script": {
-        "system": """Você é um especialista em educação médica em radiologia. Crie um SCRIPT DE AULA completo e estruturado sobre o tema fornecido.
+        "system": """Vocï¿½ ï¿½ um especialista em educaï¿½ï¿½o mï¿½dica em radiologia. Crie um SCRIPT DE AULA completo e estruturado sobre o tema fornecido.
 
-Use o contexto RAG fornecido como base científica. O script deve seguir esta estrutura:
+Use o contexto RAG fornecido como base cientï¿½fica. O script deve seguir esta estrutura:
 
 # {topic}
 
 ## ?? Hook (30 segundos)
-[Abertura envolvente com caso clínico ou dado surpreendente]
+[Abertura envolvente com caso clï¿½nico ou dado surpreendente]
 
 ## ?? Desenvolvimento
-[Conceitos fundamentais, classificações, critérios diagnósticos por modalidade]
+[Conceitos fundamentais, classificaï¿½ï¿½es, critï¿½rios diagnï¿½sticos por modalidade]
 
-## ?? Caso Clínico Integrado
+## ?? Caso Clï¿½nico Integrado
 [Caso real/anonimizado que ilustra os conceitos]
 
 ## ? Pontos-Chave
 [Resumo em bullet points dos takeaways principais]
 
-## ?? Referências
-[Fontes bibliográficas do contexto RAG]
+## ?? Referï¿½ncias
+[Fontes bibliogrï¿½ficas do contexto RAG]
 
-Seja preciso cientificamente, use terminologia adequada e inclua critérios de imagem quando relevante. Escreva em português brasileiro.""",
+Seja preciso cientificamente, use terminologia adequada e inclua critï¿½rios de imagem quando relevante. Escreva em portuguï¿½s brasileiro.""",
         "label": "Script de Aula",
         "credits": 50,
     },
     "slides": {
-        "system": """Você é um especialista em educação médica em radiologia. Crie um conjunto de SLIDES DIDÁTICOS sobre o tema fornecido.
+        "system": """Vocï¿½ ï¿½ um especialista em educaï¿½ï¿½o mï¿½dica em radiologia. Crie um conjunto de SLIDES DIDï¿½TICOS sobre o tema fornecido.
 
-Use o contexto RAG fornecido como base científica. Formate como:
+Use o contexto RAG fornecido como base cientï¿½fica. Formate como:
 
-## SLIDE 1 — Título
+## SLIDE 1 ï¿½ Tï¿½tulo
 **{topic}**
-[Subtítulo / contexto]
+[Subtï¿½tulo / contexto]
 
-## SLIDE 2 — Objetivos
+## SLIDE 2 ï¿½ Objetivos
 - Objetivo 1
 - Objetivo 2
 - Objetivo 3
 
-## SLIDES 3-8 — Conteúdo
-[Cada slide com título claro e 3-5 bullet points máx. Inclua tabelas comparativas quando relevante]
+## SLIDES 3-8 ï¿½ Conteï¿½do
+[Cada slide com tï¿½tulo claro e 3-5 bullet points mï¿½x. Inclua tabelas comparativas quando relevante]
 
-## SLIDE Final — Take-Home Points
+## SLIDE Final ï¿½ Take-Home Points
 - Resumo dos pontos-chave
-- Aplicação clínica prática
+- Aplicaï¿½ï¿½o clï¿½nica prï¿½tica
 
-Mínimo 6 slides, máximo 12. Cada slide deve ser autocontido e visualmente descritivo. Português brasileiro.""",
-        "label": "Slides Didáticos",
+Mï¿½nimo 6 slides, mï¿½ximo 12. Cada slide deve ser autocontido e visualmente descritivo. Portuguï¿½s brasileiro.""",
+        "label": "Slides Didï¿½ticos",
         "credits": 80,
     },
     "mapa_mental": {
-        "system": """Você é um especialista em educação médica em radiologia. Crie um MAPA MENTAL HIERÁRQUICO sobre o tema fornecido.
+        "system": """Vocï¿½ ï¿½ um especialista em educaï¿½ï¿½o mï¿½dica em radiologia. Crie um MAPA MENTAL HIERï¿½RQUICO sobre o tema fornecido.
 
-Use o contexto RAG fornecido como base científica. Formate como árvore hierárquica em markdown:
+Use o contexto RAG fornecido como base cientï¿½fica. Formate como ï¿½rvore hierï¿½rquica em markdown:
 
 # {topic}
 
 ## Ramo 1: [Categoria Principal]
 ### 1.1 [Subcategoria]
-- Característica / achado 1
-- Característica / achado 2
+- Caracterï¿½stica / achado 1
+- Caracterï¿½stica / achado 2
 ### 1.2 [Subcategoria]
-- Critério A
-- Critério B
+- Critï¿½rio A
+- Critï¿½rio B
 
 ## Ramo 2: [Categoria Principal]
 ...
 
-## Ramo 3: Diagnóstico Diferencial
+## Ramo 3: Diagnï¿½stico Diferencial
 ...
 
-## Ramo 4: Conduta / Classificação
+## Ramo 4: Conduta / Classificaï¿½ï¿½o
 ...
 
-Organize de forma lógica: definição ? classificação ? achados por modalidade ? diagnóstico diferencial ? conduta. Use no máximo 4 níveis de hierarquia. Português brasileiro.""",
+Organize de forma lï¿½gica: definiï¿½ï¿½o ? classificaï¿½ï¿½o ? achados por modalidade ? diagnï¿½stico diferencial ? conduta. Use no mï¿½ximo 4 nï¿½veis de hierarquia. Portuguï¿½s brasileiro.""",
         "label": "Mapa Mental",
         "credits": 60,
     },
     "tabela": {
-        "system": """Você é um especialista em educação médica em radiologia. Crie uma TABELA COMPARATIVA detalhada sobre o tema fornecido.
+        "system": """Vocï¿½ ï¿½ um especialista em educaï¿½ï¿½o mï¿½dica em radiologia. Crie uma TABELA COMPARATIVA detalhada sobre o tema fornecido.
 
-Use o contexto RAG fornecido como base científica. Formate em markdown table:
+Use o contexto RAG fornecido como base cientï¿½fica. Formate em markdown table:
 
 # Tabela Comparativa: {topic}
 
 ## Por Modalidade de Imagem
-| Característica | Ultrassonografia | Tomografia | Ressonância Magnética |
+| Caracterï¿½stica | Ultrassonografia | Tomografia | Ressonï¿½ncia Magnï¿½tica |
 |---|---|---|---|
-| [critério 1] | [achado] | [achado] | [achado] |
-| [critério 2] | [achado] | [achado] | [achado] |
+| [critï¿½rio 1] | [achado] | [achado] | [achado] |
+| [critï¿½rio 2] | [achado] | [achado] | [achado] |
 
-## Classificação / Estadiamento (se aplicável)
-| Categoria | Critérios | Conduta |
+## Classificaï¿½ï¿½o / Estadiamento (se aplicï¿½vel)
+| Categoria | Critï¿½rios | Conduta |
 |---|---|---|
 | ... | ... | ... |
 
-## Diagnóstico Diferencial
-| Diagnóstico | Achado Característico | Diferencial Principal |
+## Diagnï¿½stico Diferencial
+| Diagnï¿½stico | Achado Caracterï¿½stico | Diferencial Principal |
 |---|---|---|
 | ... | ... | ... |
 
-Inclua BIRADS, TI-RADS, LI-RADS ou outra classificação relevante quando aplicável. Seja conciso e clinicamente útil. Português brasileiro.""",
+Inclua BIRADS, TI-RADS, LI-RADS ou outra classificaï¿½ï¿½o relevante quando aplicï¿½vel. Seja conciso e clinicamente ï¿½til. Portuguï¿½s brasileiro.""",
         "label": "Tabela Comparativa",
         "credits": 60,
     },
     "questoes": {
-        "system": """Você é um especialista em educação médica em radiologia. Crie 5 QUESTÕES DE MÚLTIPLA ESCOLHA sobre o tema fornecido.
+        "system": """Vocï¿½ ï¿½ um especialista em educaï¿½ï¿½o mï¿½dica em radiologia. Crie 5 QUESTï¿½ES DE Mï¿½LTIPLA ESCOLHA sobre o tema fornecido.
 
-Use o contexto RAG fornecido como base científica. Formate cada questão assim:
+Use o contexto RAG fornecido como base cientï¿½fica. Formate cada questï¿½o assim:
 
-**QUESTÃO 1:**
-[Enunciado clínico com contexto de caso]
+**QUESTï¿½O 1:**
+[Enunciado clï¿½nico com contexto de caso]
 
 A) [Alternativa]
 B) [Alternativa]
@@ -1727,58 +1725,58 @@ D) [Alternativa]
 
 **Resposta Correta:** [Letra]
 
-**Explicação:**
-[Explicação detalhada de por que a resposta está correta e por que as outras estão erradas]
+**Explicaï¿½ï¿½o:**
+[Explicaï¿½ï¿½o detalhada de por que a resposta estï¿½ correta e por que as outras estï¿½o erradas]
 
-**Fonte:** [Referência bibliográfica]
+**Fonte:** [Referï¿½ncia bibliogrï¿½fica]
 
 Regras:
-- Cada questão deve ter exatamente 4 alternativas (A-D)
+- Cada questï¿½o deve ter exatamente 4 alternativas (A-D)
 - Apenas UMA alternativa correta
-- Enunciado deve ser no formato de caso clínico quando possível
-- Explicações devem ser educativas e detalhadas
-- Alternativas erradas devem ser plausíveis (distratores de qualidade)
-- Português brasileiro""",
-        "label": "Questões de Estudo",
+- Enunciado deve ser no formato de caso clï¿½nico quando possï¿½vel
+- Explicaï¿½ï¿½es devem ser educativas e detalhadas
+- Alternativas erradas devem ser plausï¿½veis (distratores de qualidade)
+- Portuguï¿½s brasileiro""",
+        "label": "Questï¿½es de Estudo",
         "credits": 30,
     },
     "caso_clinico": {
-        "system": """Você é um especialista em educação médica em radiologia. Crie um CASO CLÍNICO COMPLETO para apresentação acadêmica sobre o tema fornecido.
+        "system": """Vocï¿½ ï¿½ um especialista em educaï¿½ï¿½o mï¿½dica em radiologia. Crie um CASO CLï¿½NICO COMPLETO para apresentaï¿½ï¿½o acadï¿½mica sobre o tema fornecido.
 
-Use o contexto RAG fornecido como base científica. Formate assim:
+Use o contexto RAG fornecido como base cientï¿½fica. Formate assim:
 
-# Caso Clínico: {topic}
+# Caso Clï¿½nico: {topic}
 
 ## ?? Anamnese
 - **Idade/Sexo:** [dados]
 - **Queixa principal:** [sintomas]
-- **História da doença atual:** [evolução]
-- **Antecedentes relevantes:** [comorbidades, cirurgias prévias]
+- **Histï¿½ria da doenï¿½a atual:** [evoluï¿½ï¿½o]
+- **Antecedentes relevantes:** [comorbidades, cirurgias prï¿½vias]
 
-## ?? Exame Físico
-[Achados relevantes ao exame físico]
+## ?? Exame Fï¿½sico
+[Achados relevantes ao exame fï¿½sico]
 
 ## ??? Exames de Imagem
 ### Modalidade 1 (US/TC/RX/RM)
-**Técnica:** [protocolo utilizado]
+**Tï¿½cnica:** [protocolo utilizado]
 **Achados:**
-- [Descrição detalhada dos achados]
-- [Medidas, características, padrões]
+- [Descriï¿½ï¿½o detalhada dos achados]
+- [Medidas, caracterï¿½sticas, padrï¿½es]
 
-### Modalidade 2 (se aplicável)
+### Modalidade 2 (se aplicï¿½vel)
 [...]
 
-## ?? Discussão
-[Análise dos achados, diagnóstico diferencial, critérios diagnósticos]
+## ?? Discussï¿½o
+[Anï¿½lise dos achados, diagnï¿½stico diferencial, critï¿½rios diagnï¿½sticos]
 
-## ? Diagnóstico Final
-[Diagnóstico definitivo com classificação]
+## ? Diagnï¿½stico Final
+[Diagnï¿½stico definitivo com classificaï¿½ï¿½o]
 
-## ?? Referências
-[Fontes bibliográficas]
+## ?? Referï¿½ncias
+[Fontes bibliogrï¿½ficas]
 
-Seja cientificamente rigoroso e use terminologia adequada. Português brasileiro.""",
-        "label": "Caso Clínico",
+Seja cientificamente rigoroso e use terminologia adequada. Portuguï¿½s brasileiro.""",
+        "label": "Caso Clï¿½nico",
         "credits": 100,
     },
 }
@@ -1786,9 +1784,9 @@ Seja cientificamente rigoroso e use terminologia adequada. Português brasileiro.
 
 @app.post("/criar/{template_type}")
 def criar_content(template_type: str, req: CriarRequest):
-    """Gera conteúdo para o eX StudyLab usando RAG + GPT-4o."""
+    """Gera conteï¿½do para o eX StudyLab usando RAG + GPT-4o."""
     if template_type not in CRIAR_PROMPTS:
-        raise HTTPException(status_code=400, detail=f"Template inválido. Use: {', '.join(CRIAR_PROMPTS.keys())}")
+        raise HTTPException(status_code=400, detail=f"Template invï¿½lido. Use: {', '.join(CRIAR_PROMPTS.keys())}")
 
     prompt_config = CRIAR_PROMPTS[template_type]
     system_prompt = prompt_config["system"].replace("{topic}", req.topic)
@@ -1827,7 +1825,7 @@ def criar_content(template_type: str, req: CriarRequest):
         context_text = "\n\n---\n\n".join(context_chunks[:8])
     except Exception as e:
         logger.warning(f"Qdrant search failed for criar: {e}")
-        context_text = "Contexto RAG indisponível no momento."
+        context_text = "Contexto RAG indisponï¿½vel no momento."
 
     # 2. Generate with GPT-4o
     try:
@@ -1835,14 +1833,14 @@ def criar_content(template_type: str, req: CriarRequest):
             model="gpt-4o",
             messages=[
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": f"Tema: {req.topic}\n\n{f'Nível: {req.level}' if req.level else ''}\n{f'Especialidade: {req.specialty}' if req.specialty else ''}\n\nContexto científico disponível:\n{context_text}"},
+                {"role": "user", "content": f"Tema: {req.topic}\n\n{f'Nï¿½vel: {req.level}' if req.level else ''}\n{f'Especialidade: {req.specialty}' if req.specialty else ''}\n\nContexto cientï¿½fico disponï¿½vel:\n{context_text}"},
             ],
             temperature=0.7,
             max_tokens=4000,
         )
         content = response.choices[0].message.content
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro na geração: {e}")
+        raise HTTPException(status_code=500, detail=f"Erro na geracao: {e}")
 
     return {
         "content": content,
