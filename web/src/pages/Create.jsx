@@ -309,6 +309,7 @@ export default function Create() {
   const [visibility, setVisibility] = useState("public")
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState('')
+  const [aiImage, setAiImage] = useState('')
   const [publishSuccess, setPublishSuccess] = useState(false)
   const [specialty, setSpecialty] = useState('')
   const [level, setLevel] = useState('')
