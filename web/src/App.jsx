@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import ProfileSetup from "./pages/ProfileSetup";
 import Vagas from "./pages/Vagas";
 import AdminUpload from "./pages/AdminUpload";
+import AdminUsers from "./pages/AdminUsers";
 import ArticleUpload from "./pages/ArticleUpload";
 import Feed from "./pages/Feed";
 import NewPost from "./pages/NewPost";
@@ -604,6 +605,7 @@ function App() {
           <Route path="/teams" element={<Teams />} />
           <Route path="/admin/upload" element={<ProtectedRoute><AdminUpload /></ProtectedRoute>} />
           <Route path="/admin/article-upload" element={<ProtectedRoute><ArticleUpload /></ProtectedRoute>} />
+          <Route path="/admin/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
           <Route path="/feed" element={<FeedGate />} />
           <Route path="/novo-artigo" element={<ProtectedRoute><NewPost /></ProtectedRoute>} />
           <Route path="/criar" element={<ProtectedRoute><Create /></ProtectedRoute>} />
