@@ -228,6 +228,8 @@ export default function Teams() {
   const [bulkResult, setBulkResult] = useState(null)
   const [bulkCount, setBulkCount] = useState(null)
 
+  const visibleStatus = isStaff ? status : 'available'
+
   const fetchShifts = async () => {
     setLoading(true)
     setError('')
@@ -235,7 +237,7 @@ export default function Teams() {
       const params = new URLSearchParams()
       if (location) params.set('location', location)
       if (selectedDays.length === 1) params.set('day', selectedDays[0])
-      if (status && status !== 'all') params.set('status', status)
+      if (visibleStatus && visibleStatus !== 'all') params.set('status', visibleStatus)
       const res = await fetch(`${API_BASE}/shifts${params.toString() ? `?${params.toString()}` : ''}`)
       if (!res.ok) throw new Error('Falha ao carregar vagas')
       const data = await res.json()
@@ -248,7 +250,7 @@ export default function Teams() {
     }
   }
 
-  useEffect(() => { fetchShifts() }, [location, selectedDays, status])
+  useEffect(() => { fetchShifts() }, [location, selectedDays, visibleStatus])
 
   const locations = useMemo(() => Array.from(new Set(shifts.map((s) => s.location).filter(Boolean))).sort(), [shifts])
   const specialties = useMemo(() => Array.from(new Set(shifts.map((s) => s.specialty).filter(Boolean))).sort(), [shifts])
@@ -256,7 +258,7 @@ export default function Teams() {
 
   const filteredShifts = useMemo(() => {
     const term = search.trim().toLowerCase()
-    let result = shifts
+    let result = isStaff ? shifts : shifts.filter((shift) => shift.status === 'available')
     if (selectedDays.length > 1) {
       result = result.filter((shift) => selectedDays.includes(shift.day_of_week))
     }
@@ -265,7 +267,7 @@ export default function Teams() {
       const haystack = `${shift.location || ''} ${shift.specialty || ''} ${shift.day_of_week || ''} ${shift.room || ''} ${shift.time_slot || ''}`.toLowerCase()
       return haystack.includes(term)
     })
-  }, [shifts, search, selectedDays])
+  }, [shifts, search, selectedDays, isStaff])
 
   const stats = useMemo(() => {
     const dayFiltered = selectedDays.length > 1
@@ -492,13 +494,18 @@ export default function Teams() {
           </div>
           <div style={{ borderRadius:18, border:`1px solid ${C.glassBorder}`, background:C.glass, padding:12 }}>
             <label style={{ display:'block', fontSize:11, color:C.textDim, textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:8 }}>Status</label>
-            <select value={status} onChange={(e) => setStatus(e.target.value)} style={inputStyle}>
+            <select value={visibleStatus} onChange={(e) => isStaff && setStatus(e.target.value)} style={inputStyle} disabled={!isStaff}>
               <option value='available'>Disponíveis</option>
-              <option value='all'>Todos</option>
-              <option value='reserved'>Em andamento</option>
-              <option value='occupied'>Encerradas</option>
+              {isStaff && <option value='all'>Todos</option>}
+              {isStaff && <option value='reserved'>Em andamento</option>}
+              {isStaff && <option value='occupied'>Encerradas</option>}
             </select>
-            {selectedDays.length > 0 && status !== 'available' && (
+            {!isStaff && (
+              <div style={{ background:'none', color:C.textDim, fontSize:10, padding:'4px 0 0' }}>
+                Usuários comuns veem apenas vagas disponíveis.
+              </div>
+            )}
+            {selectedDays.length > 0 && visibleStatus !== 'available' && (
               <button
                 type='button'
                 onClick={() => setStatus('available')}
