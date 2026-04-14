@@ -1,7 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { marked } from 'marked'
-import { Transformer } from 'markmap-lib'
-import { Markmap } from 'markmap-view'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { buildPostMetadata, readImagePreview, uploadPostImage, validateImageFile } from '../lib/postImages'
@@ -207,53 +205,97 @@ function QuestionCard({ q, index }) {
 }
 
 // ── Mind Map Renderer ───────────────────────────────────────────────────────
-const markmapTransformer = new Transformer()
-
 function MindMapRenderer({ markdown }) {
   const svgRef = useRef(null)
   const mmRef = useRef(null)
+  const transformerRef = useRef(null)
+  const markmapCtorRef = useRef(null)
+
   const [theme, setTheme] = useState('dark')
   const [density, setDensity] = useState('default')
   const [expandLevel, setExpandLevel] = useState(3)
+  const [engineReady, setEngineReady] = useState(false)
+  const [engineError, setEngineError] = useState('')
+
+  const isIOS = typeof navigator !== 'undefined' && /iPhone|iPad|iPod/i.test(navigator.userAgent || '')
 
   const palette = theme === 'dark'
     ? ['#DDFF55', '#7ecbff', '#5ef0b0', '#b388ff', '#ffd166', '#ff8fab']
     : ['#6b8f00', '#005f99', '#007f5f', '#7a4cff', '#b87900', '#c2185b']
 
   const densityOptions = {
-    compact: { spacingHorizontal: 60, spacingVertical: 8, maxWidth: 180 },
-    default: { spacingHorizontal: 90, spacingVertical: 14, maxWidth: 220 },
-    airy: { spacingHorizontal: 120, spacingVertical: 20, maxWidth: 260 },
+    compact: { spacingHorizontal: 55, spacingVertical: 8, maxWidth: 170 },
+    default: { spacingHorizontal: 85, spacingVertical: 12, maxWidth: 210 },
+    airy: { spacingHorizontal: 110, spacingVertical: 18, maxWidth: 240 },
   }
 
   useEffect(() => {
-    if (!svgRef.current) return
-    const source = (markdown || '').trim() || '# Mapa Mental\n## Adicione um tema para gerar'
-    const { root } = markmapTransformer.transform(source)
-    const options = {
-      autoFit: true,
-      duration: 200,
-      initialExpandLevel: Number(expandLevel),
-      color: palette,
-      spacingHorizontal: densityOptions[density].spacingHorizontal,
-      spacingVertical: densityOptions[density].spacingVertical,
-      maxWidth: densityOptions[density].maxWidth,
-      paddingX: 12,
-      zoom: true,
-      pan: true,
+    let cancelled = false
+
+    async function loadMarkmap() {
+      try {
+        const [{ Transformer }, { Markmap }] = await Promise.all([
+          import('markmap-lib'),
+          import('markmap-view'),
+        ])
+
+        if (cancelled) return
+        transformerRef.current = new Transformer()
+        markmapCtorRef.current = Markmap
+        setEngineReady(true)
+      } catch (err) {
+        if (cancelled) return
+        console.error('Erro ao carregar markmap:', err)
+        setEngineError('Não foi possível carregar o visual do mapa neste dispositivo.')
+      }
     }
 
-    if (mmRef.current) {
-      mmRef.current.setData(root)
-      mmRef.current.setOptions(options)
-      mmRef.current.fit()
-      return
-    }
+    loadMarkmap()
 
-    svgRef.current.innerHTML = ''
-    mmRef.current = Markmap.create(svgRef.current, options, root)
-    mmRef.current.fit()
-  }, [markdown, density, expandLevel, theme])
+    return () => {
+      cancelled = true
+      try {
+        mmRef.current?.destroy?.()
+      } catch {}
+      mmRef.current = null
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!engineReady || !svgRef.current || !transformerRef.current || !markmapCtorRef.current) return
+
+    try {
+      const source = (markdown || '').trim() || '# Mapa Mental\n## Adicione um tema para gerar'
+      const { root } = transformerRef.current.transform(source)
+
+      const options = {
+        autoFit: !isIOS,
+        duration: isIOS ? 0 : 180,
+        initialExpandLevel: Number(expandLevel),
+        color: palette,
+        spacingHorizontal: densityOptions[density].spacingHorizontal,
+        spacingVertical: densityOptions[density].spacingVertical,
+        maxWidth: densityOptions[density].maxWidth,
+        paddingX: 10,
+        zoom: true,
+        pan: true,
+      }
+
+      if (mmRef.current) {
+        mmRef.current.setData(root)
+        mmRef.current.setOptions(options)
+        if (!isIOS) mmRef.current.fit()
+        return
+      }
+
+      svgRef.current.innerHTML = ''
+      mmRef.current = markmapCtorRef.current.create(svgRef.current, options, root)
+      if (!isIOS) mmRef.current.fit()
+    } catch (err) {
+      console.error('Erro ao renderizar mapa mental:', err)
+      setEngineError('Falha ao renderizar o mapa mental. Você ainda pode editar/publicar o conteúdo.')
+    }
+  }, [engineReady, markdown, density, expandLevel, theme, isIOS])
 
   return (
     <div style={{ marginBottom: 16 }}>
@@ -289,7 +331,13 @@ function MindMapRenderer({ markdown }) {
         minHeight: 440,
         padding: 8,
       }}>
-        <svg ref={svgRef} style={{ width: '100%', height: 420, display: 'block' }} />
+        {!engineReady && !engineError && (
+          <div style={{ color: C.textDim, fontSize: 12, padding: 16 }}>Carregando visual do mapa…</div>
+        )}
+        {engineError && (
+          <div style={{ color: '#ffb3b3', fontSize: 12, padding: 16 }}>{engineError}</div>
+        )}
+        <svg ref={svgRef} style={{ width: '100%', height: 420, display: engineError ? 'none' : 'block' }} />
       </div>
     </div>
   )
