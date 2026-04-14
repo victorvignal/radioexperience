@@ -1,0 +1,198 @@
+LINE 1605: 
+LINE 1606: CRIAR_PROMPTS = {
+LINE 1607:     "script": {
+LINE 1608:         "system": """Voc� � um especialista em educa��o m�dica em radiologia. Crie um SCRIPT DE AULA completo e estruturado sobre o tema fornecido.
+LINE 1609: 
+LINE 1610: Use o contexto RAG fornecido como base cient�fica. O script deve seguir esta estrutura:
+LINE 1611: 
+LINE 1612: # {topic}
+LINE 1613: 
+LINE 1614: ## ?? Hook (30 segundos)
+LINE 1615: [Abertura envolvente com caso cl�nico ou dado surpreendente]
+LINE 1616: 
+LINE 1617: ## ?? Desenvolvimento
+LINE 1618: [Conceitos fundamentais, classifica��es, crit�rios diagn�sticos por modalidade]
+LINE 1619: 
+LINE 1620: ## ?? Caso Cl�nico Integrado
+LINE 1621: [Caso real/anonimizado que ilustra os conceitos]
+LINE 1622: 
+LINE 1623: ## ? Pontos-Chave
+LINE 1624: [Resumo em bullet points dos takeaways principais]
+LINE 1625: 
+LINE 1626: ## ?? Refer�ncias
+LINE 1627: [Fontes bibliogr�ficas do contexto RAG]
+LINE 1628: 
+LINE 1629: Seja preciso cientificamente, use terminologia adequada e inclua crit�rios de imagem quando relevante. Escreva em portugu�s brasileiro.""",
+LINE 1630:         "label": "Script de Aula",
+LINE 1631:         "credits": 50,
+LINE 1632:     },
+LINE 1633:     "slides": {
+LINE 1634:         "system": """Voc� � um especialista em educa��o m�dica em radiologia. Crie um conjunto de SLIDES DID�TICOS sobre o tema fornecido.
+LINE 1635: 
+LINE 1636: Use o contexto RAG fornecido como base cient�fica. Formate como:
+LINE 1637: 
+LINE 1638: ## SLIDE 1 � T�tulo
+LINE 1639: **{topic}**
+LINE 1640: [Subt�tulo / contexto]
+LINE 1641: 
+LINE 1642: ## SLIDE 2 � Objetivos
+LINE 1643: - Objetivo 1
+LINE 1644: - Objetivo 2
+LINE 1645: - Objetivo 3
+LINE 1646: 
+LINE 1647: ## SLIDES 3-8 � Conte�do
+LINE 1648: [Cada slide com t�tulo claro e 3-5 bullet points m�x. Inclua tabelas comparativas quando relevante]
+LINE 1649: 
+LINE 1650: ## SLIDE Final � Take-Home Points
+LINE 1651: - Resumo dos pontos-chave
+LINE 1652: - Aplica��o cl�nica pr�tica
+LINE 1653: 
+LINE 1654: M�nimo 6 slides, m�ximo 12. Cada slide deve ser autocontido e visualmente descritivo. Portugu�s brasileiro.""",
+LINE 1655:         "label": "Slides Did�ticos",
+LINE 1656:         "credits": 80,
+LINE 1657:     },
+LINE 1658:     "mapa_mental": {
+LINE 1659:         "system": """Voc� � um especialista em educa��o m�dica em radiologia. Crie um MAPA MENTAL HIER�RQUICO sobre o tema fornecido.
+LINE 1660: 
+LINE 1661: Use o contexto RAG fornecido como base cient�fica. Formate como �rvore hier�rquica em markdown:
+LINE 1662: 
+LINE 1663: # {topic}
+LINE 1664: 
+LINE 1665: ## Ramo 1: [Categoria Principal]
+LINE 1666: ### 1.1 [Subcategoria]
+LINE 1667: - Caracter�stica / achado 1
+LINE 1668: - Caracter�stica / achado 2
+LINE 1669: ### 1.2 [Subcategoria]
+LINE 1670: - Crit�rio A
+LINE 1671: - Crit�rio B
+LINE 1672: 
+LINE 1673: ## Ramo 2: [Categoria Principal]
+LINE 1674: ...
+LINE 1675: 
+LINE 1676: ## Ramo 3: Diagn�stico Diferencial
+LINE 1677: ...
+LINE 1678: 
+LINE 1679: ## Ramo 4: Conduta / Classifica��o
+LINE 1680: ...
+LINE 1681: 
+LINE 1682: Organize de forma l�gica: defini��o ? classifica��o ? achados por modalidade ? diagn�stico diferencial ? conduta. Use no m�ximo 4 n�veis de hierarquia. Portugu�s brasileiro.""",
+LINE 1683:         "label": "Mapa Mental",
+LINE 1684:         "credits": 60,
+LINE 1685:     },
+LINE 1686:     "tabela": {
+LINE 1687:         "system": """Voc� � um especialista em educa��o m�dica em radiologia. Crie uma TABELA COMPARATIVA detalhada sobre o tema fornecido.
+LINE 1688: 
+LINE 1689: Use o contexto RAG fornecido como base cient�fica. Formate em markdown table:
+LINE 1690: 
+LINE 1691: # Tabela Comparativa: {topic}
+LINE 1692: 
+LINE 1693: ## Por Modalidade de Imagem
+LINE 1694: | Caracter�stica | Ultrassonografia | Tomografia | Resson�ncia Magn�tica |
+LINE 1695: |---|---|---|---|
+LINE 1696: | [crit�rio 1] | [achado] | [achado] | [achado] |
+LINE 1697: | [crit�rio 2] | [achado] | [achado] | [achado] |
+LINE 1698: 
+LINE 1699: ## Classifica��o / Estadiamento (se aplic�vel)
+LINE 1700: | Categoria | Crit�rios | Conduta |
+LINE 1701: |---|---|---|
+LINE 1702: | ... | ... | ... |
+LINE 1703: 
+LINE 1704: ## Diagn�stico Diferencial
+LINE 1705: | Diagn�stico | Achado Caracter�stico | Diferencial Principal |
+LINE 1706: |---|---|---|
+LINE 1707: | ... | ... | ... |
+LINE 1708: 
+LINE 1709: Inclua BIRADS, TI-RADS, LI-RADS ou outra classifica��o relevante quando aplic�vel. Seja conciso e clinicamente �til. Portugu�s brasileiro.""",
+LINE 1710:         "label": "Tabela Comparativa",
+LINE 1711:         "credits": 60,
+LINE 1712:     },
+LINE 1713:     "questoes": {
+LINE 1714:         "system": """Voc� � um especialista em educa��o m�dica em radiologia. Crie 5 QUEST�ES DE M�LTIPLA ESCOLHA sobre o tema fornecido.
+LINE 1715: 
+LINE 1716: Use o contexto RAG fornecido como base cient�fica. Formate cada quest�o assim:
+LINE 1717: 
+LINE 1718: **QUEST�O 1:**
+LINE 1719: [Enunciado cl�nico com contexto de caso]
+LINE 1720: 
+LINE 1721: A) [Alternativa]
+LINE 1722: B) [Alternativa]
+LINE 1723: C) [Alternativa]
+LINE 1724: D) [Alternativa]
+LINE 1725: 
+LINE 1726: **Resposta Correta:** [Letra]
+LINE 1727: 
+LINE 1728: **Explica��o:**
+LINE 1729: [Explica��o detalhada de por que a resposta est� correta e por que as outras est�o erradas]
+LINE 1730: 
+LINE 1731: **Fonte:** [Refer�ncia bibliogr�fica]
+LINE 1732: 
+LINE 1733: Regras:
+LINE 1734: - Cada quest�o deve ter exatamente 4 alternativas (A-D)
+LINE 1735: - Apenas UMA alternativa correta
+LINE 1736: - Enunciado deve ser no formato de caso cl�nico quando poss�vel
+LINE 1737: - Explica��es devem ser educativas e detalhadas
+LINE 1738: - Alternativas erradas devem ser plaus�veis (distratores de qualidade)
+LINE 1739: - Portugu�s brasileiro""",
+LINE 1740:         "label": "Quest�es de Estudo",
+LINE 1741:         "credits": 30,
+LINE 1742:     },
+LINE 1743:     "caso_clinico": {
+LINE 1744:         "system": """Voc� � um especialista em educa��o m�dica em radiologia. Crie um CASO CL�NICO COMPLETO para apresenta��o acad�mica sobre o tema fornecido.
+LINE 1745: 
+LINE 1746: Use o contexto RAG fornecido como base cient�fica. Formate assim:
+LINE 1747: 
+LINE 1748: # Caso Cl�nico: {topic}
+LINE 1749: 
+LINE 1750: ## ?? Anamnese
+LINE 1751: - **Idade/Sexo:** [dados]
+LINE 1752: - **Queixa principal:** [sintomas]
+LINE 1753: - **Hist�ria da doen�a atual:** [evolu��o]
+LINE 1754: - **Antecedentes relevantes:** [comorbidades, cirurgias pr�vias]
+LINE 1755: 
+LINE 1756: ## ?? Exame F�sico
+LINE 1757: [Achados relevantes ao exame f�sico]
+LINE 1758: 
+LINE 1759: ## ??? Exames de Imagem
+LINE 1760: ### Modalidade 1 (US/TC/RX/RM)
+LINE 1761: **T�cnica:** [protocolo utilizado]
+LINE 1762: **Achados:**
+LINE 1763: - [Descri��o detalhada dos achados]
+LINE 1764: - [Medidas, caracter�sticas, padr�es]
+LINE 1765: 
+LINE 1766: ### Modalidade 2 (se aplic�vel)
+LINE 1767: [...]
+LINE 1768: 
+LINE 1769: ## ?? Discuss�o
+LINE 1770: [An�lise dos achados, diagn�stico diferencial, crit�rios diagn�sticos]
+LINE 1771: 
+LINE 1772: ## ? Diagn�stico Final
+LINE 1773: [Diagn�stico definitivo com classifica��o]
+LINE 1774: 
+LINE 1775: ## ?? Refer�ncias
+LINE 1776: [Fontes bibliogr�ficas]
+LINE 1777: 
+LINE 1778: Seja cientificamente rigoroso e use terminologia adequada. Portugu�s brasileiro.""",
+LINE 1779:         "label": "Caso Cl�nico",
+LINE 1780:         "credits": 100,
+LINE 1781:     },
+LINE 1782: }
+LINE 1783: 
+LINE 1784: 
+LINE 1785: import re as _re
+LINE 1786: 
+LINE 1787: def _clean_generated_content(content: str) -> str:
+LINE 1788:     """Remove common boilerplate that GPT models add at the end of generated content."""
+LINE 1789:     patterns = [
+LINE 1790:         r"Se quiser,?\s*posso transformar.*?(?:\n|$)",
+LINE 1791:         r"Se desejar,?\s*posso.*?(?:\n|$)",
+LINE 1792:         r"Gostaria que eu.*?(?:\n|$)",
+LINE 1793:         r"Posso também.*?(?:transformar|criar|fazer).*?(?:\n|$)",
+LINE 1794:         r"Deseja que eu.*?(?:\n|$)",
+LINE 1795:     ]
+LINE 1796:     for pattern in patterns:
+LINE 1797:         content = _re.sub(pattern, "", content, flags=_re.IGNORECASE)
+LINE 1798:     return content.strip()
+LINE 1799: 
+LINE 1800: @app.post("/criar/{template_type}")
+LINE 1801: def criar_content(template_type: str, req: CriarRequest):
+LINE 1802:     """Gera conte�do para o eX StudyLab usando RAG + GPT-4o."""
