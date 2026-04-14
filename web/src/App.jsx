@@ -228,26 +228,26 @@ const docs = useCounter(520, 2200, inView); const specs = useCounter(9, 1400, in
 const a = (d) => ({ opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(28px)", transition: `all 0.8s cubic-bezier(.4,0,.2,1) ${d}s` });
 
 return (
-<section id="hero" ref={ref} style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "130px 24px 80px", position: "relative" }}>
-<div style={{ ...a(0), display: "inline-flex", alignItems: "center", gap: 10, padding: "5px 18px 5px 6px", borderRadius: 100, background: C.accentSoft, border: "1px solid rgba(221,255,85,0.2)", marginBottom: 36, position: "relative", zIndex: 1 }}>
+<section id="hero" className="hero-section" ref={ref} style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "130px 24px 80px", position: "relative" }}>
+<div className="hero-badge" style={{ ...a(0), display: "inline-flex", alignItems: "center", gap: 10, padding: "5px 18px 5px 6px", borderRadius: 100, background: C.accentSoft, border: "1px solid rgba(221,255,85,0.2)", marginBottom: 36, position: "relative", zIndex: 1 }}>
 <span style={{ padding: "3px 10px", borderRadius: 100, fontSize: 10, fontWeight: 800, background: C.accent, color: C.bgDeep, textTransform: "uppercase", letterSpacing: "0.08em" }}>Beta</span>
 <span style={{ fontSize: 13, color: C.accent, fontWeight: 500 }}>A única plataforma que divide os lucros com você</span>
 </div>
 
-  <div style={{ ...a(0.1), marginBottom: 28, position: "relative", zIndex: 1 }}>
-    <h1 style={{ fontSize: "clamp(38px, 5.5vw, 72px)", fontWeight: 800, lineHeight: 1.05, color: C.text, maxWidth: 900, letterSpacing: "-0.04em" }}>
+  <div className="hero-title-wrap" style={{ ...a(0.1), marginBottom: 28, position: "relative", zIndex: 1 }}>
+    <h1 className="hero-title" style={{ fontSize: "clamp(38px, 5.5vw, 72px)", fontWeight: 800, lineHeight: 1.05, color: C.text, maxWidth: 900, letterSpacing: "-0.04em" }}>
       A <EX color={C.accent} size={72} />periência que vai<br />
       <span style={{ background: `linear-gradient(135deg, ${C.accent}, #b8ff33, ${C.accent})`, backgroundSize: "200% 200%", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", animation: "gradientShift 4s ease infinite" }}>revolucionar</span>{" "}sua radiologia
     </h1>
   </div>
 
-  <p style={{ fontSize: "clamp(16px, 2vw, 20px)", color: C.textMuted, maxWidth: 640, lineHeight: 1.65, margin: "0 0 16px", ...a(0.2), position: "relative", zIndex: 1 }}>
+  <p className="hero-copy" style={{ fontSize: "clamp(16px, 2vw, 20px)", color: C.textMuted, maxWidth: 640, lineHeight: 1.65, margin: "0 0 16px", ...a(0.2), position: "relative", zIndex: 1 }}>
     7 pilares. IA clínica. Educação gamificada. Uma comunidade que cresce junto.
     <br /><strong style={{ color: C.textSoft }}>E parte dos lucros devolvida para quem faz acontecer.</strong>
   </p>
-  <p style={{ fontSize: 15, color: C.accent, fontWeight: 600, marginBottom: 44, ...a(0.25), position: "relative", zIndex: 1 }}>Bem-vindo à comunidade <EX color={C.accent} size={15} />.</p>
+  <p className="hero-welcome" style={{ fontSize: 15, color: C.accent, fontWeight: 600, marginBottom: 44, ...a(0.25), position: "relative", zIndex: 1 }}>Bem-vindo à comunidade <EX color={C.accent} size={15} />.</p>
 
-  <div style={{ display: "flex", gap: 14, marginBottom: 72, flexWrap: "wrap", justifyContent: "center", ...a(0.3), position: "relative", zIndex: 1 }}>
+  <div className="hero-cta-row" style={{ display: "flex", gap: 14, marginBottom: 72, flexWrap: "wrap", justifyContent: "center", ...a(0.3), position: "relative", zIndex: 1 }}>
     <button style={{ padding: "15px 36px", borderRadius: 12, fontSize: 16, fontWeight: 700, color: C.bgDeep, border: "none", cursor: "pointer", background: C.accent, boxShadow: `0 0 40px ${C.accentGlow}, 0 4px 24px rgba(0,0,0,0.4)` }}>Teste 7 Dias Grátis →</button>
     <button style={{ padding: "15px 36px", borderRadius: 12, fontSize: 16, fontWeight: 600, color: C.textSoft, cursor: "pointer", background: C.glass, border: `1px solid ${C.glassBorder}`, backdropFilter: "blur(12px)" }}>Ver Demonstração</button>
     <button onClick={onFeed} style={{ padding: "15px 28px", borderRadius: 12, fontSize: 15, fontWeight: 700, color: user ? C.bgDeep : C.textSoft, border: user ? "none" : `1px solid ${C.glassBorder}`, cursor: "pointer", background: user ? C.accent : C.glass, boxShadow: user ? `0 0 24px ${C.accentGlow}` : "none" }}>
@@ -255,7 +255,7 @@ return (
     </button>
   </div>
 
-  <div style={{ display: "flex", gap: 2, borderRadius: 18, overflow: "hidden", background: C.glass, border: `1px solid ${C.glassBorder}`, backdropFilter: "blur(16px)", ...a(0.4), position: "relative", zIndex: 1 }}>
+  <div className="hero-stats" style={{ display: "flex", gap: 2, borderRadius: 18, overflow: "hidden", background: C.glass, border: `1px solid ${C.glassBorder}`, backdropFilter: "blur(16px)", ...a(0.4), position: "relative", zIndex: 1 }}>
     {[{ v: `${docs}+`, l: "Docs científicos" }, { v: specs, l: "Especialidades" }, { v: `${users}+`, l: "Na waitlist" }].map((s, i) => (
       <div key={i} style={{ textAlign: "center", padding: "20px 40px", borderRight: i < 2 ? `1px solid ${C.glassBorder}` : "none" }}>
         <div style={{ fontSize: 32, fontWeight: 800, color: C.accent, fontVariantNumeric: "tabular-nums" }}>{s.v}</div>
@@ -490,7 +490,7 @@ const handleFeed = () => {
 
 return (
 <div style={{ position: "relative", background: C.bg, color: C.text, minHeight: "100vh", fontFamily: "'Inter',-apple-system,BlinkMacSystemFont,sans-serif", overflowX: "hidden" }}>
-<style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap'); *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:${C.bg}} @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}} @keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}} @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}} @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-40px)}} @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,30px)}} @keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,25px)}} button:hover{filter:brightness(1.08)}a:hover{color:${C.accent}!important} ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:${C.bg}}::-webkit-scrollbar-thumb{background:${C.border};border-radius:3px} @media(max-width:960px){ #pillars>div>div{grid-template-columns:repeat(2,1fr)!important;max-width:100%!important} #pricing>div>div:nth-of-type(2){grid-template-columns:repeat(2,1fr)!important} #community>div>div:last-child{grid-template-columns:repeat(2,1fr)!important} } @media(max-width:640px){ #pillars>div>div{grid-template-columns:1fr!important} #pricing>div>div:nth-of-type(2){grid-template-columns:1fr!important} #community>div>div:last-child{grid-template-columns:1fr!important} }`}</style>
+<style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap'); *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:${C.bg}} @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}} @keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}} @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}} @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-40px)}} @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,30px)}} @keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,25px)}} button:hover{filter:brightness(1.08)}a:hover{color:${C.accent}!important} ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:${C.bg}}::-webkit-scrollbar-thumb{background:${C.border};border-radius:3px} @media(max-width:960px){ #pillars>div>div{grid-template-columns:repeat(2,1fr)!important;max-width:100%!important} #pricing>div>div:nth-of-type(2){grid-template-columns:repeat(2,1fr)!important} #community>div>div:last-child{grid-template-columns:repeat(2,1fr)!important} } @media(max-width:640px){ .hero-section{min-height:auto!important;padding:88px 18px 36px!important;justify-content:flex-start!important} .hero-badge{margin-bottom:22px!important;transform:scale(.96)} .hero-title-wrap{margin-bottom:18px!important} .hero-title{font-size:clamp(30px,12vw,52px)!important;line-height:1.02!important;max-width:340px!important} .hero-copy{font-size:15px!important;line-height:1.5!important;max-width:330px!important;margin:0 0 12px!important} .hero-welcome{margin-bottom:24px!important;font-size:14px!important} .hero-cta-row{gap:10px!important;margin-bottom:28px!important} .hero-cta-row button{width:100%;max-width:320px;padding:14px 20px!important;font-size:15px!important} .hero-stats{width:100%!important;max-width:340px!important;display:grid!important;grid-template-columns:1fr!important} .hero-stats>div{padding:14px 18px!important;border-right:none!important;border-bottom:1px solid ${C.glassBorder}!important} .hero-stats>div:last-child{border-bottom:none!important} #pillars>div>div{grid-template-columns:1fr!important} #pricing>div>div:nth-of-type(2){grid-template-columns:1fr!important} #community>div>div:last-child{grid-template-columns:1fr!important} }`}</style>
 
   {/* ═══ BACKGROUND LAYERS ═══ */}
   {/* Layer 1: Animated neural network */}
