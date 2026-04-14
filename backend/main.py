@@ -909,6 +909,13 @@ class SocialPostRequest(BaseModel):
     content: str
 
 
+class FeedPostUpdateRequest(BaseModel):
+    title: str | None = None
+    content: str | None = None
+    type: str | None = None
+    visibility: str | None = None
+
+
 @app.post("/feed/social")
 def post_social(req: SocialPostRequest):
     """Post a generic social update to the community feed."""
@@ -950,6 +957,46 @@ def list_feed_posts(post_type: str | None = None, limit: int = 20):
             timeout=15,
         )
         return {"posts": r.json(), "count": len(r.json())}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.patch("/posts/{post_id}")
+def update_post(post_id: str, req: FeedPostUpdateRequest):
+    payload = {k: v for k, v in req.model_dump().items() if v is not None}
+    if not payload:
+        raise HTTPException(status_code=400, detail="Nenhum campo para atualizar")
+    try:
+        r = httpx.patch(
+            f"{SUPABASE_URL}/rest/v1/posts?id=eq.{post_id}",
+            headers={**_supabase_headers(), "Prefer": "return=representation"},
+            json=payload,
+            timeout=15,
+        )
+        if r.status_code >= 400:
+            raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
+        data = r.json() if r.text else []
+        return {"status": "ok", "post": data[0] if data else None}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.delete("/posts/{post_id}")
+def delete_post(post_id: str):
+    try:
+        r = httpx.delete(
+            f"{SUPABASE_URL}/rest/v1/posts?id=eq.{post_id}",
+            headers={**_supabase_headers(), "Prefer": "return=representation"},
+            timeout=15,
+        )
+        if r.status_code >= 400:
+            raise HTTPException(status_code=500, detail=f"Supabase error: {r.text}")
+        data = r.json() if r.text else []
+        return {"status": "ok", "deleted": len(data)}
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

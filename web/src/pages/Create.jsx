@@ -206,96 +206,31 @@ function QuestionCard({ q, index }) {
 
 // ── Mind Map Renderer ───────────────────────────────────────────────────────
 function MindMapRenderer({ markdown }) {
-  const svgRef = useRef(null)
-  const mmRef = useRef(null)
-  const transformerRef = useRef(null)
-  const markmapCtorRef = useRef(null)
-
   const [theme, setTheme] = useState('dark')
   const [density, setDensity] = useState('default')
   const [expandLevel, setExpandLevel] = useState(3)
-  const [engineReady, setEngineReady] = useState(false)
-  const [engineError, setEngineError] = useState('')
 
-  const isIOS = typeof navigator !== 'undefined' && /iPhone|iPad|iPod/i.test(navigator.userAgent || '')
-
-  const palette = theme === 'dark'
-    ? ['#DDFF55', '#7ecbff', '#5ef0b0', '#b388ff', '#ffd166', '#ff8fab']
-    : ['#6b8f00', '#005f99', '#007f5f', '#7a4cff', '#b87900', '#c2185b']
-
+  const lines = (markdown || '').split('\n').map(line => line.trim()).filter(Boolean)
   const densityOptions = {
-    compact: { spacingHorizontal: 55, spacingVertical: 8, maxWidth: 170 },
-    default: { spacingHorizontal: 85, spacingVertical: 12, maxWidth: 210 },
-    airy: { spacingHorizontal: 110, spacingVertical: 18, maxWidth: 240 },
+    compact: { gap: 8, padY: 6, padX: 10, font: 12 },
+    default: { gap: 10, padY: 8, padX: 12, font: 13 },
+    airy: { gap: 14, padY: 10, padX: 14, font: 14 },
   }
 
-  useEffect(() => {
-    let cancelled = false
+  const visibleNodes = lines
+    .map((line, index) => {
+      const match = line.match(/^(#+)\s+(.*)$/)
+      if (!match) return null
+      const level = match[1].length
+      const text = match[2].trim()
+      if (!text) return null
+      return { id: `${index}-${text}`, level, text }
+    })
+    .filter(Boolean)
+    .filter(node => node.level <= Number(expandLevel))
 
-    async function loadMarkmap() {
-      try {
-        const [{ Transformer }, { Markmap }] = await Promise.all([
-          import('markmap-lib'),
-          import('markmap-view'),
-        ])
-
-        if (cancelled) return
-        transformerRef.current = new Transformer()
-        markmapCtorRef.current = Markmap
-        setEngineReady(true)
-      } catch (err) {
-        if (cancelled) return
-        console.error('Erro ao carregar markmap:', err)
-        setEngineError('Não foi possível carregar o visual do mapa neste dispositivo.')
-      }
-    }
-
-    loadMarkmap()
-
-    return () => {
-      cancelled = true
-      try {
-        mmRef.current?.destroy?.()
-      } catch {}
-      mmRef.current = null
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!engineReady || !svgRef.current || !transformerRef.current || !markmapCtorRef.current) return
-
-    try {
-      const source = (markdown || '').trim() || '# Mapa Mental\n## Adicione um tema para gerar'
-      const { root } = transformerRef.current.transform(source)
-
-      const options = {
-        autoFit: !isIOS,
-        duration: isIOS ? 0 : 180,
-        initialExpandLevel: Number(expandLevel),
-        color: palette,
-        spacingHorizontal: densityOptions[density].spacingHorizontal,
-        spacingVertical: densityOptions[density].spacingVertical,
-        maxWidth: densityOptions[density].maxWidth,
-        paddingX: 10,
-        zoom: true,
-        pan: true,
-      }
-
-      if (mmRef.current) {
-        mmRef.current.setData(root)
-        mmRef.current.setOptions(options)
-        if (!isIOS) mmRef.current.fit()
-        return
-      }
-
-      svgRef.current.innerHTML = ''
-      mmRef.current = markmapCtorRef.current.create(svgRef.current, options, root)
-      if (!isIOS) mmRef.current.fit()
-    } catch (err) {
-      console.error('Erro ao renderizar mapa mental:', err)
-      setEngineError('Falha ao renderizar o mapa mental. Você ainda pode editar/publicar o conteúdo.')
-    }
-  }, [engineReady, markdown, density, expandLevel, theme, isIOS])
+  const surfaceBg = theme === 'dark' ? '#00131f' : '#f5fbff'
+  const chipBg = theme === 'dark' ? 'rgba(126,203,255,0.08)' : 'rgba(0,26,43,0.04)'
 
   return (
     <div style={{ marginBottom: 16 }}>
@@ -305,7 +240,7 @@ function MindMapRenderer({ markdown }) {
         background: theme === 'dark' ? 'rgba(179,136,255,0.08)' : 'rgba(126,203,255,0.08)',
         border: `1px solid ${theme === 'dark' ? 'rgba(179,136,255,0.25)' : 'rgba(126,203,255,0.22)'}`,
       }}>
-        <strong style={{ color: C.textSoft, fontSize: 12 }}>Customização do mapa</strong>
+        <strong style={{ color: C.textSoft, fontSize: 12 }}>Preview do mapa</strong>
         <select value={theme} onChange={e => setTheme(e.target.value)} style={{ ...inputStyle, width: 140, padding: '8px 10px' }}>
           <option value='dark'>Tema escuro</option>
           <option value='light'>Tema claro</option>
@@ -316,28 +251,45 @@ function MindMapRenderer({ markdown }) {
           <option value='airy'>Espaçado</option>
         </select>
         <select value={expandLevel} onChange={e => setExpandLevel(Number(e.target.value))} style={{ ...inputStyle, width: 160, padding: '8px 10px' }}>
-          <option value={2}>Expandir nível 2</option>
-          <option value={3}>Expandir nível 3</option>
-          <option value={4}>Expandir nível 4</option>
+          <option value={1}>Mostrar nível 1</option>
+          <option value={2}>Mostrar nível 2</option>
+          <option value={3}>Mostrar nível 3</option>
+          <option value={4}>Mostrar nível 4</option>
         </select>
-        <span style={{ color: C.textDim, fontSize: 11 }}>Zoom e arraste direto no mapa</span>
+        <span style={{ color: C.textDim, fontSize: 11 }}>Preview leve e estável no celular</span>
       </div>
 
       <div style={{
-        background: theme === 'dark' ? '#00131f' : '#f5fbff',
+        background: surfaceBg,
         border: `1px solid ${C.glassBorder}`,
         borderRadius: 16,
-        overflow: 'hidden',
-        minHeight: 440,
-        padding: 8,
+        minHeight: 260,
+        padding: 14,
       }}>
-        {!engineReady && !engineError && (
-          <div style={{ color: C.textDim, fontSize: 12, padding: 16 }}>Carregando visual do mapa…</div>
+        {visibleNodes.length === 0 ? (
+          <div style={{ color: C.textDim, fontSize: 12 }}>Digite a estrutura do mapa em markdown para ver o preview.</div>
+        ) : (
+          <div style={{ display: 'grid', gap: densityOptions[density].gap }}>
+            {visibleNodes.map(node => (
+              <div
+                key={node.id}
+                style={{
+                  marginLeft: `${(node.level - 1) * 18}px`,
+                  padding: `${densityOptions[density].padY}px ${densityOptions[density].padX}px`,
+                  borderRadius: 12,
+                  background: chipBg,
+                  border: `1px solid ${node.level === 1 ? 'rgba(221,255,85,0.25)' : C.glassBorder}`,
+                  color: node.level === 1 ? C.accent : C.textSoft,
+                  fontSize: densityOptions[density].font,
+                  fontWeight: node.level <= 2 ? 700 : 500,
+                  lineHeight: 1.45,
+                }}
+              >
+                {node.text}
+              </div>
+            ))}
+          </div>
         )}
-        {engineError && (
-          <div style={{ color: '#ffb3b3', fontSize: 12, padding: 16 }}>{engineError}</div>
-        )}
-        <svg ref={svgRef} style={{ width: '100%', height: 420, display: engineError ? 'none' : 'block' }} />
       </div>
     </div>
   )
