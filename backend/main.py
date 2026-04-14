@@ -1609,8 +1609,6 @@ CRIAR_PROMPTS = {
 
 Use o contexto RAG fornecido como base científica. O script deve seguir esta estrutura:
 
-# {topic}
-
 ## 🎯 Hook (30 segundos)
 [Abertura envolvente com caso clínico ou dado surpreendente]
 
@@ -1623,8 +1621,10 @@ Use o contexto RAG fornecido como base científica. O script deve seguir esta es
 ## ✅ Pontos-Chave
 [Resumo em bullet points dos takeaways principais]
 
-## 📖 Referências
-[Fontes bibliográficas do contexto RAG]
+Regras obrigatórias:
+- NÃO coloque um título inicial como `# {topic}` ou qualquer heading antes de `## 🎯 Hook (30 segundos)`
+- NÃO inclua seção de referências
+- NÃO inclua bibliografia, fontes, links ou bloco final de leitura adicional
 
 Seja preciso cientificamente, use terminologia adequada e inclua critérios de imagem quando relevante. Escreva em português brasileiro.""",
         "label": "Script de Aula",
@@ -1797,6 +1797,35 @@ def _clean_generated_content(content: str) -> str:
         content = _re.sub(pattern, "", content, flags=_re.IGNORECASE)
     return content.strip()
 
+
+def _clean_script_content(content: str, topic: str) -> str:
+    """Remove title headings and references from script outputs."""
+    cleaned = content.strip()
+
+    heading_patterns = [
+        rf"^#\s*{_re.escape(topic)}\s*\n+",
+        rf"^#\s*{_re.escape(topic.rstrip(' .:;-'))}[ .:;-]*\n+",
+        r"^#\s*.+?\n+(?=##)",
+    ]
+    for pattern in heading_patterns:
+        cleaned = _re.sub(pattern, "", cleaned, flags=_re.IGNORECASE)
+
+    cleaned = _re.sub(
+        r"\n*##\s*(?:📖\s*)?(?:Refer[eê]ncias?|Bibliografia|Fontes?|Leitura adicional)\s*[\s\S]*$",
+        "",
+        cleaned,
+        flags=_re.IGNORECASE,
+    )
+
+    cleaned = _re.sub(
+        r"\n*(?:Refer[eê]ncias?|Bibliografia|Fontes?|Leitura adicional):\s*[\s\S]*$",
+        "",
+        cleaned,
+        flags=_re.IGNORECASE,
+    )
+
+    return cleaned.strip()
+
 @app.post("/criar/{template_type}")
 def criar_content(template_type: str, req: CriarRequest):
     """Gera conteúdo para o eX StudyLab usando RAG + GPT-4o."""
@@ -1858,6 +1887,8 @@ def criar_content(template_type: str, req: CriarRequest):
         raise HTTPException(status_code=500, detail=f"Erro na geracao: {e}")
 
     content = _clean_generated_content(content)
+    if template_type == "script":
+        content = _clean_script_content(content, req.topic)
 
     # Generate image for visual templates
     image_url = None
