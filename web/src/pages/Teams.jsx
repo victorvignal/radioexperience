@@ -215,7 +215,7 @@ export default function Teams() {
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
   const [location, setLocation] = useState('')
-  const [day, setDay] = useState('')
+  const [selectedDays, setSelectedDays] = useState([])
   const [status, setStatus] = useState('available')
   const [interestShift, setInterestShift] = useState(null)
   const [editShift, setEditShift] = useState(null)
@@ -234,7 +234,7 @@ export default function Teams() {
     try {
       const params = new URLSearchParams()
       if (location) params.set('location', location)
-      if (day) params.set('day', day)
+      if (selectedDays.length === 1) params.set('day', selectedDays[0])
       if (status && status !== 'all') params.set('status', status)
       const res = await fetch(`${API_BASE}/shifts${params.toString() ? `?${params.toString()}` : ''}`)
       if (!res.ok) throw new Error('Falha ao carregar vagas')
@@ -248,7 +248,7 @@ export default function Teams() {
     }
   }
 
-  useEffect(() => { fetchShifts() }, [location, day, status])
+  useEffect(() => { fetchShifts() }, [location, selectedDays, status])
 
   const locations = useMemo(() => Array.from(new Set(shifts.map((s) => s.location).filter(Boolean))).sort(), [shifts])
   const specialties = useMemo(() => Array.from(new Set(shifts.map((s) => s.specialty).filter(Boolean))).sort(), [shifts])
@@ -256,19 +256,28 @@ export default function Teams() {
 
   const filteredShifts = useMemo(() => {
     const term = search.trim().toLowerCase()
-    if (!term) return shifts
-    return shifts.filter((shift) => {
+    let result = shifts
+    if (selectedDays.length > 1) {
+      result = result.filter((shift) => selectedDays.includes(shift.day_of_week))
+    }
+    if (!term) return result
+    return result.filter((shift) => {
       const haystack = `${shift.location || ''} ${shift.specialty || ''} ${shift.day_of_week || ''} ${shift.room || ''} ${shift.time_slot || ''}`.toLowerCase()
       return haystack.includes(term)
     })
-  }, [shifts, search])
+  }, [shifts, search, selectedDays])
 
-  const stats = useMemo(() => ({
-    total: filteredShifts.length,
-    open: filteredShifts.filter((s) => s.status === 'available').length,
-    locations: new Set(filteredShifts.map((s) => s.location).filter(Boolean)).size,
-    specialties: new Set(filteredShifts.map((s) => s.specialty).filter(Boolean)).size,
-  }), [filteredShifts])
+  const stats = useMemo(() => {
+    const dayFiltered = selectedDays.length > 1
+      ? shifts.filter((s) => selectedDays.includes(s.day_of_week))
+      : shifts
+    return {
+      total: filteredShifts.length,
+      open: dayFiltered.filter((s) => s.status === 'available').length,
+      locations: new Set(filteredShifts.map((s) => s.location).filter(Boolean)).size,
+      specialties: new Set(filteredShifts.map((s) => s.specialty).filter(Boolean)).size,
+    }
+  }, [filteredShifts, shifts, selectedDays])
 
   const saveShift = async () => {
     setSaving(true)
@@ -419,19 +428,85 @@ export default function Teams() {
           </div>
           <div style={{ borderRadius:18, border:`1px solid ${C.glassBorder}`, background:C.glass, padding:12 }}>
             <label style={{ display:'block', fontSize:11, color:C.textDim, textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:8 }}>Dia</label>
-            <select value={day} onChange={(e) => setDay(e.target.value)} style={inputStyle}>
-              <option value=''>Todos</option>
-              {DAYS.map((item) => <option key={item} value={item}>{item}</option>)}
-            </select>
+            <div style={{ display:'flex', flexWrap:'wrap', gap:6, marginBottom:8 }}>
+              {DAYS.map((d) => {
+                const checked = selectedDays.includes(d)
+                return (
+                  <button
+                    key={d}
+                    type='button'
+                    onClick={() => {
+                      setSelectedDays((prev) =>
+                        prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]
+                      )
+                      if (status !== 'available') setStatus('available')
+                    }}
+                    style={{
+                      borderRadius:8,
+                      border:`1px solid ${checked ? C.accent : C.glassBorder}`,
+                      background: checked ? `${C.accent}22` : 'transparent',
+                      color: checked ? C.accent : C.textMuted,
+                      padding:'5px 10px',
+                      fontSize:11,
+                      fontWeight:800,
+                      cursor:'pointer',
+                      transition:'all 0.15s',
+                    }}
+                  >
+                    {d}
+                  </button>
+                )
+              })}
+            </div>
+            {selectedDays.length > 0 && (
+              <div style={{ display:'flex', flexWrap:'wrap', gap:4, alignItems:'center' }}>
+                <span style={{ fontSize:10, color:C.textDim }}>Selecionados:</span>
+                {selectedDays.map((d) => (
+                  <span key={d} style={{
+                    display:'inline-flex', alignItems:'center', gap:4,
+                    padding:'2px 8px', borderRadius:999,
+                    background:`${C.accent}18`, border:`1px solid ${C.accent}40`,
+                    color:C.accent, fontSize:10, fontWeight:800,
+                  }}>
+                    {d}
+                    <button
+                      type='button'
+                      onClick={(e) => { e.stopPropagation(); setSelectedDays((prev) => prev.filter((x) => x !== d)) }}
+                      style={{ background:'none', border:'none', color:C.accent, cursor:'pointer', padding:'0 0 0 2px', fontSize:12, lineHeight:1 }}
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+                {selectedDays.length > 1 && (
+                  <button
+                    type='button'
+                    onClick={() => setSelectedDays([])}
+                    style={{ background:'none', border:'none', color:C.textDim, cursor:'pointer', fontSize:10, textDecoration:'underline' }}
+                  >
+                    Limpar
+                  </button>
+                )}
+              </div>
+            )}
           </div>
           <div style={{ borderRadius:18, border:`1px solid ${C.glassBorder}`, background:C.glass, padding:12 }}>
             <label style={{ display:'block', fontSize:11, color:C.textDim, textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:8 }}>Status</label>
             <select value={status} onChange={(e) => setStatus(e.target.value)} style={inputStyle}>
-              <option value='all'>Todos</option>
               <option value='available'>Disponíveis</option>
+              <option value='all'>Todos</option>
               <option value='reserved'>Em andamento</option>
               <option value='occupied'>Encerradas</option>
             </select>
+            {selectedDays.length > 0 && status !== 'available' && (
+              <button
+                type='button'
+                onClick={() => setStatus('available')}
+                style={{ background:'none', border:'none', color:C.teams, cursor:'pointer', fontSize:10, textDecoration:'underline', padding:'4px 0 0', textAlign:'left' }}
+              >
+                Mostrar só disponíveis
+              </button>
+            )}
           </div>
         </section>
 

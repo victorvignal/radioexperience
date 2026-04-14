@@ -10,7 +10,7 @@ const C = {
 
 const API_BASE = "https://aria-backend-production-176b.up.railway.app";
 const DAYS = ["SEG", "TER", "QUA", "QUI", "SEX", "SÁB", "DOM"];
-const statusLabel = (s) => s === "available" ? "Disponível" : s === "reserved" ? "Em andamento" : "Encerrada";
+const statusLabel = (s) => s === "available" ? "Vago" : s === "reserved" ? "Reservado" : "Ocupado";
 const statusColor = (s) => s === "available" ? C.green : s === "reserved" ? C.yellow : C.red;
 
 export default function Vagas() {
@@ -133,7 +133,7 @@ export default function Vagas() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12, marginBottom: 16 }}>
           <Filter label="Local"><select value={location} onChange={(e) => setLocation(e.target.value)} style={sel}><option value="">Todos</option>{locations.map((l) => <option key={l}>{l}</option>)}</select></Filter>
           <Filter label="Dia"><select value={day} onChange={(e) => setDay(e.target.value)} style={sel}><option value="">Todos</option>{DAYS.map((d) => <option key={d}>{d}</option>)}</select></Filter>
-          <Filter label="Status"><select value={status} onChange={(e) => setStatus(e.target.value)} style={sel}><option value="all">Todas</option><option value="available">Disponíveis</option><option value="reserved">Em andamento</option><option value="occupied">Encerradas</option></select></Filter>
+          <Filter label="Status"><select value={status} onChange={(e) => setStatus(e.target.value)} style={sel}><option value="all">Todas</option><option value="available">Vago</option><option value="reserved">Reservado</option><option value="occupied">Ocupado</option></select></Filter>
         </div>
 
         {/* Batch management panel */}
@@ -219,7 +219,7 @@ export default function Vagas() {
               ].map(([k, l]) => (
                 <div key={k}><label style={{ fontSize: 11, color: C.textDim }}>{l}</label><input value={editShift[k] || ''} onChange={(e) => setEditShift((p) => ({ ...p, [k]: e.target.value }))} style={inp} /></div>
               ))}
-              <div><label style={{ fontSize: 11, color: C.textDim }}>Status</label><select value={editShift.status || 'available'} onChange={(e) => setEditShift((p) => ({ ...p, status: e.target.value }))} style={inp}><option value='available'>Disponível</option><option value='reserved'>Em andamento</option><option value='occupied'>Encerrada</option></select></div>
+              <div><label style={{ fontSize: 11, color: C.textDim }}>Status</label><select value={editShift.status || 'available'} onChange={(e) => setEditShift((p) => ({ ...p, status: e.target.value }))} style={inp}><option value='available'>Vago</option><option value='reserved'>Reservado</option><option value='occupied'>Ocupado</option></select></div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginTop: 16, flexWrap: 'wrap' }}>
               <button onClick={() => deleteShift(editShift.id)} style={{ borderRadius: 10, border: 'none', background: C.red, color: C.bgDeep, padding: '8px 12px', fontWeight: 800 }}>Excluir vaga</button>
