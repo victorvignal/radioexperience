@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { marked } from 'marked'
+import { Transformer } from 'markmap-lib'
+import { Markmap } from 'markmap-view'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { buildPostMetadata, readImagePreview, uploadPostImage, validateImageFile } from '../lib/postImages'
@@ -204,6 +206,95 @@ function QuestionCard({ q, index }) {
   )
 }
 
+// ── Mind Map Renderer ───────────────────────────────────────────────────────
+const markmapTransformer = new Transformer()
+
+function MindMapRenderer({ markdown }) {
+  const svgRef = useRef(null)
+  const mmRef = useRef(null)
+  const [theme, setTheme] = useState('dark')
+  const [density, setDensity] = useState('default')
+  const [expandLevel, setExpandLevel] = useState(3)
+
+  const palette = theme === 'dark'
+    ? ['#DDFF55', '#7ecbff', '#5ef0b0', '#b388ff', '#ffd166', '#ff8fab']
+    : ['#6b8f00', '#005f99', '#007f5f', '#7a4cff', '#b87900', '#c2185b']
+
+  const densityOptions = {
+    compact: { spacingHorizontal: 60, spacingVertical: 8, maxWidth: 180 },
+    default: { spacingHorizontal: 90, spacingVertical: 14, maxWidth: 220 },
+    airy: { spacingHorizontal: 120, spacingVertical: 20, maxWidth: 260 },
+  }
+
+  useEffect(() => {
+    if (!svgRef.current) return
+    const source = (markdown || '').trim() || '# Mapa Mental\n## Adicione um tema para gerar'
+    const { root } = markmapTransformer.transform(source)
+    const options = {
+      autoFit: true,
+      duration: 200,
+      initialExpandLevel: Number(expandLevel),
+      color: palette,
+      spacingHorizontal: densityOptions[density].spacingHorizontal,
+      spacingVertical: densityOptions[density].spacingVertical,
+      maxWidth: densityOptions[density].maxWidth,
+      paddingX: 12,
+      zoom: true,
+      pan: true,
+    }
+
+    if (mmRef.current) {
+      mmRef.current.setData(root)
+      mmRef.current.setOptions(options)
+      mmRef.current.fit()
+      return
+    }
+
+    svgRef.current.innerHTML = ''
+    mmRef.current = Markmap.create(svgRef.current, options, root)
+    mmRef.current.fit()
+  }, [markdown, density, expandLevel, theme])
+
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <div style={{
+        display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center',
+        marginBottom: 12, padding: '12px 14px', borderRadius: 12,
+        background: theme === 'dark' ? 'rgba(179,136,255,0.08)' : 'rgba(126,203,255,0.08)',
+        border: `1px solid ${theme === 'dark' ? 'rgba(179,136,255,0.25)' : 'rgba(126,203,255,0.22)'}`,
+      }}>
+        <strong style={{ color: C.textSoft, fontSize: 12 }}>Customização do mapa</strong>
+        <select value={theme} onChange={e => setTheme(e.target.value)} style={{ ...inputStyle, width: 140, padding: '8px 10px' }}>
+          <option value='dark'>Tema escuro</option>
+          <option value='light'>Tema claro</option>
+        </select>
+        <select value={density} onChange={e => setDensity(e.target.value)} style={{ ...inputStyle, width: 140, padding: '8px 10px' }}>
+          <option value='compact'>Compacto</option>
+          <option value='default'>Padrão</option>
+          <option value='airy'>Espaçado</option>
+        </select>
+        <select value={expandLevel} onChange={e => setExpandLevel(Number(e.target.value))} style={{ ...inputStyle, width: 160, padding: '8px 10px' }}>
+          <option value={2}>Expandir nível 2</option>
+          <option value={3}>Expandir nível 3</option>
+          <option value={4}>Expandir nível 4</option>
+        </select>
+        <span style={{ color: C.textDim, fontSize: 11 }}>Zoom e arraste direto no mapa</span>
+      </div>
+
+      <div style={{
+        background: theme === 'dark' ? '#00131f' : '#f5fbff',
+        border: `1px solid ${C.glassBorder}`,
+        borderRadius: 16,
+        overflow: 'hidden',
+        minHeight: 440,
+        padding: 8,
+      }}>
+        <svg ref={svgRef} style={{ width: '100%', height: 420, display: 'block' }} />
+      </div>
+    </div>
+  )
+}
+
 // ── Preview Modal ─────────────────────────────────────────────────────────────
 function PreviewModal({ content, topic, template, typeLabel, imagePreview, onClose, onPublish, publishing, visibility, onVisibilityChange }) {
   const html = marked.parse(content || '')
@@ -343,9 +434,17 @@ export default function Create() {
   const [specialty, setSpecialty] = useState('')
   const [level, setLevel] = useState('')
 
-  const typeLabel = template === 'script' ? 'Script de Aula' : 'Questões de Estudo'
+  const typeLabelMap = {
+    script: 'Script de Aula',
+    slides: 'Slides',
+    mapa_mental: 'Mapa Mental',
+    tabela: 'Tabela Comparativa',
+    questoes: 'Questões de Estudo',
+    caso_clinico: 'Caso Clínico',
+  }
+  const typeLabel = typeLabelMap[template] || 'Conteúdo'
 
-  const questions = template === 'questoes' ? parseQuestions(generatedContent) : []
+  const questions = template === 'questoes' ? parseQuestions(editedContent || generatedContent) : []
 
   const handleGenerate = async () => {
     if (!topic.trim()) {
@@ -821,7 +920,26 @@ export default function Create() {
                   whiteSpace: 'pre-wrap',
                 }}
               />
-            ) : ['slides', 'mapa_mental', 'tabela', 'caso_clinico'].includes(template) ? (
+            ) : template === 'mapa_mental' ? (
+              <div>
+                <MindMapRenderer markdown={editedContent} />
+                <textarea
+                  value={editedContent}
+                  onChange={e => setEditedContent(e.target.value)}
+                  rows={10}
+                  style={{
+                    ...inputStyle,
+                    minHeight: 220,
+                    fontSize: 12,
+                    lineHeight: 1.55,
+                    fontFamily: "'Courier New', monospace",
+                  }}
+                />
+                <p style={{ color: C.textDim, fontSize: 11, marginTop: 8 }}>
+                  Edite o markdown do mapa mental e a visualização atualiza automaticamente.
+                </p>
+              </div>
+            ) : ['slides', 'tabela', 'caso_clinico'].includes(template) ? (
               <div>
                 <SlideRenderer content={editedContent} />
                 <textarea
