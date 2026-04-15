@@ -1937,9 +1937,9 @@ def criar_content(template_type: str, req: CriarRequest):
     if template_type == "script":
         content = _clean_script_content(content, req.topic)
 
-    # Generate image for visual templates
+    # Generate image for visual templates (slides only — mapa_mental uses markmap on frontend)
     image_url = None
-    if template_type in ("mapa_mental", "slides"):
+    if template_type == "slides":
         image_url = generate_image_for_content(req.topic, content, template_type)
 
     return {
