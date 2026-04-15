@@ -210,27 +210,55 @@ function MindMapRenderer({ markdown }) {
   const [density, setDensity] = useState('default')
   const [expandLevel, setExpandLevel] = useState(3)
 
-  const lines = (markdown || '').split('\n').map(line => line.trim()).filter(Boolean)
   const densityOptions = {
     compact: { gap: 8, padY: 6, padX: 10, font: 12 },
     default: { gap: 10, padY: 8, padX: 12, font: 13 },
     airy: { gap: 14, padY: 10, padX: 14, font: 14 },
   }
 
-  const visibleNodes = lines
-    .map((line, index) => {
-      const match = line.match(/^(#+)\s+(.*)$/)
-      if (!match) return null
-      const level = match[1].length
-      const text = match[2].trim()
-      if (!text) return null
-      return { id: `${index}-${text}`, level, text }
-    })
-    .filter(Boolean)
-    .filter(node => node.level <= Number(expandLevel))
-
   const surfaceBg = theme === 'dark' ? '#00131f' : '#f5fbff'
   const chipBg = theme === 'dark' ? 'rgba(126,203,255,0.08)' : 'rgba(0,26,43,0.04)'
+
+  // Parse nodes from markdown — support headings AND list items
+  const lines = (markdown || '').split('\n')
+  const nodes = []
+  let currentRoot = null
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim()
+    if (!line) continue
+
+    // Match headings: # ## ### etc
+    const headingMatch = line.match(/^(#{1,6})\s+(.*)$/)
+    if (headingMatch) {
+      const level = headingMatch[1].length
+      const text = headingMatch[2].trim()
+      if (text) {
+        nodes.push({ id: `h-${level}-${text}`, level, text, isHeading: true })
+      }
+      continue
+    }
+
+    // Match list items: - or * (non-heading)
+    const listMatch = line.match(/^[-*]\s+(.*)$/)
+    if (listMatch) {
+      const text = listMatch[1].replace(/\*\*(.*?)\*\*/g, '$1').trim()
+      if (text) {
+        nodes.push({ id: `l-${text}`, level: (currentRoot?.level || 1) + 1, text, isHeading: false })
+      }
+      continue
+    }
+
+    // Plain text paragraph — treat as level-2 node
+    if (line.length > 2 && !line.startsWith('!') && !line.startsWith('```')) {
+      const clean = line.replace(/\*\*/g, '').replace(/^>\s*/, '').trim()
+      if (clean && clean.length > 1) {
+        nodes.push({ id: `p-${clean.substring(0, 20)}`, level: 2, text: clean, isHeading: false })
+      }
+    }
+  }
+
+  const visibleNodes = nodes.filter(node => node.level <= Number(expandLevel))
 
   return (
     <div style={{ marginBottom: 16 }}>
@@ -256,7 +284,7 @@ function MindMapRenderer({ markdown }) {
           <option value={3}>Mostrar nível 3</option>
           <option value={4}>Mostrar nível 4</option>
         </select>
-        <span style={{ color: C.textDim, fontSize: 11 }}>Preview leve e estável no celular</span>
+        <span style={{ color: C.textDim, fontSize: 11 }}>{visibleNodes.length} nós</span>
       </div>
 
       <div style={{
@@ -266,8 +294,14 @@ function MindMapRenderer({ markdown }) {
         minHeight: 260,
         padding: 14,
       }}>
-        {visibleNodes.length === 0 ? (
-          <div style={{ color: C.textDim, fontSize: 12 }}>Digite a estrutura do mapa em markdown para ver o preview.</div>
+        {!markdown || markdown.trim() === '' ? (
+          <div style={{ color: C.textDim, fontSize: 12 }}>
+            Digite a estrutura do mapa mental em markdown para ver o preview.
+          </div>
+        ) : visibleNodes.length === 0 ? (
+          <div style={{ color: C.textDim, fontSize: 12 }}>
+            Nenhum nó encontrado. Use headings (# título, ## subtítulo) ou listas (- item) no markdown.
+          </div>
         ) : (
           <div style={{ display: 'grid', gap: densityOptions[density].gap }}>
             {visibleNodes.map(node => (
@@ -277,14 +311,17 @@ function MindMapRenderer({ markdown }) {
                   marginLeft: `${(node.level - 1) * 18}px`,
                   padding: `${densityOptions[density].padY}px ${densityOptions[density].padX}px`,
                   borderRadius: 12,
-                  background: chipBg,
-                  border: `1px solid ${node.level === 1 ? 'rgba(221,255,85,0.25)' : C.glassBorder}`,
-                  color: node.level === 1 ? C.accent : C.textSoft,
+                  background: node.isHeading && node.level === 1
+                    ? (theme === 'dark' ? 'rgba(221,255,85,0.08)' : 'rgba(0,26,43,0.05)')
+                    : chipBg,
+                  border: `1px solid ${node.isHeading && node.level === 1 ? 'rgba(221,255,85,0.25)' : C.glassBorder}`,
+                  color: node.isHeading && node.level === 1 ? C.accent : (node.isHeading ? '#b388ff' : C.textSoft),
                   fontSize: densityOptions[density].font,
                   fontWeight: node.level <= 2 ? 700 : 500,
                   lineHeight: 1.45,
                 }}
               >
+                {node.isHeading && node.level === 1 ? '● ' : (node.isHeading ? '○ ' : '▸ ')}
                 {node.text}
               </div>
             ))}
@@ -433,6 +470,7 @@ export default function Create() {
   const [publishSuccess, setPublishSuccess] = useState(false)
   const [specialty, setSpecialty] = useState('')
   const [level, setLevel] = useState('')
+  const [savingProject, setSavingProject] = useState(false)
 
   const typeLabelMap = {
     script: 'Script de Aula',
@@ -511,6 +549,31 @@ export default function Create() {
       setError(`Erro ao publicar: ${e.message}`)
     } finally {
       setPublishing(false)
+    }
+  }
+
+  const handleSaveProject = async () => {
+    if (!user || !generatedContent) return
+    setSavingProject(true)
+    try {
+      const project = {
+        localId: `study_${Date.now()}`,
+        userId: user.id,
+        title: topic.trim(),
+        content: editedContent,
+        type: template,
+        specialty,
+        level,
+        created_at: new Date().toISOString(),
+      }
+      const existing = JSON.parse(localStorage.getItem('studyProjects') || '[]')
+      existing.push(project)
+      localStorage.setItem('studyProjects', JSON.stringify(existing))
+      setSavingProject(false)
+      navigate('/meus-projetos')
+    } catch (e) {
+      console.error('Save project error:', e)
+      setSavingProject(false)
     }
   }
 
@@ -862,6 +925,24 @@ export default function Create() {
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
+                <button
+                  onClick={handleSaveProject}
+                  disabled={!generatedContent || savingProject}
+                  style={{
+                    background: 'rgba(179,136,255,0.08)',
+                    border: `1px solid rgba(179,136,255,0.25)`,
+                    borderRadius: 8,
+                    padding: '7px 14px',
+                    cursor: (!generatedContent || savingProject) ? 'not-allowed' : 'pointer',
+                    color: '#b388ff',
+                    fontSize: 12,
+                    fontWeight: 700,
+                    fontFamily: 'inherit',
+                    opacity: (!generatedContent || savingProject) ? 0.5 : 1,
+                  }}
+                >
+                  {savingProject ? 'Salvando...' : '💾 Salvar Projeto'}
+                </button>
                 <button
                   onClick={handleSaveDraft}
                   disabled={publishing}

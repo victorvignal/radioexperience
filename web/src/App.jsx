@@ -20,6 +20,7 @@ import Create from "./pages/Create";
 import UserProfile from "./pages/UserProfile";
 import Teams from "./pages/Teams";
 import ChallengePage from "./pages/ChallengePage";
+import MyProjects from "./pages/MyProjects";
 
 const C = {
 bg: "#001a2b", bgDeep: "#002233",
@@ -613,6 +614,7 @@ function App() {
           <Route path="/profile/:id" element={<UserProfile />} />
           <Route path="/aria" element={<ProtectedRoute><ProfileGate><AriaPage /></ProfileGate></ProtectedRoute>} />
           <Route path="/challenge" element={<ProtectedRoute><ProfileGate><ChallengePage /></ProfileGate></ProtectedRoute>} />
+          <Route path="/meus-projetos" element={<ProtectedRoute><ProfileGate><MyProjects /></ProfileGate></ProtectedRoute>} />
         </Routes>
       </AuthProvider>
       </CanonicalHostGate>

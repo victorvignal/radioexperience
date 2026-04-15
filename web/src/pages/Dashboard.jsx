@@ -1315,6 +1315,7 @@ export default function Dashboard() {
     { id:'cursos', icon:<IconCursos size={20} />, label:'Cursos', active:false },
     { id:'simulados', icon:<IconSimulados size={20} />, label:'Simulados', active:false },
     { id:'comunidade', icon:<IconComunidade size={20} />, label:'Comunidade', active:false },
+    { id:'meusprojetos', icon:<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#ffd166' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round'><path d='M3 3h6l3 9h9v9H3V3z'/><path d='M9 12h6'/></svg>, label:'Meus Projetos', active:true, onClick:() => navigate('/meus-projetos') },
   ]
 
   const staffActions = [
