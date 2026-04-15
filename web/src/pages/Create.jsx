@@ -25,6 +25,26 @@ const C = {
   blueGlow: 'rgba(126,203,255,0.15)',
 }
 
+const inputStyle = {
+  width: '100%',
+  background: 'rgba(0,26,43,0.6)',
+  border: `1px solid ${C.glassBorder}`,
+  borderRadius: 10,
+  padding: '11px 14px',
+  color: C.text,
+  fontSize: 14,
+  fontFamily: 'inherit',
+  outline: 'none',
+  transition: 'border-color 0.2s',
+}
+
+const glassCard = {
+  background: C.glass,
+  border: `1px solid ${C.glassBorder}`,
+  borderRadius: 16,
+  padding: '24px',
+}
+
 const DEFAULT_API = 'https://aria-backend-production-176b.up.railway.app'
 
 function getApiBaseUrl(rawUrl) {
@@ -610,29 +630,8 @@ export default function Create() {
     }
   }
 
-  const inputStyle = {
-    width: '100%',
-    background: 'rgba(0,26,43,0.6)',
-    border: `1px solid ${C.glassBorder}`,
-    borderRadius: 10,
-    padding: '11px 14px',
-    color: C.text,
-    fontSize: 14,
-    fontFamily: 'inherit',
-    outline: 'none',
-    transition: 'border-color 0.2s',
-  }
-
-  const glassCard = {
-    background: C.glass,
-    border: `1px solid ${C.glassBorder}`,
-    borderRadius: 16,
-    padding: '24px',
-  }
-
   return (
     <div style={{
-      minHeight: '100vh',
       background: C.bg,
       color: C.text,
       fontFamily: "'Inter',-apple-system,BlinkMacSystemFont,sans-serif",
