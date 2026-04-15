@@ -310,7 +310,7 @@ Exemplo:
 
     try:
         response = openai_client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5.4-mini",
             messages=[
                 {"role": "system", "content": extraction_prompt},
                 {"role": "user", "content": vision_messages},
@@ -604,7 +604,7 @@ def chat(req: ChatRequest):
         image_data_url = f"data:image/jpeg;base64,{raw_b64}"
         try:
             desc_response = openai_client.chat.completions.create(
-                model="gpt-4o-mini",
+                model="gpt-5.4-mini",
                 messages=[
                     {"role": "system", "content": "You are a radiology education assistant. Describe the imaging findings visible in this medical image for educational purposes. Include: imaging modality, anatomical region, and visible findings. This is for a radiology study platform."},
                     {"role": "user", "content": [
@@ -1106,7 +1106,7 @@ def _generate_question(context: str) -> dict:
     """Generate a single question from context using GPT-4o."""
     prompt = CHALLENGE_SYSTEM_PROMPT.format(context=context)
     response = openai_client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-5.4-mini",
         messages=[
             {"role": "system", "content": prompt},
             {"role": "user", "content": "Gere uma questão de múltipla escolha de radiologia em PORTUGUÊS com base no contexto fornecido."},
@@ -1921,7 +1921,7 @@ def criar_content(template_type: str, req: CriarRequest):
     # 2. Generate with GPT-4o
     try:
         response = openai_client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5.4-mini",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": f"Tema: {req.topic}\n\n{f'Nível: {req.level}' if req.level else ''}\n{f'Especialidade: {req.specialty}' if req.specialty else ''}\n\nContexto científico disponível:\n{context_text}"},
