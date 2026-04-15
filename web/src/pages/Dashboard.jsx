@@ -1536,12 +1536,29 @@ export default function Dashboard() {
         overflowX:'hidden',
       }}>
 
-        {/* Top bar: Logo + Profile */}
+        {/* Top bar: Logo + Meus Projetos + Profile */}
         <div style={{
           display:'flex', alignItems:'center', justifyContent:'space-between',
           flexShrink: 0,
         }}>
-          <Logo size={15} />
+          <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+            <Logo size={15} />
+            <button
+              onClick={() => navigate('/meus-projetos')}
+              style={{
+                display:'flex', alignItems:'center', gap:5,
+                borderRadius:10, border:'none',
+                background:'rgba(221,255,85,0.15)',
+                padding:'6px 12px', cursor:'pointer',
+                fontSize:11, fontWeight:700, color:C.accent,
+              }}
+            >
+              <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke={C.accent} strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+                <path d='M3 3h6l3 9h9v9H3V3z'/><path d='M9 12h6'/>
+              </svg>
+              Meus Projetos
+            </button>
+          </div>
           <div ref={mobileProfileMenuRef} style={{ position:'relative' }}>
             <button
               onClick={() => setShowProfileMenu((v) => !v)}
@@ -1619,13 +1636,13 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* Tools — horizontal scrollable row */}
+        {/* Tools — horizontal scrollable row (Meus Projetos moved to top bar) */}
         <div className="db-mobile-tools" style={{
           display:'flex', gap:10,
           overflowX:'auto', flexShrink:0,
           paddingBottom:4,
         }}>
-          {tools.map((tool) => (
+          {tools.filter((tool) => tool.id !== 'meusprojetos').map((tool) => (
             <div key={tool.id} style={{ minWidth:130, flex:'0 0 auto' }}>
               <ToolCard {...tool} />
             </div>
