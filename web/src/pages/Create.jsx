@@ -58,6 +58,7 @@ function EX({ color = C.accent, size = 14 }) {
 
 // ── Parse questions from generated text ──────────────────────────────────────
 function parseQuestions(text) {
+  if (!text) return []
   // Match blocks starting with **QUESTÃO N:**
   const blocks = text.split(/(?=\*\*QUESTÃO \d+:)/)
   return blocks
@@ -66,23 +67,30 @@ function parseQuestions(text) {
       if (!headerMatch) return null
       const num = headerMatch[1]
       const rest = headerMatch[2].trim()
-      const altMatch = block.match(/([A-D])\)\s*(.+?)(?=\n[A-D]\)|$)/gs)
-      const options = []
-      let correctLetter = ''
-      let explanation = ''
-      let fonte = ''
-      if (altMatch) {
-        altMatch.forEach(m => {
-          const inner = m.match(/^([A-D])\)\s*(.+)/s)
-          if (inner) options.push({ letter: inner[1], text: inner[2].trim() })
-        })
+
+      // Fixed: consume all content between \nX) and \nY) or end markers, handling blank lines between options
+      const optMatches = []
+      const optIter = block.matchAll(/\n([A-D])\)\s*([\s\S]*?)(?=\n[A-D]\)\s*|\n\*\*Resposta|\n\*\*Fonte|$)/g)
+      for (const m of optIter) {
+        let content = m[2].trim()
+        // Strip any stray **Resposta** or **Fonte** that got captured
+        content = content.replace(/\*\*Resposta[^:]*:\s*/i, '').replace(/\*\*Fonte:\s*/i, '').trim()
+        optMatches.push({ letter: m[1], text: content })
       }
+      const options = optMatches
+
+      let correctLetter = ''
       const correctMatch = block.match(/\*\*Resposta Correta:\*\*\s*([A-D])/i)
       if (correctMatch) correctLetter = correctMatch[1].toUpperCase()
+
+      let explanation = ''
       const expMatch = block.match(/\*\*Explicação:\*\*\s*([\s\S]+?)(?=\n\*\*Fonte:|$)/i)
       if (expMatch) explanation = expMatch[1].trim()
+
+      let fonte = ''
       const fonteMatch = block.match(/\*\*Fonte:\*\*\s*(.+)/i)
       if (fonteMatch) fonte = fonteMatch[1].trim()
+
       if (options.length === 4) {
         return { num, statement: rest, options, correctLetter, explanation, fonte }
       }
