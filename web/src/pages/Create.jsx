@@ -758,6 +758,18 @@ export default function Create() {
     }
   }, [location])
 
+  const [isEditing, setIsEditing] = useState(false)
+
+  // Set editing flag after project is loaded (line 742 checks project)
+  useEffect(() => {
+    const stored = sessionStorage.getItem('restoreProject')
+    if (stored) {
+      try { if (JSON.parse(stored)) setIsEditing(true) } catch (_) {}
+    }
+    // Also check if navigate state passed a project (line 726-729)
+    if (location.state?.project) setIsEditing(true)
+  }, [location])
+
   const [topic, setTopic] = useState('')
   const [template, setTemplate] = useState('script') // 'script' | 'questoes'
   const [generating, setGenerating] = useState(false)
@@ -998,19 +1010,21 @@ export default function Create() {
           </span>
         </button>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{
-            fontSize: 11, fontWeight: 700, color: C.textDim,
-            background: 'rgba(192,214,234,0.05)',
-            border: `1px solid ${C.border}`,
-            borderRadius: 6,
-            padding: '2px 8px',
-          }}>
-            ✏️ Modo Edição
-          </span>
+          {isEditing && (
+            <span style={{
+              fontSize: 11, fontWeight: 700, color: C.textDim,
+              background: 'rgba(192,214,234,0.05)',
+              border: `1px solid ${C.border}`,
+              borderRadius: 6,
+              padding: '2px 8px',
+            }}>
+              ✏️ Modo Edição
+            </span>
+          )}
           <span style={{
             fontSize: 11, fontWeight: 700, color: C.accent,
             background: C.accentSoft,
-            border: `1px solid rgba(221,255,85,0.2)`,
+            border: '1px solid rgba(221,255,85,0.2)',
             borderRadius: 6,
             padding: '2px 8px',
           }}>
