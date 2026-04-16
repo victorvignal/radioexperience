@@ -219,7 +219,7 @@ def extract_title(html):
 # ══════════════════════════════════════════
 EVAL_PROMPT = """Analise este conteúdo médico e responda em JSON:
 
-{{"relevante": true/false, "especialidade": "Mama|Neurorradiologia|Abdome|Torax|Musculo-esqueletico|Pediatria|Cabeca/Pescoco|Geral", "qualidade": "alta|media|baixa", "resumo": "2-3 linhas"}}
+{{"relevante": true/false, "especialidade": "Mama|Neurorradiologia|Abdome|Torax|Musculo-esqueletico|Pediatria|Cabeca/Pescoco|Geral", "qualidade": "alta|media|baixa"}}
 
 Título: {titulo}
 Fonte: {fonte}
@@ -236,13 +236,48 @@ def evaluate(title, source, text):
                 {"role": "user", "content": EVAL_PROMPT.format(
                     titulo=title, fonte=source, conteudo=text[:2000])},
             ],
-            temperature=0.1, max_tokens=300,
+            temperature=0.1, max_tokens=200,
         )
         raw = resp.choices[0].message.content.strip()
         m = re.search(r'\{.*\}', raw, re.DOTALL)
         return json.loads(m.group()) if m else None
     except Exception as e:
         log(f"Eval error: {e}")
+        return None
+
+
+# ══════════════════════════════════════════
+# Rich Summary Generation
+# ══════════════════════════════════════════
+SUMMARY_PROMPT = """Você é um editor-chefe de radiologia para uma comunidade médica.
+Com base no artigo completo abaixo, escreva um resumo rico e envolvente para o feed da comunidade.
+
+O resumo deve ter 3-4 parágrafos:
+1. Contextoclinico: qual a condição/doença e por que é importante
+2. Achados radiologicos principais: o que procurar em imagens
+3. Pontos-chave para a prática: dicas,armadilhas, sinais característicos
+4. Implicações clínicas: como isso afeta o diagnóstico ou tratamento
+
+Título: {titulo}
+Fonte: {fonte}
+Artigo completo:
+{texto}"""
+
+def generate_rich_summary(title, source, text):
+    """Generate a rich, engaging summary for the community feed using the full article text."""
+    try:
+        resp = openai_client.chat.completions.create(
+            model=OPENAI_MODEL,
+            messages=[
+                {"role": "system", "content": "Editor-chefe de radiologia. Escreva resumos ricos e envolventes para uma comunidade médica."},
+                {"role": "user", "content": SUMMARY_PROMPT.format(
+                    titulo=title, fonte=source, texto=text[:8000])},
+            ],
+            temperature=0.4, max_tokens=600,
+        )
+        return resp.choices[0].message.content.strip()
+    except Exception as e:
+        log(f"Summary generation error: {e}")
         return None
 
 # ══════════════════════════════════════════
@@ -406,15 +441,22 @@ def run():
             continue
         
         log(f"  -> RELEVANT | {specialty} | {quality}")
-        log(f"  -> {ev.get('resumo','')[:100]}")
-        
+
+        # Generate rich summary for the community feed
+        rich_summary = generate_rich_summary(title, article["source"], text)
+        if rich_summary:
+            log(f"  -> Summary gerado ({len(rich_summary)} chars)")
+        else:
+            rich_summary = "Artigo relevante de radiologia. Leia o artigo completo para mais detalhes."
+            log(f"  -> Summary generation failed, usando fallback")
+
         # Chunk & index
         chunks = chunk_text(text)
         count = index_chunks(chunks, {
             "title": title, "source": article["source"],
             "url": url, "specialty": specialty,
         })
-        
+
         if count > 0:
             new_count += 1
             log(f"  -> Indexed {count} chunks")
@@ -424,21 +466,21 @@ def run():
                     source_url=url,
                     journal=article["source"],
                     specialty=specialty,
-                    summary=ev.get("resumo", ""),
+                    summary=rich_summary,
                     chunks=count,
                 )
                 curated_urls.add(url)
                 log("  -> Added to curated_articles editorial queue ✅")
                 indexed[url] = {
                     "title": title, "specialty": specialty, "quality": quality,
-                    "summary": ev.get("resumo"), "chunks": count,
+                    "summary": rich_summary, "chunks": count,
                     "status": "indexed", "date": now_iso(),
                 }
             except Exception as e:
                 log(f"  -> Curated queue save failed: {e}")
                 indexed[url] = {
                     "title": title, "specialty": specialty, "quality": quality,
-                    "summary": ev.get("resumo"), "chunks": count,
+                    "summary": rich_summary, "chunks": count,
                     "status": "queue_fail", "date": now_iso(),
                 }
         else:
