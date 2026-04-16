@@ -519,14 +519,28 @@ function EditPanel({ onClose, topic, template, content, specialty, onApply }) {
       display: 'flex', justifyContent: 'flex-end',
     }}>
       {/* Panel */}
-      <div style={{
+      <div class="edit-panel" style={{
         width: '100%', maxWidth: 480,
         background: C.bgDeep,
         borderLeft: `1px solid ${C.glassBorder}`,
         display: 'flex', flexDirection: 'column',
         animation: 'slideInRight 0.25s ease',
+        height: '100dvh',
+        maxHeight: '100dvh',
       }}>
-        <style>{`@keyframes slideInRight{from{transform:translateX(100%)}to{transform:translateX(0)}}`}</style>
+        <style>{`
+          @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+          }
+          @media (max-width: 640px) {
+            .edit-panel {
+              maxWidth: 100% !important;
+              border-left: none !important;
+              border-radius: 0 !important;
+            }
+          }
+        `}</style>
 
         {/* Header */}
         <div style={{
@@ -934,73 +948,101 @@ export default function Create() {
         body{background:${C.bg}}
         textarea{resize:vertical}
         input:focus, textarea:focus, button:focus { outline: none; }
+        @media (min-width: 640px) {
+          .mobile-stack { flex-direction: row !important; }
+          .template-grid { grid-template-columns: repeat(3, 1fr) !important; }
+        }
+        @media (max-width: 640px) {
+          .page-padding { padding: 20px 14px 60px !important; }
+        }
+        @media (max-width: 480px) {
+          .template-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 6px !important; }
+          .specialty-row { flex-direction: column !important; gap: 8px !important; }
+          .output-actions { flex-direction: column !important; }
+          .output-actions button { width: 100% !important; }
+        }
       `}</style>
 
       {/* Top bar */}
       <div style={{
         position: 'sticky', top: 0, zIndex: 50,
-        background: 'rgba(0,26,43,0.92)',
-        backdropFilter: 'blur(16px)',
+        background: 'rgba(0,26,43,0.95)',
+        backdropFilter: 'blur(20px)',
         borderBottom: `1px solid ${C.border}`,
-        padding: '0 24px',
-        height: 60,
+        padding: '0 14px',
+        height: 52,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontSize: 13, fontWeight: 700, color: C.textMuted }}>
-            <EX size={13} />perience
-          </span>
-          <span style={{ color: C.border }}>›</span>
-          <span style={{ fontSize: 13, fontWeight: 600, color: C.text }}>
-            StudyLab — Criar
-          </span>
-        </div>
         <button
           onClick={() => navigate('/feed')}
           style={{
             background: 'transparent',
-            border: `1px solid ${C.border}`,
-            borderRadius: 8,
-            padding: '6px 14px',
+            border: 'none',
+            padding: '6px 4px',
             color: C.textMuted,
-            fontSize: 12,
-            fontWeight: 600,
+            fontSize: 18,
             cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
             fontFamily: 'inherit',
           }}
         >
-          ← Feed
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          <span style={{ fontSize: 12, fontWeight: 700, color: C.textMuted }}>
+            <EX size={12} />perience
+          </span>
         </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{
+            fontSize: 11, fontWeight: 700, color: C.textDim,
+            background: 'rgba(192,214,234,0.05)',
+            border: `1px solid ${C.border}`,
+            borderRadius: 6,
+            padding: '2px 8px',
+          }}>
+            ✏️ Modo Edição
+          </span>
+          <span style={{
+            fontSize: 11, fontWeight: 700, color: C.accent,
+            background: C.accentSoft,
+            border: `1px solid rgba(221,255,85,0.2)`,
+            borderRadius: 6,
+            padding: '2px 8px',
+          }}>
+            eX StudyLabs
+          </span>
+        </div>
       </div>
 
-      <div style={{ maxWidth: 800, margin: '0 auto', padding: '40px 20px 80px' }}>
+      <div class="page-padding" style={{ maxWidth: 800, margin: '0 auto', padding: '20px 14px 80px' }}>
 
-        {/* Page header */}
-        <div style={{ marginBottom: 32 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+        {/* Page header — compact mobile */}
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 0 }}>
             <div style={{
-              width: 36, height: 36,
+              width: 32, height: 32,
               background: 'linear-gradient(135deg, rgba(126,203,255,0.15), rgba(126,203,255,0.05))',
               border: '1px solid rgba(126,203,255,0.25)',
-              borderRadius: 10,
+              borderRadius: 9,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              flexShrink: 0,
             }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#7ecbff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <h1 style={{ fontSize: 22, fontWeight: 800, color: C.text }}>
-              <EX size={22} /> StudyLab
+            <h1 style={{ fontSize: 18, fontWeight: 800, color: C.text }}>
+              <EX size={18} /> StudyLab
             </h1>
-            <span style={{ fontSize: 11, fontWeight: 600, color: C.textDim, background: 'rgba(192,214,234,0.06)', border: `1px solid ${C.border}`, borderRadius: 6, padding: '2px 8px' }}>
+            <span style={{ fontSize: 10, fontWeight: 700, color: C.textDim, background: 'rgba(192,214,234,0.05)', border: `1px solid ${C.border}`, borderRadius: 5, padding: '2px 7px' }}>
               Beta
             </span>
           </div>
-          <p style={{ color: C.textMuted, fontSize: 14 }}>
-            Gere scripts de aula e questões de estudo com IA usando a base de conhecimento de Radiologia.
-          </p>
         </div>
 
         {/* INPUT SECTION */}
@@ -1012,16 +1054,16 @@ export default function Create() {
             value={topic}
             onChange={e => setTopic(e.target.value)}
             placeholder="Ex: Lesões benignas do fígado nos exames de imagem para R2"
-            rows={3}
+            rows={2}
             onKeyDown={e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) handleGenerate() }}
             style={{
               ...inputStyle,
-              minHeight: 80,
+              minHeight: 64,
               resize: 'vertical',
             }}
           />
-          <p style={{ color: C.textDim, fontSize: 11, marginTop: 6 }}>
-            Pressione Ctrl+Enter para gerar rapidamente
+          <p style={{ color: C.textDim, fontSize: 11, marginTop: 5 }}>
+            Ctrl+Enter pra gerar rápido
           </p>
 
           {/* Template selector */}
@@ -1054,14 +1096,14 @@ export default function Create() {
             <label style={{ display: 'block', color: C.textSoft, fontSize: 13, fontWeight: 600, marginBottom: 10 }}>
               Tipo de conteúdo
             </label>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+            <div class="template-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 6 }}>
               {[
-                { value: 'script', label: '📝 Script de Aula', desc: 'Aula estruturada completa', color: C.blue, glow: C.blueGlow },
-                { value: 'slides', label: '📊 Slides', desc: '6-12 slides didáticos', color: C.blue, glow: C.blueGlow },
-                { value: 'mapa_mental', label: '🧠 Mapa Mental', desc: 'Hierarquia visual', color: '#b388ff', glow: 'rgba(179,136,255,0.12)' },
-                { value: 'tabela', label: '📋 Tabela', desc: 'Comparação por modalidade', color: '#ffd166', glow: 'rgba(255,209,102,0.12)' },
-                { value: 'questoes', label: '❓ Questões', desc: '5 questões múltipla escolha', color: C.green, glow: C.greenGlow },
-                { value: 'caso_clinico', label: '🔬 Caso Clínico', desc: 'Caso completo para apresentação', color: '#ff6b6b', glow: 'rgba(255,107,107,0.12)' },
+                { value: 'script', label: '📝 Script', desc: 'Aula completa', color: C.blue, glow: C.blueGlow },
+                { value: 'slides', label: '📊 Slides', desc: '6-12 slides', color: C.blue, glow: C.blueGlow },
+                { value: 'mapa_mental', label: '🧠 Mapa', desc: 'Hierarquia visual', color: '#b388ff', glow: 'rgba(179,136,255,0.12)' },
+                { value: 'tabela', label: '📋 Tabela', desc: 'Comparação', color: '#ffd166', glow: 'rgba(255,209,102,0.12)' },
+                { value: 'questoes', label: '❓ Questões', desc: '5 questões MC', color: C.green, glow: C.greenGlow },
+                { value: 'caso_clinico', label: '🔬 Caso', desc: 'Caso clínico', color: '#ff6b6b', glow: 'rgba(255,107,107,0.12)' },
               ].map(opt => (
                 <button
                   key={opt.value}
@@ -1069,17 +1111,17 @@ export default function Create() {
                   style={{
                     background: template === opt.value ? opt.glow : 'transparent',
                     border: `1px solid ${template === opt.value ? opt.color : C.border}`,
-                    borderRadius: 12,
-                    padding: '12px 14px',
+                    borderRadius: 10,
+                    padding: '10px 8px',
                     cursor: 'pointer',
                     textAlign: 'left',
                     transition: 'all 0.2s',
                   }}
                 >
-                  <div style={{ color: template === opt.value ? opt.color : C.textSoft, fontSize: 13, fontWeight: 700, marginBottom: 3 }}>
+                  <div style={{ color: template === opt.value ? opt.color : C.textSoft, fontSize: 12, fontWeight: 700, marginBottom: 2 }}>
                     {opt.label}
                   </div>
-                  <div style={{ color: C.textDim, fontSize: 11 }}>
+                  <div style={{ color: C.textDim, fontSize: 10 }}>
                     {opt.desc}
                   </div>
                 </button>
@@ -1087,8 +1129,8 @@ export default function Create() {
             </div>
 
             {/* Specialty and Level */}
-            <div style={{ marginTop: 18, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              <div>
+            <div class="specialty-row" style={{ marginTop: 14, display: 'flex', flexDirection: 'row', gap: 10 }}>
+              <div style={{ flex: 1 }}>
                 <label style={{ display: 'block', color: C.textSoft, fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
                   Especialidade (opcional)
                 </label>
@@ -1127,7 +1169,7 @@ export default function Create() {
             onClick={handleGenerate}
             disabled={generating || !topic.trim()}
             style={{
-              marginTop: 18,
+              marginTop: 14,
               width: '100%',
               background: generating
                 ? 'rgba(221,255,85,0.08)'
@@ -1140,7 +1182,7 @@ export default function Create() {
                 ? '1px solid rgba(221,255,85,0.5)'
                 : `1px solid ${C.border}`,
               borderRadius: 12,
-              padding: '13px 20px',
+              padding: '12px 20px',
               cursor: generating ? 'not-allowed' : 'pointer',
               color: generating ? C.textMuted : (topic.trim() ? C.bgDeep : C.textDim),
               fontSize: 14,
@@ -1215,7 +1257,7 @@ export default function Create() {
                   </div>
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <div class="output-actions" style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                 {/* Copy button */}
                 <button
                   onClick={() => {
@@ -1238,6 +1280,7 @@ export default function Create() {
                     alignItems: 'center',
                     gap: 5,
                     transition: 'all 0.2s',
+                    flex: '1 1 auto',
                   }}
                 >
                   {copyConfirm ? (
@@ -1289,6 +1332,7 @@ export default function Create() {
                     fontWeight: 700,
                     fontFamily: 'inherit',
                     opacity: (!generatedContent || savingProject) ? 0.5 : 1,
+                    flex: '1 1 auto',
                   }}
                 >
                   {savingProject ? 'Salvando...' : '💾 Salvar Projeto'}
