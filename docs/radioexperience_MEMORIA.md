@@ -70,3 +70,17 @@
 - [ ] Verificar se fluxo "salvar projeto → abrir" vai corretamente para o editor de criação com conteúdo carregado
 - [ ] Testar `/chat/edit` com novo modelo `gpt-5.4-mini`
 - [ ] Considerar adicionar mais clareza visual no painel de edição (talvez badge "MODO EDIÇÃO")
+
+---
+
+## Documentação (docs/)
+
+A partir de 2026-04-16, toda mudança no RadioeXperience deve atualizar:
+
+1. **`docs/radioexperience_MEMORIA.md`** — histórico de mudanças, pendências, problemas known
+2. **`docs/radioexperience_RESUMO.md`** — documentação técnica completa (endpoints, pages, fluxos, banco, etc.)
+
+### 2026-04-16 — Documentação Criada
+- Criados `docs/radioexperience_MEMORIA.md` e `docs/radioexperience_RESUMO.md`
+- Commit: `888ca41 docs: add MEMORIA and RESUMO for RadioeXperience`
+- Push: Feito para `main`
