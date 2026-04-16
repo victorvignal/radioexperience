@@ -223,6 +223,19 @@ function MindMapRenderer({ markdown }) {
   const surfaceBg = theme === 'dark' ? '#00131f' : '#f5fbff'
   const chipBg = theme === 'dark' ? 'rgba(126,203,255,0.08)' : 'rgba(0,26,43,0.04)'
 
+  // Shared input style for selects inside this component
+  const mmInputStyle = {
+    background: theme === 'dark' ? 'rgba(0,26,43,0.6)' : 'rgba(255,255,255,0.9)',
+    border: `1px solid ${theme === 'dark' ? 'rgba(179,136,255,0.25)' : 'rgba(126,203,255,0.22)'}`,
+    borderRadius: 8,
+    padding: '6px 10px',
+    color: theme === 'dark' ? '#F6F2E8' : '#001a2b',
+    fontSize: 12,
+    fontFamily: 'inherit',
+    outline: 'none',
+    cursor: 'pointer',
+  }
+
   // Parse nodes from markdown — support headings AND list items
   const lines = (markdown || '').split('\n')
   const nodes = []
@@ -273,16 +286,16 @@ function MindMapRenderer({ markdown }) {
         border: `1px solid ${theme === 'dark' ? 'rgba(179,136,255,0.25)' : 'rgba(126,203,255,0.22)'}`,
       }}>
         <strong style={{ color: C.textSoft, fontSize: 12 }}>Preview do mapa</strong>
-        <select value={theme} onChange={e => setTheme(e.target.value)} style={{ ...inputStyle, width: 140, padding: '8px 10px' }}>
+        <select value={theme} onChange={e => setTheme(e.target.value)} style={{ ...mmInputStyle, width: 140, padding: '8px 10px' }}>
           <option value='dark'>Tema escuro</option>
           <option value='light'>Tema claro</option>
         </select>
-        <select value={density} onChange={e => setDensity(e.target.value)} style={{ ...inputStyle, width: 140, padding: '8px 10px' }}>
+        <select value={density} onChange={e => setDensity(e.target.value)} style={{ ...mmInputStyle, width: 140, padding: '8px 10px' }}>
           <option value='compact'>Compacto</option>
           <option value='default'>Padrão</option>
           <option value='airy'>Espaçado</option>
         </select>
-        <select value={expandLevel} onChange={e => setExpandLevel(Number(e.target.value))} style={{ ...inputStyle, width: 160, padding: '8px 10px' }}>
+        <select value={expandLevel} onChange={e => setExpandLevel(Number(e.target.value))} style={{ ...mmInputStyle, width: 160, padding: '8px 10px' }}>
           <option value={1}>Mostrar nível 1</option>
           <option value={2}>Mostrar nível 2</option>
           <option value={3}>Mostrar nível 3</option>
