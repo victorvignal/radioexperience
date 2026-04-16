@@ -88,12 +88,17 @@ function getTemplateColor(type) {
   return colors[type] || '#8ba8c4'
 }
 
-function ProjectCard({ project, onClick }) {
+function ProjectCard({ project, onClick, onDelete }) {
   const date = project.created_at
     ? new Date(project.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })
     : ''
   const color = getTemplateColor(project.type)
   const label = getTemplateLabel(project.type)
+
+  const isPublic = project.source === 'post' && project.visibility === 'public'
+  const isPublished = project.source === 'post' && project.status === 'published'
+  const isDraft = project.source === 'post' && project.status === 'draft'
+  const isStudy = project.source === 'study'
 
   const handleCopy = (e) => {
     e.stopPropagation()
@@ -109,6 +114,14 @@ function ProjectCard({ project, onClick }) {
     a.download = `${(project.title || 'projeto').replace(/[^a-zA-Z0-9]/g, '_')}.md`
     a.click()
     URL.revokeObjectURL(url)
+  }
+
+  const handleDelete = (e) => {
+    e.stopPropagation()
+    const name = project.title || 'Este projeto'
+    if (window.confirm(`Apagar "${name}"?\n\nEsta ação não pode ser desfeita.`)) {
+      onDelete(project)
+    }
   }
 
   return (
@@ -134,19 +147,73 @@ function ProjectCard({ project, onClick }) {
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{
-            display: 'inline-block',
-            fontSize: 9, fontWeight: 700,
-            color: color,
-            background: `${color}15`,
-            border: `1px solid ${color}30`,
-            borderRadius: 4,
-            padding: '2px 8px',
-            textTransform: 'uppercase',
-            letterSpacing: '0.06em',
-            marginBottom: 8,
-          }}>
-            {label}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, flexWrap: 'wrap' }}>
+            <div style={{
+              fontSize: 9, fontWeight: 700,
+              color: color,
+              background: `${color}15`,
+              border: `1px solid ${color}30`,
+              borderRadius: 4,
+              padding: '2px 8px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.06em',
+            }}>
+              {label}
+            </div>
+            {/* Visibility badge */}
+            {isPublished ? (
+              <div style={{
+                fontSize: 9, fontWeight: 700,
+                color: '#5ef0b0',
+                background: 'rgba(94,240,176,0.08)',
+                border: `1px solid rgba(94,240,176,0.2)`,
+                borderRadius: 4,
+                padding: '2px 7px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}>
+                🟢 Público
+              </div>
+            ) : isDraft ? (
+              <div style={{
+                fontSize: 9, fontWeight: 700,
+                color: '#ffd166',
+                background: 'rgba(255,209,102,0.08)',
+                border: `1px solid rgba(255,209,102,0.2)`,
+                borderRadius: 4,
+                padding: '2px 7px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}>
+                🟡 Rascunho
+              </div>
+            ) : isStudy ? (
+              <div style={{
+                fontSize: 9, fontWeight: 700,
+                color: '#b388ff',
+                background: 'rgba(179,136,255,0.08)',
+                border: `1px solid rgba(179,136,255,0.2)`,
+                borderRadius: 4,
+                padding: '2px 7px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}>
+                🔒 Privado
+              </div>
+            ) : (
+              <div style={{
+                fontSize: 9, fontWeight: 700,
+                color: '#ff6b6b',
+                background: 'rgba(255,107,107,0.08)',
+                border: `1px solid rgba(255,107,107,0.2)`,
+                borderRadius: 4,
+                padding: '2px 7px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}>
+                🔒 Privado
+              </div>
+            )}
           </div>
           <h3 style={{
             fontSize: 14, fontWeight: 700, color: C.textSoft,
@@ -243,6 +310,27 @@ function ProjectCard({ project, onClick }) {
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           Editar
         </button>
+        <button
+          onClick={handleDelete}
+          style={{
+            background: 'rgba(255,107,107,0.06)',
+            border: `1px solid rgba(255,107,107,0.18)`,
+            borderRadius: 6,
+            padding: '5px 10px',
+            cursor: 'pointer',
+            color: '#ff6b6b',
+            fontSize: 11,
+            fontWeight: 600,
+            fontFamily: 'inherit',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 4,
+            marginLeft: 'auto',
+          }}
+        >
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          Apagar
+        </button>
       </div>
     </div>
   )
@@ -299,6 +387,20 @@ export default function MyProjects() {
 
   const studyProjects = projects.filter(p => p.source === 'study')
   const postProjects = projects.filter(p => p.source === 'post')
+
+  const handleDeleteProject = async (project) => {
+    if (project.source === 'study') {
+      // Remove from localStorage
+      const stored = JSON.parse(localStorage.getItem('studyProjects') || '[]')
+      const updated = stored.filter(p => p.localId !== project.localId)
+      localStorage.setItem('studyProjects', JSON.stringify(updated))
+      setProjects(prev => prev.filter(p => p.localId !== project.localId))
+    } else if (project.source === 'post' && project.id) {
+      // Delete from Supabase
+      await supabase.from('posts').delete().eq('id', project.id)
+      setProjects(prev => prev.filter(p => p.id !== project.id))
+    }
+  }
 
   return (
     <div style={{
@@ -457,6 +559,7 @@ export default function MyProjects() {
                     navigate(`/artigo/${project.id}`)
                   }
                 }}
+                onDelete={handleDeleteProject}
               />
             ))}
           </div>
