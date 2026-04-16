@@ -494,13 +494,13 @@ function ChatPanel({ session, onFirstMessage }) {
 }
 
 // ─── Main Page ───────────────────────────────────────────────────────────────
-let sessionCounter = 1
+let _sessionCounter = 1
 
 function newSession(dbId = null, title = null, messages = []) {
   return {
     id: dbId ?? Date.now(),
     dbId,
-    title: title ?? `${DEFAULT_CHAT_TITLE} ${sessionCounter++}`,
+    title: title ?? `${DEFAULT_CHAT_TITLE} ${_sessionCounter++}`,
     messages,
     createdAt: new Date(),
   }
@@ -514,6 +514,7 @@ export default function AriaPage() {
   const [loadingChats, setLoadingChats] = useState(true)
   const [pendingDeleteSession, setPendingDeleteSession] = useState(null)
   const [renameState, setRenameState] = useState({ open: false, sessionId: null, value: '' })
+  const [pendingNewSession, setPendingNewSession] = useState(null)
   const [titleColumnAvailable, setTitleColumnAvailable] = useState(true)
   const dbIdMapRef = useRef({}) // maps local session id → db row id
   const renameInputRef = useRef(null)
@@ -683,7 +684,7 @@ export default function AriaPage() {
   const createDbSession = useCallback(async (title = null, messages = []) => {
     if (!user) return newSession(null, title, messages)
 
-    const normalizedTitle = title?.trim() || `${DEFAULT_CHAT_TITLE} ${sessionCounter++}`
+    const normalizedTitle = title?.trim() || `${DEFAULT_CHAT_TITLE} ${_sessionCounter++}`
     const payload = titleColumnAvailable
       ? { user_id: user.id, title: normalizedTitle, messages: getVisibleMessages(messages) }
       : { user_id: user.id, messages: upsertChatMeta(messages, { title: normalizedTitle }) }
@@ -766,11 +767,11 @@ export default function AriaPage() {
     setSessions(prev => {
       const next = prev.filter(s => s.id !== id)
       if (next.length === 0) {
-        createDbSession().then(fresh => {
-          setSessions([fresh])
-          setActiveId(fresh.id)
-        })
-        return prev // return prev while async resolves
+        // Create new session synchronously to avoid empty list flash
+        const fresh = newSession(null, `${DEFAULT_CHAT_TITLE} ${_sessionCounter++}`, [])
+        setActiveId(fresh.id)
+        setPendingNewSession(fresh)
+        return prev // parent will apply pendingNewSession via effect
       }
       if (id === activeId) selectSession(next[0].id)
       return next
@@ -800,6 +801,27 @@ export default function AriaPage() {
     const frame = requestAnimationFrame(() => renameInputRef.current?.focus())
     return () => cancelAnimationFrame(frame)
   }, [renameState.open])
+
+  // Apply pending new session after delete
+  useEffect(() => {
+    if (!pendingNewSession) return
+    const { dbId } = pendingNewSession
+    setSessions(prev => {
+      if (prev.some(s => s.id === pendingNewSession.id)) return prev
+      return [pendingNewSession, ...prev]
+    })
+    if (dbId) dbIdMapRef.current[pendingNewSession.id] = dbId
+    // Persist to DB asynchronously
+    if (!dbId) {
+      createDbSession(pendingNewSession.title, pendingNewSession.messages).then(fresh => {
+        if (fresh?.dbId) {
+          dbIdMapRef.current[pendingNewSession.id] = fresh.dbId
+          setSessions(prev => prev.map(s => s.id === pendingNewSession.id ? { ...s, dbId: fresh.dbId } : s))
+        }
+      })
+    }
+    setPendingNewSession(null)
+  }, [pendingNewSession]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleFirstMessage = async (id, messages, firstText) => {
     const existingSession = sessions.find(s => s.id === id)

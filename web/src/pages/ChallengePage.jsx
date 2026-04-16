@@ -682,12 +682,15 @@ function ResultScreen({ result, onRestart }) {
   const secs = total_time % 60
   const timeStr = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`
 
-  // Leaderboard position
+  // Leaderboard position — find first entry BETTER than user, position = index+1
+  // If no one is better, user is #1
   const [lbPosition, setLbPosition] = useState(null)
   useEffect(() => {
     fetchLeaderboard('weekly').then(ranks => {
-      const found = ranks.find(r => r.best_score >= user_score)
-      setLbPosition(found ? found.rank : ranks.length + 1)
+      if (!ranks || ranks.length === 0) { setLbPosition(null); return }
+      const betterIdx = ranks.findIndex(r => r.best_score > user_score)
+      // no one is better → rank 1; otherwise rank = index+1
+      setLbPosition(betterIdx === -1 ? 1 : betterIdx + 1)
     })
   }, [user_score])
 
@@ -765,7 +768,7 @@ function ResultScreen({ result, onRestart }) {
             <div style={{ flex: 1, textAlign: 'center' }}>
               <div style={{ fontSize: 11, fontWeight: 700, color: C.textDim, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>ARIA</div>
               <div style={{ fontSize: 42, fontWeight: 900, color: C.challenge, fontVariantNumeric: 'tabular-nums' }}>{ai_score}</div>
-              <div style={{ fontSize: 12, color: C.textDim, marginTop: 2 }}>{total}/{total} corretas · 100%</div>
+              <div style={{ fontSize: 12, color: C.textDim, marginTop: 2 }}>{total}/{total} acertos · always correct</div>
             </div>
           </div>
           {/* Bar chart */}

@@ -1050,11 +1050,15 @@ class ChallengeFinishRequest(BaseModel):
     challenge_id: str
 
 
-def _get_challenge_context(specialty: str) -> str:
-    """Get relevant context chunks from Qdrant for question generation."""
+def _get_challenge_context(specialty: str, skip_hits: int = 0) -> str:
+    """Get relevant context chunks from Qdrant for question generation.
+    skip_hits causes the first N results to be skipped, producing more varied questions."""
     from qdrant_client.models import FieldCondition, MatchValue, Filter
 
-    search_terms = f"radiologia {specialty} diagnóstico imagem achados"
+    # Rotate search terms slightly for variety
+    search_suffixes = ["diagnóstico imagem", "achados radiológicos", "critérios diagnósticos", "classificação"]
+    suffix = search_suffixes[skip_hits % len(search_suffixes)]
+    search_terms = f"radiologia {specialty} {suffix}"
     try:
         embedding = openai_client.embeddings.create(
             input=[search_terms], model=EMBED_MODEL,
@@ -1135,13 +1139,14 @@ def _generate_question(context: str) -> dict:
     return data
 
 
-def _get_seen_pool_ids(user_id: str) -> set:
-    """Get pool question IDs the user has already answered."""
+def _get_seen_pool_ids(user_id: str, current_challenge_id: str | None = None) -> set:
+    """Get pool question IDs the user has already answered (across all previous challenges)."""
     try:
+        params = {"user_id": f"eq.{user_id}", "select": "question_id"}
         rr = httpx.get(
             f"{SUPABASE_URL}/rest/v1/challenge_responses",
             headers=_supabase_headers(),
-            params={"user_id": f"eq.{user_id}", "select": "question_id"},
+            params=params,
             timeout=15,
         )
         if rr.status_code != 200:
@@ -1150,6 +1155,7 @@ def _get_seen_pool_ids(user_id: str) -> set:
         if not answered_ids:
             return set()
         seen = set()
+        # Batch resolve question → pool_id
         for i in range(0, len(answered_ids), 50):
             batch = answered_ids[i:i+50]
             ids_filter = ",".join(batch)
@@ -1163,13 +1169,28 @@ def _get_seen_pool_ids(user_id: str) -> set:
                 for q in qr.json():
                     if q.get("pool_id"):
                         seen.add(q["pool_id"])
+        # Also add pool_ids from the current in-progress challenge questions
+        if current_challenge_id:
+            try:
+                cr = httpx.get(
+                    f"{SUPABASE_URL}/rest/v1/challenge_questions",
+                    headers=_supabase_headers(),
+                    params={"challenge_id": f"eq.{current_challenge_id}", "select": "pool_id"},
+                    timeout=10,
+                )
+                if cr.status_code == 200:
+                    for q in cr.json():
+                        if q.get("pool_id"):
+                            seen.add(q["pool_id"])
+            except Exception:
+                pass
         return seen
     except Exception as e:
         logger.warning(f"Failed to get seen pool IDs: {e}")
         return set()
 
 
-def _get_pool_questions(specialty: str, num: int, exclude_ids: set) -> list:
+def _get_pool_questions(specialty: str, num: int, exclude_ids: set, challenge_id: str | None = None) -> list:
     """Get questions from the pool, excluding already-seen ones."""
     try:
         params = {
@@ -1178,8 +1199,24 @@ def _get_pool_questions(specialty: str, num: int, exclude_ids: set) -> list:
             "order": "times_used.asc,created_at.asc",
             "limit": str(num * 3),
         }
-        if exclude_ids:
-            ids_str = ",".join(exclude_ids)
+        all_exclude = set(exclude_ids)
+        # Also exclude pool_ids already in this challenge (prevents duplicates within same challenge)
+        if challenge_id:
+            try:
+                cr = httpx.get(
+                    f"{SUPABASE_URL}/rest/v1/challenge_questions",
+                    headers=_supabase_headers(),
+                    params={"challenge_id": f"eq.{challenge_id}", "select": "pool_id"},
+                    timeout=10,
+                )
+                if cr.status_code == 200:
+                    for q in cr.json():
+                        if q.get("pool_id"):
+                            all_exclude.add(q["pool_id"])
+            except Exception:
+                pass
+        if all_exclude:
+            ids_str = ",".join(all_exclude)
             params["id"] = f"not.in.({ids_str})"
         r = httpx.get(
             f"{SUPABASE_URL}/rest/v1/challenge_question_pool",
@@ -1283,9 +1320,9 @@ def challenge_start(req: ChallengeStartRequest):
         challenge_id = challenge["id"]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Challenge creation error: {str(e)}")
-    seen_ids = _get_seen_pool_ids(user_id)
+    seen_ids = _get_seen_pool_ids(user_id, challenge_id)
     logger.info(f"Challenge start: user={user_id[:8]}... seen={len(seen_ids)} pool questions")
-    pool_questions = _get_pool_questions(req.specialty, req.num_questions, seen_ids)
+    pool_questions = _get_pool_questions(req.specialty, req.num_questions, seen_ids, challenge_id)
     logger.info(f"Pool returned {len(pool_questions)} questions for {req.specialty}")
     questions_to_use = list(pool_questions)
     if len(questions_to_use) < req.num_questions:
@@ -1293,7 +1330,7 @@ def challenge_start(req: ChallengeStartRequest):
         logger.info(f"Generating {needed} new questions with GPT-4o")
         for i in range(needed):
             try:
-                context = _get_challenge_context(req.specialty)
+                context = _get_challenge_context(req.specialty, skip_hits=i)
                 if not context:
                     logger.warning(f"No context for new question {i+1}, skipping")
                     continue
