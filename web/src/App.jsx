@@ -609,7 +609,7 @@ function App() {
           <Route path="/admin/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
           <Route path="/feed" element={<FeedGate />} />
           <Route path="/novo-artigo" element={<ProtectedRoute><NewPost /></ProtectedRoute>} />
-          <Route path="/criar" element={<ProtectedRoute><Create /></ProtectedRoute>} />
+          <Route path="/criar" element={<ProtectedRoute><ProfileGate><Create /></ProfileGate></ProtectedRoute>} />
           <Route path="/artigo/:id" element={<PostView />} />
           <Route path="/profile/:id" element={<UserProfile />} />
           <Route path="/aria" element={<ProtectedRoute><ProfileGate><AriaPage /></ProfileGate></ProtectedRoute>} />
