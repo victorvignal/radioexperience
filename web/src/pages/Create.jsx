@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { marked } from 'marked'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { buildPostMetadata, readImagePreview, uploadPostImage, validateImageFile } from '../lib/postImages'
 import { useAuth } from '../contexts/AuthContext'
@@ -23,26 +23,6 @@ const C = {
   greenGlow: 'rgba(94,240,176,0.15)',
   blue: '#7ecbff',
   blueGlow: 'rgba(126,203,255,0.15)',
-}
-
-const inputStyle = {
-  width: '100%',
-  background: 'rgba(0,26,43,0.6)',
-  border: `1px solid ${C.glassBorder}`,
-  borderRadius: 10,
-  padding: '11px 14px',
-  color: C.text,
-  fontSize: 14,
-  fontFamily: 'inherit',
-  outline: 'none',
-  transition: 'border-color 0.2s',
-}
-
-const glassCard = {
-  background: C.glass,
-  border: `1px solid ${C.glassBorder}`,
-  borderRadius: 16,
-  padding: '24px',
 }
 
 const DEFAULT_API = 'https://aria-backend-production-176b.up.railway.app'
@@ -474,6 +454,22 @@ function SlideRenderer({ content }) {
 export default function Create() {
   const { user } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+
+  // Load project from navigation state (Meus Projetos -> Editar)
+  useEffect(() => {
+    const { state } = location
+    if (state?.project) {
+      const p = state.project
+      if (p.topic) setTopic(p.topic)
+      if (p.type) setTemplate(p.type)
+      if (p.content) setEditedContent(p.content)
+      if (p.specialty) setSpecialty(p.specialty)
+      if (p.level) setLevel(p.level)
+      // Clear the state so a refresh doesn't reload the same project
+      navigate(location.pathname, { replace: true })
+    }
+  }, [location])
 
   const [topic, setTopic] = useState('')
   const [template, setTemplate] = useState('script') // 'script' | 'questoes'
@@ -630,8 +626,29 @@ export default function Create() {
     }
   }
 
+  const inputStyle = {
+    width: '100%',
+    background: 'rgba(0,26,43,0.6)',
+    border: `1px solid ${C.glassBorder}`,
+    borderRadius: 10,
+    padding: '11px 14px',
+    color: C.text,
+    fontSize: 14,
+    fontFamily: 'inherit',
+    outline: 'none',
+    transition: 'border-color 0.2s',
+  }
+
+  const glassCard = {
+    background: C.glass,
+    border: `1px solid ${C.glassBorder}`,
+    borderRadius: 16,
+    padding: '24px',
+  }
+
   return (
     <div style={{
+      minHeight: '100vh',
       background: C.bg,
       color: C.text,
       fontFamily: "'Inter',-apple-system,BlinkMacSystemFont,sans-serif",
