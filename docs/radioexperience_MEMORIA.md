@@ -84,3 +84,10 @@ A partir de 2026-04-16, toda mudança no RadioeXperience deve atualizar:
 - Criados `docs/radioexperience_MEMORIA.md` e `docs/radioexperience_RESUMO.md`
 - Commit: `888ca41 docs: add MEMORIA and RESUMO for RadioeXperience`
 - Push: Feito para `main`
+
+### 2026-04-16 — Fix Dashboard Mobile
+- `height:100vh` → `minHeight:100dvh` no layout mobile (corrige scroll travado)
+- Removido botão "Meus Projetos" duplicado da top bar mobile
+- Restaurados todos os tools no scroll horizontal do mobile
+- Commit: `8b2e9a6 fix(Dashboard): mobile scroll with 100dvh, remove duplicate Meus Projetos button, restore tools`
+- Push: Feito para `main`
