@@ -95,6 +95,22 @@ function ProjectCard({ project, onClick }) {
   const color = getTemplateColor(project.type)
   const label = getTemplateLabel(project.type)
 
+  const handleCopy = (e) => {
+    e.stopPropagation()
+    navigator.clipboard.writeText(project.content || '').catch(() => {})
+  }
+
+  const handleExport = (e) => {
+    e.stopPropagation()
+    const blob = new Blob([project.content || ''], { type: 'text/markdown' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${(project.title || 'projeto').replace(/[^a-zA-Z0-9]/g, '_')}.md`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <div
       onClick={onClick}
@@ -164,6 +180,69 @@ function ProjectCard({ project, onClick }) {
             }}
           />
         )}
+      </div>
+      {/* Action buttons row */}
+      <div style={{ display: 'flex', gap: 6, marginTop: 12, borderTop: `1px solid ${C.border}`, paddingTop: 12 }}>
+        <button
+          onClick={handleCopy}
+          style={{
+            background: 'rgba(126,203,255,0.06)',
+            border: `1px solid rgba(126,203,255,0.18)`,
+            borderRadius: 6,
+            padding: '5px 10px',
+            cursor: 'pointer',
+            color: '#7ecbff',
+            fontSize: 11,
+            fontWeight: 600,
+            fontFamily: 'inherit',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 4,
+          }}
+        >
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copiar
+        </button>
+        <button
+          onClick={handleExport}
+          style={{
+            background: 'rgba(221,255,85,0.06)',
+            border: `1px solid rgba(221,255,85,0.18)`,
+            borderRadius: 6,
+            padding: '5px 10px',
+            cursor: 'pointer',
+            color: C.accent,
+            fontSize: 11,
+            fontWeight: 600,
+            fontFamily: 'inherit',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 4,
+          }}
+        >
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Exportar
+        </button>
+        <button
+          onClick={e => { e.stopPropagation(); onClick() }}
+          style={{
+            background: 'rgba(179,136,255,0.08)',
+            border: `1px solid rgba(179,136,255,0.2)`,
+            borderRadius: 6,
+            padding: '5px 10px',
+            cursor: 'pointer',
+            color: '#b388ff',
+            fontSize: 11,
+            fontWeight: 700,
+            fontFamily: 'inherit',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 4,
+          }}
+        >
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Editar
+        </button>
       </div>
     </div>
   )

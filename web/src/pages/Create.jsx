@@ -468,7 +468,10 @@ export default function Create() {
       if (p.title) setTopic(p.title)
       else if (p.topic) setTopic(p.topic)
       if (p.type) setTemplate(p.type)
-      if (p.content) setEditedContent(p.content)
+      if (p.content) {
+        setEditedContent(p.content)
+        setGeneratedContent(p.content) // needed to show output section on reload
+      }
       if (p.specialty) setSpecialty(p.specialty)
       if (p.level) setLevel(p.level)
       // Clear the state so a refresh doesn't reload the same project
@@ -492,6 +495,7 @@ export default function Create() {
   const [specialty, setSpecialty] = useState('')
   const [level, setLevel] = useState('')
   const [savingProject, setSavingProject] = useState(false)
+  const [copyConfirm, setCopyConfirm] = useState(false)
 
   const typeLabelMap = {
     script: 'Script de Aula',
@@ -945,7 +949,66 @@ export default function Create() {
                   </div>
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: 8 }}>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                {/* Copy button */}
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(editedContent).then(() => {
+                      setCopyConfirm(true)
+                      setTimeout(() => setCopyConfirm(false), 2000)
+                    })
+                  }}
+                  style={{
+                    background: 'rgba(126,203,255,0.08)',
+                    border: `1px solid rgba(126,203,255,0.25)`,
+                    borderRadius: 8,
+                    padding: '7px 12px',
+                    cursor: 'pointer',
+                    color: copyConfirm ? '#5ef0b0' : '#7ecbff',
+                    fontSize: 12,
+                    fontWeight: 700,
+                    fontFamily: 'inherit',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 5,
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  {copyConfirm ? (
+                    <><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copiado!</>
+                  ) : (
+                    <><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar</>
+                  )}
+                </button>
+                {/* Export button */}
+                <button
+                  onClick={() => {
+                    const blob = new Blob([editedContent], { type: 'text/markdown' })
+                    const url = URL.createObjectURL(blob)
+                    const a = document.createElement('a')
+                    a.href = url
+                    a.download = `${(topic || 'projeto').replace(/[^a-zA-Z0-9]/g, '_')}.md`
+                    a.click()
+                    URL.revokeObjectURL(url)
+                  }}
+                  style={{
+                    background: 'rgba(221,255,85,0.08)',
+                    border: `1px solid rgba(221,255,85,0.25)`,
+                    borderRadius: 8,
+                    padding: '7px 12px',
+                    cursor: 'pointer',
+                    color: C.accent,
+                    fontSize: 12,
+                    fontWeight: 700,
+                    fontFamily: 'inherit',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 5,
+                  }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Exportar .md
+                </button>
                 <button
                   onClick={handleSaveProject}
                   disabled={!generatedContent || savingProject}
