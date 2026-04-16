@@ -296,7 +296,12 @@ export default function PostView() {
           <h1 style={{ fontSize: 28, fontWeight: 800, color: C.text, lineHeight: 1.3, marginBottom: 8 }}>{post.title}</h1>
 
           {/* Journal */}
-          {post.journal && <div style={{ fontSize: 13, color: C.textDim, marginBottom: 20, fontStyle: "italic" }}>📖 {post.journal}</div>}
+          {post.journal && <div style={{ fontSize: 13, color: C.textDim, marginBottom: 8, fontStyle: "italic" }}>📖 {post.journal}</div>}
+          {post.metadata?.source_url && (
+            <a href={post.metadata.source_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: C.accent, marginBottom: 20, display: 'inline-block', textDecoration: 'none', fontWeight: 600 }}>
+              🔗 Ver artigo original
+            </a>
+          )}
 
           {imageUrl && <img src={imageUrl} alt={post.title} style={{ width: '100%', maxHeight: 360, objectFit: 'cover', borderRadius: 16, marginBottom: 20, border: `1px solid ${C.glassBorder}` }} />}
 

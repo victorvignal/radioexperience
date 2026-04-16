@@ -131,17 +131,21 @@ function QuestionCard({ q, index }) {
       <div style={{ padding: '12px 18px 12px' }}>
         {q.options.map(opt => {
           const isCorrect = opt.letter === q.correctLetter
-          const bg = revealed && isCorrect
-            ? 'rgba(94,240,176,0.1)'
-            : revealed && !isCorrect
-            ? 'rgba(255,107,107,0.05)'
+          const bg = revealed
+            ? isCorrect
+              ? 'rgba(94,240,176,0.1)'
+              : 'rgba(255,107,107,0.05)'
             : 'transparent'
-          const border = revealed && isCorrect
-            ? 'rgba(94,240,176,0.35)'
-            : revealed && !isCorrect
-            ? 'rgba(255,107,107,0.2)'
+          const border = revealed
+            ? isCorrect
+              ? 'rgba(94,240,176,0.35)'
+              : 'rgba(255,107,107,0.2)'
             : `1px solid ${C.border}`
-          const color = revealed && isCorrect ? C.green : C.textSoft
+          const color = revealed
+            ? isCorrect
+              ? C.green
+              : C.textSoft
+            : C.textSoft
           const prefix = revealed && isCorrect ? '✓ ' : revealed && !isCorrect ? '✗ ' : ''
           return (
             <div key={opt.letter} style={{
@@ -461,7 +465,8 @@ export default function Create() {
     const { state } = location
     if (state?.project) {
       const p = state.project
-      if (p.topic) setTopic(p.topic)
+      if (p.title) setTopic(p.title)
+      else if (p.topic) setTopic(p.topic)
       if (p.type) setTemplate(p.type)
       if (p.content) setEditedContent(p.content)
       if (p.specialty) setSpecialty(p.specialty)
