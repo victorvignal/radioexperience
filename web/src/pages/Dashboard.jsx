@@ -1527,38 +1527,19 @@ export default function Dashboard() {
       {/* ═══════ MOBILE LAYOUT (<=1100px) ═══════ */}
       <div className="db-mobile" style={{
         position:'relative', zIndex:1,
-        height:'100vh', width:'100vw',
+        minHeight:'100dvh', width:'100vw',
         display:'none',
         flexDirection:'column',
-        padding: '12px 16px 16px',
-        gap: 12,
-        overflowY:'auto',
-        overflowX:'hidden',
+        padding: '12px 16px 24px',
+        gap: 14,
       }}>
 
-        {/* Top bar: Logo + Meus Projetos + Profile */}
+        {/* Top bar: Logo + Profile */}
         <div style={{
           display:'flex', alignItems:'center', justifyContent:'space-between',
           flexShrink: 0,
         }}>
-          <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-            <Logo size={15} />
-            <button
-              onClick={() => navigate('/meus-projetos')}
-              style={{
-                display:'flex', alignItems:'center', gap:5,
-                borderRadius:10, border:'none',
-                background:'rgba(221,255,85,0.15)',
-                padding:'6px 12px', cursor:'pointer',
-                fontSize:11, fontWeight:700, color:C.accent,
-              }}
-            >
-              <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke={C.accent} strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-                <path d='M3 3h6l3 9h9v9H3V3z'/><path d='M9 12h6'/>
-              </svg>
-              Meus Projetos
-            </button>
-          </div>
+          <Logo size={15} />
           <div ref={mobileProfileMenuRef} style={{ position:'relative' }}>
             <button
               onClick={() => setShowProfileMenu((v) => !v)}
@@ -1636,13 +1617,13 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* Tools — horizontal scrollable row (Meus Projetos moved to top bar) */}
+        {/* Tools — horizontal scrollable row */}
         <div className="db-mobile-tools" style={{
           display:'flex', gap:10,
           overflowX:'auto', flexShrink:0,
           paddingBottom:4,
         }}>
-          {tools.filter((tool) => tool.id !== 'meusprojetos').map((tool) => (
+          {tools.map((tool) => (
             <div key={tool.id} style={{ minWidth:130, flex:'0 0 auto' }}>
               <ToolCard {...tool} />
             </div>
