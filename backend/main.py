@@ -641,8 +641,9 @@ def chat(req: ChatRequest):
     query_filter = None
     if req.specialty:
         from qdrant_client.models import FieldCondition, MatchValue, Filter
+        normalized_sp = _normalize_specialty(req.specialty)
         query_filter = Filter(
-            must=[FieldCondition(key="specialty", match=MatchValue(value=req.specialty))]
+            must=[FieldCondition(key="specialty", match=MatchValue(value=normalized_sp))]
         )
 
     try:
@@ -945,8 +946,9 @@ Conteúdo atual:
     query_filter = None
     if req.specialty:
         from qdrant_client.models import FieldCondition, MatchValue, Filter
+        normalized_sp = _normalize_specialty(req.specialty)
         query_filter = Filter(
-            must=[FieldCondition(key="specialty", match=MatchValue(value=req.specialty))]
+            must=[FieldCondition(key="specialty", match=MatchValue(value=normalized_sp))]
         )
 
     try:
@@ -1268,10 +1270,11 @@ def _get_challenge_context(specialty: str, skip_hits: int = 0) -> str:
 
     # Try with specialty filter first
     results = None
-    if specialty and specialty.lower() != "geral":
+    normalized_sp = _normalize_specialty(specialty)
+    if specialty and normalized_sp and normalized_sp != "geral":
         try:
             query_filter = Filter(
-                must=[FieldCondition(key="specialty", match=MatchValue(value=specialty))]
+                must=[FieldCondition(key="specialty", match=MatchValue(value=normalized_sp))]
             )
             results = qdrant.query_points(
                 collection_name=COLLECTION,
@@ -2109,6 +2112,38 @@ def _clean_script_content(content: str, topic: str) -> str:
 
     return cleaned.strip()
 
+
+# ── Specialty normalization (frontend -> Qdrant lowercase) ───────────────────
+SPECIALTY_NORMALIZE = {
+    "mama": "mama",
+    "abdome": "abdome",
+    "tórax": "torax",
+    "torax": "torax",
+    "neuroimagem": "neurorradiologia",
+    "neurorradiologia": "neurorradiologia",
+    "músculo esquelético": "msk",
+    "musculo esquelético": "msk",
+    "msk": "msk",
+    "pediatria": "pediatria",
+    "urgência": "geral",
+    "vascular": "geral",
+    "obstetrícia": "geral",
+    "cabeça e pescoço": "Cabeca/Pescoco",
+    "cabeca e pescoco": "Cabeca/Pescoco",
+    "cabeca/pescoco": "Cabeca/Pescoco",
+    "radioprotecao": "radioprotecao",
+    "intervencao": "intervencao",
+    "geral": "geral",
+    "Geral": "geral",
+}
+
+
+def _normalize_specialty(specialty: str | None) -> str | None:
+    if not specialty:
+        return None
+    return SPECIALTY_NORMALIZE.get(specialty.lower().strip(), specialty.lower().strip())
+
+
 @app.post("/criar/{template_type}")
 def criar_content(template_type: str, req: CriarRequest):
     """Gera conteúdo para o eX StudyLab usando RAG + GPT-4o."""
@@ -2130,8 +2165,9 @@ def criar_content(template_type: str, req: CriarRequest):
     query_filter = None
     if req.specialty:
         from qdrant_client.models import FieldCondition, MatchValue, Filter
+        normalized_sp = _normalize_specialty(req.specialty)
         query_filter = Filter(
-            must=[FieldCondition(key="specialty", match=MatchValue(value=req.specialty))]
+            must=[FieldCondition(key="specialty", match=MatchValue(value=normalized_sp))]
         )
 
     try:
