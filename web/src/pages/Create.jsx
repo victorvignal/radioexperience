@@ -446,6 +446,234 @@ function PreviewModal({ content, topic, template, typeLabel, imagePreview, onClo
   )
 }
 
+// ── ARIA Edit Panel (sliding side panel) ─────────────────────────────────────
+function EditPanel({ onClose, topic, template, content, specialty, onApply }) {
+  const [messages, setMessages] = useState([])
+  const [input, setInput] = useState('')
+  const [busy, setBusy] = useState(false)
+  const chatRef = useRef(null)
+  const scrollDown = () => { if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight }
+
+  useEffect(() => { scrollDown() }, [messages, busy])
+
+  const typeLabelMap = {
+    script: 'Script de Aula', slides: 'Slides', mapa_mental: 'Mapa Mental',
+    tabela: 'Tabela Comparativa', questoes: 'Questões de Estudo', caso_clinico: 'Caso Clínico',
+  }
+  const typeLabel = typeLabelMap[template] || template
+
+  const send = async () => {
+    const q = input.trim()
+    if (!q || busy) return
+    setBusy(true)
+    setInput('')
+    const userMsg = { role: 'user', text: q }
+    setMessages(prev => [...prev, userMsg])
+
+    try {
+      const res = await fetch(`${getApiBaseUrl(API_BASE_URL)}/chat/edit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          question: q,
+          content: content || '',
+          template,
+          topic: topic || '',
+          top_k: 6,
+          specialty: specialty || null,
+        }),
+      })
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        setMessages(prev => [...prev, { role: 'bot', text: `Erro: ${err.detail || 'Falha na conexão'}` }])
+      } else {
+        const data = await res.json()
+        setMessages(prev => [...prev, { role: 'bot', text: data.answer, sources: data.sources || [] }])
+      }
+    } catch {
+      setMessages(prev => [...prev, { role: 'bot', text: 'Não foi possível conectar ao servidor ARIA.' }])
+    }
+    setBusy(false)
+  }
+
+  const handleApply = (text) => {
+    // Extract content after "EDITADO:" if present
+    const match = text.match(/^EDITADO:\s*\n?([\s\S]*)$/i)
+    const toApply = match ? match[1].trim() : text
+    onApply(toApply)
+  }
+
+  const suggestions = [
+    'Revise este conteúdo e corrija erros médicos',
+    'Melhore a didática e clareza',
+    'Traduza para formato de slides',
+    'Verifique se os critérios diagnósticos estão corretos',
+    'Expanda a seção de diagnóstico diferencial',
+    'Ajude-me a transformar em mapa mental',
+  ]
+
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, zIndex: 200,
+      background: 'rgba(0,10,20,0.75)', backdropFilter: 'blur(8px)',
+      display: 'flex', justifyContent: 'flex-end',
+    }}>
+      {/* Panel */}
+      <div style={{
+        width: '100%', maxWidth: 480,
+        background: C.bgDeep,
+        borderLeft: `1px solid ${C.glassBorder}`,
+        display: 'flex', flexDirection: 'column',
+        animation: 'slideInRight 0.25s ease',
+      }}>
+        <style>{`@keyframes slideInRight{from{transform:translateX(100%)}to{transform:translateX(0)}}`}</style>
+
+        {/* Header */}
+        <div style={{
+          padding: '16px 20px',
+          borderBottom: `1px solid ${C.border}`,
+          display: 'flex', alignItems: 'center', gap: 12,
+          background: 'rgba(0,26,43,0.8)',
+        }}>
+          <div style={{
+            width: 34, height: 34,
+            background: 'rgba(179,136,255,0.15)',
+            border: '1px solid rgba(179,136,255,0.3)',
+            borderRadius: 9,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 16,
+          }}>✏️</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: C.text }}>✏️ Modo Edição — eX StudyLabs</div>
+            <div style={{ fontSize: 11, color: C.textDim }}>
+              Editando: {typeLabel} — {topic || 'Sem título'}
+            </div>
+          </div>
+          <button onClick={onClose} style={{
+            background: 'transparent', border: `1px solid ${C.border}`,
+            borderRadius: 8, padding: '6px 10px',
+            color: C.textMuted, fontSize: 16, cursor: 'pointer',
+          }}>×</button>
+        </div>
+
+        {/* Context strip */}
+        {content && (
+          <div style={{
+            padding: '8px 16px',
+            background: 'rgba(179,136,255,0.05)',
+            borderBottom: `1px solid rgba(179,136,255,0.15)`,
+            fontSize: 11, color: C.textDim,
+            maxHeight: 60, overflow: 'hidden',
+          }}>
+            📋 Conteúdo atual: {content.substring(0, 120).replace(/\n/g, ' ')}...
+          </div>
+        )}
+
+        {/* Messages */}
+        <div ref={chatRef} style={{
+          flex: 1, overflowY: 'auto', padding: '16px',
+          display: 'flex', flexDirection: 'column', gap: 10,
+          scrollbarWidth: 'thin', scrollbarColor: 'rgba(192,214,234,0.15) transparent',
+        }}>
+          {messages.length === 0 && (
+            <div style={{ textAlign: 'center', color: C.textMuted, padding: '20px 12px' }}>
+              <p style={{ fontSize: 22, marginBottom: 6 }}>✏️</p>
+              <p style={{ fontWeight: 700, color: C.text, marginBottom: 4, fontSize: 13 }}>Modo Edição — eX StudyLabs</p>
+              <p style={{ fontSize: 12 }}>Pergunte como editar, revisar ou melhorar este conteúdo.</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'center', padding: '12px 0 0' }}>
+                {suggestions.map((s, i) => (
+                  <button key={i} onClick={() => { setInput(s); setBusy(true); setMessages(prev => [...prev, { role: 'user', text: s }]); send(); }} style={{
+                    background: 'rgba(179,136,255,0.08)', border: '1px solid rgba(179,136,255,0.2)',
+                    color: '#b388ff', padding: '5px 10px', borderRadius: 20,
+                    fontSize: 11, cursor: 'pointer', fontFamily: 'inherit',
+                  }}>{s}</button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {messages.map((m, i) => (
+            <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start' }}>
+              <div style={{
+                maxWidth: '88%',
+                padding: '10px 14px',
+                borderRadius: m.role === 'user' ? '12px 12px 4px 12px' : '12px 12px 12px 4px',
+                background: m.role === 'user' ? 'rgba(179,136,255,0.15)' : 'rgba(192,214,234,0.06)',
+                border: m.role === 'user' ? '1px solid rgba(179,136,255,0.3)' : `1px solid ${C.border}`,
+                color: C.text,
+                fontSize: 13, lineHeight: 1.55,
+              }}>
+                {m.role === 'user' ? m.text : (
+                  <>
+                    {m.text.split('\n').map((line, j) => <span key={j}>{line}<br/></span>)}
+                    {m.sources && m.sources.length > 0 && (
+                      <div style={{ marginTop: 8, paddingTop: 8, borderTop: `1px solid ${C.border}`, fontSize: 11, color: C.textDim }}>
+                        📚 Fontes: {m.sources.slice(0, 2).map((s, k) => <span key={k}> • {s.title}{s.page_start ? ` p.${s.page_start}` : ''}</span>)}
+                      </div>
+                    )}
+                    {m.text.startsWith('EDITADO:') || /\nEDITADO:/i.test(m.text) ? (
+                      <button onClick={() => handleApply(m.text)} style={{
+                        marginTop: 10, background: 'rgba(179,136,255,0.15)',
+                        border: '1px solid rgba(179,136,255,0.35)', borderRadius: 8,
+                        padding: '7px 14px', cursor: 'pointer',
+                        color: '#b388ff', fontSize: 12, fontWeight: 700, fontFamily: 'inherit',
+                        display: 'flex', alignItems: 'center', gap: 6,
+                      }}>
+                        ✏️ Aplicar esta edição ao conteúdo
+                      </button>
+                    ) : null}
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+
+          {busy && (
+            <div style={{ display: 'flex', gap: 4, padding: '4px 0', alignSelf: 'flex-start' }}>
+              {[0,1,2].map(i => <span key={i} style={{ width: 6, height: 6, background: C.textDim, borderRadius: '50%', animation: 'chatblink 1.4s infinite both', animationDelay: `${i*0.2}s` }} />)}
+            </div>
+          )}
+        </div>
+
+        {/* Input */}
+        <div style={{
+          padding: '12px 14px',
+          borderTop: `1px solid ${C.border}`,
+          background: 'rgba(0,34,51,0.5)',
+          display: 'flex', gap: 8, alignItems: 'flex-end',
+        }}>
+          <textarea
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send() } }}
+            placeholder="Peça para editar, revisar, expandir..."
+            rows={2}
+            style={{
+              flex: 1, background: 'rgba(0,26,43,0.6)',
+              border: `1px solid ${C.glassBorder}`, borderRadius: 10,
+              padding: '9px 12px', color: C.text, fontSize: 13,
+              fontFamily: 'inherit', resize: 'none', outline: 'none',
+              lineHeight: 1.5,
+            }}
+          />
+          <button
+            onClick={send}
+            disabled={busy || !input.trim()}
+            style={{
+              background: (!input.trim() || busy) ? 'rgba(179,136,255,0.2)' : '#b388ff',
+              border: 'none', borderRadius: 10,
+              padding: '9px 14px', color: C.bgDeep,
+              fontSize: 15, fontWeight: 700, cursor: (!input.trim() || busy) ? 'not-allowed' : 'pointer',
+              display: 'flex', alignItems: 'center',
+              transition: 'all 0.15s',
+            }}
+          >➤</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── Main Create Page ─────────────────────────────────────────────────────────
 function SlideRenderer({ content }) {
   const slides = content.split(/(?=## SLIDE \d+|## SLIDE)/i).filter(s => s.trim())
@@ -481,11 +709,27 @@ export default function Create() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  // Load project from navigation state (Meus Projetos -> Editar)
+  // Load project from navigation state (Meus Projetos -> Editar) or sessionStorage backup
   useEffect(() => {
     const { state } = location
-    if (state?.project) {
-      const p = state.project
+    let project = state?.project
+
+    // Fallback: try sessionStorage if no state passed (handles page refresh after navigation)
+    if (!project) {
+      try {
+        const stored = sessionStorage.getItem('restoreProject')
+        if (stored) {
+          project = JSON.parse(stored)
+          sessionStorage.removeItem('restoreProject')
+        }
+      } catch (_) {}
+    }
+
+    if (project) {
+      // Backup to sessionStorage in case navigation state is lost on refresh
+      try { sessionStorage.setItem('restoreProject', JSON.stringify(project)) } catch (_) {}
+
+      const p = project
       if (p.title) setTopic(p.title)
       else if (p.topic) setTopic(p.topic)
       if (p.type) setTemplate(p.type)
@@ -517,6 +761,7 @@ export default function Create() {
   const [level, setLevel] = useState('')
   const [savingProject, setSavingProject] = useState(false)
   const [copyConfirm, setCopyConfirm] = useState(false)
+  const [showEditPanel, setShowEditPanel] = useState(false)
 
   const typeLabelMap = {
     script: 'Script de Aula',

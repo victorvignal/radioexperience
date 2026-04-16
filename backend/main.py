@@ -813,6 +813,205 @@ def chat(req: ChatRequest):
     )
 
 
+class ChatEditRequest(BaseModel):
+    question: str
+    content: str          # current project content (for context)
+    template: str         # script | slides | mapa_mental | tabela | questoes | caso_clinico
+    topic: str            # project topic/title
+    top_k: int = 6
+    specialty: str | None = None
+    image_base64: str | None = None
+
+    def validate_question(self):
+        if not self.question or not self.question.strip():
+            raise ValueError("Question cannot be empty")
+        if len(self.question) > 2000:
+            raise ValueError("Question too long (max 2000 characters)")
+
+SYSTEM_PROMPT_EDIT = """Você é ARIA Edit — assistente de EDIÇÃO de conteúdo educacional de radiologia da plataforma RadioeXperience.
+
+Você NÃO gera conteúdo novo do zero. Você ajuda a EDITAR, REVISAR e MELHORAR conteúdo que o usuário já possui.
+
+## SUAS TAREFAS PRINCIPAIS:
+- Melhorar clareza, precisão e didática do texto existente
+- Corrigir erros médicos ou de formatação
+- Adaptar o nível de detalhe (mais avançado ou mais introdutório)
+- Expandir ou condensar seções mantendo a qualidade
+- Sugerir reestruturações para melhor fluxo educativo
+- Manter consistência de estilo e terminologia
+- Responder dúvidas sobre o conteúdo (ex: "esse achado está correto?", "posso substituir por...?")
+- Ajudar a transformar conteúdo de um formato para outro (script → slides, por exemplo)
+
+## CONTEÚDO ATUAL DO PROJETO:
+O usuário trabalha com o seguinte conteúdo de radiologia. Use-o como base para suas sugestões de edição:
+
+{content_context}
+
+## FORMATO DO CONTEÚDO:
+O conteúdo está no formato: **{template_label}**
+- **script**: aula textual estruturada com seções (Hook, Conceitos, Caso Clínico, Pontos-Chave)
+- **slides**: conjunto de slides em markdown com ## SLIDE N – Título e bullet points
+- **mapa_mental**: árvore hierárquica com # Título, ## Ramo, ### Subcategoria
+- **tabela**: tabela comparativa markdown com | Coluna | Coluna |
+- **questoes**: 5 questões de múltipla escolha no formato **QUESTÃO N:**... **Resposta Correta:** **Explicação:**
+- **caso_clinico**: caso clínico com ## Anamnese, ## Exame Físico, ## Exames de Imagem, ## Discussão
+
+## REGRAS DE EDIÇÃO:
+1. Quando pedir para editar/aprimorar: retorne o conteúdo completo com suas alterações aplicadas, precedido de "EDITADO:"
+2. Quando pedir para revisar: liste os pontos específicos encontrados e sugira melhorias
+3. Quando responder dúvidas sobre o conteúdo: cite partes específicas do texto ("No trecho sobre..., o termo usado está correto porque...")
+4. Quando transformar formato: mantenha TODA a informação científica do original
+5. Nunca invente informações médicas. Use a base RAG para verificar fatos.
+6. Respeite a estrutura e formatação do formato destination
+
+## USO DA BASE RAG:
+Você TEM acesso à base de conhecimento de radiologia via busca semântica. Use-a para:
+- Verificar se afirmações médicas estão corretas
+- Complementar informações quando o usuário pedir para "expandir"
+- Sugerir critérios diagnósticos, classificações ou guidelines relevantes
+- NÃO repita texto da base RAG verbatim — use para verificar e enriquecer
+
+## ESTILO:
+- Portuguese brasileiro formal e didático
+- Seja preciso: termine frases completas, não deixe "..." ou lacunas
+- Mantenha terminologia radiológica consistente (BI-RADS, TI-RADS, etc.)
+- Ao editar, comente INDENTADAMENTE o que mudou: mostre ANTES → DEPOIS quando relevante
+
+## QUANDO O USUÁRIO PEDIR EDIÇÃO:
+Comece sua resposta com "EDITADO:" seguido do conteúdo completo com edições.
+Se várias mudanças pequenas: liste cada uma com linha A→B antes do conteúdo final.
+Se mudança estrutural: explique brevemente a lógica antes do conteúdo.
+"""
+
+
+@app.post("/chat/edit", response_model=ChatResponse)
+def chat_edit(req: ChatEditRequest):
+    logger.info(f"ChatEdit request: template={req.template}, topic={req.topic[:50]}, question_len={len(req.question)}")
+
+    template_labels = {
+        "script": "Script de Aula",
+        "slides": "Slides Didáticos",
+        "mapa_mental": "Mapa Mental",
+        "tabela": "Tabela Comparativa",
+        "questoes": "Questões de Estudo",
+        "caso_clinico": "Caso Clínico",
+    }
+    template_label = template_labels.get(req.template, req.template)
+
+    content_context = f"""Título do projeto: {req.topic}
+Tipo: {template_label}
+Conteúdo atual:
+{req.content[:4000]}
+""" if req.content else f"Título: {req.topic}\nTipo: {template_label}\n(Nenhum conteúdo ainda)"
+
+    system_prompt = SYSTEM_PROMPT_EDIT.format(
+        content_context=content_context,
+        template_label=template_label,
+    )
+
+    # ── RAG search ──────────────────────────────────────────────────────────────
+    search_query = req.question
+    if req.image_base64:
+        raw_b64 = req.image_base64
+        if raw_b64.startswith('data:'):
+            raw_b64 = raw_b64.split(',', 1)[1] if ',' in raw_b64 else raw_b64
+        image_data_url = f"data:image/jpeg;base64,{raw_b64}"
+        try:
+            desc_response = openai_client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": "You are a radiology education assistant. Briefly describe the imaging findings visible in this medical image."},
+                    {"role": "user", "content": [
+                        {"type": "text", "text": "Describe the imaging findings:"},
+                        {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
+                    ]},
+                ],
+                temperature=0.2,
+                max_completion_tokens=300,
+            )
+            search_query = f"{req.question}\n\nImagem: {desc_response.choices[0].message.content}"
+        except Exception as e:
+            logger.warning(f"Image desc failed in edit chat: {e}")
+
+    # Embed + search
+    try:
+        embedding = openai_client.embeddings.create(
+            input=[search_query],
+            model=EMBED_MODEL,
+        ).data[0].embedding
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Embedding error: {e}")
+
+    query_filter = None
+    if req.specialty:
+        from qdrant_client.models import FieldCondition, MatchValue, Filter
+        query_filter = Filter(
+            must=[FieldCondition(key="specialty", match=MatchValue(value=req.specialty))]
+        )
+
+    try:
+        results = qdrant.query_points(
+            collection_name=COLLECTION,
+            query=embedding,
+            limit=req.top_k,
+            query_filter=query_filter,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Search error: {e}")
+
+    sources = []
+    context_parts = []
+    for i, hit in enumerate(results.points, 1):
+        p = hit.payload
+        excerpt = p.get("text", "")[:600]
+        title = p.get("title", "Desconhecido")
+        page_start = p.get("page_start")
+        page_end = p.get("page_end")
+        context_parts.append(f"[Fonte {i}: {title}, p.{page_start}-{page_end}]\n{excerpt}")
+        sources.append(Source(
+            title=title,
+            page_start=page_start,
+            page_end=page_end,
+            score=round(hit.score, 4),
+            excerpt=excerpt[:200],
+        ))
+
+    rag_context = "\n\n---\n\n".join(context_parts) if context_parts else ""
+
+    # ── Generate ───────────────────────────────────────────────────────────────
+    try:
+        if req.image_base64:
+            raw_b64 = req.image_base64
+            if raw_b64.startswith('data:'):
+                raw_b64 = raw_b64.split(',', 1)[1] if ',' in raw_b64 else raw_b64
+            image_data_url = f"data:image/jpeg;base64,{raw_b64}"
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": [
+                    {"type": "text", "text": f"PERGUNTA:\n{req.question}\n\nCONTEXTO RAG:\n{rag_context}"},
+                    {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
+                ]},
+            ]
+        else:
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": f"PERGUNTA:\n{req.question}\n\nCONTEXTO RAG (verifique Facts neste contexto):\n{rag_context}"},
+            ]
+
+        response = openai_client.chat.completions.create(
+            model="gpt-5.4-mini",
+            messages=messages,
+            temperature=0.3,
+            max_completion_tokens=2000,
+        )
+        answer = response.choices[0].message.content
+        tokens_used = response.usage.total_tokens if response.usage else 0
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Generation error: {e}")
+
+    return ChatResponse(answer=answer, sources=sources, tokens_used=tokens_used)
+
+
 # ═══════════════════════════════════════════
 # Feed / Posts endpoints
 # ═══════════════════════════════════════════
