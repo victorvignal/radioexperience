@@ -262,6 +262,19 @@ export default function Login() {
         @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-40px)}}
         @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,30px)}}
         @keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,25px)}}
+        @media(max-width:480px){
+          .login-card{padding:20px 16px 24px!important;border-radius:16px!important}
+          .login-label{font-size:13px!important;color:#C0D6EA!important}
+          .login-input{padding:14px 14px!important;font-size:15px!important}
+          .login-btn-main{padding:15px 16px!important;font-size:15px!important}
+          .login-google-btn{padding:13px 14px!important;font-size:14px!important}
+          .login-remember-row{font-size:12px}
+          .login-forgot{font-size:12px!important;padding:4px 0!important}
+          .login-or-row{font-size:11px!important}
+        }
+        @media(max-width:360px){
+          .login-card{padding:16px 12px 20px!important}
+        }
       `}</style>
 
       <FloatingOrbs />
@@ -299,6 +312,7 @@ export default function Login() {
             backdropFilter: 'blur(24px)',
             padding: 28,
           }}
+          className="login-card"
         >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 18 }}>
             <Logo size={18} />
@@ -326,7 +340,7 @@ export default function Login() {
           )}
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <label style={{ fontSize: 12, color: C.textDim }}>Email</label>
+            <label className="login-label" style={{ fontSize: 12, color: C.textDim }}>Email</label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -338,7 +352,7 @@ export default function Login() {
               style={inputStyle(focus.email)}
             />
 
-            <label style={{ marginTop: 6, fontSize: 12, color: C.textDim }}>Senha</label>
+            <label className="login-label" style={{ marginTop: 6, fontSize: 12, color: C.textDim }}>Senha</label>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -368,9 +382,9 @@ export default function Login() {
                     </svg>
                   )}
                 </div>
-                <span style={{ fontSize: 12, color: C.textMuted }}>Lembrar de mim</span>
+                <span className="login-remember-row" style={{ fontSize: 12, color: C.textMuted }}>Lembrar de mim</span>
               </label>
-              <a href="#" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none' }}>
+              <a className="login-forgot" href="#" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none' }}>
                 Esqueceu senha?
               </a>
             </div>
@@ -378,6 +392,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
+              className="login-btn-main"
               style={{
                 marginTop: 10,
                 width: '100%',
@@ -406,6 +421,7 @@ export default function Login() {
           <button
             type="button"
             onClick={handleGoogleSignIn}
+            className="login-google-btn"
             style={{
               width: '100%',
               display: 'flex',
