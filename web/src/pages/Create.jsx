@@ -1160,6 +1160,8 @@ export default function Create() {
                   <option value="Vascular">Vascular</option>
                   <option value="Obstetrícia">Obstetrícia</option>
                   <option value="Cabeça e Pescoço">Cabeça e Pescoço</option>
+                  <option value="Radioprotecao">Radioproteção</option>
+                  <option value="Intervencao">Intervenção</option>
                 </select>
               </div>
               <div>
