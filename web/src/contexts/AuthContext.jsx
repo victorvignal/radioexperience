@@ -19,18 +19,20 @@ export const AuthProvider = ({ children }) => {
     const isStaffEmail = STAFF_EMAILS.includes(email)
     setProfileLoading(true)
     try {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('profiles')
         .select('profile_complete, role')
         .eq('id', userId)
         .maybeSingle()
       
+      if (error) throw error
+
       if (data) {
         const resolvedRole = isAdminEmail ? 'admin' : isStaffEmail ? 'staff' : (data.role || 'user')
         setProfileComplete(data.profile_complete || false)
         setUserRole(resolvedRole)
       } else {
-        // Auto-create profile for known staff/admin emails
+        // No profile found — auto-create for known staff/admin, otherwise start with false
         if (isAdminEmail || isStaffEmail) {
           const role = isAdminEmail ? 'admin' : 'staff'
           await supabase.from('profiles').upsert({
@@ -113,24 +115,30 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   const signUp = useCallback(async (email, password, fullName) => {
+    // Clean up any existing session first
+    await supabase.auth.signOut().catch(() => {})
+    
     const { data, error } = await supabase.auth.signUp({ 
       email, 
       password,
       options: {
-        data: { full_name: fullName }
+        data: { full_name: fullName, profile_complete: false }
       }
     })
     if (error) throw error
     
-    // Create profile entry
+    // Create profile entry with profile_complete: false
     if (data?.user) {
-      await supabase.from('profiles').upsert({
+      const { error: profileError } = await supabase.from('profiles').upsert({
         id: data.user.id,
         email: data.user.email,
         full_name: fullName,
         role: 'user',
         profile_complete: false
       }, { onConflict: 'id' })
+      if (profileError) {
+        console.error('[Auth] Profile upsert error:', profileError)
+      }
     }
     
     return data
