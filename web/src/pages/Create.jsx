@@ -965,14 +965,25 @@ export default function Create() {
           .template-grid { grid-template-columns: repeat(3, 1fr) !important; }
         }
         @media (max-width: 640px) {
-          .page-padding { padding: 20px 14px 60px !important; }
+          .page-padding { padding: 16px 12px 100px !important; }
+          .template-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+          .specialty-row { flex-direction: column !important; gap: 10px !important; }
+          .output-actions { flex-direction: column !important; gap: 8px !important; }
+          .output-actions button { width: 100% !important; }
+          .page-header-icon { width: 28px !important; height: 28px !important; }
+          .page-header-title { font-size: 16px !important; }
+          .input-area { min-height: 80px !important; font-size: 15px !important; }
+          .form-label { font-size: 12px !important; margin-bottom: 6px !important; }
+          .form-section { margin-top: 20px !important; }
+          .section-label { font-size: 12px !important; margin-bottom: 8px !important; }
         }
         @media (max-width: 480px) {
+          .page-padding { padding: 14px 10px 110px !important; }
           .template-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 6px !important; }
-          .specialty-row { flex-direction: column !important; gap: 8px !important; }
-          .output-actions { flex-direction: column !important; }
-          .output-actions button { width: 100% !important; }
+          .btn-generate { padding: 14px 20px !important; font-size: 15px !important; }
         }
+        .btn-generate { position: fixed !important; bottom: 16px; left: 12px; right: 12px; width: auto !important; z-index: 40; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+        @media (min-width: 640px) { .btn-generate { position: static !important; width: 100% !important; box-shadow: none; } }
       `}</style>
 
       {/* Top bar */}
@@ -1065,6 +1076,7 @@ export default function Create() {
             Tema da aula ou questão
           </label>
           <textarea
+            className="input-area"
             value={topic}
             onChange={e => setTopic(e.target.value)}
             placeholder="Ex: Lesões benignas do fígado nos exames de imagem para R2"
@@ -1107,7 +1119,7 @@ export default function Create() {
           </div>
 
           <div style={{ marginTop: 18 }}>
-            <label style={{ display: 'block', color: C.textSoft, fontSize: 13, fontWeight: 600, marginBottom: 10 }}>
+            <label className="section-label" style={{ display: 'block', color: C.textSoft, fontSize: 13, fontWeight: 600, marginBottom: 10 }}>
               Tipo de conteúdo
             </label>
             <div class="template-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 6 }}>
@@ -1145,7 +1157,7 @@ export default function Create() {
             {/* Specialty and Level */}
             <div class="specialty-row" style={{ marginTop: 14, display: 'flex', flexDirection: 'row', gap: 10 }}>
               <div style={{ flex: 1 }}>
-                <label style={{ display: 'block', color: C.textSoft, fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
+                <label className="form-label" style={{ display: 'block', color: C.textSoft, fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
                   Especialidade (opcional)
                 </label>
                 <select value={specialty} onChange={e => setSpecialty(e.target.value)} style={{ ...inputStyle, cursor: 'pointer' }}>
@@ -1165,7 +1177,7 @@ export default function Create() {
                 </select>
               </div>
               <div>
-                <label style={{ display: 'block', color: C.textSoft, fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
+                <label className="form-label" style={{ display: 'block', color: C.textSoft, fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
                   Nível (opcional)
                 </label>
                 <select value={level} onChange={e => setLevel(e.target.value)} style={{ ...inputStyle, cursor: 'pointer' }}>
@@ -1182,6 +1194,7 @@ export default function Create() {
 
           {/* Generate button */}
           <button
+            className="btn-generate"
             onClick={handleGenerate}
             disabled={generating || !topic.trim()}
             style={{
