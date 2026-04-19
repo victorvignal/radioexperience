@@ -776,7 +776,7 @@ function NewsFeedPanel({ posts, postsLoading, isStaff, onExpand, onNewPost, onEd
           >Ver mais</button>
         </div>
       </div>
-      <div style={{ flex:1, overflowY:'auto', maxHeight: 500 }}>
+      <div style={{ flex:1, overflowY:'auto' }}>
         {postsLoading ? (
           <div style={{ fontSize:12, color:C.textDim, textAlign:'center', padding:'20px 0' }}>Carregando...</div>
         ) : posts.length === 0 ? (
@@ -1527,7 +1527,7 @@ export default function Dashboard() {
       {/* ═══════ MOBILE LAYOUT (<=1100px) ═══════ */}
       <div className="db-mobile" style={{
         position:'relative', zIndex:1,
-        minHeight:'100dvh', width:'100vw',
+        height:'100vh', width:'100vw',
         display:'none',
         flexDirection:'column',
         padding: '12px 16px 24px',
