@@ -34,6 +34,7 @@ ARIA - Assistente de Radiologia por IA
 Backend FastAPI com RAG (Qdrant + OpenAI)
 """
 import os
+import asyncio
 import json
 import tempfile
 import base64
@@ -202,6 +203,31 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# ── Identity shortcuts: answer without RAG ─────────────────────────────────
+IDENTITY_QUESTIONS = {
+    "quem é você", "quem eh voce", "who are you", "what is your name",
+    "what's your name", "who r u", "vc e quem", "voce e quem", "aria quem",
+    "introduza-se", "introduz-se", "tell me about yourself", "about you",
+}
+
+def _is_identity_question(q: str) -> bool:
+    """Return True if the question is a simple identity question that doesn't need RAG."""
+    normalized = q.lower().strip().rstrip('?')
+    return (
+        normalized in IDENTITY_QUESTIONS
+        or any(normalized.startswith(p) for p in ["quem é ", "who is ", "what is aria"])
+    )
+
+ARIA_IDENTITY = """Você é ARIA — Assistente de Radiologia por IA.
+
+Sou uma inteligência artificial especializada em radiologia, desenvolvida pela equipe do RadioeXperience.
+
+Minha missão é ajudar médicos, estudantes e profissionais de saúde a aprender radiologia de forma interativa, tirarem dúvidas sobre anatomia radiológica, técnicas de exame, interpretação de achados e classificação de imagens médicas.
+
+Estou integrada à base de conhecimento do RadioeXperience, que inclui livros e artigos de radiologia, e posso analisar imagens médicas usando visão computacional.
+
+Como posso ajudar hoje?"""
 
 # ── Auth Dependency (Supabase JWT) ───────────────────────────────────────────
 async def verify_supabase_token(authorization: str = None) -> dict | None:
@@ -928,7 +954,9 @@ async def chat_stream(request: Request, req: ChatRequest, authorization: str = N
 
     async def stream_response():
         try:
-            stream = openai_client.chat.completions.create(
+            # Run sync OpenAI stream in thread pool to avoid blocking the event loop
+            stream = await asyncio.to_thread(
+                openai_client.chat.completions.create,
                 model=model,
                 messages=messages,
                 temperature=0.3,
@@ -941,7 +969,6 @@ async def chat_stream(request: Request, req: ChatRequest, authorization: str = N
                 if token:
                     collected.append(token)
                     yield f"data: {json.dumps({'event': 'token', 'data': token})}\n\n"
-            # Final sources event
             yield f"data: {json.dumps({'event': 'done', 'sources': [s.model_dump() for s in sources[:3]]})}\n\n"
             logger.info(f"Stream complete", request_id=request_id, tokens=len(collected))
         except Exception as e:
