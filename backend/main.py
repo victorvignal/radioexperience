@@ -420,7 +420,7 @@ def health():
 
     # 3. OpenAI API key
     try:
-        openai_client.models.list(limit=1)
+        openai_client.models.list()
         checks["openai"] = {"status": "ok"}
     except Exception as e:
         checks["openai"] = {"status": "error", "detail": str(e)}
