@@ -954,7 +954,8 @@ async def chat_stream(request: Request, req: ChatRequest, authorization: str = N
         headers={
             "Cache-Control": "no-cache",
             "X-Request-ID": request_id,
-        }
+        },
+    )
 
 
 @app.post("/chat", response_model=ChatResponse)
