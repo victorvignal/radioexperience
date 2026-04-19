@@ -560,17 +560,16 @@ function EditPanel({ onClose, topic, template, content, specialty, onApply }) {
           }}>×</button>
         </div>
 
-        {/* Context strip */}
-        {content && (
-          <div style={{
-            padding: '8px 16px',
-            background: 'rgba(179,136,255,0.05)',
-            borderBottom: `1px solid rgba(179,136,255,0.15)`,
-            fontSize: 11, color: C.textDim,
-            maxHeight: 60, overflow: 'hidden',
+        {/* Undo button */}
+        {editedHistoryStep >= 0 && (
+          <button onClick={handleUndoEdit} title="Desfazer" style={{
+            margin: '8px 16px', padding: '6px 12px',
+            background: 'rgba(179,136,255,0.08)', border: '1px solid rgba(179,136,255,0.2)',
+            borderRadius: 8, color: '#b388ff', fontSize: 12, cursor: 'pointer',
+            display: 'flex', alignItems: 'center', gap: 6, alignSelf: 'flex-start',
           }}>
-            📋 Conteúdo atual: {content.substring(0, 120).replace(/\n/g, ' ')}...
-          </div>
+            ↩ Desfazer
+          </button>
         )}
 
         {/* Messages */}
@@ -755,6 +754,8 @@ export default function Create() {
   const [generating, setGenerating] = useState(false)
   const [generatedContent, setGeneratedContent] = useState('')
   const [editedContent, setEditedContent] = useState('')
+  const [editedHistory, setEditedHistory] = useState([])
+  const [editedHistoryStep, setEditedHistoryStep] = useState(-1)
   const [error, setError] = useState('')
   const [showPreview, setShowPreview] = useState(false)
   const [publishing, setPublishing] = useState(false)
@@ -874,8 +875,19 @@ export default function Create() {
   }
 
   const handleApplyEdit = (text) => {
+    if (editedContent) {
+      setEditedHistory(prev => [...prev.slice(0, editedHistoryStep + 1), editedContent])
+      setEditedHistoryStep(prev => prev + 1)
+    }
     setEditedContent(text)
     setIsEditing(false)
+  }
+
+  const handleUndoEdit = () => {
+    if (editedHistoryStep < 0) return
+    const prev = editedHistory[editedHistoryStep]
+    setEditedContent(prev)
+    setEditedHistoryStep(prev => prev - 1)
   }
 
   const handleSaveDraft = async () => {
