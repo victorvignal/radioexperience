@@ -51,6 +51,7 @@ import logging
 import json
 import uuid
 import httpx
+import random
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
@@ -193,6 +194,9 @@ def verify_supabase_token(authorization: str = None) -> dict | None:
 
 
 # ── Retry Decorators ─────────────────────────────────────────────────────────
+OPENAI_RETRY = stop_after_attempt(3)
+QDRANT_RETRY = stop_after_attempt(3)
+
 def with_retry(exceptions, max_attempts=3):
     return retry(
         retry=retry_if_exception_type(exceptions),
@@ -200,6 +204,18 @@ def with_retry(exceptions, max_attempts=3):
         wait=wait_exponential(multiplier=1, min=2, max=10),
         reraise=True,
     )
+
+# Retry-friendly wrappers
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
+def _embed_with_retry(text: str) -> list:
+    """Embed text with exponential backoff retry."""
+    resp = openai_client.embeddings.create(input=[text], model=EMBED_MODEL)
+    return resp.data[0].embedding
+
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
+def _qdrant_search_with_retry(**kwargs):
+    """Search Qdrant with exponential backoff retry."""
+    return qdrant.query_points(**kwargs)
 
 
 # ── Models ──
@@ -776,10 +792,7 @@ def chat(req: ChatRequest, authorization: str = None):
 
     # 1. Embed the question (enhanced with image description if present)
     try:
-        embedding = openai_client.embeddings.create(
-            input=[search_query],
-            model=EMBED_MODEL,
-        ).data[0].embedding
+        embedding = _embed_with_retry(search_query)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Embedding error: {e}")
 
@@ -793,7 +806,7 @@ def chat(req: ChatRequest, authorization: str = None):
         )
 
     try:
-        results = qdrant.query_points(
+        results = _qdrant_search_with_retry(
             collection_name=COLLECTION,
             query=embedding,
             limit=max(req.top_k, 50),  # fetch extra for keyword re-ranking
@@ -824,10 +837,8 @@ def chat(req: ChatRequest, authorization: str = None):
     if key_terms:
         try:
             focused_query = " ".join(key_terms[:5])  # top 5 key terms
-            focused_emb = openai_client.embeddings.create(
-                input=[focused_query], model=EMBED_MODEL,
-            ).data[0].embedding
-            extra_results = qdrant.query_points(
+            focused_emb = _embed_with_retry(focused_query)
+            extra_results = _qdrant_search_with_retry(
                 collection_name=COLLECTION,
                 query=focused_emb,
                 limit=20,
@@ -1082,10 +1093,7 @@ Conteúdo atual:
 
     # Embed + search
     try:
-        embedding = openai_client.embeddings.create(
-            input=[search_query],
-            model=EMBED_MODEL,
-        ).data[0].embedding
+        embedding = _embed_with_retry(search_query)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Embedding error: {e}")
 
@@ -1098,7 +1106,7 @@ Conteúdo atual:
         )
 
     try:
-        results = qdrant.query_points(
+        results = _qdrant_search_with_retry(
             collection_name=COLLECTION,
             query=embedding,
             limit=req.top_k,
@@ -1407,9 +1415,7 @@ def _get_challenge_context(specialty: str, skip_hits: int = 0) -> str:
     suffix = search_suffixes[skip_hits % len(search_suffixes)]
     search_terms = f"radiologia {specialty} {suffix}"
     try:
-        embedding = openai_client.embeddings.create(
-            input=[search_terms], model=EMBED_MODEL,
-        ).data[0].embedding
+        embedding = _embed_with_retry(search_terms)
     except Exception as e:
         logger.warning(f"Embedding failed: {e}")
         return ""
@@ -1422,7 +1428,7 @@ def _get_challenge_context(specialty: str, skip_hits: int = 0) -> str:
             query_filter = Filter(
                 must=[FieldCondition(key="specialty", match=MatchValue(value=normalized_sp))]
             )
-            results = qdrant.query_points(
+            results = _qdrant_search_with_retry(
                 collection_name=COLLECTION,
                 query=embedding, limit=8, query_filter=query_filter,
             )
@@ -1434,7 +1440,7 @@ def _get_challenge_context(specialty: str, skip_hits: int = 0) -> str:
     # Fallback: no specialty filter
     if results is None or len(results.points) < 3:
         try:
-            results = qdrant.query_points(
+            results = _qdrant_search_with_retry(
                 collection_name=COLLECTION,
                 query=embedding, limit=8,
             )
@@ -2301,10 +2307,7 @@ def criar_content(template_type: str, req: CriarRequest):
 
     # 1. Search RAG for context
     try:
-        embedding = openai_client.embeddings.create(
-            input=[req.topic],
-            model=EMBED_MODEL,
-        ).data[0].embedding
+        embedding = _embed_with_retry(req.topic)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro de embedding: {e}")
 
@@ -2317,7 +2320,7 @@ def criar_content(template_type: str, req: CriarRequest):
         )
 
     try:
-        results = qdrant.query_points(
+        results = _qdrant_search_with_retry(
             collection_name=COLLECTION,
             query=embedding,
             limit=req.top_k,
