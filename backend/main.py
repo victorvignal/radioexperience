@@ -940,7 +940,7 @@ async def chat_stream(request: Request, req: ChatRequest, authorization: str = N
                 token = chunk.choices[0].delta.content or ""
                 if token:
                     collected.append(token)
-                    yield f"data: {json.dumps({'event': 'token', 'data': token})}\.n\n"
+                    yield f"data: {json.dumps({'event': 'token', 'data': token})}\n\n"
             # Final sources event
             yield f"data: {json.dumps({'event': 'done', 'sources': [s.model_dump() for s in sources[:3]]})}\n\n"
             logger.info(f"Stream complete", request_id=request_id, tokens=len(collected))
