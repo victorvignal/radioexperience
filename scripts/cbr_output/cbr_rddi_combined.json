@@ -1,0 +1,2441 @@
+[
+  {
+    "number": 1,
+    "text": "Paciente apresenta inversão do fluxo da artéria vertebral esquerda. Qual a possibilidade diag-nóstica?",
+    "options": [
+      "A) Hipoplasia da artéria vertebral esquerda.",
+      "B) Hipoplasia da artéria vertebral direita.",
+      "C) Estenose da artéria subclávia esquerda.",
+      "D) Estenose da artéria subclávia direita.",
+      "E) AVC isquêmico em território de artéria basilar. 4"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 2,
+    "text": "Paciente em vigilância após colocação de stent na artéria femoral superficial, apresenta asvelocidades a seguir na imagem. Qual a estimativa do grau de estenose neste stent?",
+    "options": [
+      "A) Estenose menor do que 50%.",
+      "B) Estenose maior do que 50%, menor do que 75%.",
+      "C) Estenose maior do que 75%.",
+      "D) Não há estenose.",
+      "E) Estenose menor do que 30%. 5"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk",
+      "vascular",
+      "pediatria"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 3,
+    "text": "Paciente em vigilância após colocação de endoprótese, apresenta aumento significativo dosaco aneurismático. Realizado ultrassonografia com Doppler e contraste com microbolhas,apresentando a imagem abaixo. Qual o tipo de endoleak demonstrado?",
+    "options": [
+      "A) Tipo Ia.",
+      "B) Tipo IB.",
+      "C) Tipo IV.",
+      "D) Tipo II.",
+      "E) Tipo III. 6"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 4,
+    "text": "Considerando as imagens a seguir, nas quais se observa uma lesão (assinalada pelas setas)no aspecto anterior da zona de transição direita, com componente extra-prostático, assinale aalternativa que melhor correlaciona a via de abordagem preferencial para biópsia dessa regiãoe suas respectivas vantagens.",
+    "options": [
+      "A) Biópsia por via transretal guiada por fusão de imagens, por corresponder a melhor via deacesso para lesões no aspecto anterior da próstata.",
+      "B) Biópsia por via transretal guiada por ultrassom isoladamente, com obtenção de fragmentosde forma randômica, por estar relacionada a altas taxas de detecção tumoral.",
+      "C) Biópsia por via transperineal guiada por fusão de imagens, com obtenção de fragmentosapenas da região suspeita, pois é suficiente para excluir lesões neoplásicas nas demais regi-ões prostáticas.",
+      "D) Biópsia por via transperineal guiada por fusão de imagens, com obtenção de fragmentosde forma randômica e fragmentos adicionais da área suspeita e, está relacionada a menorestaxas de infecção pós-procedimento.",
+      "E) Biópsia por via supra-púbica guiada por ultrassom, com obtenção de fragmentos da regiãosuspeita, por estar relacionado a menores riscos de lesão de estruturas não-alvo. 7"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk",
+      "medicina_nuclear"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 5,
+    "text": "Paciente de 38 anos, com dor epigástrica crônica que piora com a expiração e melhora coma inspiração profunda, é submetido a ultrassonografia com Doppler do tronco celíaco. O es-tudo revela aumento da velocidade de pico sistólico superior a 230 cm/s durante a expiração,com normalização durante a inspiração. Qual o diagnóstico mais provável com base nessesachados?",
+    "options": [
+      "A) A velocidade do fluxo sistólico no tronco celíaco tende a diminuir durante a expiração.",
+      "B) A compressão extrínseca é constante, sem variação significativa com a respiração.",
+      "C) A síndrome é caracterizada por aumento da velocidade sistólica no tronco celíaco durantea inspiração profunda.",
+      "D) O exame Doppler pode mostrar aumento da velocidade sistólica (>200 cm/s) no troncocelíaco durante a expiração, com normalização na inspiração profunda.",
+      "E) A principal artéria acometida pela síndrome é a artéria mesentérica superior. 8"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 6,
+    "text": "Considere um paciente com antecedente de gastrectomia parcial e reconstrução do trânsitointestinal em Y-de-Roux, sem condições para realização de colangiopancreatografia retrógra-da endoscópica (CPR",
+    "options": [
+      "E) , que evoluiu com síndrome colestática e sinais inequívocos de colan-gite, sendo, então, encaminhado para avaliação da equipe de radiologia intervencionista. Foirealizada colangiografia percutânea guiada por ultrassonografia, por meio da punção de umramo biliar esquerdo conforme imagem a seguir. Qual é a conduta mais adequada para estecaso?",
+      "A) Drenagem percutânea transparieto-hepática externa à esquerda, pois a manipulação daárea de estenose tumoral está associada a altas taxas de disseminação neoplásica ao longodo trajeto do dreno.",
+      "B) Drenagem percutânea transparieto-hepática interna/externa à esquerda seria suficiente,pois não há dilatação significativa dos ramos biliares intra-hepáticos à direita.",
+      "C) Após a realização da colangiografia, deve-se solicitar um novo parecer da equipe de en-doscopia para tentativa de realização de CPRE, por se tratar da via mais adequada para dre-nagem das vias biliares no contexto descrito.",
+      "D) Punção percutânea de ramo biliar direito e tentativa de drenagem biliar transparieto-hepáti-ca interna/externa bilateral, com provável necessidade de posicionamento de três drenos, porse tratar de uma trissegmentação de vias biliares.",
+      "E) Através da punção percutânea esquerda, realizar biópsia da área de estenose por colan-gioscopia e não proceder com drenagem percutânea no mesmo tempo. 9"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "abdome",
+    "topics": [
+      "abdome"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 7,
+    "text": "Paciente do sexo feminino, com 38 anos, antecedente familiar de osteoporose e fratura dequadril. Relata vertebroplastia pós fraturas traumáticas. Fez a primeira DXA de coluna. Assi-nale a alternativa que apresenta a conclusão adequada para os achados.",
+    "options": [
+      "A) Os valores são compatíveis com baixa massa óssea.",
+      "B) Os achados são compatíveis com osteoporose clínica.",
+      "C) Os achados são compatíveis com DMO dentro do esperado para a faixa etária.",
+      "D) Os valores são compatíveis com DMO normal.",
+      "E) A coluna não seve ser considerada na análise. 10"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 8,
+    "text": "O conhecimento da anatomia vascular pélvica é fundamental na embolização da próstata.Qual é a artéria assinalada e qual a possível complicação decorrente de embolização não alvodessa estrutura?",
+    "options": [
+      "A) Artéria vesical inferior - estenose de uretra.",
+      "B) Artéria retal média - úlcera retal.",
+      "C) Artéria obturatória - dor pélvica crônica.",
+      "D) Artéria pudenda - úlcera peniana.",
+      "E) Artéria vesical superior - isquemia de bexiga. 11"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "vascular",
+    "topics": [
+      "vascular"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 9,
+    "text": "Paciente de 38 anos, nuligesta, do sexo feminino, com queixa de hipermenorreia e ressonân-cia magnética evidenciando adenomiose difusa. Foi indicada embolização para tratamentosintomático. Após o microcateterismo seletivo da artéria uterina esquerda, realizou-se a se-guinte arteriografia. Qual é o diagnóstico e a melhor conduta neste momento?",
+    "options": [
+      "A) Seguir embolização com microesferas pequenas (300-500) pois trata-se de paciente comadenomiose.",
+      "B) Seguir embolização com microesferas maiores (500-700) pois trata-se de paciente comdesejo reprodutivo.",
+      "C) Interromper a embolização com microesferas pois constatou-se uma fístula artério venosauterina.",
+      "D) Embolizar o shunt com micromolas e seguir embolização com microesferas.",
+      "E) Seguir embolização com gelfoam neste caso. 12"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 10,
+    "text": "Paciente foi encaminhada para realização de ultrassonografia transvaginal para avaliação dagestação. A última menstruação foi há 8 semanas. Diâmetro médio do saco gestacional: 27mm. Os achados ultrassonográficos estão demonstrados nas imagens. Quanto ao diagnósti-co, assinale a alternativa correta.",
+    "options": [
+      "A) Gestação inviável.",
+      "B) Gestação de viabilidade incerta.",
+      "C) Gestação viável.",
+      "D) Aborto retido.",
+      "E) Gestação incipiente. 13"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 11,
+    "text": "Considere uma mulher de 35 anos, com atraso menstrual de 15 dias e com queixa de des-conforto discreto no andar inferior do abdome. Dosagem beta-HCG de 350 Mu/ml. Analise asimagens e indique o diagnóstico ecográfico correto.",
+    "options": [
+      "A) Gravidez ectópica.",
+      "B) Abortamento incompleto.",
+      "C) Gestação inicial.",
+      "D) Diagnóstico inconclusivo.",
+      "E) Abortamento em evolução. 14"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 12,
+    "text": "Durante avaliação ultrassonográfica de rotina no segundo trimestre, um feto masculino emapresentação cefálica com dorso voltado à esquerda apresenta, em corte abdominal trans-versal, duas estruturas anecoicas adjacentes com paredes finas, situadas na linha média e àesquerda no abdome fetal. Considerando esse achado, assinale a alternativa que representacorretamente a abordagem diagnóstica e suas implicações clínicas.",
+    "options": [
+      "A) O achado é inespecífico e usualmente transitório, devendo ser reavaliado após o nasci-mento.",
+      "B) Este achado sugere obstrução intestinal distal e está associado à síndrome de Turner.",
+      "C) A presença deste sinal isolado não está relacionada a aneuploidias.",
+      "D) A atresia duodenal deve ser considerada como diagnóstico primário.",
+      "E) A ausência de outras malformações permite o diagnóstico de duplicação gástrica. 15"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 13,
+    "text": "Durante a ultrassonografia obstétrica do terceiro trimestre, é observada a imagem a seguir,no abdome, em um feto do sexo feminino, sem sinais de hidropsia ou outras anomalias as-sociadas. Exame morfológico do segundo trimestre sem alterações anatômicas. Com basena localização, morfologia e características ecográficas da lesão, assinale a alternativa queapresenta o diagnóstico mais provável.",
+    "options": [
+      "A) Duplicação entérica.",
+      "B) Hidrocolpos isolado.",
+      "C) Cisto ovariano funcional.",
+      "D) Cisto mesentérico.",
+      "E) Meningocele sacral interna. 16"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 14,
+    "text": "Qual a conclusão diagnóstica adequada para o resultado do DXA de antebraço?",
+    "options": [
+      "A) Osteopenia.",
+      "B) Osteoporose.",
+      "C) DMO normal.",
+      "D) DMO dentro do esperado para a faixa etária.",
+      "E) Exame invalidado para diagnóstico."
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 15,
+    "text": "Quanto aos resultados de DXA de coluna da paciente, do sexo feminino, com ciclos regulares,podemos concluir que:",
+    "options": [
+      "A) O segmento está invalidado para a avaliação da massa óssea.",
+      "B) A paciente tem DMO normal.",
+      "C) A DMO está dentro do esperado para a faixa etária.",
+      "D) Devemos excluir L4 da análise.",
+      "E) Devemos excluir L2-L3 da análise. 17"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 16,
+    "text": "Paciente de 35 anos, com nódulo já biopsiado e positivo para carcinoma, realiza nova ultras-sonografia para planejamento cirúrgico. Analise a imagem e assinale a alternativa que apre-senta a classificação BI RADS correta.",
+    "options": [
+      "A) BI-RADS 6.",
+      "B) BI-RADS 5.",
+      "C) BI-RADS 4.",
+      "D) BI-RADS 4C.",
+      "E) BI-RADS 0. 18"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 17,
+    "text": "A partir da análise da imagem, assinale a alternativa correta.",
+    "options": [
+      "A) Há sinais de adenomiomatose na vesícula biliar.",
+      "B) Há sinais de hepatopatia crônica.",
+      "C) Existem duas artérias renais à esquerda.",
+      "D) Existem duas artérias renais à direita.",
+      "E) A aorta está normal. 19"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 18,
+    "text": "No que diz respeito ao provável diagnóstico das imagens apresentadas, assinale a alternativacorreta.",
+    "options": [
+      "A) Acomete predominantemente homens de meia-idade, sem associação com comorbidadescomo diabetes ou obstrução urinária.",
+      "B) Cálculos de oxalato de cálcio são os mais frequentes, dada sua alta prevalência na popu-lação geral e potencial obstrutivo.",
+      "C) O tratamento de primeira linha consiste em antibioticoterapia prolongada (6 meses), reser-vando cirurgia apenas para complicações como abscessos.",
+      "D) A presença de estenoses infundibulares e comprometimento difuso do sistema urinário(como bexiga e ureter) é uma característica típica da doença.",
+      "E) Devido à obstrução crônica por cálculo e infecções recorrentes, há destruição arquiteturalirreversível e perda da função renal. 20"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 19,
+    "text": "As lesões uroteliais correspondem à maioria das neoplasias malignas da bexiga e a resso-nância magnética vem ganhando espaço em todas as etapas da doença, desde o diagnósticoaté o seguimento dos pacientes. As imagens apresentadas mostram exames de ressonânciamagnética para a avaliação específica destas lesões, sendo uma imagem foi caracterizadacomo VI-RADS 2 e a outra imagem foi caracterizada como VI-RADS 5.Considerando o caso apresentado e os seus conhecimentos sobre neoplasias vesicais, assi-nale a alternativa correta.",
+    "options": [
+      "A) Lesões uroteliais são mais frequentes em mulheres jovens, com associação forte a infec-ções urinárias recorrentes.",
+      "B) O sistema VIRADS propõe uma avaliação padronizada de lesões vesicais, sendo que o seuobjetivo é avaliar o risco de malignidade de lesões vesicais.",
+      "C) Na lesão VI-RADS 2, a ressecção transuretral (RTU) é curativa na maioria dos casos, semnecessidade de follow-up por imagem.",
+      "D) A lesão VI-RADS 5 demonstra invasão definitiva do músculo detrusor, indicando cistecto-mia radical ou terapia multimodal em tumores avançados.",
+      "E) O acometimento sincrônico de outras partes do sistema urinário é incomum, sendo maisfrequente apenas em populações imunocomprometidas."
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 20,
+    "text": "Qual o nome do compartimento peritoneal identificado pelas setas na imagem apresentada?",
+    "options": [
+      "A) Reflexão peritoneal.",
+      "B) Omento maior.",
+      "C) Ligamento gastroesplênico.",
+      "D) Retrocavidade dos epíplons.",
+      "E) Goteira parietocólica. 22"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 21,
+    "text": "Homem de 27 anos, com dispneia progressiva há 3 meses, procura atendimento de emergên-cia com quadro de insuficiência respiratória, necessitando ventilação mecânica e internaçãoem unidade de tratamento intensivo. A partir das imagens a seguir, qual é a principal hipótesediagnóstica?",
+    "options": [
+      "A) Metástases de coriocarcinoma.",
+      "B) Sarcoidose.",
+      "C) Tuberculose disseminada.",
+      "D) Granulomatose com poliangiíte.",
+      "E) Histoplasmose disseminada. 23"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "torax",
+    "topics": [
+      "torax"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 22,
+    "text": "Paciente masculino, 11 anos de idade, queixando-se de dor em quadril esquerdo, com pioraapós realização de atividade física na escola há cerca de três semanas. Ao exame físico,foi observado sobrepeso, IMC de 26,3, com persistência do membro inferior esquerdo emrotação externa. Diante do quadro clínico e das imagens radiológicas apresentadas, qual é odiagnóstico mais provável?",
+    "options": [
+      "A) Doença de Legg-Calvé-Perthes.",
+      "B) Epifisiólise da cabeça femoral.",
+      "C) Displasia do desenvolvimento do quadril.",
+      "D) Sinovite transitória do quadril.",
+      "E) Necrose avascular da cabeça femoral. 24"
+    ],
+    "correct_answer": "B",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 23,
+    "text": "Paciente masculino, 44 anos, queixando-se de dor na parte posterior da coxa esquerda, apóstrauma em jogo de futebol há 4 dias. O médico que o atendeu solicitou a RM apresentada aseguir, que demonstra hematoma muscular. Assinale a alternativa que apresenta o músculoenvolvido.",
+    "options": [
+      "A) Semitendíneo.",
+      "B) Semimembranoso.",
+      "C) Cabeça longa do bíceps femoral.",
+      "D) Adutor magno.",
+      "E) Cabeça curta do bíceps femoral."
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 24,
+    "text": "A tomografia apresentada foi realizada em paciente que buscou atendimento por dispneiaprogressiva há um ano e crepitantes nas bases pulmonares à ausculta pulmonar. A partir dosachados tomográficos do paciente, assinale a alternativa correta.",
+    "options": [
+      "A) A presença de bronquiolectasias de tração denota atividade inflamatória atual da doença.",
+      "B) Os achados tomográficos mostram uma doença pulmonar intersticial não fibrosante.",
+      "C) A predominância periférica das lesões no plano axial é um dos critérios a serem considera-dos na classificação tomográfica dos achados.",
+      "D) A espirometria de pacientes com esses achados tomográficos geralmente revela distúrbioventilatório obstrutivo.",
+      "E) O uso de meio de contraste endovenoso auxilia na classificação dos achados tomográficos. 26"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "torax",
+    "topics": [
+      "torax"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 25,
+    "text": "Paciente assintomática, em rastreamento mamográfico. Em relação ao caso apresentado,assinale a alternativa correta.",
+    "options": [
+      "A) É um nódulo obscurecido, BIRADS 0, necessária ultrassonografia complementar.",
+      "B) É um nódulo obscurecido, BIRADS 0, necessária compressão seletiva.",
+      "C) É um nódulo suspeito e a ultrassonografia pode ser usada para guiar biópsia.",
+      "D) É um nódulo suspeito, BIRADS 0, necessária ultrassonografia complementar.",
+      "E) Contém gordura no interior e hamartoma é um diagnóstico diferencial. 27"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 26,
+    "text": "Mulher com 52 anos de idade. História pessoal de mastectomia esquerda há 7 anos. Assinto-mática. Exames anteriores não foram disponibilizados para correlação. Assinale a alternativacorreta.",
+    "options": [
+      "A) O diagnóstico de carcinoma ductal in situ deve ser considerado discordante do achado deimagem.",
+      "B) Nódulo obscurecido - BI-RADS ® 0, recomenda-se estudo ultrassonográfico complemen-tar.",
+      "C) Assimetria focal - BI-RADS ® 0, recomenda-se compressão seletiva e comparação comexames anteriores.",
+      "D) Assimetria focal - BI-RADS ® 3; controle em curto intervalo de tempo, exceto se estávelhá mais de 2 anos.",
+      "E) Nódulo suspeito - devido à localização, biópsia cirúrgica deve ser preferida em relação àbiópsia percutânea. 28"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 27,
+    "text": "A partir da análise da imagem, assinale a alternativa que apresenta o diagnóstico correto.",
+    "options": [
+      "A) Descolamento de retina.",
+      "B) Descolamento de coroide.",
+      "C) Coloboma.",
+      "D) Estafiloma.",
+      "E) Phthisis bulbi. 29"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 28,
+    "text": "Paciente com alteração na voz realizou TC com estes achados. Qual condição deve ser acausa?",
+    "options": [
+      "A) Neoplasia na glândula parótida.",
+      "B) Lesão infiltrativa na mucosa da orofaringe.",
+      "C) Tumor mediastinal acometendo o arco aórtico.",
+      "D) Fratura do canal do nervo facial.",
+      "E) Lesão no canal do hipoglosso. 30"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 29,
+    "text": "Paciente com perda auditiva bilateral realizou TC e RM com estes achados. Assinale a alter-nativa que apresenta o diagnóstico correto.",
+    "options": [
+      "A) Meningioma do ângulo pontocerebelar esquerdo.",
+      "B) Labirintite ossificante.",
+      "C) Otomastoidite.",
+      "D) Ausência dos modíolos.",
+      "E) Aquedutos vestibulares alargados. 31"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 30,
+    "text": "Paciente de 33 anos realizou sialo-RM com os achados apresentados a seguir. Sobre estacondição, assinale a alternativa correta.",
+    "options": [
+      "A) Trata-se mais provavelmente de uma sialoadenite aguda causada por cálculos nos ductosparotídeos principais.",
+      "B) Afeta mais comumente pacientes jovens do sexo masculino.",
+      "C) O acometimento das glândulas lacrimais é raro.",
+      "D) Sialorreia é a queixa mais frequente dos pacientes.",
+      "E) Os pacientes apresentam risco elevado para o desenvolvimento de linfoma. 32"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 31,
+    "text": "Paciente com 23 anos nas radiografias em 2018 e 30 anos nas radiografias de 2025. Qual aúnica alternativa que explica corretamente os achados de imagem?",
+    "options": [
+      "A) Aneurisma de aorta em 2018, com sinais de tratamento com endoprótese nas imagens de2025.",
+      "B) Bócio multinodular em 2018, com sinais de ressecção completa da lesão nas imagens de2025.",
+      "C) Massa mediastinal anterior em 2018, com sinais de ressecção completa da lesão em 2025.",
+      "D) Linfoma mediastinal em 2018, com regressão das lesões nas imagens de 2025, com calci-fi cações em janela aortopulmonar.",
+      "E) Massa mediastinal posterior, por provável neoplasia neurogênica, nas imagens de 2018,com sinais de tratamento cirúrgico nas imagens de 2025. 33"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 32,
+    "text": "Paciente de 74 anos, sexo feminino. A tomografi a computadorizada demonstrada a seguirapresenta sinal do favolamento exuberante. Os sinais de faveolamento exuberante, da mar-gem reta ou “borda reta”, da região anterior do lobo superior “sinal do lobo superior anterior”e dos quatro cantos apresentam alta especificidade para qual doença ou grupo de doenças?",
+    "options": [
+      "A) Fibrose Pulmonar Idiopática.",
+      "B) Pneumonia Interstiical Não Específica.",
+      "C) Doenças do Tecido Conjuntivo.",
+      "D) Pnuemonites Medicamentosas.",
+      "E) Pneumonite por Hiperssensibilidade. 34"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 33,
+    "text": "Em relação a anatomia do tórax, analise a imagem a seguir. Quais as letras que indicam amelhor sintopia (localização) anatômica da passagem do nervo laríngeo recorrente direito eesquerdo nos tecidos adiposos do mediastino respectivamente, considerando que as setasestão todas posicionadas nos tecidos adiposos da região do mediastino?",
+    "options": [
+      "A) A e E.",
+      "B) B e D.",
+      "C) C e F.",
+      "D) A e D.",
+      "E) B e F. 35"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "torax",
+    "topics": [
+      "torax",
+      "medicina_nuclear"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 34,
+    "text": "De acordo com as imagens a seguir, assinale a alternativa que apresenta corretamente o diag-nóstico que melhor explica a imagem apontada na seta da radiografia simples.",
+    "options": [
+      "A) Tumor carcinoide no mediastino.",
+      "B) Neoplasia pulmonar do tipo carcinoide.",
+      "C) Varizes paraesofágicas.",
+      "D) Mal formação do tipo sequestro pulmonar.",
+      "E) Metástase de melanoma. 36"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 35,
+    "text": "Paciente, 45 anos, assintomática, risco habitual para o câncer de mama. Mamografia de ras-treamento. Com base nas imagens mamográficas, assinale a alternativa correta.",
+    "options": [
+      "A) Calcificações suspeitas, BI-RADS 4, recomendação biópsia percutânea guiada por estere-otaxia.",
+      "B) Calcificações grosseiras (esteatonecrose), BI-RADS 2, recomendação rastreamento.",
+      "C) Calcificações grosseiras (provável esteatonecrose), BI-RADS 3, recomendação controleem 6 meses.",
+      "D) Calcificações suspeitas, BI-RADS 5, recomendação de biópsia excisional, dado o alto riscode malignidade.",
+      "E) Solicitar ressonância magnética, pois os achados mamográficos são sugestivos de carci-noma ductal in situ. 37"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "mama",
+    "topics": [
+      "mama"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 36,
+    "text": "Paciente com 56 anos apresentando nódulo mamário obscurecido na mamografia. As ima-gens fornecidas se referem à ultrassonografia complementar. Assinale a alternativa correta.",
+    "options": [
+      "A) Nódulo sólido com até 3 lobulações, provável fi broadenoma, realizar seguimento ultrasso-nográfico em 6 meses.",
+      "B) Cisto complicado de características provavelmente benignas, seguimento ultrassonográfi-co em 6 meses.",
+      "C) Cisto complicado de características benignas, recomendar rastreamento de rotina.",
+      "D) Nódulo de características suspeitas recomendar biópsia para estudo histopatológico",
+      "E) Exame inconclusivo solicitar mamografia para avaliar necessidade de biópsia 38"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "mama",
+    "topics": [
+      "mama"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 37,
+    "text": "Paciente 70 anos, sem comorbidades. Mamografia de rastreamento em 2023 negativa.Retorna em 2024 para novo exame de rastreamento. Com base nas imagens mamográficas,assinale a alternativa correta.",
+    "options": [
+      "A) Calcificações altamente sugestivas de malignidade, BI-RADS 5, com recomendação debiópsia.",
+      "B) Calcificações redondas agrupadas, BI-RADS 4, com recomendação de biópsia se realcena ressonância magnética.",
+      "C) Calcificações redondas agrupadas, BI-RADS 3, controle mamográfico em 6 meses.",
+      "D) Calcificações redondas agrupadas, BI-RADS 4, com controle evolutivo devido a idade.",
+      "E) Calcificações redondas agrupadas, BI-RADS 4, com recomendação de biópsia. 39"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "mama",
+    "topics": [
+      "mama"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 38,
+    "text": "Mulher de 45 anos, sem antecedente cirúrgico. As imagens mostradas representam respec-tivamente a mamografia e tomossíntese à direita. Com base nas imagens mamográficas,assinale a alternativa correta.",
+    "options": [
+      "A) A assimetria na mama direita não é confirmada na incidência MLO, está entremeada à gor-dura e representa provável parênquima.",
+      "B) A assimetria na mama direita deve ser considerada benigna se estável há 24 meses.",
+      "C) O achado de imagem é suspeito e a principal hipótese diagnóstica é um carcinoma in situcom comedonecrose.",
+      "D) Em uma biópsia percutânea um diagnóstico benigno deve ser considerado discordante doaspecto de imagem.",
+      "E) O achado de imagem é inconclusivo, BIRADS 0 e a recomendação é a ultrassonografiacomplementar. 40"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "mama",
+    "topics": [
+      "mama"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 39,
+    "text": "Homem com 65 anos, com queixa de alteração palpável bilateral e dor à direita. Com base nasimagens mamográficas, assinale a alternativa correta.",
+    "options": [
+      "A) Ginecomastia nodular bilateral, mais proeminente à direita, categoria BIRADS 2.",
+      "B) Ginecomastia bilateral e provável mastite à direita, categoria BIRADS 2.",
+      "C) Exame inconclusivo, categoria BIRADS 0, recomendar ultrassonografia complementar.",
+      "D) Assimetria focal a direita, categoria 0, recomendar compressão seletiva.",
+      "E) Alteração suspeita na mama direita, recomendar biópsia para estudo histopatológico 41"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 40,
+    "text": "Sobre a anatomia prostática em exames de ressonância magnética e a localização das princi-pais patologias na glândula, assinale a alternativa correta.",
+    "options": [
+      "A) A região “A”, indicada pela seta, corresponde ao estroma fibromuscular anterior, o segundolocal mais comum de origem de neoplasias.",
+      "B) A região “B”, indicada pela seta, corresponde à zona periférica, onde usualmente se origi-nam os nódulos hiperplásicos.",
+      "C) A região “C”, indicada pela seta, corresponde à zona periférica, principal local de origemdas neoplasias primárias.",
+      "D) A região “B”, indicada pela seta, corresponde à zona de transição, onde a maior parte dasneoplasias primárias são originadas.",
+      "E) A região “C”, indicada pela seta corresponde à zona de transição, onde usualmente se ori-ginam os nódulos hiperplásicos. 42"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 41,
+    "text": "Recém-nascido, 48 horas de vida, nascido por parto vaginal com uso de fórceps. Apresen-ta discreto abaulamento frontal direita, mas encontra-se clinicamente estável, sem sinais deinstabilidade neurológica. Foi solicitada ultrassonografia transfontanelar inicial para avaliarlesões intracranianas e devido a alteração observada, foi solicitado RM de crânio para maiorelucidação diagnóstica. Qual é o diagnóstico mais provável nas setas vermelhas?",
+    "options": [
+      "A) Hematoma subpial, com características típicas de lesão cortical.",
+      "B) Hemorragia intraventricular grau I.",
+      "C) Hematoma subdural.",
+      "D) Hematoma epidural.",
+      "E) Cisto subgaleal. 43"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk",
+      "pediatria"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 42,
+    "text": "Paciente do sexo feminino, 13 anos, com histórico de atraso no desenvolvimento neuropsi-comotor e dificuldade de aprendizagem desde a infância. É encaminhada para investigaçãodevido ao surgimento de lesões cutâneas. Durante o exame físico, observam-se manchascafé-com-leite em várias regiões do corpo, especialmente no tronco e nas extremidades. Alémdisso, a paciente apresenta nódulos subcutâneos visíveis e palpáveis na face, com caracte-rística de angiofibromas, e fi bromas subungueais nas unhas das mãos. O quadro clínico dapaciente é acompanhado de convulsões frequentes desde os 5 anos, com diagnóstico de sín-drome de West. Sua mãe relata também história familiar positiva para condições semelhantes.Com base nos achados clínicos e radiológicos, qual é o diagnóstico mais provável?",
+    "options": [
+      "A) Esclerose tuberosa (TS",
+      "B) Neurofibromatose tipo 1 (NF1).",
+      "C) Doença de Von Hippel-Lindau (VHL).",
+      "D) Síndrome de Sturge-Weber.",
+      "E) Doença de Cowden. 44"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 43,
+    "text": "Neonato com 7 dias de vida e idade gestacional de 29 semanas apresenta leve distensãoabdominal e episódios transitórios de dessaturação, com queda da saturação até 60%. Foirealizada avaliação abdominal por radiografia anteroposterior em leito e ultrassonografia. Combase no quadro clínico e nos achados radiológicos, assinale a alternativa correta.",
+    "options": [
+      "A) Enterocolite necrosante com perfuração intestinal. As imagens 1 e 2 revelam extenso pneu-moperitônio. A imagem 3 evidencia fl uxo sanguíneo aumentado, achado comum na fase pre-coce dessa condição.",
+      "B) Enterocolite necrosante. As imagens 1 e 2 revelam extensa pneumatose intestinal. A ima-gem 3 evidencia fluxo sanguíneo aumentado, achado comum na fase tardia dessa condição.",
+      "C) Enterocolite necrosante com perfuração intestinal. As imagens 1 e 2 revelam extensopneumoperitônio. A imagem 3 evidencia fl uxo sanguíneo aumentado, achado comum na fasetardia dessa condição.",
+      "D) Enterocolite necrosante. As imagens 1 e 2 evidenciam extenso espessamento parietal dasalças delgadas. A imagem 3 evidencia fl uxo sanguíneo aumentado, achado comum na fasetardia dessa condição.",
+      "E) Enterocolite necrosante. As imagens 1 e 2 revelam pneumatose intestinal. A imagem 3evidencia fluxo sanguíneo aumentado, achado comum na fase precoce dessa condição. 45"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 44,
+    "text": "A partir da análise da imagem, assinale a alternativa que relaciona corretamente os marcosanatômicos e as janelas utilizadas.",
+    "options": [
+      "A) 1 - Quarto ventrículo (fontanela posterolateral); 3 -Terceiro ventrículo (fontanela anterior) e11 - Vermis cerebelar (osso temporal).",
+      "B) 2 - Quarto ventrículo (fontanela posterior); 4 - Sulco caudotalâmico (fontanela anterior) e8 - Lobo temporal (fontanela anterior).",
+      "C) 2 - Cisterna magna (fontanela posterolateral); 3 - Cavo do septo pelúcido (fontanela ante-rior) e 9 - Cisterna interpeduncular (osso temporal).",
+      "D) 3 - Terceiro ventrículo (fontanela anterior); 5 - Plexo coroide (fontanela posterior) e 10 - Pe-dúnculo cerebral (fontanela posterior).",
+      "E) 6 - Corno posterior (fontanela anterior); 7 - Fissura sylviana (fontanela posterior) e 9 - Cis-terna interpeduncular (osso temporal). 46"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 45,
+    "text": "Paciente do sexo masculino, 30 anos, previamente hígido, evolui com cefaleia progressiva, fe-bre e sonolência após uma semana de otalgia à esquerda. Havia sido diagnosticado com otitemédia aguda, mas não aderiu adequadamente ao tratamento antibiótico. A partir dos achadosda ressonância magnética, qual a hipótese diagnóstica mais provável?",
+    "options": [
+      "A) Tumor glioneuronal com degeneração cística.",
+      "B) Encefalite viral por herpes simples.",
+      "C) Cisto aracnoide infectado.",
+      "D) Abscesso piogênico secundário à mastoidite complicada.",
+      "E) Trombose de seio venoso com infarto isquêmico. 47"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 46,
+    "text": "A partir da análise da imagem, assinale a alternativa que relaciona corretamente o achadoradiológico dos crânios infantis e seu respectivo diagnóstico.",
+    "options": [
+      "A) 1 - Fechamento precoce das suturas coronais e escafocefalia.",
+      "B) 2 - Sinal da prata batida e crânio em trevo.",
+      "C) 3 - Deformidade bilateral em “olhos de harlequin” e trigonocefalia.",
+      "D) 4 - Fechamento fisiológico das suturas metópica; 5 - sagital; crânios normais.",
+      "E) 6 - Fechamento precoce das suturas coronais e sagital; crânio em “chapéu de palhaço” -oxicefalia. 48"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "medicina_nuclear",
+    "topics": [
+      "medicina_nuclear"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 47,
+    "text": "Neonato pré-termo, com 26 semanas de idade gestacional, desenvolve desconforto respira-tório intenso nas primeiras horas de vida. Foi realizada avaliação por radiografia e ultrassono-grafia. Considerando o quadro clínico e os achados de imagem, assinale a alternativa correta.",
+    "options": [
+      "A) Doença do déficit de surfactante da prematuridade: (1) Pulmões pouco expandidos, padrãogranular difuso e broncogramas aéreos; (2) Linhas B completamente confluentes white-out.",
+      "B) Taquipneia transitória do recém-nascido: (1) Congestão perihilar bilateral; (2) Pequenaquantidade de líquido subpleural.",
+      "C) Pneumonia neonatal: (1) Consolidações pulmonares irregulares e assimétricas; (2) Conso-lidação pulmonar.",
+      "D) Hérnia diafragmática: (1) Opacidade difusa e bilateral inespecífica; (2) Alças intestinaisinsinuando-se ao tórax.",
+      "E) Síndrome da aspiração meconial: (1) Pulmões com áreas alternadas de atelectasia e hipe-rinsuflação; (2) Pneumotórax. 49"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 48,
+    "text": "Paciente de 10 anos, apresenta cefaleia recorrente. Foi realizada TC de crânio, que demons-trou lesão abaixo demonstrada. Qual a hipótese diagnóstica mais provável?",
+    "options": [
+      "A) Osteoma osteoide.",
+      "B) Displasia fibrosa da calota craniana.",
+      "C) Metástase óssea de neuroblastoma.",
+      "D) Meningioma intraósseo.",
+      "E) Hemangioma ósseo. 50"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 49,
+    "text": "Paciente do sexo masculino, 67 anos, chega ao pronto-socorro com início súbito de afasia ehemiparesia há aproximadamente 3 horas. Foi realizada uma tomografia computadorizada decrânio sem contraste. Qual o achado principal visível na imagem e sua respectiva implicaçãoclínica?",
+    "options": [
+      "A) Cisto aracnoide suprasselar e achado incidental.",
+      "B) Atrofia cortical difusa, sugestiva de demência do tipo Alzheimer.",
+      "C) Hemorragia intraparenquimatosa aguda, sugestiva de AVC hemorrágico.",
+      "D) Calcificação da artéria cerebral média, compatível com ateromatose difusa.",
+      "E) Sinal da artéria cerebral média hiperdensa, indicando trombo intraluminal agudo. 51"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "medicina_nuclear",
+    "topics": [
+      "medicina_nuclear"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 50,
+    "text": "Paciente do sexo feminino, 60 anos, apresenta alterações de comportamento, desinibiçãosocial e linguagem empobrecida há cerca de 1 ano. Foi solicitada ressonância magnética doencéfalo. Com base na análise do caso, assinale a alternativa correta.",
+    "options": [
+      "A) Encefalite herpética.",
+      "B) Doença de Alzheimer.",
+      "C) Demência frontotemporal.",
+      "D) Demência vascular subcortical.",
+      "E) Demência com corpos de Lewy. 52"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 51,
+    "text": "Com base na análise das imagens de tomografia, assinale a alternativa correta.",
+    "options": [
+      "A) Os achados apontados pelas setas inferem perfuração intestinal.",
+      "B) Os achados apontados pelas setas são frequentes nas colites.",
+      "C) Os achados apontados pelas setas podem ter etiologias benignas ou ameaçadoras devida, sendo importante comunicação médica.",
+      "D) Os achados apontados pelas setas são definitivos de abdome agudo vascular avançado.",
+      "E) Os achados apontados pelas setas costumam ser benignos em crianças, enquanto nosadultos sempre requerem intervenção cirúrgica. 53"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 52,
+    "text": "Com base na análise da imagem de tomografia, assinale a alternativa correta.",
+    "options": [
+      "A) A presença de vasos colaterais dilatados no subcutâneo (cabeças de seta) e o padrão deimagem do distúrbio perfusional hepático (setas) sugerem doença cardíaca congestiva avan-çada.",
+      "B) A presença de nódulos subcutâneos (cabeças de seta) e de nódulo hepático hipervascula-rizado (setas) sugerem doença neoplásica metastática.",
+      "C) A presença de vasos colaterais dilatados no subcutâneo (cabeças de seta) e o padrão deimagem do distúrbio perfusional hepático (setas) sugerem oclusão da veia cava superior.",
+      "D) A presença de vasos colaterais dilatados no subcutâneo (cabeças de seta) e o padrão deimagem do distúrbio perfusional hepático (setas) sugerem oclusão das veias hepáticas.",
+      "E) A presença de vasos colaterais dilatados no subcutâneo (cabeças de seta) e o padrão deimagem do distúrbio perfusional hepático (setas) sugerem trombose do ramo portal direito. 54"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 53,
+    "text": "Considerando as imagens de TC apresentadas, qual é a interpretação mais adequada sobrea alteração focal renal?",
+    "options": [
+      "A) Houve aumento significativo da sua atenuação após a injeção do contraste, devendo seravaliada como uma lesão sólida.",
+      "B) As imagens indicam lesão heterogênea e sem realce evidente após a injeção do contraste,sendo adequada, neste caso, a avaliação complementar por ressonância magnética.",
+      "C) Deve ser classificada como Bosniak II.",
+      "D) Deve ser classificada como Bosniak IIF.",
+      "E) Deve ser classificada como Bosniak III. 55"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "abdome",
+    "topics": [
+      "abdome"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 54,
+    "text": "Paciente feminina de 40 anos, sendo investigada por aumento do volume do abdome comvarizes na parede abdominal. Realizada tomografia para avaliação complementar de ultras-sonografia que detectou múltiplos nódulos hepáticos. Paciente previamente hígida que nãoapresenta doenças prévias conhecidas ou antecedente de etilismo. Levando-se em conside-ração as imagens da tomografia, assinale a alternativa correta.",
+    "options": [
+      "A) O fígado apresenta sinais de cirrose com hipertensão portal à tomografia, o que permiteclassificar os nódulos hepáticos segundo o critério do LI-RADS.",
+      "B) Embora os nódulos sejam suspeitos para carcinoma hepatocelular, não há informaçõesclínicas ou tomográficas que permitam a aplicação do LI-RADS.",
+      "C) Os nódulos apresentam características sugestivas de adenomas e a paciente deve serinterrogada sobre o uso de anticoncepcionais orais.",
+      "D) Os achados de imagem permitem considerar a possibildade de hepatopatia de etiologiavascular, não sendo possível aplicar o LI-RADS para classificação dos nódulos.",
+      "E) Deve-se prosseguir a investigação com PET com análogo de somatostatina para pesquisade tumor primário de origem neuroendócrina. 56"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "abdome",
+    "topics": [
+      "abdome",
+      "vascular"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 55,
+    "text": "Paciente do sexo feminino, 41 anos, previamente hígida com episódio de dor abdominal sú-bita no hipocôndrio direito, sem febre ou outros sintomas associados. Medicações de usocontínuo: anticoncepcional oral. Sorologias para hepatites virais negativas. Levando-se emconsideração as imagens da tomografia, assinale a alternativa correta.",
+    "options": [
+      "A) As imagens da tomografia em correlação com a história clínica sugerem a hipótese de abs-cesso hepático.",
+      "B) Os achados de imagem e a história clínica favorecem a possibilidade de carcinoma hepa-tocelular multifocal com hemorragia intralesional.",
+      "C) Os achados de imagem e a história clínica favorecem a possibilidade de adenomas, omaior deles com hemorragia intralesional.",
+      "D) Os achados de imagem favorecem a posssibilidade de hemangiomas hepáticos, o maiordeles com componente hialinizado central.",
+      "E) O diagnóstico diferencial mais provável para o maior nódulo é de angiossarcoma. 57"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "torax",
+    "topics": [
+      "torax"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 56,
+    "text": "Paciente feminina, 69 anos, apresenta-se ao pronto-socorro após queda da própria altura cominversão forçada do tornozelo direito. Ao exame físico, observa-se dor e edema na região domaléolo lateral, com equimose local. A partir da analise das imagens de ressonância magnéti-ca da paciente, assinale a alternativa correta.",
+    "options": [
+      "A) Fratura de Maisonneuve, ruptura sindesmótica completa, ruptura completa do ligamentodeltoide por provável rotação externa.",
+      "B) Fratura da fíbula acima da sindesmose, ruptura completa do deltoide, provável mecanismode rotação externa com dorsiflexão.",
+      "C) Fratura da fíbula na sindesmose e estiramento do talo-fibular anterior, por provável prona-ção e rotação externa.",
+      "D) Fratura da fíbula abaixo da sindesmose, provável mecanismo de supinação-adução.",
+      "E) Lesão do ligamento talo-fabular anterior, sem fratura fibular, por provável inversão do pé. 58"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 57,
+    "text": "Paciente de 36 anos, corredor de longa distância, apresenta dor lateral no joelho direito hátrês semanas, com piora após corrida intensa no dia anterior. A dor se intensifica durante aatividade física e alivia com o repouso. Ao exame físico, observa-se dor à palpação sobre ocôndilo femoral lateral e teste de Ober positivo. Considerando o quadro clínico e as imagensdo paciente, assinale a alternativa correta.",
+    "options": [
+      "A) Síndrome do atrito da pata anserina.",
+      "B) Ruptura meniscal lateral com sinal linear hiperintenso em T2 que se estende até a superfí-cie articular do menisco.",
+      "C) Ruptura parcial do ligamento colateral lateral e edema das fibras na inserção no tubérculode Gerdy.",
+      "D) Conflito do menisco lateral com o trato iliotibial, com edema interposto entre essas estru-turas.",
+      "E) Edema mal definido nos tecidos moles entre a banda iliotibial e o côndilo femoral lateral. 59"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 58,
+    "text": "Paciente de 10 anos, com dor abdominal, febre e leucocitose há 24 horas. Com base na ima-gem e nos achados descritos, qual é a interpretação mais provável?",
+    "options": [
+      "A) Trata-se de linfonodo mesentérico aumentado, com conteúdo central denso e reação infla-matória perilesional",
+      "B) A presença de líquido peritoneal isolado sugere enterite viral autolimitada, sem necessida-de de intervenção",
+      "C) A imagem é compatível com apendicite aguda, sendo o apendicolito um marcador associa-do a maior risco de perfuração",
+      "D) A não compressibilidade do pêndice cecal é um sinal indireto de apendicite",
+      "E) A presença de conteúdo ecogênico sem sombra posterior é sugestiva de parasitose intes-tinal localizada 60"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 59,
+    "text": "Recém-nascido de 30 semanas de idade gestacional, com peso ao nascer de 1.100 g, emuso de suporte ventilatório, foi submetido à ultrassonografia transfontanelar ao 5º dia de vida.O exame evidenciou área hiperecogênica junto ao assoalho do ventrículo lateral direito, semdilatação ventricular associada. Com base na imagem e na classificação de Papile, qual é ograu da hemorragia e qual a conduta mais apropriada neste momento?",
+    "options": [
+      "A) Papile I; conduta expectante com monitorização seriada.",
+      "B) Papile II; indicação de derivação ventricular precoce.",
+      "C) Papile III; conduta cirúrgica imediata.",
+      "D) Papile IV; conduta expectante com monitorização seriada.",
+      "E) Alteração artefatual por interposição de estruturas vasculares; o exame deve ser repetidocom Doppler. 61"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "pediatria",
+    "topics": [
+      "pediatria"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 60,
+    "text": "Considerando a análise da imagem a seguir de um estudo com Doppler colorido, em corteoblíquo na topografia do hilo hepático em exame de rotina e assinale a alternativa correta.",
+    "options": [
+      "A) O fluxo na veia porta é hepatofugal.",
+      "B) O fluxo na veia porta é hepatopetal.",
+      "C) O fluxo na veia porta, demonstrado na imagem, é hepatofugal; portanto, é necessário cor-rigir a configuração invertendo a cor do mapeamento colorido.",
+      "D) Há sinais de hipertensão portal.",
+      "E) A direção do fluxo não pode ser aferida no Doppler colorido. RASCUNHO AO TRANSFERIR ESSAS MARCAÇÕES PARA A FOLHA DE RESPOSTAS,OBSERVE AS INSTRUÇÕES ESPECÍFICAS DADAS NA CAPA DA PROVA.USE CANETA ESFEROGRÁFICA AZUL OU PRETA.01 A B C D E05 A B C D E10 A B C D E03 A B C D E07 A B C D E02 A B C D E06 A B C D E04 A B C D E09 A B C D E08 A B C D E11 A B C D E15 A B C D E20 A B C D E13 A B C D E17 A B C D E12 A B C D E16 A B C D E14 A B C D E19 A B C D E18 A B C D E31 A B C D E35 A B C D E40 A B C D E33 A B C D E37 A B C D E32 A B C D E36 A B C D E34 A B C D E39 A B C D E38 A B C D E41 A B C D E45 A B C D E50 A B C D E43 A B C D E47 A B C D E42 A B C D E46 A B C D E44 A B C D E49 A B C D E48 A B C D E21 A B C D E25 A B C D E30 A B C D E23 A B C D E27 A B C D E22 A B C D E26 A B C D E24 A B C D E29 A B C D E28 A B C D E51 A B C D E55 A B C D E60 A B C D E53 A B C D E57 A B C D E52 A B C D E56 A B C D E54 A B C D E59 A B C D E58 A B C D EFOLHA DE RESPOSTAS(VERSÃO DO CANDIDATO) ATENÇÃO:AGUARDE AUTORIZAÇÃOPARA VIRAR O CADERNO DE PROVA. Questão Gabarito1 C2 C3 D4 D5 D6 D7 C8 D9 D10 A11 D12 D13 C14 A15 A16 A17 D18 E19 D20 D21 A22 B23 C24 C25 C26 A27 C28 C29 E30 E31 D32 C33 E34 C2ª ETAPA PROVA PRÁTICA 2025RADIOLOGIA E DIAGNÓSTICO POR IMAGEMnulada 35 A36 D37 E38 D39 E40 C41 A42 A43 E44 C45 D46 E47 A48 B49 E50 C51 C52 C53 B54 D55 C56 D57 E58 C59 A60 B"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "abdome",
+    "topics": [
+      "abdome"
+    ],
+    "year": 2025,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 1,
+    "text": "Paciente do sexo masculino, 40 anos, com dor lombar direita há algumas horas. Nega históriaSDWROyJLFD\u0003 SUHJUHVVD\u0011\u0003 $QDOLVH\u0003 D\u0003 WRPRJUD¿D\u0003 FRPSXWDGRUL]DGD\u0003 FRP\u0003 FRQWUDVWH\u0003 IDVH\u0003 SRUWDO \u0003realizada no pronto socorro e assinale o diagnóstico mais provável.",
+    "options": [
+      "A) Abscesso renal.",
+      "B) Infarto renal.",
+      "C) Laceração renal.",
+      "D) Pielonefrite aguda.",
+      "E) Tuberculose renal. 4"
+    ],
+    "correct_answer": "B",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 2,
+    "text": "$QDOLVH\u0003D\u0003XOWUDVVRQRJUD¿D\u0003H\u0003WRPRJUD¿D\u0003FRPSXWDGRUL]DGD\u0003VHP\u0003FRQWUDVWH\u0011\u0003Neste caso, assinale a alternativa com o diagnóstico mais provável.",
+    "options": [
+      "A) Abscesso renal.",
+      "B) Cálculo coraliforme bilateral.",
+      "C) Nefrocalcinose medular.",
+      "D) Neoplasia renal bilateral.",
+      "E) Sequela de infecção. 5"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 3,
+    "text": "Paciente do sexo feminino, 27 anos, com quadro de cefaleia recorrente e um episódio de infar-to agudo do miocárdio há 6 meses. Realiza ressonância magnética para investigar uma lesãoQD\u0003DGUHQDO\u0003HVTXHUGD\u0003PHGLQGR\u0003\u0015\u000f\u0016\u0003FP\u000f\u0003TXH\u0003IRL\u0003LQGHWHUPLQDGD\u0003QD\u0003WRPRJUD¿D\u0003FRPSXWDGRUL]DGD\u0003sem contraste (atenuação de 28 UH). Observe as imagens a seguir.1HVWH\u0003FDVR\u000f\u0003p\u0003FRUUHWR\u0003D¿UPDU\u0003TXH\u001d$ \u0003$\u0003LPDJHP\u0003DGPLWH\u0003XP\u0003IHRFURPRFLWRPD\u0011\u00032\u0003GLDJQyVWLFR\u0003SRGH\u0003VHU\u0003FRQ¿UPDGR\u0003FRP\u0003D\u0003GRVDJHP\u0003de metanefrina urinária.% \u0003$\u0003LPDJHP\u0003DGPLWH\u0003XP\u0003DGHQRPD\u0003ULFR\u0003HP\u0003JRUGXUD\u0011\u00032\u0003GLDJQyVWLFR\u0003SRGH\u0003VHU\u0003FRQ¿UPDGR\u0003FRP\u0003D\u0003dosagem de cortisol e aldosterona.",
+    "options": [
+      "C) A imagem admite um mielolipoma. Não é necessário realizar exames laboratoriais adicionais.",
+      "D) A ressonância magnética não diferencia adenoma rico em gordura de lesões agressivas.",
+      "E) A ressonância magnética com washout seria o método indicado para este tipo de avaliação. 6"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 43,
+    "text": "DFLHQWH\u0003GR\u0003VH[R\u0003PDVFXOLQR\u000f\u0003\u0018\u001a\u0003DQRV\u000f\u0003UHDOL]DQGR\u0003H[DPH\u0003GH\u0003WRPRJUD¿D\u0003FRPSXWDGRUL]DGD\u0003VHP\u0003contraste venoso para investigação de dor no hipogástrio. Nega história patológica pregressa.Qual o diagnóstico mais provável da lesão na adrenal direita (atenuação: 3 UH)?",
+    "options": [
+      "A) Adenoma.",
+      "B) Feocromocitoma.",
+      "C) Mielolipoma.",
+      "D) Metástase.",
+      "E) Tumor de origem neural. 7"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "abdome",
+    "topics": [
+      "abdome",
+      "msk",
+      "vascular"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 5,
+    "text": "Observe as imagens a seguir.Assinale a alternativa que apresenta corretamente a estrutura anatômica apontada pela seta.",
+    "options": [
+      "A) Tendão do gastrocnêmio medial.",
+      "B) Tendão do sartório.",
+      "C) Tendão do grácil.",
+      "D) Tendão do semimembranoso.",
+      "E) Tendão do adutor magno. 8"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 63,
+    "text": "DFLHQWH\u0003GH\u0003\u0018\u0013\u0003DQRV\u000f\u0003FRP\u0003GRU\u0003QRV\u0003TXDGULV\u000f\u0003UHDOL]RX\u0003UDGLRJUD¿D\u0003VLPSOHV\u0003GH\u0003EDFLD\u0011\u00032EVHUYH\u0003D\u0003imagem a seguir.Baseado na imagem, quais são os achados de imagem e a hipótese diagnóstica mais provável?",
+    "options": [
+      "A) Acentuação do trabeculado ósseo e expansão óssea na hemibacia esquerda, compatívelcom metástase.",
+      "B) Espessamento cortical, acentuação do trabeculado ósseo e expansão óssea na hemibaciaesquerda, compatível com doença de Paget.",
+      "C) Esclerose difusa na hemibacia esquerda, compatível com osteopetrose.",
+      "D) Lesões líticas esparsas na hemibacia esquerda, compatível com mieloma múltiplo.Textura óssea heterogênea na hemibacia esquerda, compatível com infartos ósseos.",
+      "E) Textura óssea heterogênea na hemibacia esquerda, compatível com infartos ósseos. 9"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 73,
+    "text": "DFLHQWH\u0003GR\u0003VH[R\u0003IHPLQLQR\u000f\u0003\u0016\u001c\u0003DQRV\u000f\u0003DWOHWD\u0003SUR¿VVLRQDO\u0003GH\u0003FRUULGD\u000f\u0003FRP\u0003GRU\u0003QR\u0003TXDGULO\u0011\u0003%DVHD-do nas imagens coronais de ressonância magnética, qual o diagnóstico mais provável?",
+    "options": [
+      "A) Fratura por estresse.",
+      "B) Fratura atípica relacionada a uso crônico de bifosfonato.",
+      "C) Osteonecrose.",
+      "D) Osteoma osteóide.",
+      "E) Sinovite transitória do quadril. 10"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 8,
+    "text": "Homem de 65 anos, realizando estadiamento de carcinoma colorretal recém diagnosticado,com achado de nódulo no rim direito. Observe as imagens a seguir.Neste caso, qual o diagnóstico mais provável?",
+    "options": [
+      "A) Metástase.",
+      "B) Angiomiolipoma.",
+      "C) Carcinoma renal urotelial.",
+      "D) Carcinoma renal do subtipo papilífero.",
+      "E) Carcinoma renal do subtipo células claras. 11"
+    ],
+    "correct_answer": "B",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 9,
+    "text": "Mulher de 33 anos, sem cirurgias prévias, com história de dor pélvica crônica de leve intensi-GDGH\u0003H\u0003FRQVWLSDomR\u000f\u0003DSyV\u0003DYDOLDomR\u0003SRU\u0003XOWUDVVRQRJUD¿D\u0003WUDQVYDJLQDO\u000f\u0003FRP\u0003DFKDGR\u0003GH\u0003LPDJHP\u0003cística, realiza exame de ressonância magnética para complementar a investigação. Observeas imagens a seguir.Neste caso, qual o diagnóstico mais provável?",
+    "options": [
+      "A) Abscesso piogênico.",
+      "B) Adenocarcinoma mucinoso.",
+      "C) Hamartoma cístico.",
+      "D) Neoplasia estromal gastrointestinal.",
+      "E) Teratoma. 12"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 10,
+    "text": "$QDOLVH\u0003DV\u0003LPDJHQV\u0003D\u0003VHJXLU\u0003GH\u0003WRPRJUD¿D\u0003FRPSXWDGRUL]DGD\u0003QRV\u0003SODQRV\u0003D[LDO\u000f\u0003FRURQDO\u0003H\u0003VDJL-tal em projeção de intensidade máxima - MIP.Assinale a alternativa que apresenta corretamente a artéria apontada nas setas das imagens.",
+    "options": [
+      "A) Gastroepiploica direita.",
+      "B) Gastroepiploica esquerda.",
+      "C) Gastroduodenal.",
+      "D) Gástrica direita.",
+      "E) Gástrica esquerda. 13"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 11,
+    "text": "Observe a imagem a seguir.Qual o marco anatômico apontado nas setas?",
+    "options": [
+      "A) Fissura do ligamento venoso.",
+      "B) Fissura do ligamento redondo.",
+      "C) Fissura do ligamento falciforme.",
+      "D) Sulco de Rouviere.",
+      "E) Forame de Winslow. 14"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 12,
+    "text": "Paciente do sexo masculino, com 35 anos de idade, praticante de corrida de rua, relata dorQD\u0003YLULOKD\u0003H\u0003UHJLmR\u0003DQWHULRU\u0003GR\u0003TXDGULO\u000f\u0003SULQFLSDOPHQWH\u0003TXDQGR\u0003HP\u0003ÀH[mR\u0003H\u0003URWDomR\u0003LQWHUQD\u0003RX\u0003abdução. Relata incômodo durante a atividade física e para entrar e sair do carro. Observe asimagens a seguir.Baseado na história clínica e nas imagens apresentadas, assinale a alternativa correta.",
+    "options": [
+      "A) Presença de “os acetabuli” e abaulamento da região anterossuperior da transição cabeça/colo femoral, com aumento do ângulo beta, compatível com impacto femoroacetabular do tipoPINCER.",
+      "B) Presença de “os acetabuli” e abaulamento da região anterossuperior da transição cabeça/colo femoral, com aumento do ângulo alfa, compatível com impacto femoroacetabular do tipoCAM, com sinais de comprometimento condrolabral.",
+      "C) Perda da concavidade da região anterossuperior da transição cabeça/colo femoral, compresença de “os acetabuli” e aumento do ângulo alfa, compatível com displasia do desenvol-vimento do quadril e sinais de comprometimento condrolabral.",
+      "D) Encurtamento do colo femoral e redução do ângulo beta. As deformidades sugerem displa-sia do desenvolvimento dos quadris e podem levar a alterações condrolabrais precoces.",
+      "E) Deformidade morfoestrutural do fêmur proximal, com perda da concavidade de suaregião anterossuperior, compatível com impacto ísquiofemoral e sinais de comprometimentocondrolabral. 15"
+    ],
+    "correct_answer": "B",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 14,
+    "text": "Paciente de 30 anos, relata entorse há 40 dias durante partida de futebol, evoluindo com in-FKDoR\u000f\u0003VHQVDomR\u0003GH\u0003IDOVHLR\u0003H\u0003GRU\u0003ODWHUDO\u000f\u0003SULQFLSDOPHQWH\u0003j\u0003ÀH[mR\u0011\u0003$QDOLVH\u0003DV\u0003LPDJHQV\u0003DSUHVHQ-tadas e assinale a alternativa correta.$ \u00032V\u0003PHQLVFRV\u0003SRVVXHP\u0003¿[DomR\u0003WLELDO\u0003H\u0003YDVFXODUL]DomR\u0003SUHGRPLQDQWHPHQWH\u0003FHQWUDO\u0011\u00031R\u0003FDVR\u0003apresentado estamos diante de uma ruptura radial do corpo do menisco medial, com extrusãoassociada.",
+    "options": [
+      "B) O menisco lateral por ser maior que o medial está mais propenso a lesões, sendo uma dasMXVWL¿FDWLYDV\u0003SDUD\u0003D\u0003OHVmR\u0003ORQJLWXGLQDO\u0003YHUWLFDO\u0003DSUHVHQWDGD\u0003QDV\u0003LPDJHQV\u0011",
+      "C) A lesão do tipo rampa (ramp lesion) apresentada, acomete o corpo do menisco medial etem bom prognóstico, sendo tratada com sutura meniscal via artroscópica.",
+      "D) A zona vermelha mais vascularizada do menisco está nas regiões periféricas. Há rupturaradial do menisco medial acometendo tanto a zona branca quanto vermelha do menisco.( \u0003$\u0003DQFRUDJHP\u0003PHQLVFDO\u0003VH\u0003Gi\u0003DWUDYpV\u0003GH\u0003VXDV\u0003UDt]HV\u000f\u0003FRP\u0003¿[DomR\u0003IHPRUDO\u0011\u00032\u0003FDVR\u0003LOXVWUD\u0003uma clássica lesão horizontal no corpo do menisco medial, devendo ser tratada através demeniscectomia parcial por via artroscópica. 17"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "torax",
+    "topics": [
+      "torax"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 15,
+    "text": "Paciente do sexo masculino, 52 anos, foi admitido na emergência com quadro agudo de con-fusão mental, dispnéia e taquicardia. No exame físico apresentava lesão na região glúteaFRQIRUPH\u0003LPDJHP\u0003D\u0003VHJXLU\u0011\u0003$\u0003WRPRJUD¿D\u0003GH\u0003FUkQLR\u0003UHDOL]DGD\u0003QD\u0003PHVPD\u0003GDWD\u0003QmR\u0003DSUHVHQWDYD\u0003alteração.Neste caso clínico, qual a melhor hipótese diagnóstica?",
+    "options": [
+      "A) Embolia séptica.",
+      "B) Granulomatose com poliangiite (GP",
+      "C) Metástase de melanoma.",
+      "D) Paracoccidioidomicose.",
+      "E) Sarcoma de Kaposi. 18"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 16,
+    "text": "Paciente do sexo masculino com 31 anos, realizou Rx de tórax para concurso o qual apresen-WRX\u0003DOWHUDomR\u000f\u0003VHQGR\u0003VXJHULGR\u0003XPD\u0003WRPRJUD¿D\u0011\u0003&RP\u0003EDVH\u0003QRV\u0003DFKDGRV\u0003GDV\u0003LPDJHQV\u0003D\u0003VHJXLU\u000f\u0003assinale a alternativa correta.",
+    "options": [
+      "A) O achado é de uma massa pulmonar e suspeita de neoplasia.",
+      "B) O achado é compatível com sequestro pulmonar, mais comum em lobos inferiores.",
+      "C) Impactação mucoide brônquica associado a diminuição da vascularização e atenuação, associa-do a aumento de volume do segmento afetado são características de atresia segmentar congênita.",
+      "D) O achado é característico de “dedo em luva” e o diagnóstico é de aspergilose broncopul-monar alérgica.( \u0003+LSHULQVXÀDomR\u0003GR\u0003VHJPHQWR\u0003VXSHULRU\u0003GR\u0003ORER\u0003LQIHULRU\u0003HVTXHUGR\u0003H\u0003RSDFLGDGH\u0003SXOPRQDU\u0003Vy-OLGD\u0003VmR\u0003FDUDFWHUtVWLFDV\u0003GH\u0003HQ¿VHPD\u0003OREDU\u0003FRQJrQLWR\u0011 19"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "torax",
+    "topics": [
+      "torax"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 17,
+    "text": "Mulher, 50 anos, com antecedente de asma, refere sibilos, dispneia e tosse com expectoraçãohá algumas semanas. Realiza TC de tórax com as seguintes imagens.Qual o melhor diagnóstico para o caso?",
+    "options": [
+      "A) Aspergilose broncopulmonar alérgica.",
+      "B) Criptococose.",
+      "C) Doença de Behçet.",
+      "D) Granulomatose com poliangeíte.",
+      "E) Histoplasmose. 20"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "torax",
+    "topics": [
+      "torax"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 18,
+    "text": "Menina de 12 anos, foi trazida ao pronto socorro com queixa de tosse há 1 semana e realizaD\u0003VHJXLQWH\u0003UDGLRJUD¿D\u0003GH\u0003WyUD[\u0011\u0003Em relação às imagens, qual o melhor diagnóstico?",
+    "options": [
+      "A) Pneumonia no lobo pulmonar superior direito.",
+      "B) Pneumonia no lobo pulmonar médio direito.",
+      "C) Pneumonia no lobo pulmonar inferior direito.",
+      "D) Pectus excavatum.",
+      "E) Pectus carinatum. 21"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 21,
+    "text": "Paciente com 69 anos, assintomática, sem fatores de risco, procura serviço de radiologia ma-PiULD\u0003SDUD\u0003UDVWUHDPHQWR\u0003PDPRJUi¿FR\u0003GR\u0003FkQFHU\u0003GH\u0003PDPD\u0003H\u0003DYDOLDomR\u0003GH\u0003LPSODQWHV\u0011\u00035HIHUH\u0003mamoplastia de aumento com inclusão de implantes em 2003 e troca dos implantes por moti-YRV\u0003HVWpWLFRV\u0003HP\u0003\u0015\u0013\u0014\u0016\u0011\u00032EVHUYH\u0003DV\u0003LPDJHQV\u0003GH\u0003PDPRJUD¿D\u0003UHDOL]DGD\u0003SHOD\u0003SDFLHQWH\u0011Em relação aos implantes mamários, assinale a alternativa correta.",
+    "options": [
+      "A) Notam-se sinais compatíveis com ruptura intracapsular bilateral, mais evidente durante amanobra de Eklund.",
+      "B) Notam-se sinais compatíveis com ruptura extracapsular bilateral, com silicone livre adja-cente aos implantes.",
+      "C) Notam-se sinais compatíveis com tela de sustentação anteriormente aos implantes mamários.' \u0003 1RWDP\u0010VH\u0003 FDOFL¿FDo}HV\u0003 JURVVHLUDV\u0003 DQWHULRUPHQWH\u0003 DRV\u0003 LPSODQWHV\u000f\u0003 UHODFLRQDGDV\u0003 j\u0003 FDSVXOD\u0003¿EURVD\u0003SUHJUHVVD\u0011( \u00031RWDP\u0010VH\u0003FDOFL¿FDo}HV\u0003JURVVHLUDV\u0003DQWHULRUPHQWH\u0003DRV\u0003LPSODQWHV\u0003FRPSDWtYHLV\u0003FRP\u0003QHFURVH\u0003gordurosa. 24"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 223,
+    "text": "DFLHQWH\u0003IHPLQLQD\u000f\u0003\u0017\u001c\u0003DQRV\u000f\u0003VXEPHWLGD\u0003D\u0003PDPRJUD¿D\u0003GLDJQyVWLFD\u0003SRU\u0003PDVWDOJLD\u0003H\u0003KLSHUHPLD\u0003mamária à direita. Apresenta risco habitual para câncer de mama. Observe as imagens deexames da paciente.Diante da correlação clínica radiológica, qual o achado radiológico principal, a categoria BI-RADS para o caso e a melhor recomendação?",
+    "options": [
+      "A) Assimetria global na mama direita. Provavelmente constitucional. BI-RADS 2. Rastreamento anual.% \u0003$VVLPHWULD\u0003JOREDO\u0003QD\u0003PDPD\u0003GLUHLWD\u0011\u00033URYiYHO\u0003PDVWLWH\u0011\u0003%,\u00105$'6\u0003\u0015\u0011\u00037HUDSrXWLFD\u0003HVSHFt¿FD\u0011& \u0003$VVLPHWULD\u0003JOREDO\u0003QD\u0003PDPD\u0003GLUHLWD\u0011\u00033URYiYHO\u0003FDUFLQRPD\u0003LQÀDPDWyULR\u0011\u0003%,\u00105$'6\u0003\u0018\u0011\u0003&RUUHOD-ção histológica.",
+      "D) Assimetria global na mama direita. Etiologia indeterminada. BI-RADS 0. Compressão focalH\u0003FRUUHODomR\u0003XOWUDVVRQRJUi¿FD\u0011",
+      "E) Assimetria global na mama direita. Provavelmente benigna. BI-RADS 3. Controle em 6 meses."
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "mama",
+    "topics": [
+      "mama"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 23,
+    "text": "Paciente feminina, 42 anos, alto risco, com achado palpável na mama direita. Observe a ima-gem a seguir.1HVWH\u0003FDVR\u000f\u0003DVVLQDOH\u0003D\u0003DOWHUQDWLYD\u0003FRUUHWD\u0003HP\u0003UHODomR\u0003DRV\u0003DFKDGRV\u000f\u0003FODVVL¿FDomR\u0003H\u0003FRQGXWD\u0011$ \u00031yGXOR\u0003RYDO\u000f\u0003LVRGHQVR\u000f\u0003FLUFXQVFULWR\u0011\u0003%,\u00105$'6\u0003\u0013\u0011\u0003&RUUHODomR\u0003XOWUDVVRQRJUi¿FD\u0011",
+    "options": [
+      "B) Nódulo oval, isodenso, circunscrito. BI-RADS 2. Rastreamento habitual.",
+      "C) Nódulo oval, isodenso, circunscrito. BI-RADS 3. Controle em 6 meses.",
+      "D) Nódulo oval, isodenso, circunscrito. BI-RADS 4. Correlação citológica.",
+      "E) Nódulo oval, isodenso, circunscrito. BI-RADS 4. Correlação histológica. 26"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "mama",
+    "topics": [
+      "mama"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 24,
+    "text": "Paciente feminina, 47 anos, assintomática. Observe a imagem a seguir.Neste caso, assinale a alternativa correta.",
+    "options": [
+      "A) O nódulo da mama direita é suspeito por ser maior.",
+      "B) O nódulo da mama esquerda é oval, isodenso e obscurecido.",
+      "C) Os nódulos são circunscritos, bilaterais e benignos.",
+      "D) O nódulo na mama direita é sugestivo de cisto.",
+      "E) O nódulo da mama direita é hiperdenso e redondo. 27"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 25,
+    "text": "Paciente feminina, 53 anos. Antecedente pessoal de neoplasia mamária, submetida a trata-mento conservador da mama direita há 2 anos. Observe a imagem a seguir.Neste caso, assinale a alternativa correta.",
+    "options": [
+      "A) Nódulo complexo sólido-cístico, BI-RADS 2, provável hematoma em involução.",
+      "B) Nódulo complexo sólido-cístico, BI-RADS 3, controle evolutivo.",
+      "C) Nódulo complexo sólido-cístico, BI-RADS 4, correlação com estudo histológico.' \u00031yGXOR\u0003FRPSOH[R\u0003VyOLGR\u0010FtVWLFR\u000f\u0003%,\u00105$'6\u0003\u0013\u000f\u0003FRUUHODomR\u0003PDPRJUi¿FD\u0011",
+      "E) Nódulo complexo sólido-cístico, BI-RADS 0, correlação com ressonância magnética. 28"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "mama",
+    "topics": [
+      "mama"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 26,
+    "text": "Observe a imagem a seguir.6REUH\u0003D\u0003LPDJHP\u0003DSUHVHQWDGD\u000f\u0003FRQVLGHUH\u0003R\u0003WHPSR\u0003GH\u0003UHÀX[R\u0003GH\u0003\u001b\u0013\u0013\u0003PV\u000f\u0003QHVWH\u0003FDVR\u0003p\u0003FRUUHWR\u0003D¿UPDU\u0003TXH\u001d\u0003",
+    "options": [
+      "A) há sinais de incompetência valvar.",
+      "B) há sinais de trombose aguda.",
+      "C) há sinais de trombose subaguda.",
+      "D) não há sinais de incompetência valvar.( \u0003QmR\u0003p\u0003SRVVtYHO\u0003D¿UPDU\u0003VH\u0003Ki\u0003LQFRPSHWrQFLD\u0003YDOYDU\u0011 29"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 27,
+    "text": "Observe a imagem.Considerando o ponto de estenose em questão, considere que a velocidade pré estenose en-contra-se a 50 cm/s e no ponto de estenose de 140 cm/s, qual o grau de estenose estimada?",
+    "options": [
+      "A) Maior do que 50.",
+      "B) Maior do que 90.",
+      "C) Menor do que 50.",
+      "D) Suboclusão.",
+      "E) Oclusão. 30"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "pediatria",
+    "topics": [
+      "pediatria"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 28,
+    "text": "Criança de 1 ano, chega ao pronto socorro após episódio de queda do trocador com trauma-WLVPR\u0003FUkQLR\u0010HQFHIiOLFR\u0011\u00035HDOL]RX\u0003D\u0003WRPRJUD¿D\u0003GH\u0003FUkQLR\u0003D\u0003VHJXLU\u0011\u0003Qual o diagnóstico radiológico neste caso?",
+    "options": [
+      "A) Coleção subdural.",
+      "B) Coleção epidural.",
+      "C) Lesão Axonal Difusa.",
+      "D) Hemorragia Subaracnoide.",
+      "E) Contusão intraparenquimatosa. 31"
+    ],
+    "correct_answer": "B",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "pediatria",
+    "topics": [
+      "pediatria"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 29,
+    "text": "Considerando-se os tumores do tipo glioma do adulto e o sinal radiológico evidenciado nassequencias de ressonância abaixo, qual o provável tipo tumoral deste paciente?",
+    "options": [
+      "A) Astrocitoma IDH Mutado.",
+      "B) Astrocitoma IDH Selvagem.",
+      "C) Meduloblastoma.",
+      "D) Meningioma.",
+      "E) Oligodendroglioma. 32"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "neurorradiologia",
+    "topics": [
+      "neurorradiologia"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 30,
+    "text": "Homem de 72 anos, iniciou quadro recente de tremores, bradicinesia e ataxia. Realizou estu-do de ressonância magnética em equipamento de 3,0 Tesla que mostrou a “ausência da cau-da Andorinha” no mesencéfalo. Esta ausência (representada na imagem) se relaciona maiscomumente a qual doença?",
+    "options": [
+      "A) Degeneração corticobasal.",
+      "B) Demência por corpúsculos de Lewi.",
+      "C) Doença de Alzheimer.",
+      "D) Doença de Parkinson.",
+      "E) Paralisia Supranuclear Progressiva. 33"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 31,
+    "text": "Mulher de 27 anos, com história de crises convulsivas de difícil controle. Realizou o estudo deressonância apresentado a seguir.$\u0003SDUWLU\u0003GD\u0003LPDJHP\u0003DSUHVHQWDGD\u000f\u0003SRGHPRV\u0003D¿UPDU\u0003TXH\u0003R\u0003HVWXGR\u0003GHPRQVWUD\u001d",
+    "options": [
+      "A) Alzheimer.",
+      "B) Displasia Cortical.",
+      "C) Esclerose Mesial Hipocampal.",
+      "D) Ganglioglioma.",
+      "E) Gangliocitoma."
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 32,
+    "text": "Homem de 42 anos, com história clínica de Von Hippel Lindau, apresentou quadro de cefaleiae ataxia, tendo realizado estudo de ressonância de crânio a seguir.Qual o provável diagnóstico, neste caso?",
+    "options": [
+      "A) Astrocitoma IDH mutado.",
+      "B) Astrocitoma IDH Selvagem.",
+      "C) Ganglioglioma.",
+      "D) Gangliocitoma.",
+      "E) Hemangioblastoma. 34"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 33,
+    "text": "Homem de 27 anos, previamente hígido, apresentou primeiro quadro convulsivo. Realizou oestudo de ressonância a seguir.Neste caso, qual é a doença sugestiva?$ \u00031HXURVt¿OLV\u0011",
+    "options": [
+      "B) Neurobeçhet.",
+      "C) Neurotuberculose.",
+      "D) Neurocisticercose.",
+      "E) Neurocriptococose. 35"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 34,
+    "text": "Analise a imagem abaixo e assinale a alternativa que contém o segmento correto para análise.",
+    "options": [
+      "A) Segmento L1-L4.",
+      "B) Segmento L1-L3.",
+      "C) Segmento L1-L2.",
+      "D) Segmento L1-L4 (L3).",
+      "E) Segmento L3-L4. 36"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 35,
+    "text": "$R\u0003DQDOLVDU\u0003R\u0003H[DPH\u0003GH\u0003XPD\u0003SDFLHQWH\u000f\u0003YRFr\u0003LGHQWL¿FD\u0003D\u0003LPDJHP\u0003GD\u0003FROXQD\u0003GHPRQVWUDGD\u0003DEDL[R\u0011\u0003Qual a provável explicação para os achados?",
+    "options": [
+      "A) Erro de cadastro do peso e altura.",
+      "B) Feixe de aquisição incorreto.",
+      "C) Paciente com baixa estatura.",
+      "D) Paciente com massa óssea muito baixa.",
+      "E) Paciente com obesidade. 37"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 36,
+    "text": "Analise a imagem a seguir.Sobre esta condição, assinale a alternativa correta.",
+    "options": [
+      "A) O útero didelfo ocorre devido à falha na fusão dos ductos de Müller durante o desenvolvi-mento fetal, resultando em dois úteros, dois colos do útero e possivelmente duas vaginas.",
+      "B) O útero didelfo se caracteriza por duas cavidades uterinas separadas, mas um único colodo útero e uma única vagina.& \u0003 0XOKHUHV\u0003 FRP\u0003 ~WHUR\u0003 GLGHOIR\u0003 IUHTXHQWHPHQWH\u0003 DSUHVHQWDP\u0003 GL¿FXOGDGHV\u0003 HP\u0003 HQJUDYLGDU\u0003 H\u000f\u0003quando conseguem, sempre necessitam de cesariana devido à estrutura do útero.",
+      "D) O útero didelfo é uma condição em que as trompas de falópio se fundem, resultando emum único útero com duas cavidades separadas por um septo.",
+      "E) Esta condição é facilmente detectada durante exames de rotina e geralmente não requertratamento, pois não causa complicações para a saúde reprodutiva. 38"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 37,
+    "text": "Analise a imagem a seguir em paciente com dengue.Sobre colecistopatia relacionada à dengue, assinale a alternativa correta.",
+    "options": [
+      "A) A colecistopatia associada à dengue é uma condição em que a vesícula biliar se enche decálculos biliares, necessitando de cirurgia imediata.",
+      "B) A colecistopatia relacionada à dengue revela espessamento da parede da vesícula biliarsem presença de cálculos.",
+      "C) A colecistopatia na dengue é uma manifestação grave que ocorre principalmente devido àinfecção bacteriana secundária da vesícula biliar.",
+      "D) Em casos de colecistopatia associada à dengue, os sintomas comuns incluem dor abdo-minal intensa, febre alta persistente e icterícia, com a necessidade de tratamento antibióticoprolongado.",
+      "E) O tratamento primário para colecistopatia relacionada à dengue envolve a remoção cirúrgi-ca da vesícula biliar para evitar complicações sérias. 39"
+    ],
+    "correct_answer": "B",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 383,
+    "text": "DFLHQWH\u0003VXEPHWLGR\u0003D\u0003XOWUDVVRQRJUD¿D\u0003SDUD\u0003YLJLOkQFLD\u0003GH\u0003FDUFLQRPD\u0003KHSDWRFHOXODU\u0011\u00032EVHUYH\u0003D\u0003imagem a seguir.Assinale a alternativa que melhor descreve a condição deste caso.",
+    "options": [
+      "A) É caracterizada pela formação de múltiplos pequenos aneurismas nas artérias hepáticas.",
+      "B) É uma condição reversível com o uso de anticoagulantes e terapia trombolítica.",
+      "C) É frequentemente assintomática e raramente requer monitoramento ou intervenção médica.",
+      "D) Está associada a uma alta incidência de hemorragia intra-abdominal, exigindo intervençãocirúrgica imediata.",
+      "E) Ocorre devido à obstrução crônica da veia porta, levando à formação de vasos colaterais. 40"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 393,
+    "text": "DFLHQWH\u0003VXEPHWLGR\u0003D\u0003XOWUDVVRQRJUD¿D\u0003SDUD\u0003SHVTXLVD\u0003GH\u0003FiOFXORV\u0003XULQiULRV\u0011\u00032EVHUYH\u0003D\u0003LPDJHP\u0003a seguir.Assinale a alternativa que melhor descreve a condição deste caso.",
+    "options": [
+      "A) É causada por infecções bacterianas crônicas nos rins e tratada com antibióticos.",
+      "B) É detectada através de exames de sangue que mostram níveis elevados de cálcio sérico.",
+      "C) É caracterizada pela presença de depósitos de cálcio no parênquima renal.",
+      "D) O tratamento envolve a remoção cirúrgica dos depósitos de cálcio nos rins.( \u00031mR\u0003HVWi\u0003DVVRFLDGD\u0003D\u0003VLQWRPDV\u0003FOtQLFRV\u0003VLJQL¿FDWLYRV\u0003H\u0003UDUDPHQWH\u0003DIHWD\u0003D\u0003IXQomR\u0003UHQDO\u0011 41"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 40,
+    "text": "Analise a imagem a seguir.Assinale a alternativa que descreve corretamente esses pixels coloridos quando vistos navesícula biliar.",
+    "options": [
+      "A) Aparecem como áreas de hiperecogenicidade uniforme e são típicos de vesícula biliarsaudável.% \u0003,QGLFDP\u0003D\u0003SUHVHQoD\u0003GH\u0003LQÀDPDomR\u0003GD\u0003SDUHGH\u0003GD\u0003YHVtFXOD\u0003ELOLDU\u0003H\u0003VmR\u0003XVDGRV\u0003SDUD\u0003GLDJQRV-ticar colecistite aguda.",
+      "C) São frequentemente observados em cálculos biliares e aparecem como uma sombra acús-tica posterior.' \u00036mR\u0003VLQDLV\u0003GH¿QLWLYRV\u0003GH\u0003PDOLJQLGDGH\u0003QD\u0003YHVtFXOD\u0003ELOLDU\u0003H\u0003UHTXHUHP\u0003LQWHUYHQomR\u0003FLU~UJLFD\u0003imediata.",
+      "E) Ocorrem devido a pequenas superfícies rugosas ou interfaces na vesícula biliar, causandouma aparência cintilante no Doppler colorido. 42"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "abdome",
+    "topics": [
+      "abdome"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 41,
+    "text": "Analise a imagem a seguir de testículo.Assinale a alternativa que descreve corretamente essa condição.",
+    "options": [
+      "A) Acúmulo de líquido ao redor do testículo.",
+      "B) Depósitos de cálcio nos testículos.",
+      "C) Desenvolvimento anormal do testículo.' \u0003,QÀDPDomR\u0003DJXGD\u0003GR\u0003HSLGtGLPR\u0011\u0003",
+      "E) Provável cachumba prévia. 43"
+    ],
+    "correct_answer": "B",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 42,
+    "text": "Analise a imagem a seguir.4XDO\u0003p\u0003D\u0003FODVVL¿FDomR\u0003),*2\u0003PDLV\u0003DGHTXDGD\u0003SDUD\u0003R\u0003PLRPD\u0003DVVLQDODGR\u0003QD\u0003LPDJHP\"\u0003",
+    "options": [
+      "A) 1.",
+      "B) 3.",
+      "C) 5.",
+      "D) 7.",
+      "E) 8. 44"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 43,
+    "text": "Analise a imagem a seguir.Qual é a principal estrutura irrigada pelo vaso apontado pela seta?",
+    "options": [
+      "A) Língua.",
+      "B) Parótida.",
+      "C) Submandibular.",
+      "D) Tireoide.",
+      "E) Timo. 45"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 44,
+    "text": "Analise a imagem a seguir.O vaso apontado pela seta irriga principalmente qual órgão?",
+    "options": [
+      "A) Rim direito.",
+      "B) Rim esquerdo.",
+      "C) Arcos costais.",
+      "D) Pâncreas.",
+      "E) Baço. 46"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 45,
+    "text": "Analise as imagens a seguir.4XDO\u0003p\u0003D\u0003FODVVL¿FDomR\u0003PDLV\u0003DGHTXDGD\u0003SDUD\u0003HVWD\u0003OHVmR\u000f\u0003VHJXQGR\u0003$&5\u00103,5$'6\"",
+    "options": [
+      "A) 1.",
+      "B) 2.",
+      "C) 3.",
+      "D) 4.",
+      "E) 5. 47"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 46,
+    "text": "Analise as imagens a seguir.6REUH\u0003D\u0003FRQGLomR\u0003LGHQWL¿FDGD\u0003QDV\u0003LPDJHQV\u000f\u0003DVVLQDOH\u0003D\u0003DOWHUQDWLYD\u0003FRUUHWD\u0011\u0003\u0003 \u0003",
+    "options": [
+      "A) Ocorre mais frequentemente em mulheres jovens e saudáveis.",
+      "B) O principal fator de risco para o desenvolvimento é a imobilização prolongada.",
+      "C) O uso do meio de contraste iodado é recomendado para o diagnóstico pela TC.",
+      "D) Geralmente é assintomática e só é descoberta incidentalmente em exames de imagemrealizados por outras razões.",
+      "E) Não está associada a um aumento do risco de embolia pulmonar. 48"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 47,
+    "text": "Observe as imagens a seguir.Qual é o diagnóstico mais provável neste caso?",
+    "options": [
+      "A) Agenesia renal.",
+      "B) Ectopia cruzada com fusão.",
+      "C) Ectopia cruzada sem fusão.",
+      "D) Rins em ferradura.",
+      "E) Rins em panqueca. 49"
+    ],
+    "correct_answer": "B",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 48,
+    "text": "Analise as imagens a seguir de uma mulher de 25 anos.Sobre a lesão mais provável neste caso, assinale a alternativa correta.",
+    "options": [
+      "A) A recorrência após ressecção completa é comum, exigindo frequentemente tratamentoadicional.",
+      "B) É frequentemente sintomático, com dor abdominal sendo o sintoma mais comum.",
+      "C) É altamente metastático, com metástases frequentes para o fígado e pulmões.",
+      "D) Deve corresponder a tumor solidocístico pseudopapilar do pâncreas.",
+      "E) O tratamento de escolha é a quimioterapia neoadjuvante seguida de ressecção cirúrgica. 50"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "msk",
+    "topics": [
+      "msk"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 49,
+    "text": "Analise a imagem a seguir.Qual é o segmento apontado pela seta?",
+    "options": [
+      "A) I.",
+      "B) II.",
+      "C) III.",
+      "D) IV.",
+      "E) V. 51"
+    ],
+    "correct_answer": "A",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 50,
+    "text": "Analise a imagem a seguir.Qual é a estrutura apontada pela seta?",
+    "options": [
+      "A) Artéria intercostal direita.",
+      "B) Cruz diafragmática direita.",
+      "C) Cisterna do quilo.",
+      "D) Veia ázigos.",
+      "E) Veia hemiázigos. 52"
+    ],
+    "correct_answer": "C",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 51,
+    "text": "Analise as imagens a seguir.6REUH\u0003D\u0003FRQGLomR\u0003SULQFLSDO\u0003LGHQWL¿FDGD\u0003QDV\u0003LPDJHQV\u000f\u0003SRGH\u0010VH\u0003D¿UPDU\u0003TXH\u001d",
+    "options": [
+      "A) A ruptura é rara e, na maioria dos casos, não necessita de intervenção médica.",
+      "B) A maioria é silenciosa e descoberta em pacientes assintomáticos.",
+      "C) É mais comum em homens jovens e geralmente diagnosticado incidentalmente.' \u0003*HUDOPHQWH\u0003HVWi\u0003DVVRFLDGR\u0003D\u0003GRHQoD\u0003LQÀDPDWyULD\u0003LQWHVWLQDO\u0003H\u0003IUHTXHQWHPHQWH\u0003WUDWDGR\u0003FRP\u0003corticoterapia.",
+      "E) O tratamento de escolha é a quimioterapia, especialmente em casos assintomáticos. 53"
+    ],
+    "correct_answer": "B",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 52,
+    "text": "Analise as imagens a seguir.Qual é a condição mais provável neste caso?",
+    "options": [
+      "A) Apendicite aguda.",
+      "B) Complicação de doença de Crohn.",
+      "C) Neoplasia.",
+      "D) Tumor carcinoide.",
+      "E) Tuberculose. 54"
+    ],
+    "correct_answer": "B",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 53,
+    "text": "Analise a imagem a seguir.Neste caso, assinale a alternativa que apresenta a condição correta.",
+    "options": [
+      "A) A causa mais comum é a perfuração de uma úlcera duodenal, geralmente detectada porXOWUDVVRQRJUD¿D\u0011% \u0003$\u0003ODSDURVFRSLD\u0003GLDJQyVWLFD\u0003UDUDPHQWH\u0003p\u0003XVDGD\u0003SDUD\u0003LGHQWL¿FDU\u0003D\u0003FDXVD\u0003VXEMDFHQWH\u0003HP\u0003FD-sos de etiologia incerta.",
+      "C) d) A manifestação crônica, com sintomas leves e intermitentes, é uma condição comum empacientes idosos.' \u0003(P\u0003SDFLHQWHV\u0003FRP\u0003HVVD\u0003FRQGLomR\u000f\u0003D\u0003UDGLRJUD¿D\u0003DEGRPLQDO\u0003JHUDOPHQWH\u0003QmR\u0003p\u0003H¿FD]\u0003SDUD\u0003detecção de ar livre sob o diafragma.",
+      "E) Pode ocorrer espontaneamente sem perfuração de órgãos viscerais e está frequentementeassociado ao uso de ventilação mecânica. 55"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 54,
+    "text": "Analise a imagem a seguir.Qual é o diagnóstico predominante mais provável neste caso?",
+    "options": [
+      "A) Agenesia pulmonar à direita.",
+      "B) Atelectasia.",
+      "C) Consolidação.",
+      "D) Derrame pleural.",
+      "E) Pneumonia necrotizante. 56"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 55,
+    "text": "Analise a imagem a seguir.Qual é o diagnóstico mais provável neste caso?",
+    "options": [
+      "A) Pneumonia por Klebsiela.",
+      "B) Pneumonia fúngica.",
+      "C) Histiocitose de células de Langerhans.",
+      "D) Esclerose tuberosa.",
+      "E) Tuberculose. 57"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 56,
+    "text": "Analise a imagem a seguir.6REUH\u0003D\u0003GRHQoD\u0003LGHQWL¿FDGD\u0003QHVWH\u0003FDVR\u000f\u0003DVVLQDOH\u0003D\u0003DOWHUQDWLYD\u0003FRUUHWD\u0011\u0003 \u0003 \u0003 \u0003$ \u0003$\u0003UDGLRJUD¿D\u0003GH\u0003WyUD[\u0003IUHTXHQWHPHQWH\u0003PRVWUD\u0003GHVYLR\u0003GD\u0003WUDTXHLD\u0003SDUD\u0003R\u0003ODGR\u0003DIHWDGR\u0003GHYLGR\u0003ao colapso pulmonar.",
+    "options": [
+      "B) É mais frequentemente diagnosticado em pacientes que apresentam um aumento súbito dapressão arterial e edema pulmonar.",
+      "C) É uma condição que se resolve espontaneamente sem a necessidade de intervençãomédica.' \u0003 2V\u0003 DFKDGRV\u0003 UDGLRJUi¿FRV\u0003 LQFOXHP\u0003 KLSHUOXFrQFLD\u0003 GR\u0003 KHPLWyUD[\u0003 DIHWDGR\u0003 H\u0003 GHVYLR\u0003 GDV\u0003estruturas mediastinais para o lado contralateral.",
+      "E) O tratamento padrão é a administração de diuréticos para reduzir o acúmulo de ar nacavidade pleural. 58"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "torax",
+    "topics": [
+      "torax"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 57,
+    "text": "Analise as imagens a seguir.&DVR\u0003IRVVH\u0003IHLWD\u0003WRPRJUD¿D\u0003FRPSXWDGRUL]DGD\u0003VHP\u0003FRQWUDVWH\u000f\u0003TXDO\u0003DFKDGR\u0003VHULD\u0003PDLV\u0003HVSHFt-¿FR\u0003GHVWD\u0003FRQGLomR\"\u0003 \u0003 \u0003 \u0003 \u0003 \u0003 \u0003 \u0003 \u0003 \u0003 \u0003$ \u0003&DOFL¿FDo}HV\u0003H[WHQVDV\u0003QR\u0003kQJXOR\u0003FHUHEHORSRQWLQR\u0011",
+    "options": [
+      "B) Expansão e remodelação do canal auditivo interno com uma lesão com densidade de par-tes moles.& \u0003/HVmR\u0003KLSRGHQVD\u0003FRP\u0003HIHLWR\u0003GH\u0003PDVVD\u0003VLJQL¿FDWLYR\u0003VREUH\u0003R\u0003FHUHEHOR\u0003H\u0003R\u0003WURQFR\u0003HQFHIiOLFR\u0011",
+      "D) Presença de múltiplas lesões hiperdensas bilaterais nos hemisférios cerebrais.",
+      "E) Dilatação dos ventrículos laterais sem massa visível no ângulo cerebelopontino. 59"
+    ],
+    "correct_answer": "B",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 58,
+    "text": "Analise a imagem de uma criança de 11 anos, apresentando dor anterior ao chutar bola.6REUH\u0003RV\u0003DFKDGRV\u0003UDGLRJUi¿FRV\u0003H\u0003FOtQLFRV\u0003GHVVD\u0003FRQGLomR\u000f\u0003DVVLQDOH\u0003D\u0003DOWHUQDWLYD\u0003FRUUHWD\u0011$ \u0003$\u0003GRHQoD\u0003p\u0003FDUDFWHUL]DGD\u0003SRU\u0003XPD\u0003IUDWXUD\u0003GR\u0003SODW{\u0003WLELDO\u0003YLVtYHO\u0003HP\u0003UDGLRJUD¿DV\u0003VLPSOHV\u0011",
+    "options": [
+      "B) A doença geralmente afeta adultos jovens e está associada a artrite degenerativa precoce.",
+      "C) A ressonância magnética é o exame de escolha e mostra uma ruptura completa do tendãopatelar.",
+      "D) O tratamento padrão inclui imobilização completa da perna afetada por pelo menos 6 meses.( \u00032\u0003H[DPH\u0003UDGLRJUi¿FR\u0003SRGH\u0003UHYHODU\u0003IUDJPHQWDomR\u0003H\u0003HOHYDomR\u0003GD\u0003WXEHURVLGDGH\u0003WLELDO\u0003DQWHULRU\u0011 60"
+    ],
+    "correct_answer": "E",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "pediatria",
+    "topics": [
+      "pediatria"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 59,
+    "text": "Analise as imagens a seguir.Qual é o diagnóstico mais provável, neste caso?",
+    "options": [
+      "A) Adenoma.",
+      "B) Carcinoma hepatocelular.",
+      "C) Hemangioma.",
+      "D) Hiperplasia nodular focal.",
+      "E) Nódulo displásicos. 61"
+    ],
+    "correct_answer": "D",
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  },
+  {
+    "number": 60,
+    "text": "Analise a imagem a seguir.O ligamento apontado pela seta é vestigial a qual estrutura?",
+    "options": [
+      "A) Ducto venoso.",
+      "B) Ducto arterioso.",
+      "C) Veia cava esquerda.",
+      "D) Veia porta.",
+      "E) Veia hepática esquerda. Questão Gabarito1 B2 C3 A4 A5 E6 B7 A8 B9 C10 E11 D12 B13 C14 D15 A16 C17 A18 D19 E20 D21 D22 C23 A24 E25 D26 A27 A28 B29 A30 D31 C32 E33 D34 E35 A36 A37 B38 E39 C40 E41 B42 A43 D44 A45 E46 C47 B48 D49 A50 C51 B52 B53 E54 D55 E56 D57 B58 E59 D60 AGABARITO PRELIMINAR2ª ETAPA PROVA PRÁTICA 2024RADIOLOGIA E DIAGNÓSTICO POR IMAGEM(60 QUESTÕES)"
+    ],
+    "correct_answer": null,
+    "has_image": false,
+    "image_base64": null,
+    "explanation": null,
+    "topic": "geral",
+    "topics": [
+      "geral"
+    ],
+    "year": 2024,
+    "specialty": "RDDI"
+  }
+]
