@@ -818,7 +818,7 @@ def chat(req: ChatRequest):
             model=model,
             messages=messages,
             temperature=0.3,
-            max_completion_tokens=1500,
+            max_completion_tokens=2000,
         )
         answer = response.choices[0].message.content
         tokens_used = response.usage.total_tokens if response.usage else 0
