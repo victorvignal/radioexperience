@@ -48,10 +48,45 @@ from openai import OpenAI
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
 import logging
+import json
+import uuid
 import httpx
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("aria")
+# ── Rate Limiter ──────────────────────────────────────────────────────────────
+limiter = Limiter(key_func=get_remote_address, default_limits=["30/minute"])
+
+# ── Structured Logging ───────────────────────────────────────────────────────
+class StructuredLogger:
+    def __init__(self, name):
+        self.logger = logging.getLogger(name)
+        self.logger.setLevel(logging.INFO)
+
+    def _format(self, level, msg, **kwargs):
+        return {
+            "level": level,
+            "msg": msg,
+            "service": "aria-backend",
+            "time": datetime.now(timezone.utc).isoformat(),
+            **kwargs,
+        }
+
+    def info(self, msg, **kwargs):
+        self.logger.info(json.dumps(self._format("info", msg, **kwargs)))
+
+    def warning(self, msg, **kwargs):
+        self.logger.warning(json.dumps(self._format("warning", msg, **kwargs)))
+
+    def error(self, msg, **kwargs):
+        self.logger.error(json.dumps(self._format("error", msg, **kwargs)))
+
+    def debug(self, msg, **kwargs):
+        self.logger.debug(json.dumps(self._format("debug", msg, **kwargs)))
+
+logger = StructuredLogger("aria")
 
 # Load env from parent directory
 env_path = Path(__file__).parent.parent / ".env"
@@ -108,7 +143,9 @@ def search_similar_images(image_b64, top_k=5):
 
 
 # ── App ──
-app = FastAPI(title="ARIA API", version="1.0.0")
+app = FastAPI(title="ARIA API", version="1.1.0")
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
@@ -125,11 +162,45 @@ app.add_middleware(
         "http://127.0.0.1:3000",
         "http://127.0.0.1:4173",
     ],
-    allow_origin_regex=r"https://.*\.(github\.io|railway\.app|vercel\.app|vercel\.co|netlify\.app|vercel\.sh)$",
+    # Regex curinga removido — apenas origens explícitas
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# ── Auth Dependency (Supabase JWT) ───────────────────────────────────────────
+def verify_supabase_token(authorization: str = None) -> dict | None:
+    """Verify Supabase JWT and return user info. Returns None if no auth (public endpoint)."""
+    if not authorization:
+        return None
+    try:
+        scheme, token = authorization.split(" ", 1)
+        if scheme.lower() != "bearer":
+            return None
+        # Verify with Supabase
+        supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+        supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
+        resp = httpx.get(
+            f"{supabase_url}/auth/v1/user",
+            headers={"Authorization": f"Bearer {token}", "apikey": supabase_key or ""},
+            timeout=10,
+        )
+        if resp.status_code == 200:
+            return resp.json()
+        return None
+    except Exception:
+        return None
+
+
+# ── Retry Decorators ─────────────────────────────────────────────────────────
+def with_retry(exceptions, max_attempts=3):
+    return retry(
+        retry=retry_if_exception_type(exceptions),
+        stop=stop_after_attempt(max_attempts),
+        wait=wait_exponential(multiplier=1, min=2, max=10),
+        reraise=True,
+    )
+
 
 # ── Models ──
 class ChatRequest(BaseModel):
@@ -247,17 +318,50 @@ Termine com regra mental, pegadinha, checklist ou próximo passo prático.
 # ── Routes ──
 @app.get("/health")
 def health():
+    """Deep health check — valida Qdrant, OpenAI e colecao."""
+    checks = {}
+    overall_ok = True
+
+    # 1. Qdrant connectivity
     try:
         cols = qdrant.get_collections()
-        count = qdrant.count(collection_name=COLLECTION).count
-        return {
-            "status": "ok",
-            "collection": COLLECTION,
-            "documents_indexed": count,
-            "collections": [c.name for c in cols.collections],
-        }
+        checks["qdrant"] = {"status": "ok", "collections": [c.name for c in cols.collections]}
     except Exception as e:
-        return {"status": "error", "detail": str(e)}
+        checks["qdrant"] = {"status": "error", "detail": str(e)}
+        overall_ok = False
+
+    # 2. Collection count
+    try:
+        count = qdrant.count(collection_name=COLLECTION).count
+        checks["qdrant"]["documents_indexed"] = count
+        if count == 0:
+            checks["qdrant"]["warning"] = "Colecao vazia"
+    except Exception as e:
+        checks["qdrant"]["count_error"] = str(e)
+        overall_ok = False
+
+    # 3. OpenAI API key
+    try:
+        openai_client.models.list(limit=1)
+        checks["openai"] = {"status": "ok"}
+    except Exception as e:
+        checks["openai"] = {"status": "error", "detail": str(e)}
+        overall_ok = False
+
+    # 4. Supabase connectivity
+    try:
+        supabase_url = os.getenv("SUPABASE_URL")
+        supabase_key = os.getenv("SUPABASE_SERVICE_KEY")
+        if supabase_url and supabase_key:
+            r = httpx.get(f"{supabase_url}/rest/v1/shifts?select=id&limit=1", headers={"apikey": supabase_key, "Authorization": f"Bearer {supabase_key}"}, timeout=10)
+            checks["supabase"] = {"status": "ok" if r.status_code < 500 else "degraded"}
+        else:
+            checks["supabase"] = {"status": "not_configured"}
+    except Exception as e:
+        checks["supabase"] = {"status": "error", "detail": str(e)}
+
+    status_code = 200 if overall_ok else 503
+    return {"status": "ok" if overall_ok else "degraded", "checks": checks}, status_code
 
 
 @app.get("/specialties")
@@ -617,8 +721,21 @@ def list_batches():
 
 
 @app.post("/chat", response_model=ChatResponse)
-def chat(req: ChatRequest):
-    logger.info(f"Chat request: question_len={len(req.question)}, top_k={req.top_k}, specialty={req.specialty}, has_image={bool(req.image_base64)}")
+@limiter.limit("60/minute")
+def chat(req: ChatRequest, authorization: str = None):
+    request_id = str(uuid.uuid4())
+    user = verify_supabase_token(authorization)
+    logger.info(
+        f"Chat request",
+        request_id=request_id,
+        user_id=user.get("id") if user else None,
+        question_len=len(req.question),
+        top_k=req.top_k,
+        specialty=req.specialty,
+        has_image=bool(req.image_base64),
+    )
+    # Validate input
+    req.validate_question()
 
     # 0. If image: first describe it to enhance the search query
     search_query = req.question
