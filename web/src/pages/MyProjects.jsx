@@ -356,14 +356,16 @@ export default function MyProjects() {
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
 
-      // Fetch study projects (drafts saved in localStorage or a separate table)
-      // For now, load from localStorage
-      const savedProjects = JSON.parse(localStorage.getItem('studyProjects') || '[]')
-        .filter(p => p.userId === user.id)
+      // Fetch study projects from Supabase (synced across devices)
+      const { data: studyData } = await supabase
+        .from('study_projects')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
 
       const allProjects = [
         ...(postsData || []).map(p => ({ ...p, source: 'post' })),
-        ...savedProjects.map(p => ({ ...p, source: 'study' })),
+        ...(studyData || []).map(p => ({ ...p, source: 'study' })),
       ]
 
       setProjects(allProjects)
@@ -389,12 +391,10 @@ export default function MyProjects() {
   const postProjects = projects.filter(p => p.source === 'post')
 
   const handleDeleteProject = async (project) => {
-    if (project.source === 'study') {
-      // Remove from localStorage
-      const stored = JSON.parse(localStorage.getItem('studyProjects') || '[]')
-      const updated = stored.filter(p => p.localId !== project.localId)
-      localStorage.setItem('studyProjects', JSON.stringify(updated))
-      setProjects(prev => prev.filter(p => p.localId !== project.localId))
+    if (project.source === 'study' && project.id) {
+      // Delete from Supabase
+      await supabase.from('study_projects').delete().eq('id', project.id)
+      setProjects(prev => prev.filter(p => p.id !== project.id))
     } else if (project.source === 'post' && project.id) {
       // Delete from Supabase
       await supabase.from('posts').delete().eq('id', project.id)

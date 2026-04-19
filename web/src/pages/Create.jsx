@@ -853,19 +853,14 @@ export default function Create() {
     if (!user || !generatedContent) return
     setSavingProject(true)
     try {
-      const project = {
-        localId: `study_${Date.now()}`,
-        userId: user.id,
+      await supabase.from('study_projects').insert({
+        user_id: user.id,
         title: topic.trim(),
         content: editedContent,
-        type: template,
+        template,
         specialty,
         level,
-        created_at: new Date().toISOString(),
-      }
-      const existing = JSON.parse(localStorage.getItem('studyProjects') || '[]')
-      existing.push(project)
-      localStorage.setItem('studyProjects', JSON.stringify(existing))
+      })
       setSavingProject(false)
       navigate('/meus-projetos')
     } catch (e) {
