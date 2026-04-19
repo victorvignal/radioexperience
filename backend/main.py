@@ -751,7 +751,11 @@ def chat(req: ChatRequest, authorization: str = None):
         has_image=bool(req.image_base64),
     )
     # Validate input
-    req.validate_question()
+    try:
+        req.validate_question()
+    except ValueError as e:
+        logger.warning(f"Validation error: {e}")
+        raise HTTPException(status_code=422, detail=str(e))
 
     # 0. If image: first describe it to enhance the search query
     search_query = req.question
