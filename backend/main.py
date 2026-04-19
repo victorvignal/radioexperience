@@ -41,7 +41,7 @@ import io
 from datetime import datetime, timezone
 from pathlib import Path
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi import FastAPI, HTTPException, UploadFile, File, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
@@ -738,7 +738,7 @@ def list_batches():
 
 @app.post("/chat", response_model=ChatResponse)
 @limiter.limit("60/minute")
-def chat(req: ChatRequest, authorization: str = None):
+def chat(request: Request, req: ChatRequest, authorization: str = None):
     request_id = str(uuid.uuid4())
     user = verify_supabase_token(authorization)
     logger.info(
