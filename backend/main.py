@@ -961,7 +961,7 @@ async def chat_stream(request: Request, req: ChatRequest, authorization: str = N
 
 @app.post("/chat", response_model=ChatResponse)
 @limiter.limit("60/minute")
-async def chat(req: ChatRequest, authorization: str = None):
+async def chat(request: Request, req: ChatRequest, authorization: str = None):
     """Non-streaming fallback for /chat — mirrors the RAG logic of the streaming version."""
     request_id = str(uuid.uuid4())
     user = await verify_supabase_token(authorization)
