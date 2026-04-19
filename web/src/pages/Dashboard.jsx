@@ -1527,7 +1527,7 @@ export default function Dashboard() {
       {/* ═══════ MOBILE LAYOUT (<=1100px) ═══════ */}
       <div className="db-mobile" style={{
         position:'relative', zIndex:1,
-        height:'100vh', width:'100vw',
+        height:'100dvh', width:'100vw',
         display:'none',
         flexDirection:'column',
         padding: '12px 16px 24px',
