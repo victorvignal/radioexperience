@@ -41,7 +41,8 @@ import io
 from datetime import datetime, timezone
 from pathlib import Path
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, UploadFile, File, Request, StreamingResponse, JSONResponse
+from fastapi import FastAPI, HTTPException, UploadFile, File, Request
+from starlette.responses import StreamingResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from openai import OpenAI
