@@ -98,6 +98,17 @@ export default function AriaChat() {
     }
   }, [messages]);
 
+  // Persist immediately when tab becomes hidden (before unmount)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden' && messages.length > 0) {
+        saveStoredMessages(messages);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [messages]);
+
   const scrollToBottom = () => {
     if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight;
   };
