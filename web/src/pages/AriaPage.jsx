@@ -1149,7 +1149,6 @@ export default function AriaPage() {
         >
           {!loadingChats && activeSession && (
             <ChatPanel
-              key={activeSession.id}
               session={activeSession}
               onFirstMessage={handleFirstMessage}
             />
