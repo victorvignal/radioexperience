@@ -87,6 +87,9 @@ export default function AriaChat() {
   const [image, setImage] = useState(null); // { file, preview }
   const chatRef = useRef(null);
   const fileInputRef = useRef(null);
+  const [streamText, setStreamText] = useState('');
+  const [streamSources, setStreamSources] = useState([]);
+  const abortRef = useRef(null);
 
   // persist messages on change
   useEffect(() => {
@@ -101,7 +104,7 @@ export default function AriaChat() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, busy]);
+  }, [messages, busy, streamText]);
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
@@ -123,6 +126,12 @@ export default function AriaChat() {
     const userMsg = { role: "user", text: q, image: sentImage?.preview || null };
     setMessages(prev => [...prev, userMsg]);
 
+    const abortController = new AbortController();
+    abortRef.current = abortController;
+
+    // Streaming placeholder message
+    setMessages(prev => [...prev, { role: "bot", text: "", _streaming: true }]);
+
     try {
       const body = {
         question: q || "Analise esta imagem e descreva os achados radiológicos.",
@@ -135,22 +144,79 @@ export default function AriaChat() {
         body.image_base64 = base64Pure;
       }
 
-      const res = await fetch(API_URL, {
+      const streamUrl = API_URL.replace('/chat', '/chat/stream') + (API_URL === DEFAULT_API ? '/stream' : '');
+      const res = await fetch(streamUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
+        signal: abortController.signal,
       });
+
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        setMessages(prev => [...prev, { role: "bot", text: `Erro: ${err.detail || "Falha na conexão"}` }]);
+        setMessages(prev => {
+          const filtered = prev.filter(m => !m._streaming);
+          return [...filtered, { role: "bot", text: `Erro: ${err.detail || "Falha na conexão"}` }];
+        });
       } else {
-        const data = await res.json();
-        setMessages(prev => [...prev, { role: "bot", text: data.answer, sources: data.sources }]);
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let finalText = "";
+        let finalSources = [];
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || "";
+
+          for (const line of lines) {
+            if (line.startsWith('event: ')) {
+              const eventType = line.slice(7).trim();
+              if (eventType === 'done') {
+                // Done event — set final text and sources
+                setMessages(prev => prev.map(m =>
+                  m._streaming ? { ...m, text: finalText, sources: finalSources, _streaming: false } : m
+                ));
+              }
+            } else if (line.startsWith('data: ')) {
+              const rawData = line.slice(6).trim();
+              try {
+                const data = JSON.parse(rawData);
+                if (data.token !== undefined) {
+                  finalText += data.token;
+                  setMessages(prev => prev.map(m =>
+                    m._streaming ? { ...m, text: finalText } : m
+                  ));
+                }
+                if (data.sources !== undefined) {
+                  finalSources = data.sources;
+                }
+              } catch {}
+            }
+          }
+        }
+
+        // Finalize — ensure the streaming message is complete
+        setMessages(prev => prev.map(m =>
+          m._streaming ? { ...m, text: finalText, sources: finalSources, _streaming: false } : m
+        ));
       }
-    } catch {
-      setMessages(prev => [...prev, { role: "bot", text: "Não foi possível conectar ao servidor ARIA." }]);
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        setMessages(prev => prev.filter(m => !m._streaming));
+      } else {
+        setMessages(prev => {
+          const filtered = prev.filter(m => !m._streaming);
+          return [...filtered, { role: "bot", text: "Não foi possível conectar ao servidor ARIA." }];
+        });
+      }
     }
     setBusy(false);
+    abortRef.current = null;
   };
 
   const handleKey = (e) => {

@@ -41,9 +41,9 @@ import io
 from datetime import datetime, timezone
 from pathlib import Path
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, UploadFile, File, Request
+from fastapi import FastAPI, HTTPException, UploadFile, File, Request, StreamingResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 from openai import OpenAI
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
@@ -56,6 +56,7 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from contextlib import asynccontextmanager
 
 # ── Rate Limiter ──────────────────────────────────────────────────────────────
 limiter = Limiter(key_func=get_remote_address, default_limits=["30/minute"])
@@ -103,6 +104,38 @@ COLLECTION = os.getenv("QDRANT_COLLECTION", "radioexperience_knowledge")
 EMBED_MODEL = os.getenv("OPENAI_EMBED_MODEL", "text-embedding-3-small")
 MIN_RELEVANCE_SCORE = float(os.getenv("MIN_RELEVANCE_SCORE", "0.55"))
 
+# ── Shared async HTTP client ──────────────────────────────────────────────────
+_http_client: httpx.AsyncClient | None = None
+
+async def get_http_client() -> httpx.AsyncClient:
+    global _http_client
+    if _http_client is None:
+        _http_client = httpx.AsyncClient(timeout=httpx.Timeout(30.0, connect=10.0))
+    return _http_client
+
+
+# ── Lifespan: startup/shutdown ────────────────────────────────────────────────
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    logger.info("ARIA backend starting", version="1.1.0")
+    try:
+        openai_client.models.list(limit=1)
+        logger.info("OpenAI API: ok")
+    except Exception as e:
+        logger.error(f"OpenAI API verification failed: {e}")
+    try:
+        qdrant.get_collections()
+        logger.info("Qdrant: ok")
+    except Exception as e:
+        logger.error(f"Qdrant connection failed: {e}")
+    yield
+    # Shutdown: close HTTP client
+    if _http_client:
+        await _http_client.aclose()
+        _http_client = None
+    logger.info("ARIA backend shutdown complete")
+
 
 def search_similar_images(image_b64, top_k=5):
     """Busca imagens similares no Qdrant via BiomedCLIP (HF Inference API)."""
@@ -144,7 +177,7 @@ def search_similar_images(image_b64, top_k=5):
 
 
 # ── App ──
-app = FastAPI(title="ARIA API", version="1.1.0")
+app = FastAPI(title="ARIA API", version="1.1.0", lifespan=lifespan)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -220,20 +253,23 @@ def _qdrant_search_with_retry(**kwargs):
 
 # ── Models ──
 class ChatRequest(BaseModel):
-    question: str
-    top_k: int = 10
-    specialty: str | None = None
-    image_base64: str | None = None  # base64 encoded image
+    model_config = ConfigDict(str_strip_whitespace=True)
 
-    def validate_question(self):
-        if not self.question or not self.question.strip():
+    question: str = Field(..., min_length=1, max_length=2000)
+    top_k: int = Field(default=10, ge=1, le=20)
+    specialty: str | None = Field(default=None, max_length=100)
+    image_base64: str | None = Field(default=None, max_length=10_000_000)  # ~10MB max
+
+    @field_validator("question")
+    @classmethod
+    def question_not_empty(cls, v: str) -> str:
+        if not v or not v.strip():
             raise ValueError("Question cannot be empty")
-        if len(self.question) > 2000:
-            raise ValueError("Question too long (max 2000 characters)")
-        if self.top_k < 1 or self.top_k > 20:
-            raise ValueError("top_k must be between 1 and 20")
+        return v.strip()
 
 class Source(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     title: str
     page_start: int | None = None
     page_end: int | None = None
@@ -736,43 +772,35 @@ def list_batches():
     return {"batches": list(batches.values()), "total_shifts": len(shifts)}
 
 
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/chat/stream")
 @limiter.limit("60/minute")
-def chat(request: Request, req: ChatRequest, authorization: str = None):
+async def chat_stream(request: Request, req: ChatRequest, authorization: str = None):
+    """Streaming version of /chat — yields SSE tokens for real-time display."""
     request_id = str(uuid.uuid4())
-    user = verify_supabase_token(authorization)
+    user = await verify_supabase_token(authorization)
     logger.info(
-        f"Chat request",
+        "Chat stream request",
         request_id=request_id,
         user_id=user.get("id") if user else None,
         question_len=len(req.question),
-        top_k=req.top_k,
-        specialty=req.specialty,
         has_image=bool(req.image_base64),
     )
-    # Validate input
-    try:
-        req.validate_question()
-    except ValueError as e:
-        logger.warning(f"Validation error: {e}")
-        raise HTTPException(status_code=422, detail=str(e))
 
-    # 0. If image: first describe it to enhance the search query
+    # 0. Image description (sync OpenAI client is thread-safe)
     search_query = req.question
     image_description = None
     image_context = ""
     image_sources = []
     if req.image_base64:
-        # Aceita base64 puro ou data URL completo (data:image/...;base64,XXX)
         raw_b64 = req.image_base64
         if raw_b64.startswith('data:'):
             raw_b64 = raw_b64.split(',', 1)[1] if ',' in raw_b64 else raw_b64
         image_data_url = f"data:image/jpeg;base64,{raw_b64}"
         try:
             desc_response = openai_client.chat.completions.create(
-                model="gpt-5.4-mini",
+                model="gpt-4o-mini",
                 messages=[
-                    {"role": "system", "content": "You are a radiology education assistant. Describe the imaging findings visible in this medical image for educational purposes. Include: imaging modality, anatomical region, and visible findings. This is for a radiology study platform."},
+                    {"role": "system", "content": "You are a radiology education assistant. Describe the imaging findings visible in this medical image for educational purposes."},
                     {"role": "user", "content": [
                         {"type": "text", "text": "Describe the imaging findings in this medical image for educational purposes:"},
                         {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
@@ -782,25 +810,22 @@ def chat(request: Request, req: ChatRequest, authorization: str = None):
                 max_completion_tokens=500,
             )
             image_description = desc_response.choices[0].message.content
-            # Combine user question with image description for better search
             search_query = f"{req.question}\n\nAchados da imagem: {image_description}"
-            logger.info(f"Image description: {image_description[:200]}...")
         except Exception as e:
-            logger.warning(f"Image description failed: {e}, falling back to text-only search")
+            logger.warning(f"Image description failed: {e}")
 
-        # 0.5 BiomedCLIP: buscar imagens similares e contexto textual
         try:
             image_context, image_sources = search_similar_images(req.image_base64, top_k=5)
         except Exception as e:
             logger.warning(f"BiomedCLIP search failed: {e}")
 
-    # 1. Embed the question (enhanced with image description if present)
+    # 1. Embed
     try:
         embedding = _embed_with_retry(search_query)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Embedding error: {e}")
 
-    # 2. Search Qdrant (semantic)
+    # 2. Search Qdrant
     query_filter = None
     if req.specialty:
         from qdrant_client.models import FieldCondition, MatchValue, Filter
@@ -813,66 +838,46 @@ def chat(request: Request, req: ChatRequest, authorization: str = None):
         results = _qdrant_search_with_retry(
             collection_name=COLLECTION,
             query=embedding,
-            limit=max(req.top_k, 50),  # fetch extra for keyword re-ranking
+            limit=max(req.top_k, 50),
             query_filter=query_filter,
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Search error: {e}")
 
-    # 2.5. Hybrid re-ranking: keyword boost + secondary search
+    # 2.5 Hybrid re-ranking
     import re
     stopwords = {"o", "a", "os", "as", "de", "da", "do", "das", "dos", "em", "na", "no",
                  "que", "e", "é", "um", "uma", "com", "por", "para", "se", "qual", "quais",
                  "como", "sao", "são", "este", "esta", "isso", "esse", "essa", "mais", "menos",
                  "sobre", "entre", "seu", "sua", "seus", "suas", "pelo", "pela", "onde", "quando",
-                 "paciente", "como", "quando", "onde", "isso", "aquele", "aquela", "tais", "tipo"}
+                 "paciente", "tipo"}
     words = re.findall(r'\b[a-záàâãéèêíïóôõöúçñ]{4,}\b', req.question.lower())
     key_terms = [w for w in words if w not in stopwords]
-    
-    # Extract 2-word phrases for exact matching
     question_words = re.findall(r'\b[a-záàâãéèêíïóôõöúçñ]+\b', req.question.lower())
-    bigrams = []
-    for i in range(len(question_words) - 1):
-        if question_words[i] not in stopwords and question_words[i+1] not in stopwords:
-            bigrams.append(f"{question_words[i]} {question_words[i+1]}")
+    bigrams = [f"{question_words[i]} {question_words[i+1]}"
+               for i in range(len(question_words)-1)
+               if question_words[i] not in stopwords and question_words[i+1] not in stopwords]
 
-    # Secondary search: embed key terms only (catches specific terms the full question might miss)
     seen_ids = {hit.id for hit in results.points}
     if key_terms:
         try:
-            focused_query = " ".join(key_terms[:5])  # top 5 key terms
-            focused_emb = _embed_with_retry(focused_query)
+            focused_emb = _embed_with_retry(" ".join(key_terms[:5]))
             extra_results = _qdrant_search_with_retry(
-                collection_name=COLLECTION,
-                query=focused_emb,
-                limit=20,
-                query_filter=query_filter,
+                collection_name=COLLECTION, query=focused_emb, limit=20, query_filter=query_filter,
             )
-            # Merge unseen results
             for hit in extra_results.points:
                 if hit.id not in seen_ids:
                     results.points.append(hit)
                     seen_ids.add(hit.id)
         except Exception:
-            pass  # secondary search is best-effort
+            pass
 
-    # Re-score: semantic + keyword boost
     scored_hits = []
     for hit in results.points:
         text_lower = hit.payload.get("text", "").lower()
-        keyword_boost = 0
-        for term in key_terms:
-            if term in text_lower:
-                count = text_lower.count(term)
-                keyword_boost += 0.02 * min(count, 5)
-        for bigram in bigrams:
-            if bigram in text_lower:
-                count = text_lower.count(bigram)
-                keyword_boost += 0.05 * min(count, 3)
-        final_score = hit.score + keyword_boost
-        scored_hits.append((final_score, hit))
-    
-    # Sort by boosted score and take top_k
+        keyword_boost = sum(0.02 * min(text_lower.count(t), 5) for t in key_terms)
+        keyword_boost += sum(0.05 * min(text_lower.count(b), 3) for b in bigrams)
+        scored_hits.append((hit.score + keyword_boost, hit))
     scored_hits.sort(key=lambda x: x[0], reverse=True)
     ranked_hits = [hit for _, hit in scored_hits[:req.top_k]]
 
@@ -885,94 +890,233 @@ def chat(request: Request, req: ChatRequest, authorization: str = None):
         title = p.get("title", "Desconhecido")
         page_start = p.get("page_start")
         page_end = p.get("page_end")
-
-        context_parts.append(
-            f"[Fonte {i}: {title}, p.{page_start}-{page_end}]\n{excerpt}"
-        )
-        sources.append(Source(
-            title=title,
-            page_start=page_start,
-            page_end=page_end,
-            score=round(hit.score, 4),
-            excerpt=excerpt[:300],
-        ))
+        context_parts.append(f"[Fonte {i}: {title}, p.{page_start}-{page_end}]\n{excerpt}")
+        sources.append(Source(title=title, page_start=page_start, page_end=page_end,
+                              score=round(hit.score, 4), excerpt=excerpt[:300]))
 
     context = "\n\n---\n\n".join(context_parts)
-
-    # 3.2. Add BiomedCLIP image context (if available)
     if image_context:
-        if context:
-            context = f"{image_context}\n\n---\n\n{context}"
-        else:
-            context = image_context
-        # Append image-derived sources (best-effort)
+        context = f"{image_context}\n\n---\n\n{context}" if context else image_context
         for s in image_sources:
-            sources.append(Source(
-                title=s.get("title", ""),
-                page_start=s.get("page"),
-                page_end=s.get("page"),
-                score=round(s.get("score", 0), 4),
-                excerpt="",
-            ))
+            sources.append(Source(title=s.get("title", ""), page_start=s.get("page"),
+                                  page_end=s.get("page"), score=round(s.get("score", 0), 4), excerpt=""))
 
-    # 3.5. Score gate: reject if top result is below threshold
-    # Use boosted score (keyword+semantic) for gate, not raw semantic score
+    # Score gate
     top_boosted_score = scored_hits[0][0] if scored_hits else 0.0
     if top_boosted_score < MIN_RELEVANCE_SCORE and not image_context:
         logger.info(f"Rejected: top_boosted_score={top_boosted_score:.3f} < {MIN_RELEVANCE_SCORE}")
-        return ChatResponse(
-            answer="Não encontrei informações suficientes na base de conhecimento para responder essa pergunta. Tente reformular com mais detalhes — por exemplo, inclua a especialidade, o tipo de exame ou a região anatômica.",
-            sources=[],
-            tokens_used=0,
+        error_msg = "Não encontrei informações suficientes na base de conhecimento para responder essa pergunta. Tente reformular com mais detalhes."
+        async def error_stream():
+            yield f"data: {json.dumps({'event': 'error', 'data': error_msg})}\n\n"
+        return StreamingResponse(error_stream(), media_type="text/event-stream")
+
+    # 4. Stream the answer
+    system_prompt = SYSTEM_PROMPT.format(context=context)
+    if req.image_base64:
+        img_ctx = f"\n\nDESCRIÇÃO DA IMAGEM (pré-análise):\n{image_description}" if image_description else ""
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": [
+                {"type": "text", "text": f"PERGUNTA DO USUÁRIO:\n{req.question}{img_ctx}\n\nCONTEXTO DA BASE DE CONHECIMENTO:\n{context}"},
+                {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
+            ]},
+        ]
+        model = "gpt-4o"
+    else:
+        messages = [{"role": "system", "content": system_prompt}, {"role": "user", "content": req.question}]
+        model = "gpt-4o-mini"
+
+    async def stream_response():
+        try:
+            stream = openai_client.chat.completions.create(
+                model=model,
+                messages=messages,
+                temperature=0.3,
+                max_completion_tokens=2000,
+                stream=True,
+            )
+            collected = []
+            for chunk in stream:
+                token = chunk.choices[0].delta.content or ""
+                if token:
+                    collected.append(token)
+                    yield f"data: {json.dumps({'event': 'token', 'data': token})}\.n\n"
+            # Final sources event
+            yield f"data: {json.dumps({'event': 'done', 'sources': [s.model_dump() for s in sources[:3]]})}\n\n"
+            logger.info(f"Stream complete", request_id=request_id, tokens=len(collected))
+        except Exception as e:
+            logger.error(f"Stream error: {e}")
+            yield f"data: {json.dumps({'event': 'error', 'data': str(e)})}\n\n"
+
+    return StreamingResponse(
+        stream_response(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Request-ID": request_id,
+        }
+
+
+@app.post("/chat", response_model=ChatResponse)
+@limiter.limit("60/minute")
+async def chat(req: ChatRequest, authorization: str = None):
+    """Non-streaming fallback for /chat — mirrors the RAG logic of the streaming version."""
+    request_id = str(uuid.uuid4())
+    user = await verify_supabase_token(authorization)
+    logger.info(
+        "Chat request",
+        request_id=request_id,
+        user_id=user.get("id") if user else None,
+        question_len=len(req.question),
+        has_image=bool(req.image_base64),
+    )
+
+    search_query = req.question
+    image_description = None
+    image_context = ""
+    image_sources = []
+    if req.image_base64:
+        raw_b64 = req.image_base64
+        if raw_b64.startswith('data:'):
+            raw_b64 = raw_b64.split(',', 1)[1] if ',' in raw_b64 else raw_b64
+        image_data_url = f"data:image/jpeg;base64,{raw_b64}"
+        try:
+            desc_response = openai_client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": "You are a radiology education assistant. Describe the imaging findings."},
+                    {"role": "user", "content": [
+                        {"type": "text", "text": "Describe the imaging findings in this medical image:"},
+                        {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
+                    ]},
+                ],
+                temperature=0.2,
+                max_completion_tokens=500,
+            )
+            image_description = desc_response.choices[0].message.content
+            search_query = f"{req.question}\n\nAchados da imagem: {image_description}"
+        except Exception as e:
+            logger.warning(f"Image description failed: {e}")
+        try:
+            image_context, image_sources = search_similar_images(req.image_base64, top_k=5)
+        except Exception as e:
+            logger.warning(f"BiomedCLIP search failed: {e}")
+
+    try:
+        embedding = _embed_with_retry(search_query)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Embedding error: {e}")
+
+    query_filter = None
+    if req.specialty:
+        from qdrant_client.models import FieldCondition, MatchValue, Filter
+        query_filter = Filter(
+            must=[FieldCondition(key="specialty", match=MatchValue(value=_normalize_specialty(req.specialty)))]
         )
 
-    # 4. Generate answer
     try:
-        system_prompt = SYSTEM_PROMPT.format(context=context)
-        context_text = context
-        if req.image_base64:
-            img_ctx = f"\n\nDESCRIÇÃO DA IMAGEM (pré-análise):\n{image_description}" if image_description else ""
-            messages = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": [
-                    {"type": "text", "text": f"PERGUNTA DO USUÁRIO:\n{req.question}{img_ctx}\n\nCONTEXTO DA BASE DE CONHECIMENTO:\n{context_text}"},
-                    {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
-                ]},
-            ]
-        else:
-            messages = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": req.question},
-            ]
-        # Use gpt-4o for images (better at radiology), gpt-4o-mini for text-only
+        results = _qdrant_search_with_retry(
+            collection_name=COLLECTION,
+            query=embedding,
+            limit=max(req.top_k, 50),
+            query_filter=query_filter,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Search error: {e}")
+
+    # Hybrid re-ranking
+    import re
+    stopwords = {"o","a","os","as","de","da","do","das","dos","em","na","no",
+                 "que","e","é","um","uma","com","por","para","se","qual","quais",
+                 "como","sao","são","este","esta","isso","esse","essa","mais","menos",
+                 "sobre","entre","seu","sua","seus","suas","pelo","pela","onde","quando",
+                 "paciente","tipo"}
+    words = re.findall(r'\b[a-záàâãéèêíïóôõöúçñ]{4,}\b', req.question.lower())
+    key_terms = [w for w in words if w not in stopwords]
+    question_words = re.findall(r'\b[a-záàâãéèêíïóôõöúçñ]+\b', req.question.lower())
+    bigrams = [f"{question_words[i]} {question_words[i+1]}"
+               for i in range(len(question_words)-1)
+               if question_words[i] not in stopwords and question_words[i+1] not in stopwords]
+
+    seen_ids = {hit.id for hit in results.points}
+    if key_terms:
+        try:
+            focused_emb = _embed_with_retry(" ".join(key_terms[:5]))
+            extra = _qdrant_search_with_retry(collection_name=COLLECTION, query=focused_emb, limit=20, query_filter=query_filter)
+            for hit in extra.points:
+                if hit.id not in seen_ids:
+                    results.points.append(hit)
+                    seen_ids.add(hit.id)
+        except Exception:
+            pass
+
+    scored_hits = []
+    for hit in results.points:
+        text_lower = hit.payload.get("text", "").lower()
+        boost = sum(0.02*min(text_lower.count(t),5) for t in key_terms)
+        boost += sum(0.05*min(text_lower.count(b),3) for b in bigrams)
+        scored_hits.append((hit.score + boost, hit))
+    scored_hits.sort(key=lambda x: x[0], reverse=True)
+    ranked_hits = [hit for _, hit in scored_hits[:req.top_k]]
+
+    sources = []
+    context_parts = []
+    for i, hit in enumerate(ranked_hits, 1):
+        p = hit.payload
+        excerpt = p.get("text", "")[:800]
+        title = p.get("title", "Desconhecido")
+        page_start, page_end = p.get("page_start"), p.get("page_end")
+        context_parts.append(f"[Fonte {i}: {title}, p.{page_start}-{page_end}]\n{excerpt}")
+        sources.append(Source(title=title, page_start=page_start, page_end=page_end,
+                             score=round(hit.score, 4), excerpt=excerpt[:300]))
+
+    context = "\n\n---\n\n".join(context_parts)
+    if image_context:
+        context = f"{image_context}\n\n---\n\n{context}" if context else image_context
+        for s in image_sources:
+            sources.append(Source(title=s.get("title",""), page_start=s.get("page"),
+                                  page_end=s.get("page"), score=round(s.get("score",0),4), excerpt=""))
+
+    top_boosted_score = scored_hits[0][0] if scored_hits else 0.0
+    if top_boosted_score < MIN_RELEVANCE_SCORE and not image_context:
+        return ChatResponse(
+            answer="Não encontrei informações suficientes na base de conhecimento para responder essa pergunta. Tente reformular com mais detalhes — por exemplo, inclua a especialidade, o tipo de exame ou a região anatômica.",
+            sources=[], tokens_used=0,
+        )
+
+    system_prompt = SYSTEM_PROMPT.format(context=context)
+    if req.image_base64:
+        img_ctx = f"\n\nDESCRIÇÃO DA IMAGEM (pré-análise):\n{image_description}" if image_description else ""
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": [
+                {"type": "text", "text": f"PERGUNTA DO USUÁRIO:\n{req.question}{img_ctx}\n\nCONTEXTO DA BASE DE CONHECIMENTO:\n{context}"},
+                {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
+            ]},
+        ]
         model = "gpt-4o"
+    else:
+        messages = [{"role": "system", "content": system_prompt}, {"role": "user", "content": req.question}]
+        model = "gpt-4o-mini"
+
+    try:
         response = openai_client.chat.completions.create(
-            model=model,
-            messages=messages,
-            temperature=0.3,
-            max_completion_tokens=2000,
+            model=model, messages=messages, temperature=0.3, max_completion_tokens=2000,
         )
         answer = response.choices[0].message.content
         tokens_used = response.usage.total_tokens if response.usage else 0
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Generation error: {e}")
 
-    # 4.5. Post-process: if answer has no citations but has sources, append them
     if "Fonte:" not in answer and "fonte:" not in answer.lower() and sources:
-        is_not_found = "não encontrei" in answer.lower() or "nao encontrei" in answer.lower()
-        if not is_not_found:
+        if "não encontrei" not in answer.lower() and "nao encontrei" not in answer.lower():
             refs = "; ".join(
                 f"[Fonte: {s.title[:60]}, p.{s.page_start}-{s.page_end}]" if s.page_start else f"[Fonte: {s.title[:60]}]"
                 for s in sources[:3]
             )
             answer += f"\n\n📚 Fontes consultadas: {refs}"
-            logger.info("Post-processed: appended sources (model did not cite)")
 
-    return ChatResponse(
-        answer=answer,
-        sources=sources,
-        tokens_used=tokens_used,
-    )
+    return ChatResponse(answer=answer, sources=sources, tokens_used=tokens_used)
 
 
 class ChatEditRequest(BaseModel):
