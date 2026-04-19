@@ -451,8 +451,14 @@ function EditPanel({ onClose, topic, template, content, specialty, onApply }) {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
+  const [currentContent, setCurrentContent] = useState(content || '')
   const chatRef = useRef(null)
   const scrollDown = () => { if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight }
+
+  // Sync content from parent in real-time so ARIA always sees the latest version
+  useEffect(() => {
+    if (content !== undefined) setCurrentContent(content)
+  }, [content])
 
   useEffect(() => { scrollDown() }, [messages, busy])
 
@@ -476,7 +482,7 @@ function EditPanel({ onClose, topic, template, content, specialty, onApply }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           question: q,
-          content: content || '',
+          content: currentContent || '',
           template,
           topic: topic || '',
           top_k: 6,
@@ -515,33 +521,17 @@ function EditPanel({ onClose, topic, template, content, specialty, onApply }) {
   return (
     <div style={{
       position: 'fixed', inset: 0, zIndex: 200,
-      background: 'rgba(0,10,20,0.75)', backdropFilter: 'blur(8px)',
       display: 'flex', justifyContent: 'flex-end',
     }}>
-      {/* Panel */}
-      <div class="edit-panel" style={{
+      <div style={{
+        position: 'fixed', right: 0, top: 0, bottom: 0,
         width: '100%', maxWidth: 480,
         background: C.bgDeep,
         borderLeft: `1px solid ${C.glassBorder}`,
         display: 'flex', flexDirection: 'column',
-        animation: 'slideInRight 0.25s ease',
+        boxShadow: '-4px 0 32px rgba(0,0,0,0.5)',
         height: '100dvh',
-        maxHeight: '100dvh',
       }}>
-        <style>{`
-          @keyframes slideInRight {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
-          }
-          @media (max-width: 640px) {
-            .edit-panel {
-              maxWidth: 100% !important;
-              border-left: none !important;
-              border-radius: 0 !important;
-            }
-          }
-        `}</style>
-
         {/* Header */}
         <div style={{
           padding: '16px 20px',
@@ -993,7 +983,7 @@ export default function Create() {
         justifyContent: 'space-between',
       }}>
         <button
-          onClick={() => navigate('/feed')}
+          onClick={() => navigate('/dashboard')}
           style={{
             background: 'transparent',
             border: 'none',
@@ -1560,14 +1550,15 @@ export default function Create() {
 
       {/* ARIA Edit Panel */}
       {isEditing && (
-        <EditPanel
+        <div style={{color:'red'}}>EditPanel temporariamente desabilitado</div>
+        /* <EditPanel
           onClose={() => setIsEditing(false)}
           topic={topic}
           template={template}
           content={editedContent || generatedContent}
           specialty={specialty}
           onApply={handleApplyEdit}
-        />
+        /> */
       )}
     </div>
   )
