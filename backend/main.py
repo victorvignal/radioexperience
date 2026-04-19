@@ -121,7 +121,7 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("ARIA backend starting", version="1.1.0")
     try:
-        openai_client.models.list(limit=1)
+        openai_client.models.list()
         logger.info("OpenAI API: ok")
     except Exception as e:
         logger.error(f"OpenAI API verification failed: {e}")
@@ -204,7 +204,7 @@ app.add_middleware(
 )
 
 # ── Auth Dependency (Supabase JWT) ───────────────────────────────────────────
-def verify_supabase_token(authorization: str = None) -> dict | None:
+async def verify_supabase_token(authorization: str = None) -> dict | None:
     """Verify Supabase JWT and return user info. Returns None if no auth (public endpoint)."""
     if not authorization:
         return None
@@ -212,13 +212,12 @@ def verify_supabase_token(authorization: str = None) -> dict | None:
         scheme, token = authorization.split(" ", 1)
         if scheme.lower() != "bearer":
             return None
-        # Verify with Supabase
         supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
         supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
-        resp = httpx.get(
+        client = await get_http_client()
+        resp = await client.get(
             f"{supabase_url}/auth/v1/user",
             headers={"Authorization": f"Bearer {token}", "apikey": supabase_key or ""},
-            timeout=10,
         )
         if resp.status_code == 200:
             return resp.json()
