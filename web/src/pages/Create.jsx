@@ -724,6 +724,7 @@ export default function Create() {
   const location = useLocation()
 
   // Load project from navigation state (Meus Projetos -> Editar) or sessionStorage backup
+  // Single effect avoids race condition between sessionStorage read/remove and isEditing flag
   useEffect(() => {
     const { state } = location
     let project = state?.project
@@ -732,43 +733,32 @@ export default function Create() {
     if (!project) {
       try {
         const stored = sessionStorage.getItem('restoreProject')
-        if (stored) {
-          project = JSON.parse(stored)
-          sessionStorage.removeItem('restoreProject')
-        }
+        if (stored) project = JSON.parse(stored)
       } catch (_) {}
     }
 
     if (project) {
-      // Backup to sessionStorage in case navigation state is lost on refresh
-      try { sessionStorage.setItem('restoreProject', JSON.stringify(project)) } catch (_) {}
-
+      // Restore all fields from the project
       const p = project
       if (p.title) setTopic(p.title)
       else if (p.topic) setTopic(p.topic)
       if (p.type) setTemplate(p.type)
       if (p.content) {
         setEditedContent(p.content)
-        setGeneratedContent(p.content) // needed to show output section on reload
+        setGeneratedContent(p.content)
       }
       if (p.specialty) setSpecialty(p.specialty)
       if (p.level) setLevel(p.level)
-      // Clear the state so a refresh doesn't reload the same project
+      setIsEditing(true)
+
+      // Clear sessionStorage backup (avoid restore on refresh)
+      sessionStorage.removeItem('restoreProject')
+      // Clear navigation state so a refresh doesn't reload the same project
       navigate(location.pathname, { replace: true })
     }
   }, [location])
 
   const [isEditing, setIsEditing] = useState(false)
-
-  // Set editing flag after project is loaded (line 742 checks project)
-  useEffect(() => {
-    const stored = sessionStorage.getItem('restoreProject')
-    if (stored) {
-      try { if (JSON.parse(stored)) setIsEditing(true) } catch (_) {}
-    }
-    // Also check if navigate state passed a project (line 726-729)
-    if (location.state?.project) setIsEditing(true)
-  }, [location])
 
   const [topic, setTopic] = useState('')
   const [template, setTemplate] = useState('script') // 'script' | 'questoes'
