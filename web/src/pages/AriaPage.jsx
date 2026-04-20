@@ -534,6 +534,8 @@ export default function AriaPage() {
     createdAt: new Date(row.created_at),
   }), [])
 
+  const titleColumnAvailable = true // title column exists in aria_chat_sessions
+
   const buildChatPayload = useCallback((title, messages = []) => {
     const safeTitle = title?.trim()
     const safeMessages = titleColumnAvailable ? getVisibleMessages(messages) : upsertChatMeta(messages, { title: safeTitle })
