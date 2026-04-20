@@ -277,12 +277,16 @@ async def verify_supabase_token(authorization: str = None) -> dict | None:
             email = payload.get('email', '')
             if not user_id:
                 return None
-        except Exception:
+        except Exception as e:
+            print(f"[DEBUG] JWT decode error: {e}")
             return None
+        
+        print(f"[DEBUG] verify_supabase_token called, user_id={user_id}, email={email}")
         
         # Verify by looking up user in profiles table via Supabase REST API
         supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
         service_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("SUPABASE_SERVICE_KEY")
+        print(f"[DEBUG] service_key present: {bool(service_key)}")
         if not service_key:
             return None
         
@@ -296,6 +300,7 @@ async def verify_supabase_token(authorization: str = None) -> dict | None:
                 "Prefer": "count=none",
             },
         )
+        print(f"[DEBUG] profiles response: status={resp.status_code}, body={resp.text[:200]}")
         if resp.status_code == 200:
             profiles = resp.json()
             if profiles and len(profiles) > 0:
@@ -308,7 +313,8 @@ async def verify_supabase_token(authorization: str = None) -> dict | None:
                 }
         
         return None
-    except Exception:
+    except Exception as e:
+        print(f"[DEBUG] verify_supabase_token exception: {e}")
         return None
 
 
