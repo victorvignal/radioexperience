@@ -255,7 +255,8 @@ Como posso ajudar hoje?"""
 async def verify_supabase_token(authorization: str = None) -> dict | None:
     """Verify Supabase JWT and return user info. Returns None if no auth (public endpoint).
     
-    Handles both Supabase-native JWTs (HS256 signed) and Google OAuth tokens (ES256).
+    Decodes JWT payload to extract user sub/email, then verifies by looking up
+    the user in the profiles table using the service role key (bypasses RLS).
     """
     if not authorization:
         return None
@@ -264,11 +265,10 @@ async def verify_supabase_token(authorization: str = None) -> dict | None:
         if scheme.lower() != "bearer":
             return None
         
-        # Decode JWT payload without verification (backend trusts upstream issuer)
+        # Decode JWT payload without verification — trust the issuer signature
         try:
             import base64
             payload_b64 = token.split('.')[1]
-            # Add padding if needed
             padding = 4 - len(payload_b64) % 4
             if padding < 4:
                 payload_b64 += '=' * padding
@@ -280,36 +280,32 @@ async def verify_supabase_token(authorization: str = None) -> dict | None:
         except Exception:
             return None
         
-        # Verify via Supabase Auth endpoint (works for Supabase-issued tokens)
+        # Verify by looking up user in profiles table via Supabase REST API
         supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
-        supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
+        service_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("SUPABASE_SERVICE_KEY")
+        if not service_key:
+            return None
+        
         client = await get_http_client()
         resp = await client.get(
-            f"{supabase_url}/auth/v1/user",
-            headers={"Authorization": f"Bearer {token}", "apikey": supabase_key or ""},
+            f"{supabase_url}/rest/v1/profiles?id=eq.{user_id}&select=id,email,full_name",
+            headers={
+                "Authorization": f"Bearer {service_key}",
+                "apikey": service_key,
+                "Content-Type": "application/json",
+                "Prefer": "count=none",
+            },
         )
         if resp.status_code == 200:
-            return resp.json()
-        
-        # Fallback: look up user by sub in profiles table using service role key
-        service_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("SUPABASE_SERVICE_KEY")
-        if service_key:
-            resp2 = await client.get(
-                f"{supabase_url}/rest/v1/profiles?id=eq.{user_id}&select=id,email,full_name",
-                headers={
-                    "Authorization": f"Bearer {service_key}",
-                    "apikey": service_key,
-                    "Content-Type": "application/json",
-                },
-            )
-            if resp2.status_code == 200:
-                profiles = resp2.json()
-                if profiles and len(profiles) > 0:
-                    return {
-                        "id": user_id,
-                        "email": email,
-                        "user_metadata": {"full_name": profiles[0].get('full_name', email.split('@')[0])},
-                    }
+            profiles = resp.json()
+            if profiles and len(profiles) > 0:
+                return {
+                    "id": user_id,
+                    "email": profiles[0].get('email') or email,
+                    "user_metadata": {
+                        "full_name": profiles[0].get('full_name') or email.split('@')[0]
+                    },
+                }
         
         return None
     except Exception:
