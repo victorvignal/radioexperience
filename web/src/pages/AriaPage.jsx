@@ -515,7 +515,6 @@ export default function AriaPage() {
   const [pendingDeleteSession, setPendingDeleteSession] = useState(null)
   const [renameState, setRenameState] = useState({ open: false, sessionId: null, value: '' })
   const [pendingNewSession, setPendingNewSession] = useState(null)
-  const [titleColumnAvailable, setTitleColumnAvailable] = useState(true)
   const dbIdMapRef = useRef({}) // maps local session id → db row id
   const renameInputRef = useRef(null)
   const [sidebarOpen, setSidebarOpen] = useState(() => {
@@ -552,31 +551,12 @@ export default function AriaPage() {
 
     setLoadingChats(true)
     try {
-      let data
-      let error
-      const queryBase = supabase
-        .from('aria_chats')
+      const { data, error } = await supabase
+        .from('aria_chat_sessions')
+        .select('id, title, created_at, updated_at')
         .eq('user_id', user.id)
         .order('updated_at', { ascending: false })
-        .limit(50)
-
-      const withTitle = await queryBase.select('id, title, messages, created_at, updated_at')
-      data = withTitle.data
-      error = withTitle.error
-
-      if (error && /title/i.test(error.message || '')) {
-        setTitleColumnAvailable(false)
-        const fallback = await supabase
-          .from('aria_chats')
-          .select('id, messages, created_at, updated_at')
-          .eq('user_id', user.id)
-          .order('updated_at', { ascending: false })
-          .limit(50)
-        data = fallback.data
-        error = fallback.error
-      } else if (!error) {
-        setTitleColumnAvailable(true)
-      }
+        .limit(5)
 
       if (error) throw error
 
@@ -585,10 +565,35 @@ export default function AriaPage() {
         setSessions([fresh])
         setActiveId(fresh.id)
       } else {
-        const loaded = data.map(hydrateSession)
+        const loaded = await Promise.all(
+          data.map(async (row, idx) => {
+            const msgs = await supabase
+              .from('aria_chat_messages')
+              .select('role, text, image_b64, sources, tokens_used, created_at')
+              .eq('session_id', row.id)
+              .order('created_at', { ascending: true })
+            const rawMessages = msgs.data || []
+            const messages = rawMessages.map(m => ({
+              role: m.role,
+              text: m.text,
+              image: m.image_b64 ? `data:image/jpeg;base64,${m.image_b64}` : null,
+              sources: m.sources || [],
+            }))
+            return {
+              id: row.id,
+              dbId: row.id,
+              title: getSessionTitleFromData({
+                title: row.title,
+                messages,
+                fallback: `${DEFAULT_CHAT_TITLE} ${idx + 1}`,
+              }),
+              messages,
+              createdAt: new Date(row.created_at),
+            }
+          })
+        )
         loaded.forEach(s => { dbIdMapRef.current[s.id] = s.dbId })
         setSessions(loaded)
-        // preserve cached active ID if it still exists
         const cachedActiveId = loadActiveIdFromCache()
         if (cachedActiveId != null && loaded.some(s => s.id === cachedActiveId)) {
           setActiveId(cachedActiveId)
@@ -604,7 +609,7 @@ export default function AriaPage() {
     } finally {
       setLoadingChats(false)
     }
-  }, [hydrateSession, user])
+  }, [user])
 
   useEffect(() => {
     if (!user) {
@@ -634,65 +639,32 @@ export default function AriaPage() {
 
   const updateSessionTitle = useCallback(async (sessionId, nextTitle) => {
     const normalizedTitle = nextTitle.trim()
-
     setSessions(prev => prev.map(s => {
       if (s.id !== sessionId) return s
-      return {
-        ...s,
-        title: normalizedTitle,
-        messages: titleColumnAvailable ? getVisibleMessages(s.messages) : upsertChatMeta(s.messages, { title: normalizedTitle }),
-      }
+      return { ...s, title: normalizedTitle }
     }))
 
     if (!user) return
 
-    const dbId = dbIdMapRef.current[sessionId] || sessionId
-    if (!dbId) return
-
-    const session = sessions.find(s => s.id === sessionId)
-    const currentMessages = session?.messages || []
-    const payload = buildChatPayload(normalizedTitle, currentMessages)
-
     try {
-      const { error } = await supabase
-        .from('aria_chats')
-        .update(payload)
-        .eq('id', dbId)
+      await supabase
+        .from('aria_chat_sessions')
+        .update({ title: normalizedTitle })
+        .eq('id', sessionId)
         .eq('user_id', user.id)
-
-      if (error) throw error
     } catch (err) {
-      if (titleColumnAvailable && /title/i.test(err.message || '')) {
-        setTitleColumnAvailable(false)
-        const fallbackPayload = {
-          messages: upsertChatMeta(currentMessages, { title: normalizedTitle }),
-          updated_at: new Date().toISOString(),
-        }
-        await supabase
-          .from('aria_chats')
-          .update(fallbackPayload)
-          .eq('id', dbId)
-          .eq('user_id', user.id)
-        setSessions(prev => prev.map(s => s.id === sessionId ? { ...s, messages: fallbackPayload.messages } : s))
-        return
-      }
-
       console.error('[AriaPage] Failed to rename chat:', err)
     }
-  }, [buildChatPayload, sessions, titleColumnAvailable, user])
+  }, [user])
 
   const createDbSession = useCallback(async (title = null, messages = []) => {
     if (!user) return newSession(null, title, messages)
 
-    const normalizedTitle = title?.trim() || `${DEFAULT_CHAT_TITLE} ${_sessionCounter++}`
-    const payload = titleColumnAvailable
-      ? { user_id: user.id, title: normalizedTitle, messages: getVisibleMessages(messages) }
-      : { user_id: user.id, messages: upsertChatMeta(messages, { title: normalizedTitle }) }
-
+    const normalizedTitle = (title || `${DEFAULT_CHAT_TITLE} ${_sessionCounter++}`).trim()
     try {
       const { data, error } = await supabase
-        .from('aria_chats')
-        .insert(payload)
+        .from('aria_chat_sessions')
+        .insert({ user_id: user.id, title: normalizedTitle })
         .select('id, created_at')
         .single()
       if (error) throw error
@@ -700,22 +672,18 @@ export default function AriaPage() {
         id: data.id,
         dbId: data.id,
         title: normalizedTitle,
-        messages: payload.messages,
+        messages,
         createdAt: new Date(data.created_at),
       }
     } catch (err) {
-      if (titleColumnAvailable && /title/i.test(err.message || '')) {
-        setTitleColumnAvailable(false)
-        return createDbSession(normalizedTitle, messages)
-      }
       console.error('[AriaPage] Failed to create DB session:', err)
-      return newSession(null, normalizedTitle, titleColumnAvailable ? getVisibleMessages(messages) : upsertChatMeta(messages, { title: normalizedTitle }))
+      return newSession(null, normalizedTitle, messages)
     }
-  }, [titleColumnAvailable, user])
+  }, [user])
 
   const deleteDbSession = useCallback(async (dbId) => {
     if (!dbId || !user) return
-    await supabase.from('aria_chats').delete().eq('id', dbId).eq('user_id', user.id)
+    await supabase.from('aria_chat_sessions').delete().eq('id', dbId).eq('user_id', user.id)
   }, [user])
 
   // persist to sessionStorage on change
@@ -826,51 +794,54 @@ export default function AriaPage() {
   const handleFirstMessage = async (id, messages, firstText) => {
     const existingSession = sessions.find(s => s.id === id)
     const nextTitle = firstText ? buildAutoTitle(firstText, existingSession?.title || DEFAULT_CHAT_TITLE) : existingSession?.title || DEFAULT_CHAT_TITLE
-    const payloadMessages = titleColumnAvailable ? messages : upsertChatMeta(messages, { title: nextTitle })
 
     setSessions(prev => prev.map(s => {
       if (s.id !== id) return s
-      return { ...s, messages: payloadMessages, title: nextTitle }
+      return { ...s, messages, title: nextTitle }
     }))
 
     if (!user) return
 
     try {
-      let dbId = dbIdMapRef.current[id]
-      if (!dbId && existingSession?.dbId) {
-        dbId = existingSession.dbId
-        dbIdMapRef.current[id] = dbId
-      }
-
-      if (dbId) {
-        const payload = buildChatPayload(nextTitle, messages)
-        const { error } = await supabase
-          .from('aria_chats')
-          .update(payload)
-          .eq('id', dbId)
-        if (error) throw error
-      } else {
-        const insertPayload = titleColumnAvailable
-          ? { user_id: user.id, title: nextTitle, messages }
-          : { user_id: user.id, messages: upsertChatMeta(messages, { title: nextTitle }) }
+      // Get or create session in DB
+      let sessionDbId = dbIdMapRef.current[id] || existingSession?.dbId
+      if (!sessionDbId) {
         const { data, error } = await supabase
-          .from('aria_chats')
-          .insert(insertPayload)
+          .from('aria_chat_sessions')
+          .insert({ user_id: user.id, title: nextTitle })
           .select('id')
           .single()
         if (error) throw error
-        dbIdMapRef.current[id] = data.id
-        setSessions(prev => prev.map(s =>
-          s.id === id ? { ...s, dbId: data.id, messages: insertPayload.messages } : s
-        ))
+        sessionDbId = data.id
+        dbIdMapRef.current[id] = sessionDbId
+        setSessions(prev => prev.map(s => s.id === id ? { ...s, dbId: sessionDbId } : s))
+      } else {
+        // Update session title
+        await supabase
+          .from('aria_chat_sessions')
+          .update({ title: nextTitle })
+          .eq('id', sessionDbId)
+          .eq('user_id', user.id)
+      }
+
+      // Save all messages to aria_chat_messages
+      for (const msg of messages) {
+        const imageB64 = msg.image
+          ? (msg.image.includes(',') ? msg.image.split(',')[1] : msg.image)
+          : null
+        const { error: msgError } = await supabase
+          .from('aria_chat_messages')
+          .insert({
+            session_id: sessionDbId,
+            role: msg.role,
+            text: msg.text || '',
+            image_b64: imageB64,
+            sources: msg.sources || null,
+          })
+        if (msgError) console.error('[AriaPage] Failed to save message:', msgError)
       }
     } catch (err) {
-      if (titleColumnAvailable && /title/i.test(err.message || '')) {
-        setTitleColumnAvailable(false)
-        await handleFirstMessage(id, messages, firstText)
-        return
-      }
-      console.error('[AriaPage] Failed to save chat:', err)
+      console.error('[AriaPage] Failed to save messages:', err)
     }
   }
 
