@@ -2612,6 +2612,254 @@ def generate_image_for_content(topic: str, content: str, template_type: str) -> 
         logger.warning(f"Image generation failed: {e}")
         return None
 
+# ── ARIA Chat Sync: Sessions ────────────────────────────────────────────────
+
+class ChatSessionCreateRequest(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+    title: str | None = Field(default=None, max_length=200)
+
+class ChatSessionUpdateRequest(BaseModel):
+    title: str | None = Field(default=None, max_length=200)
+
+@app.get("/chat-sessions")
+async def list_chat_sessions(authorization: str = None):
+    """Lista sessões do usuário logado (máximo 5, ordenadas por updated_at)."""
+    user = await verify_supabase_token(authorization)
+    if not user:
+        raise HTTPException(status_code=401, detail="Não autenticado")
+
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="Supabase não configurado")
+
+    client = await get_http_client()
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+        "Range": "0-49",  # max 5 sessions, each with 1 row
+    }
+
+    try:
+        resp = await client.get(
+            f"{supabase_url}/rest/v1/aria_chat_sessions"
+            f"?user_id=eq.{user['id']}&order=updated_at.desc&limit=5",
+            headers=headers,
+        )
+        if resp.status_code == 200:
+            return resp.json()
+        raise HTTPException(status_code=resp.status_code, detail=resp.text)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/chat-sessions")
+async def create_chat_session(req: ChatSessionCreateRequest, authorization: str = None):
+    """Cria uma nova sessão. Se o usuário já tiver 5, a mais antiga é deletada (trigger no banco)."""
+    user = await verify_supabase_token(authorization)
+    if not user:
+        raise HTTPException(status_code=401, detail="Não autenticado")
+
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="Supabase não configurado")
+
+    title = req.title or "Nova conversa"
+    client = await get_http_client()
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+        "Content-Type": "application/json",
+        "Prefer": "return=representation",
+    }
+
+    try:
+        resp = await client.post(
+            f"{supabase_url}/rest/v1/aria_chat_sessions",
+            headers=headers,
+            json={"user_id": user["id"], "title": title},
+        )
+        if resp.status_code in (200, 201):
+            result = resp.json()
+            # Support single-object or array response from PostgREST
+            if isinstance(result, list):
+                return result[0]
+            return result
+        raise HTTPException(status_code=resp.status_code, detail=resp.text)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.patch("/chat-sessions/{session_id}")
+async def update_chat_session(session_id: str, req: ChatSessionUpdateRequest, authorization: str = None):
+    """Renomeia uma sessão (título)."""
+    user = await verify_supabase_token(authorization)
+    if not user:
+        raise HTTPException(status_code=401, detail="Não autenticado")
+
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="Supabase não configurado")
+
+    client = await get_http_client()
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+        "Content-Type": "application/json",
+        "Prefer": "return=representation",
+    }
+
+    body = {}
+    if req.title is not None:
+        body["title"] = req.title
+
+    try:
+        resp = await client.patch(
+            f"{supabase_url}/rest/v1/aria_chat_sessions?id=eq.{session_id}&user_id=eq.{user['id']}",
+            headers=headers,
+            json=body,
+        )
+        if resp.status_code in (200, 204):
+            return {"ok": True}
+        raise HTTPException(status_code=resp.status_code, detail=resp.text)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.delete("/chat-sessions/{session_id}")
+async def delete_chat_session(session_id: str, authorization: str = None):
+    """Deleta uma sessão e todas as suas mensagens."""
+    user = await verify_supabase_token(authorization)
+    if not user:
+        raise HTTPException(status_code=401, detail="Não autenticado")
+
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="Supabase não configurado")
+
+    client = await get_http_client()
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+    }
+
+    try:
+        resp = await client.delete(
+            f"{supabase_url}/rest/v1/aria_chat_sessions?id=eq.{session_id}&user_id=eq.{user['id']}",
+            headers=headers,
+        )
+        if resp.status_code in (200, 204):
+            return {"ok": True}
+        raise HTTPException(status_code=resp.status_code, detail=resp.text)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ── ARIA Chat Sync: Messages ──────────────────────────────────────────────────
+
+class ChatMessageCreateRequest(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+    session_id: str = Field(..., max_length=64)
+    role: str = Field(..., pattern="^(user|bot)$")
+    text: str = Field(..., max_length=10000)
+    image_b64: str | None = Field(default=None, max_length=10_000_000)
+    sources: list | None = Field(default=None)
+    tokens_used: int | None = Field(default=None)
+
+
+@app.get("/chat-sessions/{session_id}/messages")
+async def list_chat_messages(session_id: str, authorization: str = None):
+    """Lista mensagens de uma sessão (para carregar histórico)."""
+    user = await verify_supabase_token(authorization)
+    if not user:
+        raise HTTPException(status_code=401, detail="Não autenticado")
+
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="Supabase não configurado")
+
+    client = await get_http_client()
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+    }
+
+    try:
+        resp = await client.get(
+            f"{supabase_url}/rest/v1/aria_chat_messages"
+            f"?session_id=eq.{session_id}&order=created_at.asc",
+            headers=headers,
+        )
+        if resp.status_code == 200:
+            return resp.json()
+        raise HTTPException(status_code=resp.status_code, detail=resp.text)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/chat-messages")
+async def create_chat_message(req: ChatMessageCreateRequest, authorization: str = None):
+    """Salva uma mensagem no banco."""
+    user = await verify_supabase_token(authorization)
+    if not user:
+        raise HTTPException(status_code=401, detail="Não autenticado")
+
+    supabase_url = os.getenv("SUPABASE_URL", "https://pcdequsipbkxcfsewiow.supabase.co")
+    supabase_key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
+    if not supabase_key:
+        raise HTTPException(status_code=500, detail="Supabase não configurado")
+
+    client = await get_http_client()
+    headers = {
+        "apikey": supabase_key,
+        "Authorization": f"Bearer {supabase_key}",
+        "Content-Type": "application/json",
+        "Prefer": "return=representation",
+    }
+
+    # Verify session ownership
+    session_resp = await client.get(
+        f"{supabase_url}/rest/v1/aria_chat_sessions"
+        f"?id=eq.{req.session_id}&user_id=eq.{user['id']}&select=id",
+        headers={"apikey": supabase_key, "Authorization": f"Bearer {supabase_key}"},
+    )
+    if session_resp.status_code != 200 or not session_resp.json():
+        raise HTTPException(status_code=404, detail="Sessão não encontrada")
+
+    # Update session's updated_at timestamp
+    await client.patch(
+        f"{supabase_url}/rest/v1/aria_chat_sessions?id=eq.{req.session_id}",
+        headers=headers,
+        json={"updated_at": datetime.now(timezone.utc).isoformat()},
+    )
+
+    try:
+        resp = await client.post(
+            f"{supabase_url}/rest/v1/aria_chat_messages",
+            headers=headers,
+            json={
+                "session_id": req.session_id,
+                "role": req.role,
+                "text": req.text,
+                "image_b64": req.image_b64,
+                "sources": req.sources,
+                "tokens_used": req.tokens_used,
+            },
+        )
+        if resp.status_code in (200, 201):
+            result = resp.json()
+            if isinstance(result, list):
+                return result[0]
+            return result
+        raise HTTPException(status_code=resp.status_code, detail=resp.text)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", "8000"))
