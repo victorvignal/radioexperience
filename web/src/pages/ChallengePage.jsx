@@ -557,9 +557,9 @@ function BattleScreen({ challenge, specialty, timePerQuestion, onFinish, userId 
           border: `1px solid ${C.glassBorder}`, borderRadius: 20, padding: 28,
           animation: 'slideIn 0.4s ease',
         }}>
-          {question?.image_url && (
+          {(question?.image_url || question?.image_base64) && (
             <img
-              src={question.image_url}
+              src={question.image_base64 ? `data:image/jpeg;base64,${question.image_base64}` : question.image_url}
               alt="Questão"
               style={{
                 width: '100%',
