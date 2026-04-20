@@ -304,7 +304,7 @@ function ChatPanel({ session, onFirstMessage }) {
             <div>
               <div style={{ fontSize: 20, fontWeight: 800, color: C.text, marginBottom: 6 }}>ARIA</div>
               <div style={{ fontSize: 13, color: C.textMuted, lineHeight: 1.6, maxWidth: 380 }}>
-                Assistente de Radiologia por IA · Radio<EX />perience<br />
+                Assistente de Radiologia por IA · RadioeXperience
                 Pergunte sobre anatomia, técnicas, patologias ou diagnóstico por imagem.
               </div>
             </div>
