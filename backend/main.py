@@ -219,6 +219,28 @@ def _is_identity_question(q: str) -> bool:
         or any(normalized.startswith(p) for p in ["quem é ", "who is ", "what is aria"])
     )
 
+def _is_trivial_greeting(q: str) -> bool:
+    """Return True if the question is a trivial greeting that doesn't need RAG."""
+    normalized = q.lower().strip().rstrip('!').rstrip('?')
+    trivial_greetings = {
+        "oi", "ola", "olá", "hi", "hey", "hello", "bom dia", "boa tarde",
+        "boa noite", "eae", "eaí", "e ai", " fala ", "fala", "suave", "tmp",
+        "td bem", "tá bom", "como vai", "como vai?", "tudo bem", "beleza",
+        "hey all", "hi there", "hello there", "oii", "oiii", "oi!", "olá!",
+        "bom dia!", "oi,", "ola,", "hi,", "hey,", "oi tudo bem", "oi, td bem",
+    }
+    return (
+        normalized in trivial_greetings
+        or (len(normalized) <= 3 and not any(c.isalnum() for c in normalized) is False)
+        or (len(normalized) <= 2 and normalized in "oi oi oi olláhi hey".split())
+    )
+
+TRIVIAL_GREETING_RESPONSE = """Olá! 👋 Eu sou a ARIA, sua assistente de radiologia por IA.
+
+Estou aqui pra ajudar com dúvidas sobre radiology, casos clínicos, preparação para provas como CBR, USG, RDDI, e muito mais.
+
+Pode me perguntar qualquer coisa!"""
+
 ARIA_IDENTITY = """Você é ARIA — Assistente de Radiologia por IA.
 
 Sou uma inteligência artificial especializada em radiologia, desenvolvida pela equipe do RadioeXperience.
@@ -812,6 +834,15 @@ async def chat_stream(request: Request, req: ChatRequest, authorization: str = N
         has_image=bool(req.image_base64),
     )
 
+    # 0. Trivial greeting check — bypass RAG
+    if _is_trivial_greeting(req.question) or _is_identity_question(req.question):
+        greeting_response = TRIVIAL_GREETING_RESPONSE if _is_trivial_greeting(req.question) else ARIA_IDENTITY
+        async def greeting_stream():
+            for word in greeting_response:
+                yield f"event: token\ndata: {word}\n\n"
+            yield "event: done\ndata: {}\n\n"
+        return StreamingResponse(greeting_stream(), media_type="text/event-stream", headers={"X-Request-ID": request_id})
+
     # 0. Image description (sync OpenAI client is thread-safe)
     search_query = req.question
     image_description = None
@@ -998,6 +1029,11 @@ async def chat(request: Request, req: ChatRequest, authorization: str = None):
         question_len=len(req.question),
         has_image=bool(req.image_base64),
     )
+
+    # Trivial greeting / identity shortcut
+    if _is_trivial_greeting(req.question) or _is_identity_question(req.question):
+        response_text = TRIVIAL_GREETING_RESPONSE if _is_trivial_greeting(req.question) else ARIA_IDENTITY
+        return ChatResponse(answer=response_text, sources=[], tokens_used=0)
 
     search_query = req.question
     image_description = None
