@@ -174,13 +174,57 @@ async function main() {
         correct_answer: q.correct_answer,
         explanation: `${label} Q${q.number}. ${q.explanation || ''}`.trim(),
         source_title: `${label} — Questão ${q.number}`,
-        image_base64: q.has_image ? (q.image_base64 || null) : null,
         difficulty: mapDifficulty(q.difficulty),
+        image_base64: q.has_image ? (q.image_base64 || null) : null,
+        has_image: q.has_image || false,
         times_used: 0,
       })
     }
     const withAnswer = (data.questions || []).filter(q => q.correct_answer && /^[A-E]$/.test(q.correct_answer)).length
     console.log(`${file}: ${data.questions?.length} loaded, ${withAnswer} with valid answer`)
+  }
+
+  // Delete old CBR questions — must clear FK references first
+  console.log('Deleting old CBR from challenge_questions...')
+  {
+    const { status, body } = await new Promise((resolve) => {
+      const req = require('https').request(`${SUPABASE_URL}/rest/v1/challenge_questions?pool_id=not.is.null&source_title=ilike.*CBR*`, {
+        method: 'DELETE',
+        headers: { 'apikey': SERVICE_KEY, 'Authorization': `Bearer ${SERVICE_KEY}` }
+      }, res => {
+        let d = ''
+        res.on('data', c => d += c)
+        res.on('end', () => resolve({ status: res.statusCode, body: d }))
+      })
+      req.on('error', e => resolve({ status: 0, body: e.message }))
+      req.end()
+    })
+    if (status < 300) {
+      console.log(`Deleted old CBR from challenge_questions (${status}).`)
+    } else {
+      console.log(`Delete challenge_questions: ${status} ${body}`)
+    }
+  }
+
+  console.log('Deleting old CBR from pool...')
+  {
+    const { status, body } = await new Promise((resolve) => {
+      const req = require('https').request(`${SUPABASE_URL}/rest/v1/challenge_question_pool?source_title=ilike.*CBR*`, {
+        method: 'DELETE',
+        headers: { 'apikey': SERVICE_KEY, 'Authorization': `Bearer ${SERVICE_KEY}` }
+      }, res => {
+        let d = ''
+        res.on('data', c => d += c)
+        res.on('end', () => resolve({ status: res.statusCode, body: d }))
+      })
+      req.on('error', e => resolve({ status: 0, body: e.message }))
+      req.end()
+    })
+    if (status < 300) {
+      console.log(`Deleted old CBR from pool (${status}).`)
+    } else {
+      console.log(`Delete pool: ${status} ${body}`)
+    }
   }
 
   console.log(`\nTotal to ingest: ${allToIngest.length}`)
