@@ -557,6 +557,20 @@ function BattleScreen({ challenge, specialty, timePerQuestion, onFinish, userId 
           border: `1px solid ${C.glassBorder}`, borderRadius: 20, padding: 28,
           animation: 'slideIn 0.4s ease',
         }}>
+          {question?.image_url && (
+            <img
+              src={question.image_url}
+              alt="Questão"
+              style={{
+                width: '100%',
+                maxHeight: 300,
+                objectFit: 'contain',
+                borderRadius: 12,
+                marginBottom: 20,
+                border: `1px solid ${C.glassBorder}`,
+              }}
+            />
+          )}
           <p style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.65, color: C.text, marginBottom: 24 }}>
             {question?.question_text}
           </p>
