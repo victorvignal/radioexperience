@@ -1022,7 +1022,7 @@ async def chat_stream(request: Request, req: ChatRequest, authorization: str = N
                 {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
             ]},
         ]
-        model = "gpt-4o"
+        model = "gpt-5.4"
     else:
         messages = [{"role": "system", "content": system_prompt}, {"role": "user", "content": req.question}]
         model = "gpt-4o-mini"
@@ -1202,7 +1202,7 @@ async def chat(request: Request, req: ChatRequest, authorization: str = None):
                 {"type": "image_url", "image_url": {"url": image_data_url, "detail": "high"}},
             ]},
         ]
-        model = "gpt-4o"
+        model = "gpt-5.4"
     else:
         messages = [{"role": "system", "content": system_prompt}, {"role": "user", "content": req.question}]
         model = "gpt-4o-mini"
