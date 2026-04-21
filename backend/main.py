@@ -1849,9 +1849,10 @@ def _get_pool_questions(specialty: str, num: int, exclude_ids: set, challenge_id
     # Normalize specialty
     normalized = specialty.lower().strip() if specialty else "geral"
 
-    # Step 1: try specific specialty
-    questions = _fetch_pool(specialty if normalized != "geral" else None, num * 3)
-    logger.info(f"Pool step 1 ({specialty if normalized != 'geral' else 'Geral'}): {len(questions)} questions")
+    # Step 1: try specific specialty (use capitalized specialty name for DB match)
+    db_specialty = specialty.strip() if specialty else None
+    questions = _fetch_pool(db_specialty if normalized != "geral" else None, num * 3)
+    logger.info(f"Pool step 1 ({db_specialty if normalized != 'geral' else 'Geral'}): {len(questions)} questions")
 
     # Step 2: if not enough and not "Geral", try "Geral" to fill the gap
     if len(questions) < num and normalized != "geral":
@@ -1957,6 +1958,7 @@ def challenge_start(req: ChallengeStartRequest):
         raise HTTPException(status_code=500, detail=f"Challenge creation error: {str(e)}")
     seen_ids = _get_seen_pool_ids(user_id, challenge_id)
     logger.info(f"Challenge start: user={user_id[:8]}... seen={len(seen_ids)} pool questions")
+    logger.info(f"Using SUPABASE_URL: {SUPABASE_URL}")
     pool_questions = _get_pool_questions(req.specialty, req.num_questions, seen_ids, challenge_id)
     logger.info(f"Pool returned {len(pool_questions)} questions for {req.specialty}")
     questions_to_use = list(pool_questions)
@@ -1978,6 +1980,7 @@ def challenge_start(req: ChallengeStartRequest):
                 continue
     random.shuffle(questions_to_use)
     questions = []
+    copy_errors = []
     for i, q in enumerate(questions_to_use[:req.num_questions]):
         try:
             if q.get("_generated"):
