@@ -1841,9 +1841,10 @@ def _get_pool_questions(specialty: str, num: int, exclude_ids: set, challenge_id
             )
             if r.status_code == 200:
                 return r.json()
+            logger.warning(f"Pool fetch non-200: status={r.status_code} body={r.text[:200]}")
             return []
         except Exception as e:
-            logger.warning(f"Pool fetch failed: {e}")
+            logger.warning(f"Pool fetch exception: {e}")
             return []
 
     # Normalize specialty
@@ -2037,9 +2038,9 @@ def challenge_start(req: ChallengeStartRequest):
             logger.warning(f"Failed to save question {i+1}: {e}")
             continue
     if not questions:
-        detail = "Could not prepare questions"
+        detail = f"Could not prepare questions (pool_q={len(pool_questions)} seen={len(seen_ids)} needed={req.num_questions})"
         if copy_errors:
-            detail += f" (copy errors at questions: {copy_errors})"
+            detail += f" copy_errors={copy_errors}"
         raise HTTPException(status_code=500, detail=detail)
     return {
         "challenge_id": challenge_id,
