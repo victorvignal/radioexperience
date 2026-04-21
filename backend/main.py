@@ -1805,10 +1805,12 @@ def _get_pool_questions(specialty: str, num: int, exclude_ids: set, challenge_id
     try:
         params = {
             "select": "*",
-            "specialty": f"eq.{specialty}",
             "order": "times_used.asc,created_at.asc",
             "limit": str(num * 3),
         }
+        # Only filter by specialty if NOT "Geral" — "Geral" shows all questions
+        if specialty and specialty.lower() != "geral":
+            params["specialty"] = f"eq.{specialty}"
         all_exclude = set(exclude_ids)
         # Also exclude pool_ids already in this challenge (prevents duplicates within same challenge)
         if challenge_id:

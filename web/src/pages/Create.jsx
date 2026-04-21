@@ -447,7 +447,7 @@ function PreviewModal({ content, topic, template, typeLabel, imagePreview, onClo
 }
 
 // ── ARIA Edit Panel (sliding side panel) ─────────────────────────────────────
-function EditPanel({ onClose, topic, template, content, specialty, onApply }) {
+function EditPanel({ onClose, topic, template, content, specialty, onApply, editedHistoryStep, onUndo }) {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
@@ -562,7 +562,7 @@ function EditPanel({ onClose, topic, template, content, specialty, onApply }) {
 
         {/* Undo button */}
         {editedHistoryStep >= 0 && (
-          <button onClick={handleUndoEdit} title="Desfazer" style={{
+          <button onClick={onUndo} title="Desfazer" style={{
             margin: '8px 16px', padding: '6px 12px',
             background: 'rgba(179,136,255,0.08)', border: '1px solid rgba(179,136,255,0.2)',
             borderRadius: 8, color: '#b388ff', fontSize: 12, cursor: 'pointer',
@@ -1557,15 +1557,16 @@ export default function Create() {
 
       {/* ARIA Edit Panel */}
       {isEditing && (
-        <div style={{color:'red'}}>EditPanel temporariamente desabilitado</div>
-        /* <EditPanel
+        <EditPanel
           onClose={() => setIsEditing(false)}
           topic={topic}
           template={template}
           content={editedContent || generatedContent}
           specialty={specialty}
           onApply={handleApplyEdit}
-        /> */
+          editedHistoryStep={editedHistoryStep}
+          onUndo={handleUndoEdit}
+        />
       )}
     </div>
   )
