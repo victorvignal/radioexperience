@@ -1903,6 +1903,8 @@ def _copy_pool_to_challenge(challenge_id: str, pool_q: dict, question_number: in
             "explanation": pool_q.get("explanation", ""),
             "source_title": pool_q.get("source_title", ""),
             "pool_id": pool_q["id"],
+            "image_base64": pool_q.get("image_base64"),
+            "has_image": pool_q.get("has_image", False),
         }
         qr = httpx.post(
             f"{SUPABASE_URL}/rest/v1/challenge_questions",
@@ -2004,6 +2006,8 @@ def challenge_start(req: ChallengeStartRequest):
                         "question_text": saved_q["question_text"],
                         "question_type": saved_q["question_type"],
                         "options": saved_q["options"],
+                        "image_base64": saved_q.get("image_base64"),
+                        "has_image": saved_q.get("has_image", False),
                         "time_per_question": req.time_per_question,
                     })
             else:
@@ -2015,6 +2019,8 @@ def challenge_start(req: ChallengeStartRequest):
                         "question_text": saved["question_text"],
                         "question_type": saved["question_type"],
                         "options": saved["options"],
+                        "image_base64": saved.get("image_base64"),
+                        "has_image": saved.get("has_image", False),
                         "time_per_question": req.time_per_question,
                     })
         except Exception as e:
