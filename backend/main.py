@@ -1926,9 +1926,10 @@ def _copy_pool_to_challenge(challenge_id: str, pool_q: dict, question_number: in
             except Exception:
                 pass
             return saved
+        logger.warning(f"Copy question failed: status={qr.status_code} body={qr.text[:300]} challenge_id={challenge_id}")
         return None
     except Exception as e:
-        logger.warning(f"Failed to copy pool question: {e}")
+        logger.warning(f"Copy question exception: {e}")
         return None
 
 
