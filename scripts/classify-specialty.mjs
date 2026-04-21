@@ -162,7 +162,7 @@ Respondendo SOMENTE com o nome da especialidade (uma palavra/sigla), sem explica
       model: GPT_MODEL,
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.1,
-      max_tokens: 30,
+      max_completion_tokens: 30,
     })
     
     const specialty = response.choices[0].message.content.trim()
