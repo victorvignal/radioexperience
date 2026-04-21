@@ -520,18 +520,15 @@ function EditPanel({ onClose, topic, template, content, specialty, onApply, edit
 
   return (
     <div style={{
-      position: 'fixed', inset: 0, zIndex: 200,
-      display: 'flex', justifyContent: 'flex-end',
+      position: 'fixed', right: 0, top: 0, bottom: 0,
+      width: '100%', maxWidth: 480,
+      background: C.bgDeep,
+      borderLeft: `1px solid ${C.glassBorder}`,
+      display: 'flex', flexDirection: 'column',
+      boxShadow: '-4px 0 32px rgba(0,0,0,0.5)',
+      height: '100dvh',
+      zIndex: 200,
     }}>
-      <div style={{
-        position: 'fixed', right: 0, top: 0, bottom: 0,
-        width: '100%', maxWidth: 480,
-        background: C.bgDeep,
-        borderLeft: `1px solid ${C.glassBorder}`,
-        display: 'flex', flexDirection: 'column',
-        boxShadow: '-4px 0 32px rgba(0,0,0,0.5)',
-        height: '100dvh',
-      }}>
         {/* Header */}
         <div style={{
           padding: '16px 20px',
@@ -673,7 +670,6 @@ function EditPanel({ onClose, topic, template, content, specialty, onApply, edit
           >➤</button>
         </div>
       </div>
-    </div>
   )
 }
 
