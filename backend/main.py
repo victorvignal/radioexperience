@@ -1962,6 +1962,7 @@ def challenge_start(req: ChallengeStartRequest):
     pool_questions = _get_pool_questions(req.specialty, req.num_questions, seen_ids, challenge_id)
     logger.info(f"Pool returned {len(pool_questions)} questions for {req.specialty}")
     questions_to_use = list(pool_questions)
+    generated_count = 0
     if len(questions_to_use) < req.num_questions:
         needed = req.num_questions - len(questions_to_use)
         logger.info(f"Generating {needed} new questions with GPT-4o")
@@ -1975,9 +1976,11 @@ def challenge_start(req: ChallengeStartRequest):
                 _save_to_pool(req.specialty, q_data)
                 q_data["_generated"] = True
                 questions_to_use.append(q_data)
+                generated_count += 1
             except Exception as e:
                 logger.warning(f"Failed to generate question {i+1}: {e} | context_len={len(context) if context else 0}")
                 continue
+    logger.info(f"Total questions to use: {len(questions_to_use)} (pool: {len(pool_questions)}, generated: {generated_count})")
     random.shuffle(questions_to_use)
     questions = []
     copy_errors = []
@@ -2013,6 +2016,8 @@ def challenge_start(req: ChallengeStartRequest):
                         "has_image": saved_q.get("has_image", False),
                         "time_per_question": req.time_per_question,
                     })
+                else:
+                    logger.warning(f"Failed to insert generated question: {qr.status_code} {qr.text[:200]}")
             else:
                 saved = _copy_pool_to_challenge(challenge_id, q, i + 1)
                 if saved:
@@ -2026,11 +2031,16 @@ def challenge_start(req: ChallengeStartRequest):
                         "has_image": saved.get("has_image", False),
                         "time_per_question": req.time_per_question,
                     })
+                else:
+                    copy_errors.append(i + 1)
         except Exception as e:
             logger.warning(f"Failed to save question {i+1}: {e}")
             continue
     if not questions:
-        raise HTTPException(status_code=500, detail="Could not prepare questions. Try a different specialty.")
+        detail = "Could not prepare questions"
+        if copy_errors:
+            detail += f" (copy errors at questions: {copy_errors})"
+        raise HTTPException(status_code=500, detail=detail)
     return {
         "challenge_id": challenge_id,
         "questions": questions,
