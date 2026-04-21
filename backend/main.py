@@ -1801,48 +1801,69 @@ def _get_seen_pool_ids(user_id: str, current_challenge_id: str | None = None) ->
 
 
 def _get_pool_questions(specialty: str, num: int, exclude_ids: set, challenge_id: str | None = None) -> list:
-    """Get questions from the pool, excluding already-seen ones."""
-    try:
-        params = {
-            "select": "*",
-            "order": "times_used.asc,created_at.asc",
-            "limit": str(num * 3),
-        }
-        # Only filter by specialty if NOT "Geral" — "Geral" shows all questions
-        if specialty and specialty.lower() != "geral":
-            params["specialty"] = f"eq.{specialty}"
-        all_exclude = set(exclude_ids)
-        # Also exclude pool_ids already in this challenge (prevents duplicates within same challenge)
-        if challenge_id:
-            try:
-                cr = httpx.get(
-                    f"{SUPABASE_URL}/rest/v1/challenge_questions",
-                    headers=_supabase_headers(),
-                    params={"challenge_id": f"eq.{challenge_id}", "select": "pool_id"},
-                    timeout=10,
-                )
-                if cr.status_code == 200:
-                    for q in cr.json():
-                        if q.get("pool_id"):
-                            all_exclude.add(q["pool_id"])
-            except Exception:
-                pass
-        if all_exclude:
-            ids_str = ",".join(all_exclude)
-            params["id"] = f"not.in.({ids_str})"
-        r = httpx.get(
-            f"{SUPABASE_URL}/rest/v1/challenge_question_pool",
-            headers=_supabase_headers(),
-            params=params,
-            timeout=15,
-        )
-        if r.status_code == 200:
-            return r.json()[:num]
-        return []
-    except Exception as e:
-        logger.warning(f"Pool fetch failed: {e}")
-        return []
+    """Get questions from the pool, excluding already-seen ones. Prioritizes pool questions over LLM generation."""
+    def _fetch_pool(specialty_filter: str | None, limit: int) -> list:
+        """Helper: fetch pool questions with optional specialty filter."""
+        try:
+            params = {
+                "select": "*",
+                "order": "times_used.asc,created_at.asc",
+                "limit": str(limit),
+            }
+            if specialty_filter:
+                params["specialty"] = f"eq.{specialty_filter}"
 
+            all_ex = set(exclude_ids)
+            # Also exclude pool_ids already in this challenge (prevents duplicates within same challenge)
+            if challenge_id:
+                try:
+                    cr = httpx.get(
+                        f"{SUPABASE_URL}/rest/v1/challenge_questions",
+                        headers=_supabase_headers(),
+                        params={"challenge_id": f"eq.{challenge_id}", "select": "pool_id"},
+                        timeout=10,
+                    )
+                    if cr.status_code == 200:
+                        for q in cr.json():
+                            if q.get("pool_id"):
+                                all_ex.add(q["pool_id"])
+                except Exception:
+                    pass
+            if all_ex:
+                ids_str = ",".join(all_ex)
+                params["id"] = f"not.in.({ids_str})"
+
+            r = httpx.get(
+                f"{SUPABASE_URL}/rest/v1/challenge_question_pool",
+                headers=_supabase_headers(),
+                params=params,
+                timeout=15,
+            )
+            if r.status_code == 200:
+                return r.json()
+            return []
+        except Exception as e:
+            logger.warning(f"Pool fetch failed: {e}")
+            return []
+
+    # Normalize specialty
+    normalized = specialty.lower().strip() if specialty else "geral"
+
+    # Step 1: try specific specialty
+    questions = _fetch_pool(specialty if normalized != "geral" else None, num * 3)
+    logger.info(f"Pool step 1 ({specialty if normalized != 'geral' else 'Geral'}): {len(questions)} questions")
+
+    # Step 2: if not enough and not "Geral", try "Geral" to fill the gap
+    if len(questions) < num and normalized != "geral":
+        geral_qs = _fetch_pool("Geral", (num - len(questions)) * 2)
+        logger.info(f"Pool step 2 (Geral): {len(geral_qs)} questions")
+        existing_ids = {q["id"] for q in questions}
+        for gq in geral_qs:
+            if gq["id"] not in existing_ids:
+                questions.append(gq)
+                existing_ids.add(gq["id"])
+
+    return questions[:num]
 
 def _save_to_pool(specialty: str, q_data: dict):
     """Save a generated question to the pool for reuse."""
