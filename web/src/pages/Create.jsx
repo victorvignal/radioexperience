@@ -447,11 +447,15 @@ function PreviewModal({ content, topic, template, typeLabel, imagePreview, onClo
 }
 
 // ── ARIA Edit Panel (sliding side panel) ─────────────────────────────────────
-function EditPanel({ onClose, topic, template, content, specialty, onApply, editedHistoryStep, onUndo }) {
+function EditPanel({ onClose, topic, template, content, specialty, onApply, editedHistoryStep, onUndo, projectId }) {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
   const [currentContent, setCurrentContent] = useState(content || '')
+  const [showHistory, setShowHistory] = useState(false)
+  const [versionHistory, setVersionHistory] = useState([])
+  const [loadingHistory, setLoadingHistory] = useState(false)
+  const [previewVersion, setPreviewVersion] = useState(null)
   const chatRef = useRef(null)
   const scrollDown = () => { if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight }
 
@@ -550,11 +554,136 @@ function EditPanel({ onClose, topic, template, content, specialty, onApply, edit
               Editando: {typeLabel} — {topic || 'Sem título'}
             </div>
           </div>
+          {projectId && (
+            <button onClick={async () => {
+              if (!showHistory) {
+                setLoadingHistory(true)
+                setShowHistory(true)
+                try {
+                  const { data } = await supabase
+                    .from('study_projects')
+                    .select('version_history')
+                    .eq('id', projectId)
+                    .single()
+                  setVersionHistory(data?.version_history || [])
+                } catch (err) {
+                  console.error('Failed to load history:', err)
+                  setVersionHistory([])
+                }
+                setLoadingHistory(false)
+              } else {
+                setShowHistory(false)
+              }
+            }} style={{
+              background: showHistory ? '#b388ff' : 'rgba(179,136,255,0.15)',
+              border: `1px solid ${showHistory ? '#b388ff' : 'rgba(179,136,255,0.3)'}`,
+              borderRadius: 8, padding: '6px 10px',
+              color: showHistory ? C.bgDeep : '#b388ff',
+              fontSize: 12, fontWeight: 700, cursor: 'pointer',
+            }}>📜 Histórico</button>
+          )}
           <button onClick={onClose} style={{
             background: 'transparent', border: `1px solid ${C.border}`,
             borderRadius: 8, padding: '6px 10px',
             color: C.textMuted, fontSize: 16, cursor: 'pointer',
           }}>×</button>
+        </div>
+
+        {/* Version History Panel */}
+        {showHistory && (
+          <div style={{
+            position: 'absolute', left: 0, top: 0, bottom: 0, width: '100%',
+            background: C.bg, zIndex: 10, display: 'flex', flexDirection: 'column',
+          }}>
+            <div style={{
+              padding: '14px 16px', borderBottom: `1px solid ${C.border}`,
+              display: 'flex', alignItems: 'center', gap: 12,
+            }}>
+              <button onClick={() => setShowHistory(false)} style={{
+                background: 'transparent', border: `1px solid ${C.border}`,
+                borderRadius: 8, padding: '6px 10px',
+                color: C.textMuted, fontSize: 16, cursor: 'pointer',
+              }}>←</button>
+              <span style={{ fontSize: 14, fontWeight: 700, color: C.text }}>📜 Histórico de Versões</span>
+            </div>
+            <div style={{ flex: 1, overflowY: 'auto', padding: '12px' }}>
+              {loadingHistory ? (
+                <div style={{ textAlign: 'center', color: C.textMuted, padding: 20 }}>Carregando...</div>
+              ) : versionHistory.length === 0 ? (
+                <div style={{ textAlign: 'center', color: C.textMuted, padding: 20 }}>
+                  Nenhuma versão anterior encontrada.
+                </div>
+              ) : (
+                versionHistory.map((v, i) => (
+                  <div key={i} style={{
+                    background: C.glass, border: `1px solid ${C.glassBorder}`,
+                    borderRadius: 10, padding: '12px 14px', marginBottom: 8,
+                    cursor: 'pointer',
+                  }} onClick={() => setPreviewVersion(v)}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                      <span style={{ fontSize: 11, color: C.textDim }}>Versão {versionHistory.length - i}</span>
+                      <span style={{ fontSize: 11, color: C.textDim }}>
+                        {new Date(v.editedAt).toLocaleString('pt-BR')}
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 12, color: C.textSoft, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {v.content?.substring(0, 80) || '(sem conteúdo)'}...
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Version Preview Modal */}
+        {previewVersion && (
+          <div style={{
+            position: 'absolute', inset: 0, background: 'rgba(0,10,20,0.9)',
+            zIndex: 20, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: 20,
+          }}>
+            <div style={{
+              background: C.bgDeep, border: `1px solid ${C.glassBorder}`,
+              borderRadius: 16, padding: 20, maxHeight: '80vh', overflow: 'auto', width: '100%',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                <div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: C.text }}>📜 Versão de {new Date(previewVersion.editedAt).toLocaleString('pt-BR')}</div>
+                </div>
+                <button onClick={() => setPreviewVersion(null)} style={{
+                  background: 'transparent', border: `1px solid ${C.border}`,
+                  borderRadius: 8, padding: '6px 10px',
+                  color: C.textMuted, fontSize: 16, cursor: 'pointer',
+                }}>×</button>
+              </div>
+              <pre style={{
+                fontSize: 12, color: C.textSoft, whiteSpace: 'pre-wrap',
+                background: 'rgba(0,26,43,0.4)', padding: 12, borderRadius: 8,
+                maxHeight: 300, overflow: 'auto', marginBottom: 12,
+              }}>{previewVersion.content}</pre>
+              <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+                <button onClick={() => setPreviewVersion(null)} style={{
+                  padding: '8px 16px', borderRadius: 8,
+                  background: 'transparent', border: `1px solid ${C.border}`,
+                  color: C.textMuted, fontSize: 12, cursor: 'pointer',
+                }}>Fechar</button>
+                <button onClick={() => {
+                  onApply(previewVersion.content)
+                  setPreviewVersion(null)
+                  setShowHistory(false)
+                }} style={{
+                  padding: '8px 16px', borderRadius: 8,
+                  background: '#b388ff', border: 'none',
+                  color: C.bgDeep, fontSize: 12, fontWeight: 700, cursor: 'pointer',
+                }}>↩ Restaurar esta versão</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Header */}
+        <div style={{
         </div>
 
         {/* Undo button */}
