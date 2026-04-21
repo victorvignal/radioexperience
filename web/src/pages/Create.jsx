@@ -734,6 +734,7 @@ export default function Create() {
       }
       if (p.specialty) setSpecialty(p.specialty)
       if (p.level) setLevel(p.level)
+      if (p.id) setCurrentProjectId(p.id)
       setIsEditing(true)
 
       // Clear sessionStorage backup (avoid restore on refresh)
@@ -764,6 +765,7 @@ export default function Create() {
   const [level, setLevel] = useState('')
   const [savingProject, setSavingProject] = useState(false)
   const [copyConfirm, setCopyConfirm] = useState(false)
+  const [currentProjectId, setCurrentProjectId] = useState(null)
 
   const typeLabelMap = {
     script: 'Script de Aula',
@@ -849,14 +851,44 @@ export default function Create() {
     if (!user || !generatedContent) return
     setSavingProject(true)
     try {
-      await supabase.from('study_projects').insert({
-        user_id: user.id,
-        title: topic.trim(),
-        content: editedContent,
-        template,
-        specialty,
-        level,
-      })
+      if (currentProjectId) {
+        // Update existing project with version history
+        const { data: current } = await supabase
+          .from('study_projects')
+          .select('content, version_history')
+          .eq('id', currentProjectId)
+          .single()
+
+        const historyEntry = {
+          content: current?.content || editedContent,
+          editedAt: new Date().toISOString(),
+        }
+        const existingHistory = current?.version_history || []
+        const newHistory = [historyEntry, ...existingHistory].slice(0, 20)
+
+        await supabase
+          .from('study_projects')
+          .update({
+            title: topic.trim(),
+            content: editedContent,
+            template,
+            specialty,
+            level,
+            version_history: newHistory,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', currentProjectId)
+      } else {
+        // Insert new project
+        await supabase.from('study_projects').insert({
+          user_id: user.id,
+          title: topic.trim(),
+          content: editedContent,
+          template,
+          specialty,
+          level,
+        })
+      }
       setSavingProject(false)
       navigate('/meus-projetos')
     } catch (e) {
@@ -865,13 +897,50 @@ export default function Create() {
     }
   }
 
-  const handleApplyEdit = (text) => {
+  const handleApplyEdit = async (text) => {
+    // Save to history stack for local undo
     if (editedContent) {
       setEditedHistory(prev => [...prev.slice(0, editedHistoryStep + 1), editedContent])
       setEditedHistoryStep(prev => prev + 1)
     }
     setEditedContent(text)
     setIsEditing(false)
+
+    // If editing existing project, save to Supabase with version history
+    if (currentProjectId && user) {
+      try {
+        // Fetch current project to get existing version_history
+        const { data: current } = await supabase
+          .from('study_projects')
+          .select('content, version_history')
+          .eq('id', currentProjectId)
+          .single()
+
+        if (current) {
+          // Build version history entry
+          const historyEntry = {
+            content: editedContent, // save current before new edit
+            editedAt: new Date().toISOString(),
+          }
+
+          // Append to existing history (keep last 20 versions)
+          const existingHistory = current.version_history || []
+          const newHistory = [historyEntry, ...existingHistory].slice(0, 20)
+
+          // Update project with new content and history
+          await supabase
+            .from('study_projects')
+            .update({
+              content: text,
+              version_history: newHistory,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', currentProjectId)
+        }
+      } catch (err) {
+        console.error('Failed to save edit:', err)
+      }
+    }
   }
 
   const handleUndoEdit = () => {
