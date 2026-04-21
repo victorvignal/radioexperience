@@ -525,7 +525,7 @@ function EditPanel({ onClose, topic, template, content, specialty, onApply, edit
   return (
     <div style={{
       position: 'fixed', right: 0, top: 0, bottom: 0,
-      width: '100%', maxWidth: 480,
+      width: 480, maxWidth: '100%',
       background: C.bgDeep,
       borderLeft: `1px solid ${C.glassBorder}`,
       display: 'flex', flexDirection: 'column',
