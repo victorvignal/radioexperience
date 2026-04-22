@@ -1933,6 +1933,72 @@ def _copy_pool_to_challenge(challenge_id: str, pool_q: dict, question_number: in
         return None
 
 
+@app.get("/challenge/debug-insert")
+def challenge_debug_insert():
+    """Debug endpoint: test INSERT into challenge_questions."""
+    import random
+    test_user = str(uuid.uuid4())
+    challenge_payload = {
+        "user_id": test_user,
+        "specialty": "Mama",
+        "num_questions": 3,
+        "time_per_question": 60,
+        "status": "in_progress",
+    }
+    try:
+        r = httpx.post(
+            f"{SUPABASE_URL}/rest/v1/challenges",
+            headers={**_supabase_headers(), "Prefer": "return=representation"},
+            json=challenge_payload,
+            timeout=15,
+        )
+        if r.status_code not in (200, 201):
+            return {"step": "create_challenge", "status": r.status_code, "body": r.text[:200]}
+        challenge = r.json()[0]
+        challenge_id = challenge["id"]
+        
+        # Get a pool question
+        pr = httpx.get(
+            f"{SUPABASE_URL}/rest/v1/challenge_question_pool",
+            headers=_supabase_headers(),
+            params={"specialty": "eq.Mama", "select": "*", "limit": "1", "order": "times_used.asc"},
+            timeout=15,
+        )
+        if pr.status_code != 200 or not pr.json():
+            return {"step": "fetch_pool", "status": pr.status_code, "body": pr.text[:200]}
+        pool_q = pr.json()[0]
+        
+        # Try INSERT
+        q_payload = {
+            "challenge_id": challenge_id,
+            "question_number": 1,
+            "question_text": pool_q["question_text"],
+            "question_type": pool_q.get("question_type", "multiple_choice"),
+            "options": pool_q["options"],
+            "correct_answer": pool_q["correct_answer"],
+            "ai_answer": pool_q["correct_answer"],
+            "explanation": pool_q.get("explanation", ""),
+            "source_title": pool_q.get("source_title", ""),
+            "pool_id": pool_q["id"],
+            "image_base64": pool_q.get("image_base64"),
+            "has_image": pool_q.get("has_image", False),
+        }
+        ir = httpx.post(
+            f"{SUPABASE_URL}/rest/v1/challenge_questions",
+            headers={**_supabase_headers(), "Prefer": "return=representation"},
+            json=q_payload,
+            timeout=15,
+        )
+        return {
+            "step": "insert",
+            "status": ir.status_code,
+            "body": ir.text[:500],
+            "key_prefix": SUPABASE_SERVICE_KEY[:20] + "..." if SUPABASE_SERVICE_KEY else "EMPTY",
+            "key_role": "unknown",
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
 @app.post("/challenge/start")
 def challenge_start(req: ChallengeStartRequest):
     """Create a new challenge using question pool (with GPT-4o fallback)."""
