@@ -1,7 +1,7 @@
 [
   {
     "number": 1,
-    "text": "Paciente de 67 anos, diabética há mais de 20 anos, encaminhada para avaliação rotineira. Ao ultrassom, evidencia-se formação cística complexa no corpo pancreático, com 4 cm de diâmetro, bem delimitada, com septos evidentes e calcificação grosseira central. Não se observa dilatação de duto pancreático ou colédoco. Tal imagem é sugestiva de:",
+    "text": "Paciente de 67 anos, diabética há mais de 20 anos, encaminhada para avaliação rotineira. Ao ultrassom, evidencia-seformação cística complexa no corpo pancreático, com 4 cm de diâmetro, bem delimitada, com septos evidentes ecalcificação grosseira central. Não se observa dilatação de duto pancreático ou colédoco.Tal imagem é sugestiva de:",
     "options": [
       "A) A - Tumor neurendócrino.",
       "B) B - Tumor papilar mucinoso intraductal.",
@@ -18,8 +18,7 @@
       "neurorradiologia"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 2,
@@ -29,7 +28,7 @@
       "B) B - Aumento de 2 mm no diâmetro de pólipo vesicular no período de 1 ano.",
       "C) C - Adenomiose da vesícula biliar.",
       "D) D - Pólipo incidental com 5 mm de diâmetro.",
-      "E) E - Coexistência de hepatopatia crônica.2"
+      "E) E - Coexistência de hepatopatia crônica. 2"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -44,7 +43,7 @@
   },
   {
     "number": 3,
-    "text": "Com relação ao Consenso da SRU (Society of Radiologists in Ultrasound) de 2022 relativo aos pólipos da vesícula biliar. Marque a afirmativa correta:",
+    "text": "Com relação ao Consenso da SRU (Society of Radiologists in Ultrasound) de 2022 relativo aos pólipos da vesículabiliar.Marque a afirmativa correta:",
     "options": [
       "A) A - Colecistectomia deve ser indicada para todos os pólipos acima de 5 mm de diâmetro.",
       "B) B - Vigilância ativa está indicada para todos os pólipos abaixo de 15 mm de diâmetro.",
@@ -65,13 +64,13 @@
   },
   {
     "number": 4,
-    "text": "Paciente com história de cirurgia abdominal videolaparoscópica há 1 ano, apresentando quadro de dor abdominal difusa e náuseas. Achados ecográficos com segmento de alça dilatada, sem espessamento parietal, com aumento do espaço entre as vilosidades da mucosa, com sequestro de líquido e diminuição da peristalse. Qual o diagnóstico?",
+    "text": "Paciente com história de cirurgia abdominal videolaparoscópica há 1 ano, apresentando quadro de dor abdominaldifusa e náuseas. Achados ecográficos com segmento de alça dilatada, sem espessamento parietal, com aumentodo espaço entre as vilosidades da mucosa, com sequestro de líquido e diminuição da peristalse.Qual o diagnóstico?",
     "options": [
       "A) A - Oclusão intestinal",
       "B) B - Triflite.",
       "C) C - Ileíte.",
       "D) D - Apendagite.",
-      "E) E - Duodenite.3"
+      "E) E - Duodenite. 3"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -86,7 +85,7 @@
   },
   {
     "number": 5,
-    "text": "Paciente com dor abdominal submetido à ultrassonografia abdominal, na qual são encontrados os seguintes resultados: espessamento concêntrico de todas as camadas da alça intestinal; gordura inflamatória adjacente; linfadenopatia locorregional; fístula ileocecal; e aumento da vascularização ao Doppler. Estes achados são clássicos da:",
+    "text": "Paciente com dor abdominal submetido à ultrassonografia abdominal, na qual são encontrados os seguintesresultados: espessamento concêntrico de todas as camadas da alça intestinal; gordura inflamatória adjacente;linfadenopatia locorregional; fístula ileocecal; e aumento da vascularização ao Doppler.Estes achados são clássicos da:",
     "options": [
       "A) A - Triflite.",
       "B) B - Doença de Crohn.",
@@ -108,13 +107,13 @@
   },
   {
     "number": 6,
-    "text": "Quanto à análise ultrassonográfica do linfonodo cervical. É correto afirmar:",
+    "text": "Quanto à análise ultrassonográfica do linfonodo cervical.É correto afirmar:",
     "options": [
       "A) A - O linfonodo reativo é hipervascularizado, com vasos assimétricos e irregulares.",
       "B) B - Os linfonodos benignos tendem a ser arredondados, enquanto os malignos, fusiformes.",
       "C) C - A ausência do hilo gorduroso é característica de malignidade.",
       "D) D - As microcalcificações nos linfonodos são exclusivas de comprometimento metastático.",
-      "E) E - O linfonodo maligno apresenta vascularização organizada, radial, desde o hilo até a periferia, devido a fatores\nantiangiogênicos.4"
+      "E) E - O linfonodo maligno apresenta vascularização organizada, radial, desde o hilo até a periferia, devido a fatoresantiangiogênicos. 4"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -150,13 +149,13 @@
   },
   {
     "number": 8,
-    "text": "Com relação às glândulas paratireoides. Assinale a alternativa correta:",
+    "text": "Com relação às glândulas paratireoides.Assinale a alternativa correta:",
     "options": [
-      "A) A - No caso de hiperparatireoidismo primário, é mais frequente a demonstração de mais de um nódulo em paratireoide\ncom hiperprodução hormonal, geralmente ocorrendo em pares.",
-      "B) B - No hiperparatireoidismo primário, a ocorrência de carcinoma de paratireoide é um evento muito comum,\ncorrespondendo a cerca de 50% de casos com lesão visível à ultrassonografia.",
-      "C) C - O adenoma de paratireoide é mais frequentemente uma lesão solitária, ovalada, hipoecoica, com hipervascularização\nao Doppler, situada em região posterior à tireoide.",
-      "D) D - A cintilografia Sestamibi com Tecnécio 99 (MIBI) é um excelente método pré-operatório para distinção entre o\nadenoma produtor de paratireoide e o carcinoma de paratireoide.",
-      "E) E - Lesão ecogênica em topografia de paratireoide associada a níveis séricos de cálcio reduzidos é um achado que eleva o\nrisco de possibilidade de carcinoma de paratireoide.5"
+      "A) A - No caso de hiperparatireoidismo primário, é mais frequente a demonstração de mais de um nódulo em paratireoidecom hiperprodução hormonal, geralmente ocorrendo em pares.",
+      "B) B - No hiperparatireoidismo primário, a ocorrência de carcinoma de paratireoide é um evento muito comum,correspondendo a cerca de 50% de casos com lesão visível à ultrassonografia.",
+      "C) C - O adenoma de paratireoide é mais frequentemente uma lesão solitária, ovalada, hipoecoica, com hipervascularizaçãoao Doppler, situada em região posterior à tireoide.",
+      "D) D - A cintilografia Sestamibi com Tecnécio 99 (MIBI) é um excelente método pré-operatório para distinção entre oadenoma produtor de paratireoide e o carcinoma de paratireoide.",
+      "E) E - Lesão ecogênica em topografia de paratireoide associada a níveis séricos de cálcio reduzidos é um achado que eleva orisco de possibilidade de carcinoma de paratireoide. 5"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -171,9 +170,9 @@
   },
   {
     "number": 9,
-    "text": "Criança de 2 anos de idade, com vômitos biliosos e ultrassonografia demonstrando sinais de má-rotação intestinal. Assinale a alternativa correta:",
+    "text": "Criança de 2 anos de idade, com vômitos biliosos e ultrassonografia demonstrando sinais de má-rotação intestinal.Assinale a alternativa correta:",
     "options": [
-      "A) A - É elevada a incidência de pacientes com o diagnóstico simultâneo de estenose hipertrófica de piloro e de má-\nrotação intestinal.",
+      "A) A - É elevada a incidência de pacientes com o diagnóstico simultâneo de estenose hipertrófica de piloro e de má-rotação intestinal.",
       "B) B - Criança com vômitos biliosos não necessita investigação imediata.",
       "C) C - Há maior incidência de litíase biliar em crianças com má-rotação intestinal.",
       "D) D - A ultrassonografia com Doppler demonstra o sinal “do redemoinho”, o qual é altamente específico.",
@@ -193,13 +192,13 @@
   },
   {
     "number": 10,
-    "text": "Menina com 6 anos de idade apresentando infecção urinária de repetição e perda urinária constante. Iniciada investigação com a realização de ultrassonografia, a qual demonstrou duplicidade pielo-ureteral completa, com ureter ectópico. Qual a resposta correta?",
+    "text": "Menina com 6 anos de idade apresentando infecção urinária de repetição e perda urinária constante. Iniciadainvestigação com a realização de ultrassonografia, a qual demonstrou duplicidade pielo-ureteral completa, comureter ectópico.Qual a resposta correta?",
     "options": [
       "A) A - Duplicidade pielo-ureteral é a anomalia renal mais comum.",
       "B) B - A regra de Weigert-Meyer é utilizada com duplicidade pielo-ureteral incompleta.",
-      "C) C - Pacientes com duplicidade pielo-ureteral completa tem menor incidência de infecção urinária e de refluxo\nvesicoureteral.",
+      "C) C - Pacientes com duplicidade pielo-ureteral completa tem menor incidência de infecção urinária e de refluxovesicoureteral.",
       "D) D - Pacientes com duplicidade pielo-ureteral completa têm maior incidência de tumor renal.",
-      "E) E - Ureter ectópico com inserção acima do esfíncter externo determina perda urinária contínua.6"
+      "E) E - Ureter ectópico com inserção acima do esfíncter externo determina perda urinária contínua. 6"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -214,12 +213,12 @@
   },
   {
     "number": 11,
-    "text": "Recém-nascido prematuro com baixo peso, com asfixia severa ao nascimento, está internado na UTI, entubado e realizou ultrassonografia intracraniana. Qual a resposta correta?",
+    "text": "Recém-nascido prematuro com baixo peso, com asfixia severa ao nascimento, está internado na UTI, entubado erealizou ultrassonografia intracraniana.Qual a resposta correta?",
     "options": [
       "A) A - O padrão mais comum de hemorragia intracraniana em recém-nascido prematuro é o céfalo-hematoma.",
-      "B) B - A hemorragia intracraniana em recém-nascido prematuro deve ser classificada pela Classificação de Orsini, a\nqual apresenta 8 graus de acometimento.",
+      "B) B - A hemorragia intracraniana em recém-nascido prematuro deve ser classificada pela Classificação de Orsini, aqual apresenta 8 graus de acometimento.",
       "C) C - Hemorragia intracraniana neonatal tem origem na matriz germinativa em 90% dos casos.",
-      "D) D - A hemorragia intracraniana grau II, com extensão ventricular e sem dilatação do sistema ventricular apresenta\nmaterial hipoeoico intraventricular.",
+      "D) D - A hemorragia intracraniana grau II, com extensão ventricular e sem dilatação do sistema ventricular apresentamaterial hipoeoico intraventricular.",
       "E) E - Hemorragia intracraniana grau I apresenta associação com fratura de crânio por tocotraumatismo."
     ],
     "correct_answer": null,
@@ -241,7 +240,7 @@
       "B) B - Tendão do flexor longo dos dedos.",
       "C) C - Tendão do abdutor do hálux.",
       "D) D - Tendão do flexor curto dos dedos.",
-      "E) E - Tendão do extensor longo do hálux.7"
+      "E) E - Tendão do extensor longo do hálux. 7"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -256,7 +255,7 @@
   },
   {
     "number": 13,
-    "text": "Qual estrutura anatômica, isoladamente ou ramos, se relaciona com a sintomatologia da síndrome do túnel do tarso?",
+    "text": "Qual estrutura anatômica, isoladamente ou ramos, se relaciona com a sintomatologia da síndrome dotúnel do tarso?",
     "options": [
       "A) A - Artéria fibular",
       "B) B - Artéria tibial anterior.",
@@ -304,7 +303,7 @@
       "B) B - Retináculo dos flexores.",
       "C) C - Canal de Guyon.",
       "D) D - Flexor radial do carpo.",
-      "E) E - Tubérculo do trapézio.8"
+      "E) E - Tubérculo do trapézio. 8"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -319,7 +318,7 @@
   },
   {
     "number": 16,
-    "text": "Nas manifestações da síndrome do canal de Guyon, ocasionado antes da bifurcação neural, haverá alteração ?",
+    "text": "Nas manifestações da síndrome do canal de Guyon, ocasionado antes da bifurcação neural, haveráalteração ?",
     "options": [
       "A) A - Alteração sensitiva e motora na musculatura hipotenar do 1º e 2º dedos.",
       "B) B - Alteração sensitiva e motora na musculatura hipotenar do 2º e 3º dedos.",
@@ -342,11 +341,11 @@
     "number": 17,
     "text": "Considerando-se as patologias ovarianas, é correto afirmar que:",
     "options": [
-      "A) A - Endometriomas decidualizados podem ser encontrados em pacientes na menacme usuárias de progestágeno\ne com sintomatologia importante.",
-      "B) B - Em mulheres assintomáticas na menacme, cistos hemorrágicos com 3 cm ou menos devem ser descritos e\nacompanhados até o próximo ciclo.",
-      "C) C - Conteúdo líquido na cavidade uterina e líquido livre no fundo de saco são achados específicos da doença\ninflamatória pélvica.",
+      "A) A - Endometriomas decidualizados podem ser encontrados em pacientes na menacme usuárias de progestágenoe com sintomatologia importante.",
+      "B) B - Em mulheres assintomáticas na menacme, cistos hemorrágicos com 3 cm ou menos devem ser descritos eacompanhados até o próximo ciclo.",
+      "C) C - Conteúdo líquido na cavidade uterina e líquido livre no fundo de saco são achados específicos da doençainflamatória pélvica.",
       "D) D - O sítio mais comum de endometriose infiltrativa extra pélvica é o diafragma.",
-      "E) E - O cisto hemorrágico pode se apresentar com diversas variações ecográficas e mimetizar outros processos,\nsendo reconhecido como “grande imitador”.9"
+      "E) E - O cisto hemorrágico pode se apresentar com diversas variações ecográficas e mimetizar outros processos,sendo reconhecido como “grande imitador”. 9"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -363,11 +362,11 @@
     "number": 18,
     "text": "Com relação aos aspectos ultrassonográficos das patologias estruturais uterinas, é correto afirmar que:",
     "options": [
-      "A) A - Útero, tubas, colo uterino, dois terços superiores da vagina e ovários são derivados müllerianos, enquanto\nterço inferior da vagina tem origem no seio urogenital.",
-      "B) B - O útero unicorno é a anomalia mülleriana com pior prognóstico gestacional, embora seja a de mais fácil\ndiagnóstico pelo ultrassom 3D.",
-      "C) C - No útero didelfo, as hemicavidades uterinas não se comunicam e pode haver um septo vaginal longitudinal ou\noblíquo.",
-      "D) D - A reabsorção parcial dos dois ductos de Müller com absorção incompleta do fundo resulta na formação de um\nútero bicorno e um único colo do útero.",
-      "E) E - A falha na fusão do septo intrauterino, após fusão incompleta dos ductos de Müller, resulta na formação de um\nútero septado."
+      "A) A - Útero, tubas, colo uterino, dois terços superiores da vagina e ovários são derivados müllerianos, enquantoterço inferior da vagina tem origem no seio urogenital.",
+      "B) B - O útero unicorno é a anomalia mülleriana com pior prognóstico gestacional, embora seja a de mais fácildiagnóstico pelo ultrassom 3D.",
+      "C) C - No útero didelfo, as hemicavidades uterinas não se comunicam e pode haver um septo vaginal longitudinal ouoblíquo.",
+      "D) D - A reabsorção parcial dos dois ductos de Müller com absorção incompleta do fundo resulta na formação de umútero bicorno e um único colo do útero.",
+      "E) E - A falha na fusão do septo intrauterino, após fusão incompleta dos ductos de Müller, resulta na formação de umútero septado."
     ],
     "correct_answer": null,
     "has_image": false,
@@ -382,13 +381,13 @@
   },
   {
     "number": 19,
-    "text": "Sabe-se que o conhecimento adequado da anatomia pélvica é imprescindível para a realização dos exames transvaginais. A partir dessa afirmação, assinale a alternativa correta:",
+    "text": "Sabe-se que o conhecimento adequado da anatomia pélvica é imprescindível para a realização dos examestransvaginais.A partir dessa afirmação, assinale a alternativa correta:",
     "options": [
       "A) A - Os ligamentos uterossacros formam os limites laterais do fundo de saco posterior.",
       "B) B - Os ligamentos redondos surgem na região cornual, posteriormente às tubas uterinas.",
       "C) C - As artérias uterinas e ovarianas são ramos da artéria ilíaca interna.",
       "D) D - O halo hipoecogênico subendometrial deve ser incluído na medida do endométrio.",
-      "E) E - Cistos de Gartner são vistos na parede vaginal e remanescentes de ductos paramesonéfricos.10"
+      "E) E - Cistos de Gartner são vistos na parede vaginal e remanescentes de ductos paramesonéfricos. 10"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -424,13 +423,13 @@
   },
   {
     "number": 21,
-    "text": "O protocolo da ISUOG (International Society of Ultrasound in Obstetrics and Gynecology) sobre o papel da ultrassonografia na predição do parto prematuro espontâneo traz diretrizes sobre a realização correta do exame. Assinale a alternativa correta acerca das orientações fornecidas pelo protocolo:",
+    "text": "O protocolo da ISUOG (International Society of Ultrasound in Obstetrics and Gynecology) sobre o papel daultrassonografia na predição do parto prematuro espontâneo traz diretrizes sobre a realização correta do exame.Assinale a alternativa correta acerca das orientações fornecidas pelo protocolo:",
     "options": [
-      "A) A - Para diminuir os erros por causa das mudanças dinâmicas do colo, deverão ser feitas, pelo menos, três medidas\nconsecutivas e escolhida a maior delas.",
-      "B) B - Tecnicamente, a avaliação ultrassonográfica do colo pode ser realizada por abordagem transabdominal,\ntransperineal ou transvaginal.",
-      "C) C - A bexiga vazia e a pressão excessiva do transdutor sobre o colo podem diminuir artificialmente o comprimento\ndo colo uterino.",
-      "D) D - O colo uterino deve ocupar, no máximo, 25% da tela, e devem também estar presentes na documentação a\nborda inferior da bexiga e a sínfise púbica.",
-      "E) E - A medida longitudinal do afunilamento é um indicador importante de risco de parto pré-termo, aliado à medida\ndo colo uterino.11"
+      "A) A - Para diminuir os erros por causa das mudanças dinâmicas do colo, deverão ser feitas, pelo menos, três medidasconsecutivas e escolhida a maior delas.",
+      "B) B - Tecnicamente, a avaliação ultrassonográfica do colo pode ser realizada por abordagem transabdominal,transperineal ou transvaginal.",
+      "C) C - A bexiga vazia e a pressão excessiva do transdutor sobre o colo podem diminuir artificialmente o comprimentodo colo uterino.",
+      "D) D - O colo uterino deve ocupar, no máximo, 25% da tela, e devem também estar presentes na documentação aborda inferior da bexiga e a sínfise púbica.",
+      "E) E - A medida longitudinal do afunilamento é um indicador importante de risco de parto pré-termo, aliado à medidado colo uterino. 11"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -447,11 +446,11 @@
     "number": 22,
     "text": "Com relação à ultrassonografia do primeiro trimestre, é correto afirmar:",
     "options": [
-      "A) A - A medida do comprimento cabeça-nádega deve ser utilizada para estimar a idade gestacional em todos os\ncasos, exceto em gestações concebidas por fertilização in vitro.",
-      "B) B - Quando são feitas múltiplas medidas do comprimento cabeça-nádega durante o exame, o valor a ser\nconsiderado é uma média entre todas as medidas.",
-      "C) C - A avaliação das vias de saída do coração fetal faz parte dos pré-requisitos mínimos da ultrassonografia do\nprimeiro trimestre.",
-      "D) D - A bexiga fetal deve estar visível durante todos os exames de ultrassonografia do primeiro trimestre e ter\ndiâmetro longitudinal igual ou menor que 10 mm.",
-      "E) E - O plano sagital da cabeça pode ser utilizado para avaliar a fossa posterior e visualizar a translucência\nintracraniana, verme cerebelar e tronco encefálico como um teste de triagem para defeitos abertos do tubo neural\ne malformações císticas da fossa posterior."
+      "A) A - A medida do comprimento cabeça-nádega deve ser utilizada para estimar a idade gestacional em todos oscasos, exceto em gestações concebidas por fertilização in vitro.",
+      "B) B - Quando são feitas múltiplas medidas do comprimento cabeça-nádega durante o exame, o valor a serconsiderado é uma média entre todas as medidas.",
+      "C) C - A avaliação das vias de saída do coração fetal faz parte dos pré-requisitos mínimos da ultrassonografia doprimeiro trimestre.",
+      "D) D - A bexiga fetal deve estar visível durante todos os exames de ultrassonografia do primeiro trimestre e terdiâmetro longitudinal igual ou menor que 10 mm.",
+      "E) E - O plano sagital da cabeça pode ser utilizado para avaliar a fossa posterior e visualizar a translucênciaintracraniana, verme cerebelar e tronco encefálico como um teste de triagem para defeitos abertos do tubo neurale malformações císticas da fossa posterior."
     ],
     "correct_answer": null,
     "has_image": false,
@@ -468,11 +467,11 @@
     "number": 23,
     "text": "Qual a alternativa correta?",
     "options": [
-      "A) A - Líquido em fundo de saco posterior é um achado normal em mulheres assintomáticas e pode ser visualizado\nem todo o ciclo menstrual.",
+      "A) A - Líquido em fundo de saco posterior é um achado normal em mulheres assintomáticas e pode ser visualizadoem todo o ciclo menstrual.",
       "B) B - Folículos antrais medem mais que 1 cm e aparecem no 10 dia menstrual.",
       "C) C - Folículo maduro é aquele que chega a 15 mm.",
       "D) D - Cistos funcionais são neoplasias do ovário sem relação hormonal.",
-      "E) E - Focos ecogênicos pontuais no parênquima ovariano são sempre suspeitos de malignidade.12"
+      "E) E - Focos ecogênicos pontuais no parênquima ovariano são sempre suspeitos de malignidade. 12"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -487,7 +486,7 @@
   },
   {
     "number": 24,
-    "text": "Em um exame ultrassonográfico abdominal de rotina de um paciente do sexo masculino, 65 anos, tabagista e hipertenso, sem queixas, é encontrado um calibre da aorta abdominal infrarrenal de 3,5 cm. Assinale a alternativa correta:",
+    "text": "Em um exame ultrassonográfico abdominal de rotina de um paciente do sexo masculino, 65 anos, tabagista ehipertenso, sem queixas, é encontrado um calibre da aorta abdominal infrarrenal de 3,5 cm.Assinale a alternativa correta:",
     "options": [
       "A) A - O calibre pode ser considerado normal para o paciente em questão.",
       "B) B - Há uma ectasia da aorta abdominal infrarrenal.",
@@ -509,13 +508,13 @@
   },
   {
     "number": 25,
-    "text": "Mulher de 45 anos vem ao pronto- socorro com queixa de edema assimétrico de membros inferiores há 2 dias. A perna direita está com edema e dor. Para confirmar um diagnóstico de trombose venosa profunda, qual alternativa representa os achados esperados à ultrassonografia com Doppler dos membros inferiores?",
+    "text": "Mulher de 45 anos vem ao pronto- socorro com queixa de edema assimétrico de membros inferiores há 2dias. A perna direita está com edema e dor. Para confirmar um diagnóstico de trombose venosa profunda,qual alternativa representa os achados esperados à ultrassonografia com Doppler dos membrosinferiores?",
     "options": [
-      "A) A - Veia poplítea direita com calibre aumentado, conteúdo hipoecogênico, ausência de fluxo ao Doppler e\nincompressível.",
+      "A) A - Veia poplítea direita com calibre aumentado, conteúdo hipoecogênico, ausência de fluxo ao Doppler eincompressível.",
       "B) B - Veia poplítea direita afilada, com conteúdo hipoecogênico, ausência de fluxo e incompressível.",
       "C) C - Veia poplítea direita com calibre normal, conteúdo anecogênico, ausência de fluxo e compressível.",
       "D) D - Veia poplítea direita com calibre normal, conteúdo anecogênico, fluxo presente e compressível.",
-      "E) E - Veia poplítea direita afilada, com conteúdo hiperecogênico, ausência de fluxo e incompressível.13"
+      "E) E - Veia poplítea direita afilada, com conteúdo hiperecogênico, ausência de fluxo e incompressível. 13"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -530,7 +529,7 @@
   },
   {
     "number": 26,
-    "text": "As veias hepáticas habitualmente possuem um padrão espectral de fluxo multifásico à ultrassonografia com Doppler. Entretanto, algumas doenças podem reduzir essa multifasicidade, chegando até mesmo a “portalizar” o fluxo. Qual das doenças abaixo poderia fazer isso?",
+    "text": "As veias hepáticas habitualmente possuem um padrão espectral de fluxo multifásico à ultrassonografia comDoppler. Entretanto, algumas doenças podem reduzir essa multifasicidade, chegando até mesmo a “portalizar” ofluxo.Qual das doenças abaixo poderia fazer isso?",
     "options": [
       "A) A - Insuficiência tricúspide.",
       "B) B - Insuficiência cardíaca direita.",
@@ -553,11 +552,11 @@
     "number": 27,
     "text": "Assinale a alternativa correta sobre onfalocele:",
     "options": [
-      "A) A - Os fetos cujos fígados encontram-se no saco da onfalocele apresentam um risco menor de anormalidades\ncromossômicas do que aqueles com onfalocele apenas de intestino delgado.",
-      "B) B - Os fetos cujos apenas o intestino delgado encontra-se no saco da onfalocele apresentam um risco menor de\nanormalidades cromossômicas do que aqueles com onfalocele contendo outras estruturas.",
+      "A) A - Os fetos cujos fígados encontram-se no saco da onfalocele apresentam um risco menor de anormalidadescromossômicas do que aqueles com onfalocele apenas de intestino delgado.",
+      "B) B - Os fetos cujos apenas o intestino delgado encontra-se no saco da onfalocele apresentam um risco menor deanormalidades cromossômicas do que aqueles com onfalocele contendo outras estruturas.",
       "C) C - Não há nenhuma relação entre o conteúdo da onfalocele e o risco de anormalidade cromossômicas.",
       "D) D - Quando a onfalocele não é isolada, a etiologia do seu desenvolvimento é multifatorial.",
-      "E) E - Quando a onfalocele é isolada, a etiologia do seu desenvolvimento é devido a falha de fechamento do\nmesoderma medial.14"
+      "E) E - Quando a onfalocele é isolada, a etiologia do seu desenvolvimento é devido a falha de fechamento domesoderma medial. 14"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -572,7 +571,7 @@
   },
   {
     "number": 28,
-    "text": "À dopplervelocimetria de uma gestante, o índice de Pulsatilidade da artéria cerebral média estava abaixo do percentil 5. Além de acidemia e hipóxia, qual outro fator abaixo pode estar associado a esse achado?",
+    "text": "À dopplervelocimetria de uma gestante, o índice de Pulsatilidade da artéria cerebral média estava abaixodo percentil 5. Além de acidemia e hipóxia, qual outro fator abaixo pode estar associado a esse achado?",
     "options": [
       "A) A - Anemia fetal severa.",
       "B) B - Oligodramnia.",
@@ -593,13 +592,13 @@
   },
   {
     "number": 29,
-    "text": "Qual das displasias esqueléticas abaixo é letal e cursa com micromelia grave e diminuição da circunferência torácica e mineralização óssea normal?",
+    "text": "Qual das displasias esqueléticas abaixo é letal e cursa com micromelia grave e diminuição dacircunferência torácica e mineralização óssea normal?",
     "options": [
       "A) A - Displasia tanatofórica.",
       "B) B - Acondrogenese.",
       "C) C - Osteogênese imperfeita tipo II.",
       "D) D - Hipofosfatasia congênita.",
-      "E) E - Acondroplasia heterozigótica.15"
+      "E) E - Acondroplasia heterozigótica. 15"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -615,7 +614,7 @@
   },
   {
     "number": 30,
-    "text": "Paciente realizou ultrassonografia obstétrica que evidenciou encurtamento do segmento proximal do fêmur e úmero. Essa alteração é denominada:",
+    "text": "Paciente realizou ultrassonografia obstétrica que evidenciou encurtamento do segmento proximal do fêmur eúmero.Essa alteração é denominada:",
     "options": [
       "A) A - Rizomelia.",
       "B) B - Mesomelia.",
@@ -636,13 +635,13 @@
   },
   {
     "number": 31,
-    "text": "Paciente de 24 semanas, realizou ultrassonografia que evidenciou rins hiperecogênicos aumentados de tamanho bilateralmente, sem outras anomalias fetais associadas. Tais achados estão mais frequentemente associados à qual patologia?",
+    "text": "Paciente de 24 semanas, realizou ultrassonografia que evidenciou rins hiperecogênicos aumentados de tamanhobilateralmente, sem outras anomalias fetais associadas.Tais achados estão mais frequentemente associados à qual patologia?",
     "options": [
       "A) A - Doença policística renal.",
       "B) B - Síndrome de Meckel Gruber.",
       "C) C - Displasia obstrutiva.",
       "D) D - Rim multicístico displásico.",
-      "E) E - Doença renal multicística.16"
+      "E) E - Doença renal multicística. 16"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -657,7 +656,7 @@
   },
   {
     "number": 32,
-    "text": "Gestante de 36 anos, 12 semanas, foi à consulta de pré-natal com exame morfológico de primeiro trimestre evidenciando translucência nucal = 3,8 mm e ducto venoso com onda A reversa. Nesse caso, a melhor conduta para oferecer à paciente nessa idade gestacional é:",
+    "text": "Gestante de 36 anos, 12 semanas, foi à consulta de pré-natal com exame morfológico de primeiro trimestreevidenciando translucência nucal = 3,8 mm e ducto venoso com onda A reversa.Nesse caso, a melhor conduta para oferecer à paciente nessa idade gestacional é:",
     "options": [
       "A) A - Biópsia de vilo corial.",
       "B) B - Amniocentese.",
@@ -678,7 +677,7 @@
   },
   {
     "number": 33,
-    "text": "Nas gestações gemelares, quando a clivagem do embrião ocorre entre o 4º e o 8º dias após a fertilização, haverá uma gestação:",
+    "text": "Nas gestações gemelares, quando a clivagem do embrião ocorre entre o 4º e o 8º dias após a fertilização,haverá uma gestação:",
     "options": [
       "A) A - Monocoriônica diamniótica.",
       "B) B - Dicoriônica diamniótica.",
@@ -699,13 +698,13 @@
   },
   {
     "number": 34,
-    "text": "A frequência cardíaca em um embrião menor que 5 mm pode ser considerada normal quando está acima de quantos batimentos por minuto?",
+    "text": "A frequência cardíaca em um embrião menor que 5 mm pode ser considerada normal quando está acimade quantos batimentos por minuto?",
     "options": [
       "A) A - 80.",
       "B) B - 90.",
       "C) C - 100.",
       "D) D - 110.",
-      "E) E - 120.17"
+      "E) E - 120. 17"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -768,7 +767,7 @@
       "B) B - Trompas.",
       "C) C - Rins.",
       "D) D - Glândulas suprarrenais.",
-      "E) E - Baço.18"
+      "E) E - Baço. 18"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -783,7 +782,7 @@
   },
   {
     "number": 38,
-    "text": "ANULADA Quanto à anatomia pélvica, é correto afirmar:",
+    "text": "ANULADAQuanto à anatomia pélvica, é correto afirmar:",
     "options": [
       "A) A - Os ligamentos redondos originam-se da escavação vesico uterina e se estendem ao fórnice vaginal.",
       "B) B - O mesossalpinge contém a tuba uterina.",
@@ -804,7 +803,7 @@
   },
   {
     "number": 39,
-    "text": "No caso de uma paciente há meses em uso diário e contínuo de estrogênio e progesterona, espera-se que o endométrio no exame ecográfico apresente-se:",
+    "text": "No caso de uma paciente há meses em uso diário e contínuo de estrogênio e progesterona, espera-se queo endométrio no exame ecográfico apresente-se:",
     "options": [
       "A) A - Fino com espessamento focal.",
       "B) B - Fino atrófico.",
@@ -825,13 +824,13 @@
   },
   {
     "number": 40,
-    "text": "Qual a melhor fase do ciclo menstrual para realização da ultrassonografia com intuito de avaliar pólipo endometrial?",
+    "text": "Qual a melhor fase do ciclo menstrual para realização da ultrassonografia com intuito de avaliar pólipoendometrial?",
     "options": [
       "A) A - Folicular.",
       "B) B - Luteal.",
       "C) C - Periovulatória.",
       "D) D - Período menstrual.",
-      "E) E - Todas são iguais na avaliação da polipose.19\nULTRASSONOGRAFIA GERAL – TEÓRICO-PRÁTICA"
+      "E) E - Todas são iguais na avaliação da polipose. 19ULTRASSONOGRAFIA GERAL – TEÓRICO-PRÁTICA"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -846,13 +845,13 @@
   },
   {
     "number": 1,
-    "text": "Paciente de 42 anos com febre baixa, dor no hipocôndrio esquerdo e tosse crônica persistente. Analise a imagem do baço. Qual é a hipótese diagnóstica?",
+    "text": "Paciente de 42 anos com febre baixa, dor no hipocôndrio esquerdo e tosse crônica persistente. Analise a imagem do baço.Qual é a hipótese diagnóstica?",
     "options": [
       "A) A - Hemangiomas.",
       "B) B - Metástases.",
       "C) C - Infecção granulomatosa.",
       "D) D - Distúrbio metabólico.",
-      "E) E - Anemia falciforme.20"
+      "E) E - Anemia falciforme. 20"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -864,18 +863,17 @@
       "vascular"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 2,
-    "text": "Analise as imagens. Assinale a alternativa cujo conteúdo melhor se associa aos achados ultrassonográficos destas imagens.",
+    "text": "Analise as imagens.Assinale a alternativa cujo conteúdo melhor se associa aos achados ultrassonográficos destas imagens.",
     "options": [
-      "A) A - Uropatia obstrutiva crônica por cálculo ureteral distal em paciente febril e toxemiada. Ultrassonografia revela apreciável\nhidronefrose associada à presença de ecos internos, que podem estar relacionados à pionefrose.",
+      "A) A - Uropatia obstrutiva crônica por cálculo ureteral distal em paciente febril e toxemiada. Ultrassonografia revela apreciávelhidronefrose associada à presença de ecos internos, que podem estar relacionados à pionefrose.",
       "B) B - Tumor de cálice renal com dilatação pielocalicinal associada. Ultrassonografia revela apreciável dilatação pielocalicinal.",
       "C) C - Uropatia obstrutiva aguda por tumor ureteral em paciente assintomático. Ultrassonografia revela dilatação pielocalicinal.",
       "D) D - Cistos parapiélicos em paciente assintomático. Ultrassonografia revela cistos bem individualizados.",
-      "E) E - Abscesso renal em paciente febril e toxemiada. Ultrassonografia revela formação anecoica com presença de ecos internos, que\npode estar relacionada ao abscesso.21"
+      "E) E - Abscesso renal em paciente febril e toxemiada. Ultrassonografia revela formação anecoica com presença de ecos internos, quepode estar relacionada ao abscesso. 21"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -890,13 +888,13 @@
   },
   {
     "number": 3,
-    "text": "Analise o corte sagital da fossa posterior de um feto de 12 semanas demonstrado na imagem abaixo. Identifique as estruturas assinaladas pelas setas e números:",
+    "text": "Analise o corte sagital da fossa posterior de um feto de 12 semanas demonstrado na imagem abaixo.Identifique as estruturas assinaladas pelas setas e números:",
     "options": [
       "A) A - 1) tronco cerebral; 2) 4º ventrículo; 3) cisterna magna.",
       "B) B - 1) 4º ventrículo; 2) tronco cerebral; 3) cisterna magna.",
       "C) C - 1) cisterna magna; 2) tronco cerebral; 3) 4º ventrículo.",
       "D) D - 1) cisterna magna; 2) 4º ventrículo; 3) tronco cerebral.",
-      "E) E - 1) tronco cerebral; 2) cisterna magna; 3) 4º ventrículo.22"
+      "E) E - 1) tronco cerebral; 2) cisterna magna; 3) 4º ventrículo. 22"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -907,18 +905,17 @@
       "msk"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 4,
-    "text": "Analise as imagens. A patologia demonstrada é:",
+    "text": "Analise as imagens.A patologia demonstrada é:",
     "options": [
       "A) A - Falha de fechamento do neuroporo rostral.",
       "B) B - Falha de fusão do neuroporo ventral.",
       "C) C - Falha de fusão do neuroporo caudal.",
       "D) D - Falha de fechamento do prosencéfalo.",
-      "E) E - Falha de fechamento do mielencéfalo.23"
+      "E) E - Falha de fechamento do mielencéfalo. 23"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -933,13 +930,13 @@
   },
   {
     "number": 5,
-    "text": "Analise a imagem apontada pela seta abaixo. Qual o diagnóstico mais provável?",
+    "text": "Analise a imagem apontada pela seta abaixo.Qual o diagnóstico mais provável?",
     "options": [
       "A) A - Hemangioma bem vascularizado.",
       "B) B - Esteatose focal.",
       "C) C - Hiperplasia nodular focal.",
       "D) D - Adenoma.",
-      "E) E - Hepatoblastoma.24"
+      "E) E - Hepatoblastoma. 24"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -950,18 +947,17 @@
       "geral"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 6,
-    "text": "Menina com 5 anos de idade assintomática. Durante consulta de rotina, o pediatra palpou nódulo indolor no quadrante inferior direito do abdômen e solicitou avaliação ultrassonográfica. Qual das seguintes hipóteses é compatível com esta imagem neste contexto clínico?",
+    "text": "Menina com 5 anos de idade assintomática. Durante consulta de rotina, o pediatra palpou nódulo indolor no quadranteinferior direito do abdômen e solicitou avaliação ultrassonográfica.Qual das seguintes hipóteses é compatível com esta imagem neste contexto clínico?",
     "options": [
       "A) A - Tumor cecal.",
       "B) B - Linfoma intestinal.",
       "C) C - Massa ovariana.",
       "D) D - Cisto de duplicação entérico.",
-      "E) E - Linfonodomegalia reacional.25"
+      "E) E - Linfonodomegalia reacional. 25"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -972,18 +968,17 @@
       "torax"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 7,
-    "text": "Observe a imagem abaixo. Sobre a estrutura apontada pela seta, é correto afirmar que:",
+    "text": "Observe a imagem abaixo.Sobre a estrutura apontada pela seta, é correto afirmar que:",
     "options": [
       "A) A - No feto, esta estrutura conecta a primeira porção da aorta ao ramo principal da veia porta.",
       "B) B - Habitualmente esta estrutura é patente no adulto e permite o fluxo sanguíneo portossistêmico.",
       "C) C - Esta estrutura permite a separação entre os segmentos I e VII (Couinaud) do fígado.",
       "D) D - Em variações anatômicas, é sítio habitual da artéria hepática acessória.",
-      "E) E - Esta estrutura corresponde ao ligamento hepatogástrico e é foco de varizes periesofágicas em pacientes com hipertensão\nportal.26"
+      "E) E - Esta estrutura corresponde ao ligamento hepatogástrico e é foco de varizes periesofágicas em pacientes com hipertensãoportal. 26"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -994,18 +989,17 @@
       "geral"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 8,
-    "text": "Observe a imagem abaixo. Qual é o nome da estrutura apontada pela seta?",
+    "text": "Observe a imagem abaixo.Qual é o nome da estrutura apontada pela seta?",
     "options": [
       "A) A - Veia retrotireoidea.",
       "B) B - Veia traqueal.",
       "C) C - Tributária da veia jugular interna.",
       "D) D - Artéria tireoidea inferior.",
-      "E) E - Tronco tireocervical.27"
+      "E) E - Tronco tireocervical. 27"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1016,18 +1010,17 @@
       "geral"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 9,
-    "text": "Observe a imagem abaixo. Qual é o nome da estrutura apontada pela seta?",
+    "text": "Observe a imagem abaixo.Qual é o nome da estrutura apontada pela seta?",
     "options": [
       "A) A - Artéria radial.",
       "B) B - Artéria interóssea.",
       "C) C - Artéria braquial.",
       "D) D - Nervo interósseo posterior.",
-      "E) E - Nervo ulnar.28"
+      "E) E - Nervo ulnar. 28"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1038,12 +1031,11 @@
       "geral"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 10,
-    "text": "Observe a imagem abaixo. Sobre a estrutura apontada pela seta, é correto afirmar:",
+    "text": "Observe a imagem abaixo.Sobre a estrutura apontada pela seta, é correto afirmar:",
     "options": [
       "A) A - A primeira porção do duodeno localiza-se anterossuperiormente à cabeça da estrutura.",
       "B) B - A principal artéria que nutre este órgão deriva-se da artéria mesentérica superior.",
@@ -1060,12 +1052,11 @@
       "geral"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 1,
-    "text": "Paciente de 67 anos, diabética há mais de 20 anos, encaminhada para avaliação rotineira. Ao ultrassom, evidencia-se formação cística complexa no corpo pancreático, com 4 cm de diâmetro, bem delimitada, com septos evidentes e calcificação grosseira central. Não se observa dilatação de duto pancreático ou colédoco. Tal imagem é sugestiva de:",
+    "text": "Paciente de 67 anos, diabética há mais de 20 anos, encaminhada para avaliação rotineira. Ao ultrassom, evidencia-seformação cística complexa no corpo pancreático, com 4 cm de diâmetro, bem delimitada, com septos evidentes ecalcificação grosseira central. Não se observa dilatação de duto pancreático ou colédoco.Tal imagem é sugestiva de:",
     "options": [
       "A) A - Tumor neurendócrino.",
       "B) B - Tumor papilar mucinoso intraductal.",
@@ -1082,8 +1073,7 @@
       "neurorradiologia"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 2,
@@ -1093,7 +1083,7 @@
       "B) B - Aumento de 2 mm no diâmetro de pólipo vesicular no período de 1 ano.",
       "C) C - Adenomiose da vesícula biliar.",
       "D) D - Pólipo incidental com 5 mm de diâmetro.",
-      "E) E - Coexistência de hepatopatia crônica.2"
+      "E) E - Coexistência de hepatopatia crônica. 2"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1108,7 +1098,7 @@
   },
   {
     "number": 3,
-    "text": "Com relação ao Consenso da SRU (Society of Radiologists in Ultrasound) de 2022 relativo aos pólipos da vesícula biliar. Marque a afirmativa correta:",
+    "text": "Com relação ao Consenso da SRU (Society of Radiologists in Ultrasound) de 2022 relativo aos pólipos da vesículabiliar.Marque a afirmativa correta:",
     "options": [
       "A) A - Colecistectomia deve ser indicada para todos os pólipos acima de 5 mm de diâmetro.",
       "B) B - Vigilância ativa está indicada para todos os pólipos abaixo de 15 mm de diâmetro.",
@@ -1129,13 +1119,13 @@
   },
   {
     "number": 4,
-    "text": "Paciente com história de cirurgia abdominal videolaparoscópica há 1 ano, apresentando quadro de dor abdominal difusa e náuseas. Achados ecográficos com segmento de alça dilatada, sem espessamento parietal, com aumento do espaço entre as vilosidades da mucosa, com sequestro de líquido e diminuição da peristalse. Qual o diagnóstico?",
+    "text": "Paciente com história de cirurgia abdominal videolaparoscópica há 1 ano, apresentando quadro de dor abdominaldifusa e náuseas. Achados ecográficos com segmento de alça dilatada, sem espessamento parietal, com aumentodo espaço entre as vilosidades da mucosa, com sequestro de líquido e diminuição da peristalse.Qual o diagnóstico?",
     "options": [
       "A) A - Oclusão intestinal",
       "B) B - Triflite.",
       "C) C - Ileíte.",
       "D) D - Apendagite.",
-      "E) E - Duodenite.3"
+      "E) E - Duodenite. 3"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1150,7 +1140,7 @@
   },
   {
     "number": 5,
-    "text": "Paciente com dor abdominal submetido à ultrassonografia abdominal, na qual são encontrados os seguintes resultados: espessamento concêntrico de todas as camadas da alça intestinal; gordura inflamatória adjacente; linfadenopatia locorregional; fístula ileocecal; e aumento da vascularização ao Doppler. Estes achados são clássicos da:",
+    "text": "Paciente com dor abdominal submetido à ultrassonografia abdominal, na qual são encontrados os seguintesresultados: espessamento concêntrico de todas as camadas da alça intestinal; gordura inflamatória adjacente;linfadenopatia locorregional; fístula ileocecal; e aumento da vascularização ao Doppler.Estes achados são clássicos da:",
     "options": [
       "A) A - Triflite.",
       "B) B - Doença de Crohn.",
@@ -1172,13 +1162,13 @@
   },
   {
     "number": 6,
-    "text": "Quanto à análise ultrassonográfica do linfonodo cervical. É correto afirmar:",
+    "text": "Quanto à análise ultrassonográfica do linfonodo cervical.É correto afirmar:",
     "options": [
       "A) A - O linfonodo reativo é hipervascularizado, com vasos assimétricos e irregulares.",
       "B) B - Os linfonodos benignos tendem a ser arredondados, enquanto os malignos, fusiformes.",
       "C) C - A ausência do hilo gorduroso é característica de malignidade.",
       "D) D - As microcalcificações nos linfonodos são exclusivas de comprometimento metastático.",
-      "E) E - O linfonodo maligno apresenta vascularização organizada, radial, desde o hilo até a periferia, devido a fatores\nantiangiogênicos.4"
+      "E) E - O linfonodo maligno apresenta vascularização organizada, radial, desde o hilo até a periferia, devido a fatoresantiangiogênicos. 4"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1214,13 +1204,13 @@
   },
   {
     "number": 8,
-    "text": "Com relação às glândulas paratireoides. Assinale a alternativa correta:",
+    "text": "Com relação às glândulas paratireoides.Assinale a alternativa correta:",
     "options": [
-      "A) A - No caso de hiperparatireoidismo primário, é mais frequente a demonstração de mais de um nódulo em paratireoide\ncom hiperprodução hormonal, geralmente ocorrendo em pares.",
-      "B) B - No hiperparatireoidismo primário, a ocorrência de carcinoma de paratireoide é um evento muito comum,\ncorrespondendo a cerca de 50% de casos com lesão visível à ultrassonografia.",
-      "C) C - O adenoma de paratireoide é mais frequentemente uma lesão solitária, ovalada, hipoecoica, com hipervascularização\nao Doppler, situada em região posterior à tireoide.",
-      "D) D - A cintilografia Sestamibi com Tecnécio 99 (MIBI) é um excelente método pré-operatório para distinção entre o\nadenoma produtor de paratireoide e o carcinoma de paratireoide.",
-      "E) E - Lesão ecogênica em topografia de paratireoide associada a níveis séricos de cálcio reduzidos é um achado que eleva o\nrisco de possibilidade de carcinoma de paratireoide.5"
+      "A) A - No caso de hiperparatireoidismo primário, é mais frequente a demonstração de mais de um nódulo em paratireoidecom hiperprodução hormonal, geralmente ocorrendo em pares.",
+      "B) B - No hiperparatireoidismo primário, a ocorrência de carcinoma de paratireoide é um evento muito comum,correspondendo a cerca de 50% de casos com lesão visível à ultrassonografia.",
+      "C) C - O adenoma de paratireoide é mais frequentemente uma lesão solitária, ovalada, hipoecoica, com hipervascularizaçãoao Doppler, situada em região posterior à tireoide.",
+      "D) D - A cintilografia Sestamibi com Tecnécio 99 (MIBI) é um excelente método pré-operatório para distinção entre oadenoma produtor de paratireoide e o carcinoma de paratireoide.",
+      "E) E - Lesão ecogênica em topografia de paratireoide associada a níveis séricos de cálcio reduzidos é um achado que eleva orisco de possibilidade de carcinoma de paratireoide. 5"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1235,9 +1225,9 @@
   },
   {
     "number": 9,
-    "text": "Criança de 2 anos de idade, com vômitos biliosos e ultrassonografia demonstrando sinais de má-rotação intestinal. Assinale a alternativa correta:",
+    "text": "Criança de 2 anos de idade, com vômitos biliosos e ultrassonografia demonstrando sinais de má-rotação intestinal.Assinale a alternativa correta:",
     "options": [
-      "A) A - É elevada a incidência de pacientes com o diagnóstico simultâneo de estenose hipertrófica de piloro e de má-\nrotação intestinal.",
+      "A) A - É elevada a incidência de pacientes com o diagnóstico simultâneo de estenose hipertrófica de piloro e de má-rotação intestinal.",
       "B) B - Criança com vômitos biliosos não necessita investigação imediata.",
       "C) C - Há maior incidência de litíase biliar em crianças com má-rotação intestinal.",
       "D) D - A ultrassonografia com Doppler demonstra o sinal “do redemoinho”, o qual é altamente específico.",
@@ -1257,13 +1247,13 @@
   },
   {
     "number": 10,
-    "text": "Menina com 6 anos de idade apresentando infecção urinária de repetição e perda urinária constante. Iniciada investigação com a realização de ultrassonografia, a qual demonstrou duplicidade pielo-ureteral completa, com ureter ectópico. Qual a resposta correta?",
+    "text": "Menina com 6 anos de idade apresentando infecção urinária de repetição e perda urinária constante. Iniciadainvestigação com a realização de ultrassonografia, a qual demonstrou duplicidade pielo-ureteral completa, comureter ectópico.Qual a resposta correta?",
     "options": [
       "A) A - Duplicidade pielo-ureteral é a anomalia renal mais comum.",
       "B) B - A regra de Weigert-Meyer é utilizada com duplicidade pielo-ureteral incompleta.",
-      "C) C - Pacientes com duplicidade pielo-ureteral completa tem menor incidência de infecção urinária e de refluxo\nvesicoureteral.",
+      "C) C - Pacientes com duplicidade pielo-ureteral completa tem menor incidência de infecção urinária e de refluxovesicoureteral.",
       "D) D - Pacientes com duplicidade pielo-ureteral completa têm maior incidência de tumor renal.",
-      "E) E - Ureter ectópico com inserção acima do esfíncter externo determina perda urinária contínua.6"
+      "E) E - Ureter ectópico com inserção acima do esfíncter externo determina perda urinária contínua. 6"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1278,12 +1268,12 @@
   },
   {
     "number": 11,
-    "text": "Recém-nascido prematuro com baixo peso, com asfixia severa ao nascimento, está internado na UTI, entubado e realizou ultrassonografia intracraniana. Qual a resposta correta?",
+    "text": "Recém-nascido prematuro com baixo peso, com asfixia severa ao nascimento, está internado na UTI, entubado erealizou ultrassonografia intracraniana.Qual a resposta correta?",
     "options": [
       "A) A - O padrão mais comum de hemorragia intracraniana em recém-nascido prematuro é o céfalo-hematoma.",
-      "B) B - A hemorragia intracraniana em recém-nascido prematuro deve ser classificada pela Classificação de Orsini, a\nqual apresenta 8 graus de acometimento.",
+      "B) B - A hemorragia intracraniana em recém-nascido prematuro deve ser classificada pela Classificação de Orsini, aqual apresenta 8 graus de acometimento.",
       "C) C - Hemorragia intracraniana neonatal tem origem na matriz germinativa em 90% dos casos.",
-      "D) D - A hemorragia intracraniana grau II, com extensão ventricular e sem dilatação do sistema ventricular apresenta\nmaterial hipoeoico intraventricular.",
+      "D) D - A hemorragia intracraniana grau II, com extensão ventricular e sem dilatação do sistema ventricular apresentamaterial hipoeoico intraventricular.",
       "E) E - Hemorragia intracraniana grau I apresenta associação com fratura de crânio por tocotraumatismo."
     ],
     "correct_answer": null,
@@ -1305,7 +1295,7 @@
       "B) B - Tendão do flexor longo dos dedos.",
       "C) C - Tendão do abdutor do hálux.",
       "D) D - Tendão do flexor curto dos dedos.",
-      "E) E - Tendão do extensor longo do hálux.7"
+      "E) E - Tendão do extensor longo do hálux. 7"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1320,7 +1310,7 @@
   },
   {
     "number": 13,
-    "text": "Qual estrutura anatômica, isoladamente ou ramos, se relaciona com a sintomatologia da síndrome do túnel do tarso?",
+    "text": "Qual estrutura anatômica, isoladamente ou ramos, se relaciona com a sintomatologia da síndrome dotúnel do tarso?",
     "options": [
       "A) A - Artéria fibular",
       "B) B - Artéria tibial anterior.",
@@ -1368,7 +1358,7 @@
       "B) B - Retináculo dos flexores.",
       "C) C - Canal de Guyon.",
       "D) D - Flexor radial do carpo.",
-      "E) E - Tubérculo do trapézio.8"
+      "E) E - Tubérculo do trapézio. 8"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1383,7 +1373,7 @@
   },
   {
     "number": 16,
-    "text": "Nas manifestações da síndrome do canal de Guyon, ocasionado antes da bifurcação neural, haverá alteração ?",
+    "text": "Nas manifestações da síndrome do canal de Guyon, ocasionado antes da bifurcação neural, haveráalteração ?",
     "options": [
       "A) A - Alteração sensitiva e motora na musculatura hipotenar do 1º e 2º dedos.",
       "B) B - Alteração sensitiva e motora na musculatura hipotenar do 2º e 3º dedos.",
@@ -1406,11 +1396,11 @@
     "number": 17,
     "text": "Considerando-se as patologias ovarianas, é correto afirmar que:",
     "options": [
-      "A) A - Endometriomas decidualizados podem ser encontrados em pacientes na menacme usuárias de progestágeno\ne com sintomatologia importante.",
-      "B) B - Em mulheres assintomáticas na menacme, cistos hemorrágicos com 3 cm ou menos devem ser descritos e\nacompanhados até o próximo ciclo.",
-      "C) C - Conteúdo líquido na cavidade uterina e líquido livre no fundo de saco são achados específicos da doença\ninflamatória pélvica.",
+      "A) A - Endometriomas decidualizados podem ser encontrados em pacientes na menacme usuárias de progestágenoe com sintomatologia importante.",
+      "B) B - Em mulheres assintomáticas na menacme, cistos hemorrágicos com 3 cm ou menos devem ser descritos eacompanhados até o próximo ciclo.",
+      "C) C - Conteúdo líquido na cavidade uterina e líquido livre no fundo de saco são achados específicos da doençainflamatória pélvica.",
       "D) D - O sítio mais comum de endometriose infiltrativa extra pélvica é o diafragma.",
-      "E) E - O cisto hemorrágico pode se apresentar com diversas variações ecográficas e mimetizar outros processos,\nsendo reconhecido como “grande imitador”.9"
+      "E) E - O cisto hemorrágico pode se apresentar com diversas variações ecográficas e mimetizar outros processos,sendo reconhecido como “grande imitador”. 9"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1427,11 +1417,11 @@
     "number": 18,
     "text": "Com relação aos aspectos ultrassonográficos das patologias estruturais uterinas, é correto afirmar que:",
     "options": [
-      "A) A - Útero, tubas, colo uterino, dois terços superiores da vagina e ovários são derivados müllerianos, enquanto\nterço inferior da vagina tem origem no seio urogenital.",
-      "B) B - O útero unicorno é a anomalia mülleriana com pior prognóstico gestacional, embora seja a de mais fácil\ndiagnóstico pelo ultrassom 3D.",
-      "C) C - No útero didelfo, as hemicavidades uterinas não se comunicam e pode haver um septo vaginal longitudinal ou\noblíquo.",
-      "D) D - A reabsorção parcial dos dois ductos de Müller com absorção incompleta do fundo resulta na formação de um\nútero bicorno e um único colo do útero.",
-      "E) E - A falha na fusão do septo intrauterino, após fusão incompleta dos ductos de Müller, resulta na formação de um\nútero septado."
+      "A) A - Útero, tubas, colo uterino, dois terços superiores da vagina e ovários são derivados müllerianos, enquantoterço inferior da vagina tem origem no seio urogenital.",
+      "B) B - O útero unicorno é a anomalia mülleriana com pior prognóstico gestacional, embora seja a de mais fácildiagnóstico pelo ultrassom 3D.",
+      "C) C - No útero didelfo, as hemicavidades uterinas não se comunicam e pode haver um septo vaginal longitudinal ouoblíquo.",
+      "D) D - A reabsorção parcial dos dois ductos de Müller com absorção incompleta do fundo resulta na formação de umútero bicorno e um único colo do útero.",
+      "E) E - A falha na fusão do septo intrauterino, após fusão incompleta dos ductos de Müller, resulta na formação de umútero septado."
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1446,13 +1436,13 @@
   },
   {
     "number": 19,
-    "text": "Sabe-se que o conhecimento adequado da anatomia pélvica é imprescindível para a realização dos exames transvaginais. A partir dessa afirmação, assinale a alternativa correta:",
+    "text": "Sabe-se que o conhecimento adequado da anatomia pélvica é imprescindível para a realização dos examestransvaginais.A partir dessa afirmação, assinale a alternativa correta:",
     "options": [
       "A) A - Os ligamentos uterossacros formam os limites laterais do fundo de saco posterior.",
       "B) B - Os ligamentos redondos surgem na região cornual, posteriormente às tubas uterinas.",
       "C) C - As artérias uterinas e ovarianas são ramos da artéria ilíaca interna.",
       "D) D - O halo hipoecogênico subendometrial deve ser incluído na medida do endométrio.",
-      "E) E - Cistos de Gartner são vistos na parede vaginal e remanescentes de ductos paramesonéfricos.10"
+      "E) E - Cistos de Gartner são vistos na parede vaginal e remanescentes de ductos paramesonéfricos. 10"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1488,13 +1478,13 @@
   },
   {
     "number": 21,
-    "text": "O protocolo da ISUOG (International Society of Ultrasound in Obstetrics and Gynecology) sobre o papel da ultrassonografia na predição do parto prematuro espontâneo traz diretrizes sobre a realização correta do exame. Assinale a alternativa correta acerca das orientações fornecidas pelo protocolo:",
+    "text": "O protocolo da ISUOG (International Society of Ultrasound in Obstetrics and Gynecology) sobre o papel daultrassonografia na predição do parto prematuro espontâneo traz diretrizes sobre a realização correta do exame.Assinale a alternativa correta acerca das orientações fornecidas pelo protocolo:",
     "options": [
-      "A) A - Para diminuir os erros por causa das mudanças dinâmicas do colo, deverão ser feitas, pelo menos, três medidas\nconsecutivas e escolhida a maior delas.",
-      "B) B - Tecnicamente, a avaliação ultrassonográfica do colo pode ser realizada por abordagem transabdominal,\ntransperineal ou transvaginal.",
-      "C) C - A bexiga vazia e a pressão excessiva do transdutor sobre o colo podem diminuir artificialmente o comprimento\ndo colo uterino.",
-      "D) D - O colo uterino deve ocupar, no máximo, 25% da tela, e devem também estar presentes na documentação a\nborda inferior da bexiga e a sínfise púbica.",
-      "E) E - A medida longitudinal do afunilamento é um indicador importante de risco de parto pré-termo, aliado à medida\ndo colo uterino.11"
+      "A) A - Para diminuir os erros por causa das mudanças dinâmicas do colo, deverão ser feitas, pelo menos, três medidasconsecutivas e escolhida a maior delas.",
+      "B) B - Tecnicamente, a avaliação ultrassonográfica do colo pode ser realizada por abordagem transabdominal,transperineal ou transvaginal.",
+      "C) C - A bexiga vazia e a pressão excessiva do transdutor sobre o colo podem diminuir artificialmente o comprimentodo colo uterino.",
+      "D) D - O colo uterino deve ocupar, no máximo, 25% da tela, e devem também estar presentes na documentação aborda inferior da bexiga e a sínfise púbica.",
+      "E) E - A medida longitudinal do afunilamento é um indicador importante de risco de parto pré-termo, aliado à medidado colo uterino. 11"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1511,11 +1501,11 @@
     "number": 22,
     "text": "Com relação à ultrassonografia do primeiro trimestre, é correto afirmar:",
     "options": [
-      "A) A - A medida do comprimento cabeça-nádega deve ser utilizada para estimar a idade gestacional em todos os\ncasos, exceto em gestações concebidas por fertilização in vitro.",
-      "B) B - Quando são feitas múltiplas medidas do comprimento cabeça-nádega durante o exame, o valor a ser\nconsiderado é uma média entre todas as medidas.",
-      "C) C - A avaliação das vias de saída do coração fetal faz parte dos pré-requisitos mínimos da ultrassonografia do\nprimeiro trimestre.",
-      "D) D - A bexiga fetal deve estar visível durante todos os exames de ultrassonografia do primeiro trimestre e ter\ndiâmetro longitudinal igual ou menor que 10 mm.",
-      "E) E - O plano sagital da cabeça pode ser utilizado para avaliar a fossa posterior e visualizar a translucência\nintracraniana, verme cerebelar e tronco encefálico como um teste de triagem para defeitos abertos do tubo neural\ne malformações císticas da fossa posterior."
+      "A) A - A medida do comprimento cabeça-nádega deve ser utilizada para estimar a idade gestacional em todos oscasos, exceto em gestações concebidas por fertilização in vitro.",
+      "B) B - Quando são feitas múltiplas medidas do comprimento cabeça-nádega durante o exame, o valor a serconsiderado é uma média entre todas as medidas.",
+      "C) C - A avaliação das vias de saída do coração fetal faz parte dos pré-requisitos mínimos da ultrassonografia doprimeiro trimestre.",
+      "D) D - A bexiga fetal deve estar visível durante todos os exames de ultrassonografia do primeiro trimestre e terdiâmetro longitudinal igual ou menor que 10 mm.",
+      "E) E - O plano sagital da cabeça pode ser utilizado para avaliar a fossa posterior e visualizar a translucênciaintracraniana, verme cerebelar e tronco encefálico como um teste de triagem para defeitos abertos do tubo neurale malformações císticas da fossa posterior."
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1532,11 +1522,11 @@
     "number": 23,
     "text": "Qual a alternativa correta?",
     "options": [
-      "A) A - Líquido em fundo de saco posterior é um achado normal em mulheres assintomáticas e pode ser visualizado\nem todo o ciclo menstrual.",
+      "A) A - Líquido em fundo de saco posterior é um achado normal em mulheres assintomáticas e pode ser visualizadoem todo o ciclo menstrual.",
       "B) B - Folículos antrais medem mais que 1 cm e aparecem no 10 dia menstrual.",
       "C) C - Folículo maduro é aquele que chega a 15 mm.",
       "D) D - Cistos funcionais são neoplasias do ovário sem relação hormonal.",
-      "E) E - Focos ecogênicos pontuais no parênquima ovariano são sempre suspeitos de malignidade.12"
+      "E) E - Focos ecogênicos pontuais no parênquima ovariano são sempre suspeitos de malignidade. 12"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1551,7 +1541,7 @@
   },
   {
     "number": 24,
-    "text": "Em um exame ultrassonográfico abdominal de rotina de um paciente do sexo masculino, 65 anos, tabagista e hipertenso, sem queixas, é encontrado um calibre da aorta abdominal infrarrenal de 3,5 cm. Assinale a alternativa correta:",
+    "text": "Em um exame ultrassonográfico abdominal de rotina de um paciente do sexo masculino, 65 anos, tabagista ehipertenso, sem queixas, é encontrado um calibre da aorta abdominal infrarrenal de 3,5 cm.Assinale a alternativa correta:",
     "options": [
       "A) A - O calibre pode ser considerado normal para o paciente em questão.",
       "B) B - Há uma ectasia da aorta abdominal infrarrenal.",
@@ -1573,13 +1563,13 @@
   },
   {
     "number": 25,
-    "text": "Mulher de 45 anos vem ao pronto- socorro com queixa de edema assimétrico de membros inferiores há 2 dias. A perna direita está com edema e dor. Para confirmar um diagnóstico de trombose venosa profunda, qual alternativa representa os achados esperados à ultrassonografia com Doppler dos membros inferiores?",
+    "text": "Mulher de 45 anos vem ao pronto- socorro com queixa de edema assimétrico de membros inferiores há 2dias. A perna direita está com edema e dor. Para confirmar um diagnóstico de trombose venosa profunda,qual alternativa representa os achados esperados à ultrassonografia com Doppler dos membrosinferiores?",
     "options": [
-      "A) A - Veia poplítea direita com calibre aumentado, conteúdo hipoecogênico, ausência de fluxo ao Doppler e\nincompressível.",
+      "A) A - Veia poplítea direita com calibre aumentado, conteúdo hipoecogênico, ausência de fluxo ao Doppler eincompressível.",
       "B) B - Veia poplítea direita afilada, com conteúdo hipoecogênico, ausência de fluxo e incompressível.",
       "C) C - Veia poplítea direita com calibre normal, conteúdo anecogênico, ausência de fluxo e compressível.",
       "D) D - Veia poplítea direita com calibre normal, conteúdo anecogênico, fluxo presente e compressível.",
-      "E) E - Veia poplítea direita afilada, com conteúdo hiperecogênico, ausência de fluxo e incompressível.13"
+      "E) E - Veia poplítea direita afilada, com conteúdo hiperecogênico, ausência de fluxo e incompressível. 13"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1594,7 +1584,7 @@
   },
   {
     "number": 26,
-    "text": "As veias hepáticas habitualmente possuem um padrão espectral de fluxo multifásico à ultrassonografia com Doppler. Entretanto, algumas doenças podem reduzir essa multifasicidade, chegando até mesmo a “portalizar” o fluxo. Qual das doenças abaixo poderia fazer isso?",
+    "text": "As veias hepáticas habitualmente possuem um padrão espectral de fluxo multifásico à ultrassonografia comDoppler. Entretanto, algumas doenças podem reduzir essa multifasicidade, chegando até mesmo a “portalizar” ofluxo.Qual das doenças abaixo poderia fazer isso?",
     "options": [
       "A) A - Insuficiência tricúspide.",
       "B) B - Insuficiência cardíaca direita.",
@@ -1617,11 +1607,11 @@
     "number": 27,
     "text": "Assinale a alternativa correta sobre onfalocele:",
     "options": [
-      "A) A - Os fetos cujos fígados encontram-se no saco da onfalocele apresentam um risco menor de anormalidades\ncromossômicas do que aqueles com onfalocele apenas de intestino delgado.",
-      "B) B - Os fetos cujos apenas o intestino delgado encontra-se no saco da onfalocele apresentam um risco menor de\nanormalidades cromossômicas do que aqueles com onfalocele contendo outras estruturas.",
+      "A) A - Os fetos cujos fígados encontram-se no saco da onfalocele apresentam um risco menor de anormalidadescromossômicas do que aqueles com onfalocele apenas de intestino delgado.",
+      "B) B - Os fetos cujos apenas o intestino delgado encontra-se no saco da onfalocele apresentam um risco menor deanormalidades cromossômicas do que aqueles com onfalocele contendo outras estruturas.",
       "C) C - Não há nenhuma relação entre o conteúdo da onfalocele e o risco de anormalidade cromossômicas.",
       "D) D - Quando a onfalocele não é isolada, a etiologia do seu desenvolvimento é multifatorial.",
-      "E) E - Quando a onfalocele é isolada, a etiologia do seu desenvolvimento é devido a falha de fechamento do\nmesoderma medial.14"
+      "E) E - Quando a onfalocele é isolada, a etiologia do seu desenvolvimento é devido a falha de fechamento domesoderma medial. 14"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1636,7 +1626,7 @@
   },
   {
     "number": 28,
-    "text": "À dopplervelocimetria de uma gestante, o índice de Pulsatilidade da artéria cerebral média estava abaixo do percentil 5. Além de acidemia e hipóxia, qual outro fator abaixo pode estar associado a esse achado?",
+    "text": "À dopplervelocimetria de uma gestante, o índice de Pulsatilidade da artéria cerebral média estava abaixodo percentil 5. Além de acidemia e hipóxia, qual outro fator abaixo pode estar associado a esse achado?",
     "options": [
       "A) A - Anemia fetal severa.",
       "B) B - Oligodramnia.",
@@ -1657,13 +1647,13 @@
   },
   {
     "number": 29,
-    "text": "Qual das displasias esqueléticas abaixo é letal e cursa com micromelia grave e diminuição da circunferência torácica e mineralização óssea normal?",
+    "text": "Qual das displasias esqueléticas abaixo é letal e cursa com micromelia grave e diminuição dacircunferência torácica e mineralização óssea normal?",
     "options": [
       "A) A - Displasia tanatofórica.",
       "B) B - Acondrogenese.",
       "C) C - Osteogênese imperfeita tipo II.",
       "D) D - Hipofosfatasia congênita.",
-      "E) E - Acondroplasia heterozigótica.15"
+      "E) E - Acondroplasia heterozigótica. 15"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1679,7 +1669,7 @@
   },
   {
     "number": 30,
-    "text": "Paciente realizou ultrassonografia obstétrica que evidenciou encurtamento do segmento proximal do fêmur e úmero. Essa alteração é denominada:",
+    "text": "Paciente realizou ultrassonografia obstétrica que evidenciou encurtamento do segmento proximal do fêmur eúmero.Essa alteração é denominada:",
     "options": [
       "A) A - Rizomelia.",
       "B) B - Mesomelia.",
@@ -1700,13 +1690,13 @@
   },
   {
     "number": 31,
-    "text": "Paciente de 24 semanas, realizou ultrassonografia que evidenciou rins hiperecogênicos aumentados de tamanho bilateralmente, sem outras anomalias fetais associadas. Tais achados estão mais frequentemente associados à qual patologia?",
+    "text": "Paciente de 24 semanas, realizou ultrassonografia que evidenciou rins hiperecogênicos aumentados de tamanhobilateralmente, sem outras anomalias fetais associadas.Tais achados estão mais frequentemente associados à qual patologia?",
     "options": [
       "A) A - Doença policística renal.",
       "B) B - Síndrome de Meckel Gruber.",
       "C) C - Displasia obstrutiva.",
       "D) D - Rim multicístico displásico.",
-      "E) E - Doença renal multicística.16"
+      "E) E - Doença renal multicística. 16"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1721,7 +1711,7 @@
   },
   {
     "number": 32,
-    "text": "Gestante de 36 anos, 12 semanas, foi à consulta de pré-natal com exame morfológico de primeiro trimestre evidenciando translucência nucal = 3,8 mm e ducto venoso com onda A reversa. Nesse caso, a melhor conduta para oferecer à paciente nessa idade gestacional é:",
+    "text": "Gestante de 36 anos, 12 semanas, foi à consulta de pré-natal com exame morfológico de primeiro trimestreevidenciando translucência nucal = 3,8 mm e ducto venoso com onda A reversa.Nesse caso, a melhor conduta para oferecer à paciente nessa idade gestacional é:",
     "options": [
       "A) A - Biópsia de vilo corial.",
       "B) B - Amniocentese.",
@@ -1742,7 +1732,7 @@
   },
   {
     "number": 33,
-    "text": "Nas gestações gemelares, quando a clivagem do embrião ocorre entre o 4º e o 8º dias após a fertilização, haverá uma gestação:",
+    "text": "Nas gestações gemelares, quando a clivagem do embrião ocorre entre o 4º e o 8º dias após a fertilização,haverá uma gestação:",
     "options": [
       "A) A - Monocoriônica diamniótica.",
       "B) B - Dicoriônica diamniótica.",
@@ -1763,13 +1753,13 @@
   },
   {
     "number": 34,
-    "text": "A frequência cardíaca em um embrião menor que 5 mm pode ser considerada normal quando está acima de quantos batimentos por minuto?",
+    "text": "A frequência cardíaca em um embrião menor que 5 mm pode ser considerada normal quando está acimade quantos batimentos por minuto?",
     "options": [
       "A) A - 80.",
       "B) B - 90.",
       "C) C - 100.",
       "D) D - 110.",
-      "E) E - 120.17"
+      "E) E - 120. 17"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1832,7 +1822,7 @@
       "B) B - Trompas.",
       "C) C - Rins.",
       "D) D - Glândulas suprarrenais.",
-      "E) E - Baço.18"
+      "E) E - Baço. 18"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1847,7 +1837,7 @@
   },
   {
     "number": 38,
-    "text": "ANULADA Quanto à anatomia pélvica, é correto afirmar:",
+    "text": "ANULADAQuanto à anatomia pélvica, é correto afirmar:",
     "options": [
       "A) A - Os ligamentos redondos originam-se da escavação vesico uterina e se estendem ao fórnice vaginal.",
       "B) B - O mesossalpinge contém a tuba uterina.",
@@ -1868,7 +1858,7 @@
   },
   {
     "number": 39,
-    "text": "No caso de uma paciente há meses em uso diário e contínuo de estrogênio e progesterona, espera-se que o endométrio no exame ecográfico apresente-se:",
+    "text": "No caso de uma paciente há meses em uso diário e contínuo de estrogênio e progesterona, espera-se queo endométrio no exame ecográfico apresente-se:",
     "options": [
       "A) A - Fino com espessamento focal.",
       "B) B - Fino atrófico.",
@@ -1889,13 +1879,13 @@
   },
   {
     "number": 40,
-    "text": "ANULADA Qual a melhor fase do ciclo menstrual para realização da ultrassonografia com intuito de avaliar pólipo endometrial?",
+    "text": "ANULADAQual a melhor fase do ciclo menstrual para realização da ultrassonografia com intuito de avaliar pólipoendometrial?",
     "options": [
       "A) A - Folicular.",
       "B) B - Luteal.",
       "C) C - Periovulatória.",
       "D) D - Período menstrual.",
-      "E) E - Todas são iguais na avaliação da polipose.19\nULTRASSONOGRAFIA GERAL – TEÓRICO-PRÁTICA"
+      "E) E - Todas são iguais na avaliação da polipose. 19ULTRASSONOGRAFIA GERAL – TEÓRICO-PRÁTICA"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1910,13 +1900,13 @@
   },
   {
     "number": 1,
-    "text": "Paciente de 42 anos com febre baixa, dor no hipocôndrio esquerdo e tosse crônica persistente. Analise a imagem do baço. Qual é a hipótese diagnóstica?",
+    "text": "Paciente de 42 anos com febre baixa, dor no hipocôndrio esquerdo e tosse crônica persistente. Analise a imagem do baço.Qual é a hipótese diagnóstica?",
     "options": [
       "A) A - Hemangiomas.",
       "B) B - Metástases.",
       "C) C - Infecção granulomatosa.",
       "D) D - Distúrbio metabólico.",
-      "E) E - Anemia falciforme.20"
+      "E) E - Anemia falciforme. 20"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1928,18 +1918,17 @@
       "vascular"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 2,
-    "text": "Analise as imagens. Assinale a alternativa cujo conteúdo melhor se associa aos achados ultrassonográficos destas imagens.",
+    "text": "Analise as imagens.Assinale a alternativa cujo conteúdo melhor se associa aos achados ultrassonográficos destas imagens.",
     "options": [
-      "A) A - Uropatia obstrutiva crônica por cálculo ureteral distal em paciente febril e toxemiada. Ultrassonografia revela apreciável\nhidronefrose associada à presença de ecos internos, que podem estar relacionados à pionefrose.",
+      "A) A - Uropatia obstrutiva crônica por cálculo ureteral distal em paciente febril e toxemiada. Ultrassonografia revela apreciávelhidronefrose associada à presença de ecos internos, que podem estar relacionados à pionefrose.",
       "B) B - Tumor de cálice renal com dilatação pielocalicinal associada. Ultrassonografia revela apreciável dilatação pielocalicinal.",
       "C) C - Uropatia obstrutiva aguda por tumor ureteral em paciente assintomático. Ultrassonografia revela dilatação pielocalicinal.",
       "D) D - Cistos parapiélicos em paciente assintomático. Ultrassonografia revela cistos bem individualizados.",
-      "E) E - Abscesso renal em paciente febril e toxemiada. Ultrassonografia revela formação anecoica com presença de ecos internos, que\npode estar relacionada ao abscesso.21"
+      "E) E - Abscesso renal em paciente febril e toxemiada. Ultrassonografia revela formação anecoica com presença de ecos internos, quepode estar relacionada ao abscesso. 21"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1954,13 +1943,13 @@
   },
   {
     "number": 3,
-    "text": "Analise o corte sagital da fossa posterior de um feto de 12 semanas demonstrado na imagem abaixo. Identifique as estruturas assinaladas pelas setas e números:",
+    "text": "Analise o corte sagital da fossa posterior de um feto de 12 semanas demonstrado na imagem abaixo.Identifique as estruturas assinaladas pelas setas e números:",
     "options": [
       "A) A - 1) tronco cerebral; 2) 4º ventrículo; 3) cisterna magna.",
       "B) B - 1) 4º ventrículo; 2) tronco cerebral; 3) cisterna magna.",
       "C) C - 1) cisterna magna; 2) tronco cerebral; 3) 4º ventrículo.",
       "D) D - 1) cisterna magna; 2) 4º ventrículo; 3) tronco cerebral.",
-      "E) E - 1) tronco cerebral; 2) cisterna magna; 3) 4º ventrículo.22"
+      "E) E - 1) tronco cerebral; 2) cisterna magna; 3) 4º ventrículo. 22"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1971,18 +1960,17 @@
       "msk"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 4,
-    "text": "Analise as imagens. A patologia demonstrada é:",
+    "text": "Analise as imagens.A patologia demonstrada é:",
     "options": [
       "A) A - Falha de fechamento do neuroporo rostral.",
       "B) B - Falha de fusão do neuroporo ventral.",
       "C) C - Falha de fusão do neuroporo caudal.",
       "D) D - Falha de fechamento do prosencéfalo.",
-      "E) E - Falha de fechamento do mielencéfalo.23"
+      "E) E - Falha de fechamento do mielencéfalo. 23"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -1997,13 +1985,13 @@
   },
   {
     "number": 5,
-    "text": "Analise a imagem apontada pela seta abaixo. Qual o diagnóstico mais provável?",
+    "text": "Analise a imagem apontada pela seta abaixo.Qual o diagnóstico mais provável?",
     "options": [
       "A) A - Hemangioma bem vascularizado.",
       "B) B - Esteatose focal.",
       "C) C - Hiperplasia nodular focal.",
       "D) D - Adenoma.",
-      "E) E - Hepatoblastoma.24"
+      "E) E - Hepatoblastoma. 24"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -2014,18 +2002,17 @@
       "geral"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 6,
-    "text": "Menina com 5 anos de idade assintomática. Durante consulta de rotina, o pediatra palpou nódulo indolor no quadrante inferior direito do abdômen e solicitou avaliação ultrassonográfica. Qual das seguintes hipóteses é compatível com esta imagem neste contexto clínico?",
+    "text": "Menina com 5 anos de idade assintomática. Durante consulta de rotina, o pediatra palpou nódulo indolor no quadranteinferior direito do abdômen e solicitou avaliação ultrassonográfica.Qual das seguintes hipóteses é compatível com esta imagem neste contexto clínico?",
     "options": [
       "A) A - Tumor cecal.",
       "B) B - Linfoma intestinal.",
       "C) C - Massa ovariana.",
       "D) D - Cisto de duplicação entérico.",
-      "E) E - Linfonodomegalia reacional.25"
+      "E) E - Linfonodomegalia reacional. 25"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -2036,18 +2023,17 @@
       "torax"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 7,
-    "text": "Observe a imagem abaixo. Sobre a estrutura apontada pela seta, é correto afirmar que:",
+    "text": "Observe a imagem abaixo.Sobre a estrutura apontada pela seta, é correto afirmar que:",
     "options": [
       "A) A - No feto, esta estrutura conecta a primeira porção da aorta ao ramo principal da veia porta.",
       "B) B - Habitualmente esta estrutura é patente no adulto e permite o fluxo sanguíneo portossistêmico.",
       "C) C - Esta estrutura permite a separação entre os segmentos I e VII (Couinaud) do fígado.",
       "D) D - Em variações anatômicas, é sítio habitual da artéria hepática acessória.",
-      "E) E - Esta estrutura corresponde ao ligamento hepatogástrico e é foco de varizes periesofágicas em pacientes com hipertensão\nportal.26"
+      "E) E - Esta estrutura corresponde ao ligamento hepatogástrico e é foco de varizes periesofágicas em pacientes com hipertensãoportal. 26"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -2058,18 +2044,17 @@
       "geral"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 8,
-    "text": "Observe a imagem abaixo. Qual é o nome da estrutura apontada pela seta?",
+    "text": "Observe a imagem abaixo.Qual é o nome da estrutura apontada pela seta?",
     "options": [
       "A) A - Veia retrotireoidea.",
       "B) B - Veia traqueal.",
       "C) C - Tributária da veia jugular interna.",
       "D) D - Artéria tireoidea inferior.",
-      "E) E - Tronco tireocervical.27"
+      "E) E - Tronco tireocervical. 27"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -2080,18 +2065,17 @@
       "geral"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 9,
-    "text": "Observe a imagem abaixo. Qual é o nome da estrutura apontada pela seta?",
+    "text": "Observe a imagem abaixo.Qual é o nome da estrutura apontada pela seta?",
     "options": [
       "A) A - Artéria radial.",
       "B) B - Artéria interóssea.",
       "C) C - Artéria braquial.",
       "D) D - Nervo interósseo posterior.",
-      "E) E - Nervo ulnar.28"
+      "E) E - Nervo ulnar. 28"
     ],
     "correct_answer": null,
     "has_image": false,
@@ -2102,12 +2086,11 @@
       "geral"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   },
   {
     "number": 10,
-    "text": "Observe a imagem abaixo. Sobre a estrutura apontada pela seta, é correto afirmar:",
+    "text": "Observe a imagem abaixo.Sobre a estrutura apontada pela seta, é correto afirmar:",
     "options": [
       "A) A - A primeira porção do duodeno localiza-se anterossuperiormente à cabeça da estrutura.",
       "B) B - A principal artéria que nutre este órgão deriva-se da artéria mesentérica superior.",
@@ -2124,7 +2107,6 @@
       "geral"
     ],
     "year": 2023,
-    "specialty": "USG",
-    "needs_image": true
+    "specialty": "USG"
   }
 ]

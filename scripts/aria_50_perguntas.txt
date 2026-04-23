@@ -1,0 +1,60 @@
+# ARIA — 50 Perguntas de Radiologia (Teste 2026-04-18)
+
+## BÁSICA (10)
+
+1. [mama] O que é BI-RADS?
+2. [tórax] O que é consolidação pulmonar?
+3. [musculoesquelético] O que é fratura em galho verde?
+4. [neurorradiologia] O que é edema cerebral?
+5. [abdome] O que é hepatomegalia?
+6. [tórax] Quais são os lobos pulmonares à direita?
+7. [mama] O que é calcificação na mamografia?
+8. [vascular] O que é aneurisma de aorta abdominal?
+9. [musculoesquelético] Qual a diferença entre luxação e subluxação?
+10. [tórax] O que é derrame pleural?
+
+## INTERMEDIÁRIA (20)
+
+11. [mama] Qual a diferença entre BIRADS 3 e BIRADS 4?
+12. [tórax] Como diferenciar consolidação de derrame pleural no raio-x?
+13. [neurorradiologia] Quais os critérios de McDonald para esclerose múltipla?
+14. [musculoesquelético] Qual a apresentação radiológica da doença de Perthes?
+15. [abdome] Como stratificar risco de apendicite pelo escore de Alvarado?
+16. [mama] Quando usar ultrassom complementar à mamografia?
+17. [tórax] Quais achados radiológicos sugerem insuficiência cardíaca esquerda?
+18. [neurorradiologia] Qual a diferença entre AVC isquêmico e hemorrágico na TC?
+19. [vascular] Quando pedir angio-TC de artérias renais?
+20. [musculoesquelético] Quais são os estágios de Ficat para necrose avascular da femoral?
+21. [abdome] Qual a sensibilidade da ultrassonografia para litíase biliar?
+22. [mama] Como funciona a classificação TNM para câncer de mama?
+23. [tórax] O que é sinal do halo invertido na tuberculose?
+24. [neurorradiologia] Quando pedir RNM de sela túrcica?
+25. [musculoesquelético] Qual a utilidade da radiografia na suspeita de osteomielite?
+26. [abdome] Quais achados de TC sugerem pancreatite necrosante?
+27. [tórax] Como stratificar nódulo pulmonar pelo sistema Lung-RADS?
+28. [vascular] Qual o papel do Doppler venoso no diagnóstico de TVP?
+29. [musculoesquelético] O que é sinal de Blinese?
+30. [neurorradiologia] Quais são os subtipos de glioma pela classificação WHO 2021?
+
+## AVANÇADA (20)
+
+31. [mama] Qual o valor preditivo positivo real do BIRADS 4A na prática brasileira?
+32. [neurorradiologia] Como o protocolo de Stroke do ACC/AHA muda a conduta no AVC agudo?
+33. [musculoesquelético] Quais critérios de Steinberg classificam necrose avascular da femoral?
+34. [tórax] Qual a acurácia do PET-CT no estadiamento do carcinoma brônquico não pequenas células?
+35. [abdome] Quando a ressonância magnética com hepatobiliares substitui a colangio-Wirsung?
+36. [mama] Qual a taxa de upgrade de lesão cistadenocarcinoma mucinoso no BIRADS 5?
+37. [neurorradiologia] Quais os novos biomarcadores de imagem no diagnóstico de Alzheimer?
+38. [vascular] Qual a mortalidade operatória do AAA roto vs eletivo?
+39. [musculoesquelético] Como o ângulo alfa do fêmur prediz colapso na doença de Perthes?
+40. [tórax] Quais são os padrões de perfusão no cintilograma V/Q e sua interpretação?
+41. [abdome] Qual a sensibilidade e especificidade da elastografia na fibrose hepática?
+42. [neurorradiologia] Como o Swallow Tail Sign exclui Parkinson?
+43. [mama] Qual o papel do Sono no contexto do BIRADS 3?
+44. [vascular] Quando indicar endarterectomia vs angioplastia na doença carotídea?
+45. [musculoesquelético] Qual a utilidade do ângulo de rebatimento na displasia do desenvolvimento do quadril?
+46. [tórax] Como os critérios de Fleischner 2023 mudaram o follow-up de nódulos incidentais?
+47. [abdome] Qual a acurácia da RM multiparamétrica da próstata na detecção de Gleason ≥7?
+48. [neurorradiologia] Quais achados de imagem distinguem neuromielite óptica de esclerose múltipla?
+49. [mama] Como incorporar inteligência artificial na leitura mamográfica?
+50. [vascular] Qual o algoritmo de tratamento para dissecção aórtica tipo B de Stanford?

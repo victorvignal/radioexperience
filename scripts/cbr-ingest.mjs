@@ -1,6 +1,5 @@
 /**
  * Re-ingest CBR questions with correct answers from gabarito PDFs.
- * Reads cbr_output JSON + parses gabarito PDFs + upserts to Supabase
  */
 import { createRequire } from 'module'
 import fs from 'fs'
@@ -27,29 +26,32 @@ async function parseGabarito(filePath) {
     const content = await page.getTextContent()
     text += ' ' + content.items.map(item => item.str).join('')
   }
+  return text
+}
+
+async function parseGabaritoRDDI(filePath) {
+  const data = new Uint8Array(fs.readFileSync(filePath))
+  const doc = await pdfjsLib.getDocument({ data, useWorkerFetch: false, isEvalEnabled: false, useSystemFonts: true }).promise
+  let text = ''
+  for (let i = 1; i <= doc.numPages; i++) {
+    const page = await doc.getPage(i)
+    const content = await page.getTextContent()
+    text += ' ' + content.items.map(item => item.str).join('')
+  }
 
   const answers = {}
-  const t1 = text.indexOf('GABARITO PROVA TEÓRICAQT. Gabarito')
-  const t2 = text.indexOf('GABARITO PROVA TEÓRICO-PRÁTICA')
 
-  if (t1 >= 0) {
-    const block = text.slice(t1, t2 > t1 ? t2 : text.length)
-    const p1 = [...block.matchAll(/(\d+)\s+(ANULADA|[A-E])/g)]
-    for (const m of p1) {
-      const n = parseInt(m[1])
-      if (n >= 1 && n <= 200) answers[n] = m[2]
-    }
-  }
-  if (t2 >= 0) {
-    const block = text.slice(t2)
-    const p1 = [...block.matchAll(/(\d+)\s+(ANULADA|[A-E])/g)]
-    for (const m of p1) {
-      const n = parseInt(m[1])
-      if (n >= 1 && n <= 20) answers['TP' + n] = m[2]
+  // Try to find "GABARITO" patterns: "01 A", "02 B", etc.
+  // Pattern: number followed by single letter A-E
+  const matches = [...text.matchAll(/(\d{2})\s+([A-E])\b/g)]
+  for (const m of matches) {
+    const n = parseInt(m[1])
+    if (n >= 1 && n <= 200) {
+      answers[n] = m[2]
     }
   }
 
-  return answers
+  return { answers, raw: text.slice(0, 500) }
 }
 
 // ── Supabase REST ─────────────────────────────────────────────────────────────
@@ -120,6 +122,15 @@ function formatOptions(opts) {
 async function main() {
   console.log('Parsing gabaritos...')
 
+  // Parse RDDI gabaritos
+  const rddiGab2024 = await parseGabaritoRDDI(CBR_BASE + '\\RDDI\\2024\\Caderno-Completo-com-Gabarito-Preliminar-2024.pdf')
+  const rddiGab2025 = await parseGabaritoRDDI(CBR_BASE + '\\RDDI\\2025\\Prova-TP-com-Gabarito-2025.pdf')
+
+  console.log(`RDDI 2024 gabarito: ${Object.keys(rddiGab2024.answers).length} answers found`)
+  console.log(`RDDI 2025 gabarito: ${Object.keys(rddiGab2025.answers).length} answers found`)
+  console.log('RDDI 2024 sample:', rddiGab2024.raw.slice(0, 200))
+  console.log('RDDI 2025 sample:', rddiGab2025.raw.slice(0, 200))
+
   const gabaritos = {
     'may_2023': CBR_BASE + '\\USG\\2023\\Gabarito-USG-Geral-maio-2023.pdf',
     'june_2023': CBR_BASE + '\\USG\\2023\\Gabarito-USG-Geral-junho-2023.pdf',
@@ -128,50 +139,59 @@ async function main() {
   const gabAnswers = {}
   for (const [key, filePath] of Object.entries(gabaritos)) {
     try {
-      gabAnswers[key] = await parseGabarito(filePath)
-      const valid = Object.keys(gabAnswers[key]).filter(k => !String(k).startsWith('TP') && gabAnswers[key][k] !== 'ANULADA')
-      const anuladas = Object.keys(gabAnswers[key]).filter(k => gabAnswers[key][k] === 'ANULADA')
-      console.log(`${key}: ${valid.length} valid, ${anuladas.length} cancelled, TP=${Object.keys(gabAnswers[key]).filter(k => String(k).startsWith('TP')).length}`)
+      const text = await parseGabarito(filePath)
+      const answers = {}
+      const p1 = [...text.matchAll(/(\d+)\s+(ANULADA|[A-E])/g)]
+      for (const m of p1) {
+        const n = parseInt(m[1])
+        if (n >= 1 && n <= 200) answers[n] = m[2]
+      }
+      gabAnswers[key] = answers
+      const valid = Object.keys(answers).filter(k => !String(k).startsWith('TP') && answers[k] !== 'ANULADA')
+      console.log(`${key}: ${valid.length} valid`)
     } catch (e) {
       console.error(`Failed to parse ${key}: ${e.message}`)
     }
   }
 
   const cbrFiles = [
-    { file: 'cbr_rddi_2025_with_images.json', gabKey: null, version: null },
-    { file: 'cbr_rddi_2024_with_images.json', gabKey: null, version: null },
-    { file: 'cbr_usg_2023_v1_with_images.json', gabKey: 'may_2023', version: 'V1' },
-    { file: 'cbr_usg_2023_v2_with_images.json', gabKey: 'june_2023', version: 'V2' },
+    { file: 'cbr_rddi_2025_with_images.json', gab: rddiGab2025.answers, year: '2025', specialty: 'RDDI' },
+    { file: 'cbr_rddi_2024_with_images.json', gab: rddiGab2024.answers, year: '2024', specialty: 'RDDI' },
+    { file: 'cbr_usg_2023_v1_with_images.json', gabKey: 'may_2023', year: '2023', specialty: 'USG', version: 'V1' },
+    { file: 'cbr_usg_2023_v2_with_images.json', gabKey: 'june_2023', year: '2023', specialty: 'USG', version: 'V2' },
   ]
 
   const allToIngest = []
 
-  for (const { file, gabKey, version } of cbrFiles) {
+  for (const entry of cbrFiles) {
+    const { file, gab, gabKey, year, specialty, version } = entry
     const filePath = path.join(CBR_DIR, file)
     if (!fs.existsSync(filePath)) { console.error('Missing: ' + file); continue }
 
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
-    const gab = gabKey ? gabAnswers[gabKey] : null
-    // year and specialty are TOP-LEVEL fields in the JSON, not per-question
-    const year = data.year
-    const specialtyRoot = data.specialty  // e.g. 'RDDI' or 'USG'
+    const gabSource = gab || (gabKey ? gabAnswers[gabKey] : null)
 
     for (const q of (data.questions || [])) {
       let correctAnswer = q.correct_answer
-      if (gab) {
-        correctAnswer = gab[parseInt(q.number)] || q.correct_answer || null
-        if (correctAnswer && /^[A-E]$/.test(correctAnswer)) q.correct_answer = correctAnswer
+
+      if (gabSource) {
+        const qNum = parseInt(q.number)
+        const fromGab = gabSource[qNum]
+        if (fromGab && /^[A-E]$/.test(fromGab)) {
+          correctAnswer = fromGab
+          q.correct_answer = fromGab
+        }
       }
 
-      if (!q.correct_answer || !/^[A-E]$/.test(q.correct_answer)) continue
+      if (!correctAnswer || !/^[A-E]$/.test(correctAnswer)) continue
 
-      const label = `CBR ${specialtyRoot} ${year}${version ? ' ' + version : ''}`
+      const label = `CBR ${specialty} ${year}${version ? ' ' + version : ''}`
       allToIngest.push({
-        specialty: mapSpecialty(specialtyRoot, q.topics?.[0] || q.topic),
+        specialty: mapSpecialty(specialty, q.topics?.[0] || q.topic),
         question_text: q.text,
         question_type: 'multiple_choice',
         options: formatOptions(q.options),
-        correct_answer: q.correct_answer,
+        correct_answer: correctAnswer,
         explanation: `${label} Q${q.number}. ${q.explanation || ''}`.trim(),
         source_title: `${label} — Questão ${q.number}`,
         difficulty: mapDifficulty(q.difficulty),
@@ -181,10 +201,10 @@ async function main() {
       })
     }
     const withAnswer = (data.questions || []).filter(q => q.correct_answer && /^[A-E]$/.test(q.correct_answer)).length
-    console.log(`${file}: ${data.questions?.length} loaded, ${withAnswer} with valid answer`)
+    console.log(`${file}: ${data.questions?.length} loaded, ${withAnswer} with valid answer`);
   }
 
-  // Delete old CBR questions — must clear FK references first
+  // Delete old CBR questions
   console.log('Deleting old CBR from challenge_questions...')
   {
     const { status, body } = await new Promise((resolve) => {
@@ -199,11 +219,7 @@ async function main() {
       req.on('error', e => resolve({ status: 0, body: e.message }))
       req.end()
     })
-    if (status < 300) {
-      console.log(`Deleted old CBR from challenge_questions (${status}).`)
-    } else {
-      console.log(`Delete challenge_questions: ${status} ${body}`)
-    }
+    console.log(`Deleted challenge_questions: ${status}`)
   }
 
   console.log('Deleting old CBR from pool...')
@@ -220,16 +236,11 @@ async function main() {
       req.on('error', e => resolve({ status: 0, body: e.message }))
       req.end()
     })
-    if (status < 300) {
-      console.log(`Deleted old CBR from pool (${status}).`)
-    } else {
-      console.log(`Delete pool: ${status} ${body}`)
-    }
+    console.log(`Deleted pool: ${status}`)
   }
 
   console.log(`\nTotal to ingest: ${allToIngest.length}`)
 
-  // Ingest in batches
   const BATCH = 50
   let totalIngested = 0
   for (let i = 0; i < allToIngest.length; i += BATCH) {

@@ -683,7 +683,7 @@ function EditPanel({ onClose, topic, template, content, specialty, onApply, edit
         )}
 
         {/* Header */}
-        <div style={{
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
         </div>
 
         {/* Undo button */}

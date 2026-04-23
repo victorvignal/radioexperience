@@ -1,0 +1,22 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "| Script | Size | Purpose |\r |--------|------|---------|\r | `rad_ingest.py` | 31KB | Main ingestion: PDF → chunks → Qdrant |\r | `fix_specialty_payload.py` | 3KB | Batch-fix specialty metadata from paths |\r | `audit_text_quality.py` | 3.5KB | Score chunk quality (hyphens, stuck-é, fused tokens) |\r | `review_problem_chunks.py` | 4.3KB | Interactive chunk inspector with search |\r | `staging_search.py` | 3.3KB | Local semantic search over staging batches |",
+  "main": "aria_50_perguntas.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "canvas": "^3.2.3",
+    "openai": "^6.34.0",
+    "pdf-lib": "^1.17.1",
+    "pdf2pic": "^3.2.0",
+    "pdfjs-dist": "^5.6.205",
+    "sharp": "^0.34.5",
+    "tesseract.js": "^7.0.0"
+  }
+}
