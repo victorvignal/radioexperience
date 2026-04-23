@@ -1,0 +1,2176 @@
+{
+  "document_id": "rddi-2024-completo",
+  "source_file": "RDDI/2024/Caderno-Completo-com-Gabarito-Preliminar-2024.pdf",
+  "total_pages": 62,
+  "questions": [
+    {
+      "question_number": 1,
+      "section": "R1",
+      "page_start": 3,
+      "page_end": 3,
+      "question_text": "4",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 2,
+      "section": "R1",
+      "page_start": 4,
+      "page_end": 4,
+      "question_text": "5",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 3,
+      "section": "R1",
+      "page_start": 5,
+      "page_end": 5,
+      "question_text": "6",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 43,
+      "section": "R1",
+      "page_start": 6,
+      "page_end": 6,
+      "question_text": "7",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 5,
+      "section": "R1",
+      "page_start": 7,
+      "page_end": 7,
+      "question_text": "8",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 63,
+      "section": "R1",
+      "page_start": 8,
+      "page_end": 8,
+      "question_text": "9",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 73,
+      "section": "R1",
+      "page_start": 9,
+      "page_end": 9,
+      "question_text": "10",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 8,
+      "section": "R1",
+      "page_start": 10,
+      "page_end": 10,
+      "question_text": "11",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 9,
+      "section": "R1",
+      "page_start": 11,
+      "page_end": 11,
+      "question_text": "12",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 10,
+      "section": "R1",
+      "page_start": 12,
+      "page_end": 12,
+      "question_text": "13",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 11,
+      "section": "R1",
+      "page_start": 13,
+      "page_end": 13,
+      "question_text": "14",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 12,
+      "section": "R1",
+      "page_start": 14,
+      "page_end": 14,
+      "question_text": "15",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 13,
+      "section": "R1",
+      "page_start": 15,
+      "page_end": 15,
+      "question_text": "16",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 14,
+      "section": "R1",
+      "page_start": 16,
+      "page_end": 16,
+      "question_text": "17",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 15,
+      "section": "R1",
+      "page_start": 17,
+      "page_end": 17,
+      "question_text": "18",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 16,
+      "section": "R1",
+      "page_start": 18,
+      "page_end": 18,
+      "question_text": "19",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 17,
+      "section": "R1",
+      "page_start": 19,
+      "page_end": 19,
+      "question_text": "20",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 18,
+      "section": "R1",
+      "page_start": 20,
+      "page_end": 20,
+      "question_text": "21",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 19,
+      "section": "R1",
+      "page_start": 21,
+      "page_end": 21,
+      "question_text": "22",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 203,
+      "section": "R1",
+      "page_start": 22,
+      "page_end": 22,
+      "question_text": "23",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 21,
+      "section": "R1",
+      "page_start": 23,
+      "page_end": 23,
+      "question_text": "24",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 223,
+      "section": "R1",
+      "page_start": 24,
+      "page_end": 24,
+      "question_text": "",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 23,
+      "section": "R1",
+      "page_start": 25,
+      "page_end": 25,
+      "question_text": "26",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 24,
+      "section": "R1",
+      "page_start": 26,
+      "page_end": 26,
+      "question_text": "27",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 25,
+      "section": "R1",
+      "page_start": 27,
+      "page_end": 27,
+      "question_text": "28",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 26,
+      "section": "R1",
+      "page_start": 28,
+      "page_end": 28,
+      "question_text": "29",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 27,
+      "section": "R1",
+      "page_start": 29,
+      "page_end": 29,
+      "question_text": "30",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 28,
+      "section": "R1",
+      "page_start": 30,
+      "page_end": 30,
+      "question_text": "31",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 29,
+      "section": "R1",
+      "page_start": 31,
+      "page_end": 31,
+      "question_text": "32",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 30,
+      "section": "R1",
+      "page_start": 32,
+      "page_end": 32,
+      "question_text": "33",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 31,
+      "section": "R1",
+      "page_start": 33,
+      "page_end": 33,
+      "question_text": "",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 32,
+      "section": "R1",
+      "page_start": 33,
+      "page_end": 33,
+      "question_text": "34",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 33,
+      "section": "R1",
+      "page_start": 34,
+      "page_end": 34,
+      "question_text": "35",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 34,
+      "section": "R1",
+      "page_start": 35,
+      "page_end": 35,
+      "question_text": "36",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 35,
+      "section": "R1",
+      "page_start": 36,
+      "page_end": 36,
+      "question_text": "37",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 36,
+      "section": "R1",
+      "page_start": 37,
+      "page_end": 37,
+      "question_text": "38",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 37,
+      "section": "R1",
+      "page_start": 38,
+      "page_end": 38,
+      "question_text": "39",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 383,
+      "section": "R1",
+      "page_start": 39,
+      "page_end": 39,
+      "question_text": "40",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 393,
+      "section": "R1",
+      "page_start": 40,
+      "page_end": 40,
+      "question_text": "41",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 40,
+      "section": "R1",
+      "page_start": 41,
+      "page_end": 41,
+      "question_text": "42",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 41,
+      "section": "R1",
+      "page_start": 42,
+      "page_end": 42,
+      "question_text": "43",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 42,
+      "section": "R1",
+      "page_start": 43,
+      "page_end": 43,
+      "question_text": "44",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 43,
+      "section": "R1",
+      "page_start": 44,
+      "page_end": 44,
+      "question_text": "45",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 44,
+      "section": "R1",
+      "page_start": 45,
+      "page_end": 45,
+      "question_text": "46",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 45,
+      "section": "R1",
+      "page_start": 46,
+      "page_end": 46,
+      "question_text": "47",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 46,
+      "section": "R1",
+      "page_start": 47,
+      "page_end": 47,
+      "question_text": "48",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 47,
+      "section": "R1",
+      "page_start": 48,
+      "page_end": 48,
+      "question_text": "49",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 48,
+      "section": "R1",
+      "page_start": 49,
+      "page_end": 49,
+      "question_text": "50",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 49,
+      "section": "R1",
+      "page_start": 50,
+      "page_end": 50,
+      "question_text": "51",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 50,
+      "section": "R1",
+      "page_start": 51,
+      "page_end": 51,
+      "question_text": "52",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 51,
+      "section": "R1",
+      "page_start": 52,
+      "page_end": 52,
+      "question_text": "53",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 52,
+      "section": "R1",
+      "page_start": 53,
+      "page_end": 53,
+      "question_text": "54",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 53,
+      "section": "R1",
+      "page_start": 54,
+      "page_end": 54,
+      "question_text": "55",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 54,
+      "section": "R1",
+      "page_start": 55,
+      "page_end": 55,
+      "question_text": "56",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 55,
+      "section": "R1",
+      "page_start": 56,
+      "page_end": 56,
+      "question_text": "57",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 56,
+      "section": "R1",
+      "page_start": 57,
+      "page_end": 57,
+      "question_text": "58",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 57,
+      "section": "R1",
+      "page_start": 58,
+      "page_end": 58,
+      "question_text": "59",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 58,
+      "section": "R1",
+      "page_start": 59,
+      "page_end": 59,
+      "question_text": "60",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 59,
+      "section": "R1",
+      "page_start": 60,
+      "page_end": 60,
+      "question_text": "61",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 60,
+      "section": "R2",
+      "page_start": 61,
+      "page_end": 61,
+      "question_text": "Questão Gabarito1 B2 C3 A4 A5 E6 B7 A8 B9 C10 E11 D12 B13 C14 D15 A16 C17 A18 D19 E20 D21 D22 C23 A24 E25 D26 A27 A28 B29 A30 D31 C32 E33 D34 E35 A36 A37 B38 E39 C40 E41 B42 A43 D44 A45 E46 C47 B48 D49 A50 C51 B52 B53 E54 D55 E56 D57 B58 E59 D60 AGABARITO PRELIMINAR2ª ETAPA PROVA PRÁTICA 2024RADIOLOGIA E DIAGNÓSTICO POR IMAGEM(60 QUESTÕES)",
+      "options": [
+        {
+          "label": "A",
+          "text": ""
+        },
+        {
+          "label": "B",
+          "text": ""
+        },
+        {
+          "label": "C",
+          "text": ""
+        },
+        {
+          "label": "D",
+          "text": ""
+        },
+        {
+          "label": "E",
+          "text": ""
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": true,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    }
+  ],
+  "answers_only": null,
+  "stats": {
+    "total_questions": 60,
+    "with_answers": 0,
+    "with_images": 0,
+    "flagged_for_review": 60,
+    "no_text": 59,
+    "bad_options": 60
+  }
+}

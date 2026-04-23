@@ -1,0 +1,1449 @@
+{
+  "document_id": "usg-2019",
+  "source_file": "USG/2019/Prova-Anual-2019.pdf",
+  "total_pages": 18,
+  "specialty": "USG",
+  "year": 2019,
+  "questions": [
+    {
+      "question_number": 1,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Considere que um paciente com suspeita de aneurisma de aorta realiza ultrassonografia do abdome.É encontrado um nódulo no fígado, como demonstrado na imagem a seguir.Baseando-se nessas informações, qual o provável diagnóstico e a melhor conduta para esse paciente?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hiperplasia nodular focal / Conduta cirúrgica."
+        },
+        {
+          "label": "B",
+          "text": "Hemangioma / Confirmação por RM/TC."
+        },
+        {
+          "label": "C",
+          "text": "Carcinoma hepatocelular / Conduta conservadora."
+        },
+        {
+          "label": "D",
+          "text": "Hemangioblastoma / Conduta cirúrgica."
+        },
+        {
+          "label": "E",
+          "text": "Lipoma / Conduta cirúrgica."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 2,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Observe a seguir a imagem de uma tireoide e assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Essa glândula não demonstra sinais de tireoidite, mas pode haver tireotoxicose."
+        },
+        {
+          "label": "B",
+          "text": "Essa ultrassonografia apresenta um típico nódulo White Knight."
+        },
+        {
+          "label": "C",
+          "text": "Caso esse nódulo tenha vascularização central ao mapeamento com Doppler colorido, será necessária umamelhor investigação por punção aspirativa por agulha fina."
+        },
+        {
+          "label": "D",
+          "text": "Caso esse nódulo tenha focos ecogênicos e o TSH estiver alto, está indicada a punção aspirativa por agulha fina."
+        },
+        {
+          "label": "E",
+          "text": "Caso esse nódulo possua vascularização difusa e intensa ao mapeamento com Doppler colorido, esse pacienteprovavelmente será portador de tireotoxicose. 4"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 3,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Observe a seguir a imagem hepática de um pacientediabético.Considerando essas informações, assinale o diagnósticomais provável.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Doença hepática gordurosa"
+        },
+        {
+          "label": "B",
+          "text": "Cirrose"
+        },
+        {
+          "label": "C",
+          "text": "Carcinoma hepatocelular típico"
+        },
+        {
+          "label": "D",
+          "text": "Metástases hepáticas"
+        },
+        {
+          "label": "E",
+          "text": "Trombose de veia hepática"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 4,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Observe a seguir a imagem ecográfica do fígado de umpaciente com neoplasia de intestino grosso.Considerando essas informações, assinale o diagnósticomais provável.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hiperplasia nodular focal"
+        },
+        {
+          "label": "B",
+          "text": "Linfoma"
+        },
+        {
+          "label": "C",
+          "text": "Adenomatose hepática"
+        },
+        {
+          "label": "D",
+          "text": "Metástases"
+        },
+        {
+          "label": "E",
+          "text": "Hemangiomas"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 5,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise o caso clínico a seguir.Paciente com 32 anos de idade, em uso de contraceptivooral, chega ao pronto-atendimento apresentandodor aguda no hipocôndrio direito e hipotensão.À ultrassonografia, é vista uma massa volumosaheterogênea no lobo direito do fígado, mal delimitada,em contato com a superfície hepática, além de volumosaquantidade de líquido livre na cavidade peritonial.Nesse caso, qual é a hipótese diagnóstica mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hiperplasia nodular focal"
+        },
+        {
+          "label": "B",
+          "text": "Adenoma hepático"
+        },
+        {
+          "label": "C",
+          "text": "Hemangioblastoma"
+        },
+        {
+          "label": "D",
+          "text": "Hemangioma gigante"
+        },
+        {
+          "label": "E",
+          "text": "Metástase"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 6,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A distância percorrida pela onda sonora em um ciclochama-se",
+      "options": [
+        {
+          "label": "A",
+          "text": "pulso."
+        },
+        {
+          "label": "B",
+          "text": "frequência."
+        },
+        {
+          "label": "C",
+          "text": "amplitude."
+        },
+        {
+          "label": "D",
+          "text": "comprimento de onda."
+        },
+        {
+          "label": "E",
+          "text": "intensidade."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 7,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A resolução consiste na capacidade de um método dediscriminar dois fenômenos discretos. No campo dodiagnóstico por imagens, a resolução espacial representao menor espaço entre dois pontos reconhecíveis comoseparados em uma imagem.Assinale a alternativa que contém tipos de resoluçãocomumente identificados na área de ultrassonografia.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Espacial axial, espacial lateral, e de reforçoposterior."
+        },
+        {
+          "label": "B",
+          "text": "Espacial lateral, temporal, e de atenuaçãoposterior."
+        },
+        {
+          "label": "C",
+          "text": "Temporal, de contraste, e dynamic range."
+        },
+        {
+          "label": "D",
+          "text": "De atenuação posterior, de reforço posterior, ede elevação."
+        },
+        {
+          "label": "E",
+          "text": "De elevação, temporal, e de contraste. 5"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 8,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise a seguir as imagens de um paciente alcoólatra com cirrose e ascite.Qual é o diagnóstico mais provável dessa lesão focal?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Colangiocarcinoma"
+        },
+        {
+          "label": "B",
+          "text": "Carcinoma hepatocelular"
+        },
+        {
+          "label": "C",
+          "text": "Hemangioma"
+        },
+        {
+          "label": "D",
+          "text": "Hiperplasia nodular focal"
+        },
+        {
+          "label": "E",
+          "text": "Lipoma"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 9,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual é o nome da estrutura apontada pela seta nessa imagem?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Veia hepática esquerda"
+        },
+        {
+          "label": "B",
+          "text": "Veia hepática média"
+        },
+        {
+          "label": "C",
+          "text": "Veia hepática direita"
+        },
+        {
+          "label": "D",
+          "text": "Veia hepática direita acessória"
+        },
+        {
+          "label": "E",
+          "text": "Veia cava inferior 6"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 10,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Assinale a alternativa que melhor define o artefato crosstalk.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Ocorre quando a taxa de amostra é muito baixa em comparação à medida do fluxo."
+        },
+        {
+          "label": "B",
+          "text": "Corresponde ao artefato determinado quando a diferença da frequência está além da metade do valor do PulseRate Frequency (PRF)."
+        },
+        {
+          "label": "C",
+          "text": "Ocorre quando a velocidade do fluxo está muito alta, além do limite de Nyquist."
+        },
+        {
+          "label": "D",
+          "text": "Corresponde ao artefato gerado quando a escala de velocidade está relativamente baixa, gerando espectro emdireção oposta."
+        },
+        {
+          "label": "E",
+          "text": "Ocorre quando o sinal Doppler é alto, apresentando espectro de onda simétrico a partir da linha de base."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 11,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Considere uma paciente, sexo feminino, 60 anos de idade, apresentando quadro de depressão, fadiga e constipaçãointestinal. O ultrassom cervical a seguir, indica a alteração, apontada pelas setas vermelhas.Com base nesse quadro clínico e nessas imagens, qual achado laboratorial espera-se encontrar?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Baixos níveis de bio-PTH."
+        },
+        {
+          "label": "B",
+          "text": "Redução dos níveis de cálcio urinário."
+        },
+        {
+          "label": "C",
+          "text": "Hipercalcemia e PTH elevado."
+        },
+        {
+          "label": "D",
+          "text": "Redução dos níveis de cálcio ionizado."
+        },
+        {
+          "label": "E",
+          "text": "Hipocalcemia e baixos índices de vitamina D."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 12,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Em uma orquite não complicada, qual dos achados ultrassonográficos a seguir é frequentemente encontrado?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Velocidades diastólicas aumentadas nas artérias intratesticulares."
+        },
+        {
+          "label": "B",
+          "text": "Hipofluxo vascular generalizado no testículo acometido."
+        },
+        {
+          "label": "C",
+          "text": "Aumento da ecogenicidade testicular."
+        },
+        {
+          "label": "D",
+          "text": "Presença de microcalcificações."
+        },
+        {
+          "label": "E",
+          "text": "Ectasia tubular da rede testis."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 13,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Em relação à anatomia do abdome, assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "A veia hepática direita é referência anatômica para divisão entre os segmentos VII e VIII."
+        },
+        {
+          "label": "B",
+          "text": "A cauda do pâncreas usualmente posiciona-se inferiormente à cabeça."
+        },
+        {
+          "label": "C",
+          "text": "O ligamento falciforme é composto pelo ligamento arqueado e por reflexões peritoniais."
+        },
+        {
+          "label": "D",
+          "text": "As artérias renais geralmente localizam-se superiormente à artéria mesentérica superior."
+        },
+        {
+          "label": "E",
+          "text": "O ligamento umbilical mediano é composto pelo resquício das artérias umbilicais fetais. 7"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 14,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Das estruturas anatômicas a seguir, qual é referência para divisão dos níveis linfonodais axilares?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Músculo peitoral maior."
+        },
+        {
+          "label": "B",
+          "text": "Artéria axilar."
+        },
+        {
+          "label": "C",
+          "text": "Músculo peitoral menor."
+        },
+        {
+          "label": "D",
+          "text": "Artéria subclávia."
+        },
+        {
+          "label": "E",
+          "text": "Veia axilar."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 15,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "O ligamento venoso do fígado divide os segmentos",
+      "options": [
+        {
+          "label": "A",
+          "text": "I e II."
+        },
+        {
+          "label": "B",
+          "text": "II e III."
+        },
+        {
+          "label": "C",
+          "text": "V e VIII."
+        },
+        {
+          "label": "D",
+          "text": "II e IV."
+        },
+        {
+          "label": "E",
+          "text": "IVa e IVb."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 16,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise o caso clínico a seguir.Gestação de 39 semanas. Gravidez de evolução normal, líquido amniótico de volume normal, feto no percentil 30.Dados: RD = Rim Direito. RE = Rim Esquerdo.Com base nessas informações e nas imagens apresentadas, qual é a principal hipótese diagnóstica?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Ectasiada pelve renal esquerda sem hidronefrose."
+        },
+        {
+          "label": "B",
+          "text": "Ectasia bilateral com discreta hidronefrose."
+        },
+        {
+          "label": "C",
+          "text": "As medidas dos rins e das pelves renais normais para a idade gestacional."
+        },
+        {
+          "label": "D",
+          "text": "Hidronefrose leve bilateral."
+        },
+        {
+          "label": "E",
+          "text": "Ectasia das pelves renais. 8"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 17,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise o caso clínico a seguir.Recém-nascido pré-termo de 32 semanas, AIG,apresentou desconforto respiratório leve ao nascimento,resolvido com oxigenioterapia via cateter nasal, realizouno terceiro dia de vida ultrassonografia transfontanelarde rastreio.Considerando esse caso e a imagem apresentada, qualé a hipótese diagnóstica mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Normal."
+        },
+        {
+          "label": "B",
+          "text": "Holoprosencefalia lobar."
+        },
+        {
+          "label": "C",
+          "text": "Defeito da linha média."
+        },
+        {
+          "label": "D",
+          "text": "Ectasia ventricular."
+        },
+        {
+          "label": "E",
+          "text": "Hemorragia da matriz germinal."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 18,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise o caso clínico a seguir.Paciente, sexo feminino, 32 anos de idade, sem históriafamiliar para câncer de mama, apresenta um nódulosólido hipoecogênico, oval, circunscrito e paralelo à pelecom 1,0 cm no quadrante superolateral direito na presenteultrassonografia de mamas. Esse nódulo apresenta-se semalterações significativas em relação à ultrassonografia deum ano atrás.Considerando essas informações, assinale a alternativacorreta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "A categoria para o presente exame é a 2 peloACR BI-RADS."
+        },
+        {
+          "label": "B",
+          "text": "Deve ser recomendado o controle evolutivoultrassonográfico em 6 meses."
+        },
+        {
+          "label": "C",
+          "text": "Deve ser recomendado o controle evolutivoultrassonográfico em 12 meses."
+        },
+        {
+          "label": "D",
+          "text": "Deve ser recomendada a correlação com oexame citológico."
+        },
+        {
+          "label": "E",
+          "text": "Deve ser recomendada a correlação com oexame histopatológico."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 19,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "No recém-nascido, a causa mais frequente de cistorenal é",
+      "options": [
+        {
+          "label": "A",
+          "text": "cisto simples."
+        },
+        {
+          "label": "B",
+          "text": "doença policística autossômica recessiva."
+        },
+        {
+          "label": "C",
+          "text": "doença policística autossômica dominante."
+        },
+        {
+          "label": "D",
+          "text": "displasia renal."
+        },
+        {
+          "label": "E",
+          "text": "nefronofitíase."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 20,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise o caso clínico a seguir.Paciente, sexo masculino, 14 meses de idade,apresentando aumento do volume da bolsa testiculardireita. Ao ultrassom, observa-se massa sólida eheterogênea intratesticular, com pequenas áreascísticas, ocupando quase todo o testículo. Nota-setambém linfonodomegalia abdominal. Os níveis dealfafetoproteína estão elevados.Com base nesses dados, assinale a alternativa queapresenta a principal hipótese diagnóstica.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Seminoma."
+        },
+        {
+          "label": "B",
+          "text": "Doença da arranhadura do gato."
+        },
+        {
+          "label": "C",
+          "text": "Linfoma testicular."
+        },
+        {
+          "label": "D",
+          "text": "Tumor do saco vitelínico."
+        },
+        {
+          "label": "E",
+          "text": "Cisto epidermoide."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 21,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Assinale a alternativa que apresenta uma característicada Doença de Crohn.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Há inflamação transmural que envolve demaneira contínua todo o intestino delgado egrosso."
+        },
+        {
+          "label": "B",
+          "text": "Apresenta predileção especial pela regiãoileocecal."
+        },
+        {
+          "label": "C",
+          "text": "É mais frequente no sexo masculino, com picode incidência maior na sexta e sétima décadasde vida."
+        },
+        {
+          "label": "D",
+          "text": "Mesmo na fase de atividade da doença, a paredeintestinal não apresenta alterações detectáveispela ultrassonografia."
+        },
+        {
+          "label": "E",
+          "text": "O megacólon tóxico é a complicação maisfrequente."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 22,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Considere uma gestante de 20 semanas, primigesta,sem comorbidades de 37 anos de idade.Assinale a alternativa corretamente relacionada com ocontrole ultrassonográfico.",
+      "options": [
+        {
+          "label": "A",
+          "text": "A avaliação da vitalidade fetal pode ser feita peloperfil biofísico fetal."
+        },
+        {
+          "label": "B",
+          "text": "O estudo Dopplervelocimétrico das artériasuterinas permitirá indicar a terapêutica comaspirina para prevenção de pré-eclâmpsia."
+        },
+        {
+          "label": "C",
+          "text": "O principal parâmetro para cálculo da idadegestacional é o comprimento dos ossos longos."
+        },
+        {
+          "label": "D",
+          "text": "É a época ideal para o cálculo da idade gestacionalatravés da avaliação morfológica fetal."
+        },
+        {
+          "label": "E",
+          "text": "A maioria das malformações grosseiras do SNCé diagnosticada nesse período. 9"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 23,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Em relação ao diagnóstico ultrassonográfico da endometriose, assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Os sítios mais comuns da endometriose profunda são o sigmoide e o apêndice cecal, e o diagnóstico ecográficoé realizado principalmente com a sonda endovaginal."
+        },
+        {
+          "label": "B",
+          "text": "O endometrioma ovariano caracteriza-se pela detecção de um cisto com debris e vascularização periféricaexuberante com o Doppler de amplitude."
+        },
+        {
+          "label": "C",
+          "text": "A ultrassonografia não é um método adequado para diagnóstico dos implantes endometrióticos peritoniais."
+        },
+        {
+          "label": "D",
+          "text": "As lesões endometrióticas da endometriose profunda são os mais frequentemente espessamentos hiperecogênicosdos ligamentos uterossacros."
+        },
+        {
+          "label": "E",
+          "text": "A endometriose vesical é mais frequente na parede anterior da bexiga, e o principal diagnóstico diferencial é como cisto de úraco."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 24,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Considere uma gestação de 28 semanas.Nas imagens, cortes axiais do polo cefálico a nível dos tálamos e fossa posterior.Com base nessas informações e nas imagens apresentadas, qual é a principal hipótese diagnóstica?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Malformação de Arnold-Chiari."
+        },
+        {
+          "label": "B",
+          "text": "Porencefalia."
+        },
+        {
+          "label": "C",
+          "text": "Holoprosencefalia semilobar."
+        },
+        {
+          "label": "D",
+          "text": "Cisto aracnoide na linha média."
+        },
+        {
+          "label": "E",
+          "text": "Malformaçãode Dandy-Walker. 10"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 25,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Sobre lesões císticas do pâncreas, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "O cistoadenoma mucinoso é mais frequente emhomens abaixo de 30 anos de idade."
+        },
+        {
+          "label": "B",
+          "text": "É infrequente a comunicação ductal na neoplasiamucinosa papilar intraductal (IPMN)."
+        },
+        {
+          "label": "C",
+          "text": "Os cistos geralmente são menores noscistoadenomas mucinosos do que nos serosos."
+        },
+        {
+          "label": "D",
+          "text": "As calcificações são frequentes na neoplasiamucinosa papilar intraductal (IPMN)."
+        },
+        {
+          "label": "E",
+          "text": "O cistoadenoma seroso possui baixo potencialde malignização."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 26,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Considere um paciente, sexo masculino, 8 meses,apresentando dor abdominal e vômitos. Analise asimagens a seguir.Nesse caso, qual é a hipótese diagnóstica mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Volvo do intestino médio."
+        },
+        {
+          "label": "B",
+          "text": "Invaginação intestinal."
+        },
+        {
+          "label": "C",
+          "text": "Estenose hipertrófica do piloro."
+        },
+        {
+          "label": "D",
+          "text": "Pólipo de duodeno."
+        },
+        {
+          "label": "E",
+          "text": "Colite."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 27,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Em relação às gestações gemelares, assinale aalternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "As gestações monocoriônicas são sempremonozigóticas."
+        },
+        {
+          "label": "B",
+          "text": "As malformações fetais são mais frequentes nasgestações dizigóticas."
+        },
+        {
+          "label": "C",
+          "text": "A presença de duas massas placentárias distintasé diagnóstico de gemelaridade dizigótica."
+        },
+        {
+          "label": "D",
+          "text": "As gestações monoamnióticas são a variedademais frequente da gemelaridade monocoriônica."
+        },
+        {
+          "label": "E",
+          "text": "A síndrome de transfusão feto-fetal ocorreraramente nas gestações dizigóticas."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 28,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Considere uma RN nascida de parto pélvico, apresentaexame Ortolani positivo bilateralmente.Em relação à displasia do desenvolvimento do quadril, écorreto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Primeira gestação e fetos microssômicos sãofatores de risco."
+        },
+        {
+          "label": "B",
+          "text": "Existe associação com torcicolo congênito."
+        },
+        {
+          "label": "C",
+          "text": "O lado direito é comumente mais acometido."
+        },
+        {
+          "label": "D",
+          "text": "A incidência é maior no sexo masculino."
+        },
+        {
+          "label": "E",
+          "text": "Na maior parte dos casos, o diagnóstico é tardio,o que compromete o prognóstico."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 29,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Considere uma mulher de 55 anos de idade,menopausada há 7 anos, em terapia de reposiçãohormonal (TRH) contínua, assintomática, submetidaa uma ultrassonografia endovaginal de rotina, sendodetectado um cisto simples ovariano, unilateral, comdiâmetro máximo de 6 cm.Com base nesses dados, assinale a alternativa queapresenta, respectivamente, a hipótese diagnóstica maisprovável e a(s)conduta(s) a ser(em) adotada(s).",
+      "options": [
+        {
+          "label": "A",
+          "text": "Cisto funcional relacionado com a TRH /Suspender hormonioterapia e realizar exame decontrole após 30 dias."
+        },
+        {
+          "label": "B",
+          "text": "Neoplasia ovariana benigna / Realizar punçãoaspirativa do cisto para estudo citológico."
+        },
+        {
+          "label": "C",
+          "text": "Cisto ovariano provavelmente benigno / RealizarRM para complementação diagnóstica."
+        },
+        {
+          "label": "D",
+          "text": "Provável cisto de inclusão folicular / Realizarapenas controle ecográfico periódico."
+        },
+        {
+          "label": "E",
+          "text": "Cisto ovariano indeterminado / Indicar exéresedo cisto para estudo histológico. 11"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 30,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Observe a seguir o espectro de onda de uma artéria tireoidea superior realizado com técnica adequada.Considerando essa imagem, assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "O cálculo da velocidade está errado, pois o ângulo de correção Doppler é 60 graus."
+        },
+        {
+          "label": "B",
+          "text": "A velocidade de pico sistólico está muito baixa."
+        },
+        {
+          "label": "C",
+          "text": "Observa-se diástole muito baixa, indicando fluxo de alta resistividade."
+        },
+        {
+          "label": "D",
+          "text": "Esse padrão espectral é característico na doença de Graves."
+        },
+        {
+          "label": "E",
+          "text": "Esse vaso possui fluxo tipicamente venoso."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 31,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Observe a imagem a seguir.Esse vaso é a carótida",
+      "options": [
+        {
+          "label": "A",
+          "text": "interna pela baixa resistividade."
+        },
+        {
+          "label": "B",
+          "text": "externa devido à alta resistividade."
+        },
+        {
+          "label": "C",
+          "text": "interna pela alta resistividade."
+        },
+        {
+          "label": "D",
+          "text": "externa devido à baixa resistividade."
+        },
+        {
+          "label": "E",
+          "text": "interna e possui resistividade intermediária. 12"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 32,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Observe as imagens a seguir, obtidas em Doppler da artéria renal esquerda de uma mulher de 55 anos de idade.Considerando essas informações e imagens, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Se trata de uma condição agressiva, pois a velocidade diastólica está relativamente baixa."
+        },
+        {
+          "label": "B",
+          "text": "As imagens indicam que o ultrassonografista empregou o método indireto de aquisição."
+        },
+        {
+          "label": "C",
+          "text": "Esse exame está normal, uma vez que possui velocidade de pico sistólico adequada na artéria renal."
+        },
+        {
+          "label": "D",
+          "text": "A aceleração sistólica inicial nas artérias interlobares está aumentada."
+        },
+        {
+          "label": "E",
+          "text": "As imagens indicam estenose da artéria renal esquerda."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 33,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Considerando a anatomia do cotovelo, assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "O processo coronoide tem localização posterior, onde se insere o tendão do tríceps."
+        },
+        {
+          "label": "B",
+          "text": "A tuberosidade do rádio é o local de inserção do tendão braquial."
+        },
+        {
+          "label": "C",
+          "text": "A cabeça da ulna fica localizada no lado medial do cotovelo."
+        },
+        {
+          "label": "D",
+          "text": "O ligamento anular do rádio tem inserção na ulna."
+        },
+        {
+          "label": "E",
+          "text": "A cabeça do rádio articula-se com a tróclea do úmero."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 34,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Considere um paciente, sexo masculino, 60 anos de idade, portador de hepatite C crônica. A seguir, imagens do Dopplerde veia porta.Com base nesses dados e nas imagens apresentadas, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "O sentido de fluxo na veia porta está invertido."
+        },
+        {
+          "label": "B",
+          "text": "O fluxo portal é hepatofugal, e a velocidade está reduzida."
+        },
+        {
+          "label": "C",
+          "text": "O fluxo é hepatopetal, e a onda espectral revela presença de circulação colateral."
+        },
+        {
+          "label": "D",
+          "text": "O fluxo é hepatopetal, e a velocidade está normal."
+        },
+        {
+          "label": "E",
+          "text": "O fluxo portal é hepatopetal, e a velocidade está aumentada. 13"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 35,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise o caso clínico a seguir.Paciente de 35 anos de idade, secundigesta, com IMC de 32, exames laboratoriais normais e história de pré-eclampsia(P",
+      "options": [
+        {
+          "label": "A",
+          "text": "A presença da incisura protodiastólica bilateral associada aos dados clínicos é o principal parâmetro para classificaressa gestação como de alto risco."
+        },
+        {
+          "label": "B",
+          "text": "Os dados clínicos e Dopplervelocimétricos indicam que essa gestante tem maior risco para desenvolver pré-eclâmpsia e CIUR."
+        },
+        {
+          "label": "C",
+          "text": "A análise das artérias uterinas deve ser repetida no segundo trimestre para estabelecer os fatores de risco."
+        },
+        {
+          "label": "D",
+          "text": "Deve ser avaliado o ducto venoso para estabelecer o prognóstico com maior precisão."
+        },
+        {
+          "label": "E",
+          "text": "na primeira gestação, que ocorreu há 10 anos. Encontra-se na 11ª semana de gestação com gravidez de evoluçãonormal até o momento. Submetida a estudo Doppler das artérias uterinas com os seguintes resultados: IP artéria uterinadireita de 3,18 e esquerda de 2,78. (Valores de referência de 1,18 a 2,70 dos IPs médios para os percentis 5 e 95 para aidade gestacional).Com base nessas informações e nas imagens apresentadas, assinale a alternativa correta."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 36,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Em relação ao Doppler transcraniano, é correto afirmar que a(o)",
+      "options": [
+        {
+          "label": "A",
+          "text": "velocidade média de fluxo no sifão da artéria carótida interna de 110 cm/s indica estenose menor de 50%."
+        },
+        {
+          "label": "B",
+          "text": "velocidade média de fluxo na artéria basilar de 50 cm/s indica estenose maior que 70%."
+        },
+        {
+          "label": "C",
+          "text": "melhor banda de frequência do transdutor a ser utilizado na insonação transtemporal é de 5 a7 MHz."
+        },
+        {
+          "label": "D",
+          "text": "posicionamento suboccipital do transdutor é a melhor via para visualização da artéria oftálmica."
+        },
+        {
+          "label": "E",
+          "text": "segmento A2 da artéria cerebral anterior está à jusante da artéria comunicante anterior."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 37,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise o caso clínico a seguir.Paciente, sexo feminino, 30 anos de idade, sem uso de contraceptivos orais e previamente hígida, apresenta lesãoexpansiva hepática arredondada, de contornos regulares e margens lisas, conteúdo homogêneo e isoecoico, semcalcificações, halo ou cápsula, com vascularização predominantemente centrífuga ao Doppler colorido e padrão bifásicoarterial.Com base nessa descrição, qual é a hipótese diagnóstica mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hiperplasia nodular focal."
+        },
+        {
+          "label": "B",
+          "text": "Adenoma hepático."
+        },
+        {
+          "label": "C",
+          "text": "Carcinoma hepatocelular."
+        },
+        {
+          "label": "D",
+          "text": "Hemangioblastoma."
+        },
+        {
+          "label": "E",
+          "text": "Hemangioma. 14"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 38,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Considere que um paciente do sexo masculino, 47 anos de idade, apresenta quadro de hipertensão arterial refratário atratamento. O exame Doppler de artérias renais evidenciou artéria renal esquerda com velocidade de pico sistólico de247 cm/s, com o padrão espectral, como apresentado na imagem a seguir.Com base nesses dados, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Exame Doppler renal dentro dos limites da normalidade."
+        },
+        {
+          "label": "B",
+          "text": "Estenose hemodinamicamente significativa ( maior que 50%) na artéria renal esquerda."
+        },
+        {
+          "label": "C",
+          "text": "Estenose leve na artéria renal esquerda, sem repercussão hemodinâmica."
+        },
+        {
+          "label": "D",
+          "text": "Aumento da velocidade de pico sistólico na artéria renal esquerda, indicando estenose hemodinamicamentesignificativa na artéria renal contralateral."
+        },
+        {
+          "label": "E",
+          "text": "Fluxo com padrão tardus parvus na artéria renal esquerda."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 39,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Em relação às glândulas paratireoides, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Quando normais são facilmente identificadas pela ultrassonografia."
+        },
+        {
+          "label": "B",
+          "text": "Quando aumentadas, as glândulas inferiores são geralmente visualizadas posteriormente à tireoide."
+        },
+        {
+          "label": "C",
+          "text": "As glândulas de grandes dimensões são geralmente homogêneas e têm aspecto ovalado e hiperecogênico."
+        },
+        {
+          "label": "D",
+          "text": "O hiperparatireoidismo primário na maioria dos casos é decorrente de insuficiência renal crônica."
+        },
+        {
+          "label": "E",
+          "text": "O adenoma frequentemente envolve 3 ou 4 glândulas. 15"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 40,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Avaliando a imagem a seguir do Doppler espectral de uma artéria segmentar, tem-se:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Índice de aceleração normal, porém com tempo de aceleração bastante reduzido."
+        },
+        {
+          "label": "B",
+          "text": "Padrão espectral compatível com necrose tubular aguda."
+        },
+        {
+          "label": "C",
+          "text": "Sinal indireto de estenose da artéria renal."
+        },
+        {
+          "label": "D",
+          "text": "Doença renal parenquimatosa, pois apresenta padrão tardus parvus."
+        },
+        {
+          "label": "E",
+          "text": "Provável processo obstrutivo ureteral, com aumento da resistência intrarrenal. FOLHA DE RESPOSTAS(vERSÃO DO cANDIDATO)AO TRANSFERIR ESSAS MARCAçõES PARA A FOLHA DE RESPOSTAS,OBSERVE AS INSTRUçõES ESPECÍFICAS DADAS NA CAPA DA PROVA.USE cANETA ESFEROgRáFIcA AzUL OU PRETA. ATENÇÃO:AgUARDE AUTORIzAÇÃOPARA vIRAR O cADERNO DE PROvA."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    }
+  ]
+}

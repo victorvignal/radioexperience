@@ -1,0 +1,1809 @@
+{
+  "document_id": "usg-2023-v2",
+  "source_file": "USG/2023/Prova-Teorica-TP-v2-2023.pdf",
+  "total_pages": 29,
+  "specialty": "USG",
+  "year": 2023,
+  "questions": [
+    {
+      "question_number": 1,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente de 67 anos, diabética há mais de 20 anos, encaminhada para avaliação rotineira. Ao ultrassom, evidencia-seformação cística complexa no corpo pancreático, com 4 cm de diâmetro, bem delimitada, com septos evidentes ecalcificação grosseira central. Não se observa dilatação de duto pancreático ou colédoco.Tal imagem é sugestiva de:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Tumor neurendócrino."
+        },
+        {
+          "label": "B",
+          "text": "Tumor papilar mucinoso intraductal."
+        },
+        {
+          "label": "C",
+          "text": "Tumor de Frantz."
+        },
+        {
+          "label": "D",
+          "text": "Cistadenocarcinoma mucinoso."
+        },
+        {
+          "label": "E",
+          "text": "Cistadenoma seroso."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 2,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual das seguintes alterações associa-se ao câncer da vesícula biliar?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Espessamento focal (> 4 mm) da parede da vesícula biliar."
+        },
+        {
+          "label": "B",
+          "text": "Aumento de 2 mm no diâmetro de pólipo vesicular no período de 1 ano."
+        },
+        {
+          "label": "C",
+          "text": "Adenomiose da vesícula biliar."
+        },
+        {
+          "label": "D",
+          "text": "Pólipo incidental com 5 mm de diâmetro."
+        },
+        {
+          "label": "E",
+          "text": "Coexistência de hepatopatia crônica. 2"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 3,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Com relação ao Consenso da SRU (Society of Radiologists in Ultrasound) de 2022 relativo aos pólipos da vesículabiliar.Marque a afirmativa correta:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Colecistectomia deve ser indicada para todos os pólipos acima de 5 mm de diâmetro."
+        },
+        {
+          "label": "B",
+          "text": "Vigilância ativa está indicada para todos os pólipos abaixo de 15 mm de diâmetro."
+        },
+        {
+          "label": "C",
+          "text": "Pólipos com vasos evidentes ao Doppler colorido são de alto risco e devem ser ressecados."
+        },
+        {
+          "label": "D",
+          "text": "Pólipos em pacientes com colangite esclerosante primária possuem maior risco de malignidade."
+        },
+        {
+          "label": "E",
+          "text": "Pólipos adenomatosos podem ser reconhecidos pela hipoecogenicidade."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 4,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente com história de cirurgia abdominal videolaparoscópica há 1 ano, apresentando quadro de dor abdominaldifusa e náuseas. Achados ecográficos com segmento de alça dilatada, sem espessamento parietal, com aumentodo espaço entre as vilosidades da mucosa, com sequestro de líquido e diminuição da peristalse.Qual o diagnóstico?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Oclusão intestinal"
+        },
+        {
+          "label": "B",
+          "text": "Triflite."
+        },
+        {
+          "label": "C",
+          "text": "Ileíte."
+        },
+        {
+          "label": "D",
+          "text": "Apendagite."
+        },
+        {
+          "label": "E",
+          "text": "Duodenite. 3"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 5,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente com dor abdominal submetido à ultrassonografia abdominal, na qual são encontrados os seguintesresultados: espessamento concêntrico de todas as camadas da alça intestinal; gordura inflamatória adjacente;linfadenopatia locorregional; fístula ileocecal; e aumento da vascularização ao Doppler.Estes achados são clássicos da:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Triflite."
+        },
+        {
+          "label": "B",
+          "text": "Doença de Crohn."
+        },
+        {
+          "label": "C",
+          "text": "Apendagite."
+        },
+        {
+          "label": "D",
+          "text": "Retocolite ulcerativa."
+        },
+        {
+          "label": "E",
+          "text": "Câncer de cólon."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 6,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Quanto à análise ultrassonográfica do linfonodo cervical.É correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "O linfonodo reativo é hipervascularizado, com vasos assimétricos e irregulares."
+        },
+        {
+          "label": "B",
+          "text": "Os linfonodos benignos tendem a ser arredondados, enquanto os malignos, fusiformes."
+        },
+        {
+          "label": "C",
+          "text": "A ausência do hilo gorduroso é característica de malignidade."
+        },
+        {
+          "label": "D",
+          "text": "As microcalcificações nos linfonodos são exclusivas de comprometimento metastático."
+        },
+        {
+          "label": "E",
+          "text": "O linfonodo maligno apresenta vascularização organizada, radial, desde o hilo até a periferia, devido a fatoresantiangiogênicos. 4"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 7,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual o nível linfonodal cervical que se estende do osso hioídeo até o manúbrio esternal?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Nível III."
+        },
+        {
+          "label": "B",
+          "text": "Nível IV."
+        },
+        {
+          "label": "C",
+          "text": "Nível V."
+        },
+        {
+          "label": "D",
+          "text": "Nível VI."
+        },
+        {
+          "label": "E",
+          "text": "Nível VII."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 8,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Com relação às glândulas paratireoides.Assinale a alternativa correta:",
+      "options": [
+        {
+          "label": "A",
+          "text": "No caso de hiperparatireoidismo primário, é mais frequente a demonstração de mais de um nódulo em paratireoidecom hiperprodução hormonal, geralmente ocorrendo em pares."
+        },
+        {
+          "label": "B",
+          "text": "No hiperparatireoidismo primário, a ocorrência de carcinoma de paratireoide é um evento muito comum,correspondendo a cerca de 50% de casos com lesão visível à ultrassonografia."
+        },
+        {
+          "label": "C",
+          "text": "O adenoma de paratireoide é mais frequentemente uma lesão solitária, ovalada, hipoecoica, com hipervascularizaçãoao Doppler, situada em região posterior à tireoide."
+        },
+        {
+          "label": "D",
+          "text": "A cintilografia Sestamibi com Tecnécio 99 (MIBI) é um excelente método pré-operatório para distinção entre oadenoma produtor de paratireoide e o carcinoma de paratireoide."
+        },
+        {
+          "label": "E",
+          "text": "Lesão ecogênica em topografia de paratireoide associada a níveis séricos de cálcio reduzidos é um achado que eleva orisco de possibilidade de carcinoma de paratireoide. 5"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 9,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Criança de 2 anos de idade, com vômitos biliosos e ultrassonografia demonstrando sinais de má-rotação intestinal.Assinale a alternativa correta:",
+      "options": [
+        {
+          "label": "A",
+          "text": "É elevada a incidência de pacientes com o diagnóstico simultâneo de estenose hipertrófica de piloro e de má-rotação intestinal."
+        },
+        {
+          "label": "B",
+          "text": "Criança com vômitos biliosos não necessita investigação imediata."
+        },
+        {
+          "label": "C",
+          "text": "Há maior incidência de litíase biliar em crianças com má-rotação intestinal."
+        },
+        {
+          "label": "D",
+          "text": "A ultrassonografia com Doppler demonstra o sinal “do redemoinho”, o qual é altamente específico."
+        },
+        {
+          "label": "E",
+          "text": "É imprescindível a identificação de banda de Ladd para confirmação do diagnóstico de má-rotação intestinal."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 10,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Menina com 6 anos de idade apresentando infecção urinária de repetição e perda urinária constante. Iniciadainvestigação com a realização de ultrassonografia, a qual demonstrou duplicidade pielo-ureteral completa, comureter ectópico.Qual a resposta correta?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Duplicidade pielo-ureteral é a anomalia renal mais comum."
+        },
+        {
+          "label": "B",
+          "text": "A regra de Weigert-Meyer é utilizada com duplicidade pielo-ureteral incompleta."
+        },
+        {
+          "label": "C",
+          "text": "Pacientes com duplicidade pielo-ureteral completa tem menor incidência de infecção urinária e de refluxovesicoureteral."
+        },
+        {
+          "label": "D",
+          "text": "Pacientes com duplicidade pielo-ureteral completa têm maior incidência de tumor renal."
+        },
+        {
+          "label": "E",
+          "text": "Ureter ectópico com inserção acima do esfíncter externo determina perda urinária contínua. 6"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 11,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Recém-nascido prematuro com baixo peso, com asfixia severa ao nascimento, está internado na UTI, entubado erealizou ultrassonografia intracraniana.Qual a resposta correta?",
+      "options": [
+        {
+          "label": "A",
+          "text": "O padrão mais comum de hemorragia intracraniana em recém-nascido prematuro é o céfalo-hematoma."
+        },
+        {
+          "label": "B",
+          "text": "A hemorragia intracraniana em recém-nascido prematuro deve ser classificada pela Classificação de Orsini, aqual apresenta 8 graus de acometimento."
+        },
+        {
+          "label": "C",
+          "text": "Hemorragia intracraniana neonatal tem origem na matriz germinativa em 90% dos casos."
+        },
+        {
+          "label": "D",
+          "text": "A hemorragia intracraniana grau II, com extensão ventricular e sem dilatação do sistema ventricular apresentamaterial hipoeoico intraventricular."
+        },
+        {
+          "label": "E",
+          "text": "Hemorragia intracraniana grau I apresenta associação com fratura de crânio por tocotraumatismo."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 12,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "O túnel do tarso contém qual dessas estruturas anatômicas?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Tendão do tibial anterior."
+        },
+        {
+          "label": "B",
+          "text": "Tendão do flexor longo dos dedos."
+        },
+        {
+          "label": "C",
+          "text": "Tendão do abdutor do hálux."
+        },
+        {
+          "label": "D",
+          "text": "Tendão do flexor curto dos dedos."
+        },
+        {
+          "label": "E",
+          "text": "Tendão do extensor longo do hálux. 7"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 13,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual estrutura anatômica, isoladamente ou ramos, se relaciona com a sintomatologia da síndrome dotúnel do tarso?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Artéria fibular"
+        },
+        {
+          "label": "B",
+          "text": "Artéria tibial anterior."
+        },
+        {
+          "label": "C",
+          "text": "Nervo tibial."
+        },
+        {
+          "label": "D",
+          "text": "Nervo fibular."
+        },
+        {
+          "label": "E",
+          "text": "Fáscia plantar."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 14,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual estrutura anatômica corresponde ao teto do túnel do tarso?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Maléolo tibial."
+        },
+        {
+          "label": "B",
+          "text": "Retináculo dos flexores."
+        },
+        {
+          "label": "C",
+          "text": "Fáscia plantar."
+        },
+        {
+          "label": "D",
+          "text": "Talus."
+        },
+        {
+          "label": "E",
+          "text": "Calcâneo."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 15,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual estrutura anatômica corresponde ao limite medial do túnel do carpo?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Tubérculo do escafoide."
+        },
+        {
+          "label": "B",
+          "text": "Retináculo dos flexores."
+        },
+        {
+          "label": "C",
+          "text": "Canal de Guyon."
+        },
+        {
+          "label": "D",
+          "text": "Flexor radial do carpo."
+        },
+        {
+          "label": "E",
+          "text": "Tubérculo do trapézio. 8"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 16,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Nas manifestações da síndrome do canal de Guyon, ocasionado antes da bifurcação neural, haveráalteração ?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Alteração sensitiva e motora na musculatura hipotenar do 1º e 2º dedos."
+        },
+        {
+          "label": "B",
+          "text": "Alteração sensitiva e motora na musculatura hipotenar do 2º e 3º dedos."
+        },
+        {
+          "label": "C",
+          "text": "Alteração sensitiva e motora na musculatura hipotenar do 3º e 4º dedos."
+        },
+        {
+          "label": "D",
+          "text": "Alteração sensitiva e motora na musculatura hipotenar do 4º e 5º dedos."
+        },
+        {
+          "label": "E",
+          "text": "Alteração sensitiva e motora na musculatura hipotenar do 3º e 5º dedos."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 17,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Considerando-se as patologias ovarianas, é correto afirmar que:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Endometriomas decidualizados podem ser encontrados em pacientes na menacme usuárias de progestágenoe com sintomatologia importante."
+        },
+        {
+          "label": "B",
+          "text": "Em mulheres assintomáticas na menacme, cistos hemorrágicos com 3 cm ou menos devem ser descritos eacompanhados até o próximo ciclo."
+        },
+        {
+          "label": "C",
+          "text": "Conteúdo líquido na cavidade uterina e líquido livre no fundo de saco são achados específicos da doençainflamatória pélvica."
+        },
+        {
+          "label": "D",
+          "text": "O sítio mais comum de endometriose infiltrativa extra pélvica é o diafragma."
+        },
+        {
+          "label": "E",
+          "text": "O cisto hemorrágico pode se apresentar com diversas variações ecográficas e mimetizar outros processos,sendo reconhecido como “grande imitador”. 9"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 18,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Com relação aos aspectos ultrassonográficos das patologias estruturais uterinas, é correto afirmar que:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Útero, tubas, colo uterino, dois terços superiores da vagina e ovários são derivados müllerianos, enquantoterço inferior da vagina tem origem no seio urogenital."
+        },
+        {
+          "label": "B",
+          "text": "O útero unicorno é a anomalia mülleriana com pior prognóstico gestacional, embora seja a de mais fácildiagnóstico pelo ultrassom 3D."
+        },
+        {
+          "label": "C",
+          "text": "No útero didelfo, as hemicavidades uterinas não se comunicam e pode haver um septo vaginal longitudinal ouoblíquo."
+        },
+        {
+          "label": "D",
+          "text": "A reabsorção parcial dos dois ductos de Müller com absorção incompleta do fundo resulta na formação de umútero bicorno e um único colo do útero."
+        },
+        {
+          "label": "E",
+          "text": "A falha na fusão do septo intrauterino, após fusão incompleta dos ductos de Müller, resulta na formação de umútero septado."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 19,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Sabe-se que o conhecimento adequado da anatomia pélvica é imprescindível para a realização dos examestransvaginais.A partir dessa afirmação, assinale a alternativa correta:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Os ligamentos uterossacros formam os limites laterais do fundo de saco posterior."
+        },
+        {
+          "label": "B",
+          "text": "Os ligamentos redondos surgem na região cornual, posteriormente às tubas uterinas."
+        },
+        {
+          "label": "C",
+          "text": "As artérias uterinas e ovarianas são ramos da artéria ilíaca interna."
+        },
+        {
+          "label": "D",
+          "text": "O halo hipoecogênico subendometrial deve ser incluído na medida do endométrio."
+        },
+        {
+          "label": "E",
+          "text": "Cistos de Gartner são vistos na parede vaginal e remanescentes de ductos paramesonéfricos. 10"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 20,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Com relação ao desenvolvimento do sistema nervoso fetal, assinale a alternativa correta:",
+      "options": [
+        {
+          "label": "A",
+          "text": "O corpo caloso pode ser visibilizado a partir de 15 semanas."
+        },
+        {
+          "label": "B",
+          "text": "O átrio ventricular deve ser medido na altura da fissura de Sylvius e deve medir até 10 mm."
+        },
+        {
+          "label": "C",
+          "text": "N a agenesia do septo pelúcido, os cornos anteriores do ventrículo lateral se comunicam."
+        },
+        {
+          "label": "D",
+          "text": "Holoprosencefalia lobar é a forma mais grave e há somente um único ventrículo primitivo."
+        },
+        {
+          "label": "E",
+          "text": "Os cistos aracnoideos normalmente se comunicam com o sistema ventricular."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 21,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "O protocolo da ISUOG (International Society of Ultrasound in Obstetrics and Gynecology) sobre o papel daultrassonografia na predição do parto prematuro espontâneo traz diretrizes sobre a realização correta do exame.Assinale a alternativa correta acerca das orientações fornecidas pelo protocolo:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Para diminuir os erros por causa das mudanças dinâmicas do colo, deverão ser feitas, pelo menos, três medidasconsecutivas e escolhida a maior delas."
+        },
+        {
+          "label": "B",
+          "text": "Tecnicamente, a avaliação ultrassonográfica do colo pode ser realizada por abordagem transabdominal,transperineal ou transvaginal."
+        },
+        {
+          "label": "C",
+          "text": "A bexiga vazia e a pressão excessiva do transdutor sobre o colo podem diminuir artificialmente o comprimentodo colo uterino."
+        },
+        {
+          "label": "D",
+          "text": "O colo uterino deve ocupar, no máximo, 25% da tela, e devem também estar presentes na documentação aborda inferior da bexiga e a sínfise púbica."
+        },
+        {
+          "label": "E",
+          "text": "A medida longitudinal do afunilamento é um indicador importante de risco de parto pré-termo, aliado à medidado colo uterino. 11"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 22,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Com relação à ultrassonografia do primeiro trimestre, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "A medida do comprimento cabeça-nádega deve ser utilizada para estimar a idade gestacional em todos oscasos, exceto em gestações concebidas por fertilização in vitro."
+        },
+        {
+          "label": "B",
+          "text": "Quando são feitas múltiplas medidas do comprimento cabeça-nádega durante o exame, o valor a serconsiderado é uma média entre todas as medidas."
+        },
+        {
+          "label": "C",
+          "text": "A avaliação das vias de saída do coração fetal faz parte dos pré-requisitos mínimos da ultrassonografia doprimeiro trimestre."
+        },
+        {
+          "label": "D",
+          "text": "A bexiga fetal deve estar visível durante todos os exames de ultrassonografia do primeiro trimestre e terdiâmetro longitudinal igual ou menor que 10 mm."
+        },
+        {
+          "label": "E",
+          "text": "O plano sagital da cabeça pode ser utilizado para avaliar a fossa posterior e visualizar a translucênciaintracraniana, verme cerebelar e tronco encefálico como um teste de triagem para defeitos abertos do tubo neurale malformações císticas da fossa posterior."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 23,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual a alternativa correta?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Líquido em fundo de saco posterior é um achado normal em mulheres assintomáticas e pode ser visualizadoem todo o ciclo menstrual."
+        },
+        {
+          "label": "B",
+          "text": "Folículos antrais medem mais que 1 cm e aparecem no 10 dia menstrual."
+        },
+        {
+          "label": "C",
+          "text": "Folículo maduro é aquele que chega a 15 mm."
+        },
+        {
+          "label": "D",
+          "text": "Cistos funcionais são neoplasias do ovário sem relação hormonal."
+        },
+        {
+          "label": "E",
+          "text": "Focos ecogênicos pontuais no parênquima ovariano são sempre suspeitos de malignidade. 12"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 24,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Em um exame ultrassonográfico abdominal de rotina de um paciente do sexo masculino, 65 anos, tabagista ehipertenso, sem queixas, é encontrado um calibre da aorta abdominal infrarrenal de 3,5 cm.Assinale a alternativa correta:",
+      "options": [
+        {
+          "label": "A",
+          "text": "O calibre pode ser considerado normal para o paciente em questão."
+        },
+        {
+          "label": "B",
+          "text": "Há uma ectasia da aorta abdominal infrarrenal."
+        },
+        {
+          "label": "C",
+          "text": "Há um aneurisma da aorta abdominal infrarrenal."
+        },
+        {
+          "label": "D",
+          "text": "Há um pseudoaneurisma da aorta abdominal infrarrenal."
+        },
+        {
+          "label": "E",
+          "text": "É provável que haja um flap intimal de dissecção associado."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 25,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Mulher de 45 anos vem ao pronto- socorro com queixa de edema assimétrico de membros inferiores há 2dias. A perna direita está com edema e dor. Para confirmar um diagnóstico de trombose venosa profunda,qual alternativa representa os achados esperados à ultrassonografia com Doppler dos membrosinferiores?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Veia poplítea direita com calibre aumentado, conteúdo hipoecogênico, ausência de fluxo ao Doppler eincompressível."
+        },
+        {
+          "label": "B",
+          "text": "Veia poplítea direita afilada, com conteúdo hipoecogênico, ausência de fluxo e incompressível."
+        },
+        {
+          "label": "C",
+          "text": "Veia poplítea direita com calibre normal, conteúdo anecogênico, ausência de fluxo e compressível."
+        },
+        {
+          "label": "D",
+          "text": "Veia poplítea direita com calibre normal, conteúdo anecogênico, fluxo presente e compressível."
+        },
+        {
+          "label": "E",
+          "text": "Veia poplítea direita afilada, com conteúdo hiperecogênico, ausência de fluxo e incompressível. 13"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 26,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "As veias hepáticas habitualmente possuem um padrão espectral de fluxo multifásico à ultrassonografia comDoppler. Entretanto, algumas doenças podem reduzir essa multifasicidade, chegando até mesmo a “portalizar” ofluxo.Qual das doenças abaixo poderia fazer isso?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Insuficiência tricúspide."
+        },
+        {
+          "label": "B",
+          "text": "Insuficiência cardíaca direita."
+        },
+        {
+          "label": "C",
+          "text": "Hepatite A."
+        },
+        {
+          "label": "D",
+          "text": "Estados hipervolêmicos."
+        },
+        {
+          "label": "E",
+          "text": "Cirrose hepática."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 27,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Assinale a alternativa correta sobre onfalocele:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Os fetos cujos fígados encontram-se no saco da onfalocele apresentam um risco menor de anormalidadescromossômicas do que aqueles com onfalocele apenas de intestino delgado."
+        },
+        {
+          "label": "B",
+          "text": "Os fetos cujos apenas o intestino delgado encontra-se no saco da onfalocele apresentam um risco menor deanormalidades cromossômicas do que aqueles com onfalocele contendo outras estruturas."
+        },
+        {
+          "label": "C",
+          "text": "Não há nenhuma relação entre o conteúdo da onfalocele e o risco de anormalidade cromossômicas."
+        },
+        {
+          "label": "D",
+          "text": "Quando a onfalocele não é isolada, a etiologia do seu desenvolvimento é multifatorial."
+        },
+        {
+          "label": "E",
+          "text": "Quando a onfalocele é isolada, a etiologia do seu desenvolvimento é devido a falha de fechamento domesoderma medial. 14"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 28,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "À dopplervelocimetria de uma gestante, o índice de Pulsatilidade da artéria cerebral média estava abaixodo percentil 5. Além de acidemia e hipóxia, qual outro fator abaixo pode estar associado a esse achado?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Anemia fetal severa."
+        },
+        {
+          "label": "B",
+          "text": "Oligodramnia."
+        },
+        {
+          "label": "C",
+          "text": "Compressão do polo cefálico fetal."
+        },
+        {
+          "label": "D",
+          "text": "Baixa frequência cardíaca fetal."
+        },
+        {
+          "label": "E",
+          "text": "Hidranencefalia fetal."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 29,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual das displasias esqueléticas abaixo é letal e cursa com micromelia grave e diminuição dacircunferência torácica e mineralização óssea normal?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Displasia tanatofórica."
+        },
+        {
+          "label": "B",
+          "text": "Acondrogenese."
+        },
+        {
+          "label": "C",
+          "text": "Osteogênese imperfeita tipo II."
+        },
+        {
+          "label": "D",
+          "text": "Hipofosfatasia congênita."
+        },
+        {
+          "label": "E",
+          "text": "Acondroplasia heterozigótica. 15"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 30,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente realizou ultrassonografia obstétrica que evidenciou encurtamento do segmento proximal do fêmur eúmero.Essa alteração é denominada:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Rizomelia."
+        },
+        {
+          "label": "B",
+          "text": "Mesomelia."
+        },
+        {
+          "label": "C",
+          "text": "Acromelia."
+        },
+        {
+          "label": "D",
+          "text": "Micromelia."
+        },
+        {
+          "label": "E",
+          "text": "Acondromelia."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 31,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente de 24 semanas, realizou ultrassonografia que evidenciou rins hiperecogênicos aumentados de tamanhobilateralmente, sem outras anomalias fetais associadas.Tais achados estão mais frequentemente associados à qual patologia?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Doença policística renal."
+        },
+        {
+          "label": "B",
+          "text": "Síndrome de Meckel Gruber."
+        },
+        {
+          "label": "C",
+          "text": "Displasia obstrutiva."
+        },
+        {
+          "label": "D",
+          "text": "Rim multicístico displásico."
+        },
+        {
+          "label": "E",
+          "text": "Doença renal multicística. 16"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 32,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Gestante de 36 anos, 12 semanas, foi à consulta de pré-natal com exame morfológico de primeiro trimestreevidenciando translucência nucal = 3,8 mm e ducto venoso com onda A reversa.Nesse caso, a melhor conduta para oferecer à paciente nessa idade gestacional é:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Biópsia de vilo corial."
+        },
+        {
+          "label": "B",
+          "text": "Amniocentese."
+        },
+        {
+          "label": "C",
+          "text": "Cordocentese."
+        },
+        {
+          "label": "D",
+          "text": "Teste pré-natal não invasivo (NIPT)."
+        },
+        {
+          "label": "E",
+          "text": "Não há indicação de procedimento invasivo."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 33,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Nas gestações gemelares, quando a clivagem do embrião ocorre entre o 4º e o 8º dias após a fertilização,haverá uma gestação:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Monocoriônica diamniótica."
+        },
+        {
+          "label": "B",
+          "text": "Dicoriônica diamniótica."
+        },
+        {
+          "label": "C",
+          "text": "Monocoriônica monoamniótica."
+        },
+        {
+          "label": "D",
+          "text": "Dicoriônica, monoamniótica."
+        },
+        {
+          "label": "E",
+          "text": "Gemelaridade imperfeita."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 34,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A frequência cardíaca em um embrião menor que 5 mm pode ser considerada normal quando está acimade quantos batimentos por minuto?",
+      "options": [
+        {
+          "label": "A",
+          "text": "80."
+        },
+        {
+          "label": "B",
+          "text": "90."
+        },
+        {
+          "label": "C",
+          "text": "100."
+        },
+        {
+          "label": "D",
+          "text": "110."
+        },
+        {
+          "label": "E",
+          "text": "120. 17"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 35,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A ossificação do crânio fetal deve ser identificável a partir de quantas semanas completas?",
+      "options": [
+        {
+          "label": "A",
+          "text": "10."
+        },
+        {
+          "label": "B",
+          "text": "11."
+        },
+        {
+          "label": "C",
+          "text": "12."
+        },
+        {
+          "label": "D",
+          "text": "13."
+        },
+        {
+          "label": "E",
+          "text": "14."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 36,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A vesícula vitelínica, além da transferência de nutrientes para o embrião, exerce qual outra função?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Angiogênese."
+        },
+        {
+          "label": "B",
+          "text": "Formação do sistema linfático fetal."
+        },
+        {
+          "label": "C",
+          "text": "Formação do cordão umbilical."
+        },
+        {
+          "label": "D",
+          "text": "Blastogênese."
+        },
+        {
+          "label": "E",
+          "text": "Sistema urinário primitivo."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 37,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Nas anomalias oriundas dos ductos de Müller, são frequentes as coexistentes com:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Ovários."
+        },
+        {
+          "label": "B",
+          "text": "Trompas."
+        },
+        {
+          "label": "C",
+          "text": "Rins."
+        },
+        {
+          "label": "D",
+          "text": "Glândulas suprarrenais."
+        },
+        {
+          "label": "E",
+          "text": "Baço. 18"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 38,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "ANULADAQuanto à anatomia pélvica, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Os ligamentos redondos originam-se da escavação vesico uterina e se estendem ao fórnice vaginal."
+        },
+        {
+          "label": "B",
+          "text": "O mesossalpinge contém a tuba uterina."
+        },
+        {
+          "label": "C",
+          "text": "O ovário é nutrido pela artéria ovárica, ramo direto da aorta."
+        },
+        {
+          "label": "D",
+          "text": "A veia ovariana direita drena diretamente na veia renal."
+        },
+        {
+          "label": "E",
+          "text": "O fundo de saco posterior está localizado entre o reto e a bexiga."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 39,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "No caso de uma paciente há meses em uso diário e contínuo de estrogênio e progesterona, espera-se queo endométrio no exame ecográfico apresente-se:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Fino com espessamento focal."
+        },
+        {
+          "label": "B",
+          "text": "Fino atrófico."
+        },
+        {
+          "label": "C",
+          "text": "Espesso e heterogêneo."
+        },
+        {
+          "label": "D",
+          "text": "Espesso variável com a fase do ciclo."
+        },
+        {
+          "label": "E",
+          "text": "Espesso com pequenos cistos endometriais."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 40,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "ANULADAQual a melhor fase do ciclo menstrual para realização da ultrassonografia com intuito de avaliar pólipoendometrial?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Folicular."
+        },
+        {
+          "label": "B",
+          "text": "Luteal."
+        },
+        {
+          "label": "C",
+          "text": "Periovulatória."
+        },
+        {
+          "label": "D",
+          "text": "Período menstrual."
+        },
+        {
+          "label": "E",
+          "text": "Todas são iguais na avaliação da polipose. 19ULTRASSONOGRAFIA GERAL – TEÓRICO-PRÁTICA"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 1,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente de 42 anos com febre baixa, dor no hipocôndrio esquerdo e tosse crônica persistente. Analise a imagem do baço.Qual é a hipótese diagnóstica?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hemangiomas."
+        },
+        {
+          "label": "B",
+          "text": "Metástases."
+        },
+        {
+          "label": "C",
+          "text": "Infecção granulomatosa."
+        },
+        {
+          "label": "D",
+          "text": "Distúrbio metabólico."
+        },
+        {
+          "label": "E",
+          "text": "Anemia falciforme. 20"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 2,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise as imagens.Assinale a alternativa cujo conteúdo melhor se associa aos achados ultrassonográficos destas imagens.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Uropatia obstrutiva crônica por cálculo ureteral distal em paciente febril e toxemiada. Ultrassonografia revela apreciávelhidronefrose associada à presença de ecos internos, que podem estar relacionados à pionefrose."
+        },
+        {
+          "label": "B",
+          "text": "Tumor de cálice renal com dilatação pielocalicinal associada. Ultrassonografia revela apreciável dilatação pielocalicinal."
+        },
+        {
+          "label": "C",
+          "text": "Uropatia obstrutiva aguda por tumor ureteral em paciente assintomático. Ultrassonografia revela dilatação pielocalicinal."
+        },
+        {
+          "label": "D",
+          "text": "Cistos parapiélicos em paciente assintomático. Ultrassonografia revela cistos bem individualizados."
+        },
+        {
+          "label": "E",
+          "text": "Abscesso renal em paciente febril e toxemiada. Ultrassonografia revela formação anecoica com presença de ecos internos, quepode estar relacionada ao abscesso. 21"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 3,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise o corte sagital da fossa posterior de um feto de 12 semanas demonstrado na imagem abaixo.Identifique as estruturas assinaladas pelas setas e números:",
+      "options": [
+        {
+          "label": "A",
+          "text": "1) tronco cerebral; 2) 4º ventrículo; 3) cisterna magna."
+        },
+        {
+          "label": "B",
+          "text": "1) 4º ventrículo; 2) tronco cerebral; 3) cisterna magna."
+        },
+        {
+          "label": "C",
+          "text": "1) cisterna magna; 2) tronco cerebral; 3) 4º ventrículo."
+        },
+        {
+          "label": "D",
+          "text": "1) cisterna magna; 2) 4º ventrículo; 3) tronco cerebral."
+        },
+        {
+          "label": "E",
+          "text": "1) tronco cerebral; 2) cisterna magna; 3) 4º ventrículo. 22"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 4,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise as imagens.A patologia demonstrada é:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Falha de fechamento do neuroporo rostral."
+        },
+        {
+          "label": "B",
+          "text": "Falha de fusão do neuroporo ventral."
+        },
+        {
+          "label": "C",
+          "text": "Falha de fusão do neuroporo caudal."
+        },
+        {
+          "label": "D",
+          "text": "Falha de fechamento do prosencéfalo."
+        },
+        {
+          "label": "E",
+          "text": "Falha de fechamento do mielencéfalo. 23"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 5,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise a imagem apontada pela seta abaixo.Qual o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hemangioma bem vascularizado."
+        },
+        {
+          "label": "B",
+          "text": "Esteatose focal."
+        },
+        {
+          "label": "C",
+          "text": "Hiperplasia nodular focal."
+        },
+        {
+          "label": "D",
+          "text": "Adenoma."
+        },
+        {
+          "label": "E",
+          "text": "Hepatoblastoma. 24"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 6,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Menina com 5 anos de idade assintomática. Durante consulta de rotina, o pediatra palpou nódulo indolor no quadranteinferior direito do abdômen e solicitou avaliação ultrassonográfica.Qual das seguintes hipóteses é compatível com esta imagem neste contexto clínico?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Tumor cecal."
+        },
+        {
+          "label": "B",
+          "text": "Linfoma intestinal."
+        },
+        {
+          "label": "C",
+          "text": "Massa ovariana."
+        },
+        {
+          "label": "D",
+          "text": "Cisto de duplicação entérico."
+        },
+        {
+          "label": "E",
+          "text": "Linfonodomegalia reacional. 25"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 7,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Observe a imagem abaixo.Sobre a estrutura apontada pela seta, é correto afirmar que:",
+      "options": [
+        {
+          "label": "A",
+          "text": "No feto, esta estrutura conecta a primeira porção da aorta ao ramo principal da veia porta."
+        },
+        {
+          "label": "B",
+          "text": "Habitualmente esta estrutura é patente no adulto e permite o fluxo sanguíneo portossistêmico."
+        },
+        {
+          "label": "C",
+          "text": "Esta estrutura permite a separação entre os segmentos I e VII (Couinaud) do fígado."
+        },
+        {
+          "label": "D",
+          "text": "Em variações anatômicas, é sítio habitual da artéria hepática acessória."
+        },
+        {
+          "label": "E",
+          "text": "Esta estrutura corresponde ao ligamento hepatogástrico e é foco de varizes periesofágicas em pacientes com hipertensãoportal. 26"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 8,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Observe a imagem abaixo.Qual é o nome da estrutura apontada pela seta?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Veia retrotireoidea."
+        },
+        {
+          "label": "B",
+          "text": "Veia traqueal."
+        },
+        {
+          "label": "C",
+          "text": "Tributária da veia jugular interna."
+        },
+        {
+          "label": "D",
+          "text": "Artéria tireoidea inferior."
+        },
+        {
+          "label": "E",
+          "text": "Tronco tireocervical. 27"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 9,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Observe a imagem abaixo.Qual é o nome da estrutura apontada pela seta?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Artéria radial."
+        },
+        {
+          "label": "B",
+          "text": "Artéria interóssea."
+        },
+        {
+          "label": "C",
+          "text": "Artéria braquial."
+        },
+        {
+          "label": "D",
+          "text": "Nervo interósseo posterior."
+        },
+        {
+          "label": "E",
+          "text": "Nervo ulnar. 28"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 10,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Observe a imagem abaixo.Sobre a estrutura apontada pela seta, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "A primeira porção do duodeno localiza-se anterossuperiormente à cabeça da estrutura."
+        },
+        {
+          "label": "B",
+          "text": "A principal artéria que nutre este órgão deriva-se da artéria mesentérica superior."
+        },
+        {
+          "label": "C",
+          "text": "A bolsa omental limita-se com a porção posterior deste órgão."
+        },
+        {
+          "label": "D",
+          "text": "Esta estrutura está localizada no abdome aproximadamente no nível de L4."
+        },
+        {
+          "label": "E",
+          "text": "É uma estrutura recoberta por cápsula peritonial, exceto a porção caudal."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    }
+  ]
+}

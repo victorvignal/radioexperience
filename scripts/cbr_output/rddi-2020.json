@@ -1,0 +1,3609 @@
+{
+  "document_id": "rddi-2020",
+  "source_file": "RDDI/2020/Prova-Anual-2020.pdf",
+  "total_pages": 44,
+  "specialty": "RDDI",
+  "year": 2020,
+  "questions": [
+    {
+      "question_number": 1,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "O gráfico a seguir, conhecido como curva de Hurter and Driffield, é característico da resposta em densidade óptica emfunção da exposição de radiação recebida num filme radiográfico.Sabendo que a densidade óptica é uma medida do enegrecimento do filme radiográfico após o processo de revelação,assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "A região associada a baixos valores de exposição relativa (toe) não apresenta contraste, pois não é capaz desensibilizar o filme radiográfico."
+        },
+        {
+          "label": "B",
+          "text": "A faixa dinâmica ou latitude de um filme corresponde ao intervalo de valores de exposição à radiação, em que aresposta em densidade óptica é linear e capaz de produzir contraste para formação de imagens."
+        },
+        {
+          "label": "C",
+          "text": "A faixa dinâmica ou latitude de um filme corresponde ao intervalo no qual a resposta em densidade óptica ésaturada e sem contraste. Somente após o processo de revelação do filme é que ocorre o ajuste de resposta dacurva."
+        },
+        {
+          "label": "D",
+          "text": "O ombro da curva (shoulder), associado a valores elevados de exposição relativa, é a região ótima, em queos valores de densidade óptica apresentados são capazes de formar uma imagem com contraste e resoluçãosatisfatórios."
+        },
+        {
+          "label": "E",
+          "text": "É preciso que a técnica radiológica esteja bem ajustada para que a exposição relativa seja sempre maior que 1,ou seja, esteja no único intervalo de latitude em que é possível observar contraste na imagem após o processode revelação. 4"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 2,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Raios X são gerados a partir de dois diferentes processos, em que elétrons a alta velocidade liberam energia no ânododo tubo de raios X. Um desses processos envolve a reação dos elétrons com o núcleo do ânodo, efeito conhecido comobremsstrahlung – radiação de freamento. Outro processo acontece quando elétrons em alta velocidade bombardeiam oalvo. A remoção de um elétron de um átomo de tungstênio faz com que o átomo passe a ter um excesso de carga positiva,tornando-o um íon positivo. No processo para retornar ao seu estado normal, o átomo ionizado do ânodo emite radiaçãocom comprimento de onda na faixa de energia da radiação X.Sobre esse fenômeno, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "O fóton de raios X é espalhado após a absorção do elétron por efeito Compton, sendo o elétron K ejetado comenergia característica do átomo de tungstênio."
+        },
+        {
+          "label": "B",
+          "text": "O fóton produzido dessa forma é chamado de raio X característico, devido ao fato de seu comprimento de ondaapresentar uma característica da energia de ligação do átomo de tungstênio."
+        },
+        {
+          "label": "C",
+          "text": "O elétron é absorvido e, por formação de pares, são emitidos dois elétrons com diferença de energia K,característica do tungstênio. Essa energia é cedida ao fóton de raios X ejetado."
+        },
+        {
+          "label": "D",
+          "text": "O fóton de raios X produzido ocorre por interação do elétron incidente com o elétron K, que saltou para um nívelmais baixo de energia característica do átomo de tungstênio."
+        },
+        {
+          "label": "E",
+          "text": "O elétron K é chamado característico, pois é capaz de estimular o decaimento de outros elétrons para camadasmais internas do átomo de tungstênio, em um efeito cascata até a estabilidade eletrônica do átomo."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 3,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Maria Sklodowska – Nascida em Varsóvia, a grande cientista era a mais nova dos cinco filhos de Bronislawa e WladyslawSklodowski. Em 1891, seguiu para Paris, a fim de continuar seus estudos na Sorbonne. Casou-se com o já famoso físicoPierre Curie em 26/07/1895 e passou a ser conhecida como Mme. Curie. Em 1903, ganhou, com Pierre Curie e HenriBecquerel, o Prêmio Nobel de Física pelas pesquisas sobre fenômenos de radiação descobertos por Becquerel e, em1911, o segundo Prêmio Nobel (em Química), pela descoberta dos elementos polônio e rádio.OKUNO, Emico; YOSHIMURA, Elisabeth Mateus. Física das Radiações. São Paulo: Oficina de Textos, 2010.Atualmente, diversos elementos radioativos são utilizados em Medicina Nuclear para diagnóstico e terapia. Sabendo quea atividade é a medida da taxa de desintegrações radioativas que ocorrem em uma amostra contendo um radioisótopo,é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "A meia-vida é o tempo necessário para que a atividade inicial de uma amostra caia pela metade, sendo atividadea taxa de desintegrações radioativas que ocorrem."
+        },
+        {
+          "label": "B",
+          "text": "A meia-vida biológica é a taxa de desintegrações necessárias para que uma amostra radioativa seja metade dainicial em um determinado tecido, e a atividade é uma medida do nível de radiação emitido."
+        },
+        {
+          "label": "C",
+          "text": "A meia-vida é a taxa necessária para que a radiação do tecido decaia à metade da intensidade de radiação inicialemitida."
+        },
+        {
+          "label": "D",
+          "text": "A meia-vida independe do radioisótopo, pois é uma medida de taxa, enquanto a atividade é uma medida de tempo."
+        },
+        {
+          "label": "E",
+          "text": "Meia-vida é o nome dado para o tempo que uma amostra radioativa demora para ser totalmente eliminada de umtecido biológico, enquanto a atividade mede a intensidade de radiação inicial emitida. 5"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 4,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Na Medicina, encontra-se radiação tanto originada deradioisótopos quanto de equipamentos geradores deraios X.Sabendo que radioisótopo é o nome dado a um nuclídeoinstável que emite radiação, assinale a alternativacorreta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Os raios gama são um tipo de radiaçãoeletromagnética não ionizante, emitida porequipamentos de radioterapia."
+        },
+        {
+          "label": "B",
+          "text": "Dependendo de sua energia, a luz visível podeser considerada um tipo de radiação corpuscular,assim como a radiação alfa e beta."
+        },
+        {
+          "label": "C",
+          "text": "A radiação ultravioleta é um tipo de radiaçãocorpuscular não ionizante emitida porradionuclídeos, muito usada em equipamentosde bronzeamento artificial."
+        },
+        {
+          "label": "D",
+          "text": "Partículas alfa e beta são radiações corpuscularesemitidas por meio de processos de decaimentoradioativo de radioisótopos."
+        },
+        {
+          "label": "E",
+          "text": "Um equipamento de raios X emite radiaçãocorpuscular de baixa energia."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 5,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A Resolução RDC 330 de 2019 (que revoga a Portarianº 453/98) afirma que “Art. 60 A realização deprocedimentos radiológicos com equipamentos móveisem leitos hospitalares ou ambientes coletivos deinternação, tais como unidades de terapia intensivo eberçários, somente será permitida quando for inexequívelou clinicamente inaceitável transferir o paciente parauma instalação com equipamento fixo”.Para a realização desses procedimentos, devem seradotadas as seguintes medidas:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Todos os pacientes presentes no ambientedevem ser removidos para salas vizinhas ouposicionados de modo que não estejam a menosde dez metros do tubo de raios X."
+        },
+        {
+          "label": "B",
+          "text": "Garantir que os demais pacientes que nãopuderem ser removidos do ambiente estejamprotegidos da radiação espalhada por barreiraprotetora (proteção de corpo inteiro) com,no mínimo, 0,5 mm equivalentes de chumbo;ou que estejam à distância necessária docabeçote e do receptor de imagem para queo equivalente de dose ambiental seja inferiorao definido para área livre, determinada pelolevantamento radiométrico."
+        },
+        {
+          "label": "C",
+          "text": "Todos os pacientes presentes no ambiente devemser posicionados a uma distância mínima de doismetros do tubo de raios X, sendo dispensado ouso do biombo plumbífero para aqueles que nãopuderem ser removidos a tal distância, desdeque assinado termo de consentimento livre eesclarecido."
+        },
+        {
+          "label": "D",
+          "text": "Os pacientes que não puderem ser removidosdo ambiente devem se afastar 0,5 metros docabeçote ou receptor de imagem e utilizarvestimenta individual com equivalência mínimaa 2 mm de chumbo."
+        },
+        {
+          "label": "E",
+          "text": "Os demais pacientes que não puderem serremovidos do ambiente devem ser protegidosda radiação espalhada, posicionando-se a umadistância mínima de 0,5 metros do tubo de raios X."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 6,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Com relação à dose efetiva (",
+      "options": [
+        {
+          "label": "A",
+          "text": "A dose efetiva, cuja unidade é o Gray, considera otipo de tecido ou órgão irradiado (fator WT) capazde apresentar efeitos biológicos estocásticos."
+        },
+        {
+          "label": "B",
+          "text": "A dose efetiva, cuja unidade é o Sv, é a somadas doses absorvidas ("
+        },
+        {
+          "label": "C",
+          "text": "A dose efetiva, cuja unidade é o Sv, consideratanto a eficácia biológica relativa (RB"
+        },
+        {
+          "label": "D",
+          "text": "recebidas em todos ostecidos do corpo humano."
+        },
+        {
+          "label": "E",
+          "text": ", é correto afirmar:"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 7,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A mamografia requer um cuidado especial na seleção datécnica de aquisição, uma vez que existe um intervaloótimo no qual é possível distinguir os coeficientes deatenuação dos tecidos. A escolha correta da energia edos materiais do alvo e filtro são de extrema importânciapara a formação de uma imagem de qualidade.Sobre o equipamento de mamografia, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Trabalha com energias altas, na ordem de100 kVp, podendo a dose recebida pelo pacienteser comparada à tomografia computadorizada."
+        },
+        {
+          "label": "B",
+          "text": "O intervalo ótimo de energia geralmente estáentre 80 e 120 kVp, dependendo da espessurada mama e variando de acordo com a energiacaracterística do material do alvo."
+        },
+        {
+          "label": "C",
+          "text": "Exposições com controle automático deexposição não são mais utilizadas emmamografia."
+        },
+        {
+          "label": "D",
+          "text": "A combinação alvo / filtro mais utilizada éRh / Rh, pois o pico de energiacaracterística do ródio é ideal para mamasdensas com espessura acima de 5 cm."
+        },
+        {
+          "label": "E",
+          "text": "A utilização da bandeja de compressão éimportante para manter homogeneidade deespessura, evitar sobreposição de estruturase reduzir a intensidade do feixe espalhado,aumentando o contraste. 6"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 8,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "O controle de qualidade em um equipamento detomografia computadorizada é importante para garantira adequação de uma série de parâmetros, entre eles oruído, a exatidão e a uniformidade do número de CT.Sobre o número de CT, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Representa a constante de proporcionalidadeentre o material e o meio material selecionado,podendo ser água (K = +1000), ar (K= 0) ou osso(K = –1000)."
+        },
+        {
+          "label": "B",
+          "text": "É proporcional ao coeficiente de atenuaçãolinear da água, em Unidades Hounsfield (UH)."
+        },
+        {
+          "label": "C",
+          "text": "É proporcional ao coeficiente de atenuaçãolinear do material, normalizado pelo coeficientede atenuação da água e multiplicado por umfator K = +1000."
+        },
+        {
+          "label": "D",
+          "text": "Representa o número atômico efetivo domaterial, dividido pelo número atômico da água."
+        },
+        {
+          "label": "E",
+          "text": "Representa a quantidade de elétrons por pixelde imagem, em Unidades Hounsfield (UH)."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 9,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "No que diz respeito ao extravasamento de contrasteiodado, pode-se afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Uso de bomba injetora e local de punção nãoideal não são considerados fatores de risco."
+        },
+        {
+          "label": "B",
+          "text": "Extravasamento de contraste não iônico tem piorprognóstico que o de contraste iônico."
+        },
+        {
+          "label": "C",
+          "text": "Crioterapia não deve ser realizada, pois podecausar queimadura na pele."
+        },
+        {
+          "label": "D",
+          "text": "É recomendado elevar o membro afetado acimado nível do coração."
+        },
+        {
+          "label": "E",
+          "text": "Ao ser identificado, não é preciso interromper oexame imediatamente."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 10,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Sobre as reações adversas aos meios de contraste (M",
+      "options": [
+        {
+          "label": "A",
+          "text": "As reações tardias são aquelas que ocorrementre 30 minutos e sete dias após a administraçãodo MC."
+        },
+        {
+          "label": "B",
+          "text": "O uso de MC iodixanol está relacionado areações tardias."
+        },
+        {
+          "label": "C",
+          "text": "iodados, assinale a alternativa correta."
+        },
+        {
+          "label": "D",
+          "text": "As reações anafilactoides dependem da dose doMC."
+        },
+        {
+          "label": "E",
+          "text": "A maioria das reações graves e fatais ocorreuma hora após a injeção do MC."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 11,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Sobre os quelatos de gadolínio, assinale a alternativacorreta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Esses meios de contraste não são dialisáveis."
+        },
+        {
+          "label": "B",
+          "text": "Possuem excreção elevada no leite materno."
+        },
+        {
+          "label": "C",
+          "text": "Não são recomendados durante a gestação."
+        },
+        {
+          "label": "D",
+          "text": "Os agentes de cadeia linear são mais estáveis."
+        },
+        {
+          "label": "E",
+          "text": "O gadoteridol possui cadeia linear."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 12,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Um paciente, três minutos após realizar tomografiacomputadorizada de tórax com contraste, apresentouquadro de hipotensão com taquicardia.Assinale a alternativa que apresenta, respectivamente,a diluição, a dose e a via de administração de adrenalinanesse caso.",
+      "options": [
+        {
+          "label": "A",
+          "text": "1:1000 / 1 mL / IV."
+        },
+        {
+          "label": "B",
+          "text": "1: 10000 / 3 mL / IM."
+        },
+        {
+          "label": "C",
+          "text": "1: 10000 / 3 mL / IV."
+        },
+        {
+          "label": "D",
+          "text": "1: 1000 / 0,5 mL / IM."
+        },
+        {
+          "label": "E",
+          "text": "1: 1000 / 2 mL / IM."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 13,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Um paciente, após a realização de uma tomografia detórax com contraste, apresentou quadro de hipotensãocom bradicardia.Qual é a droga de escolha para o tratamento nessecaso?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Adrenalina."
+        },
+        {
+          "label": "B",
+          "text": "Atropina."
+        },
+        {
+          "label": "C",
+          "text": "Hidrocortisona."
+        },
+        {
+          "label": "D",
+          "text": "Aminofilina."
+        },
+        {
+          "label": "E",
+          "text": "Difenidramina."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 14,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Assinale a alternativa que corresponde a um quelantede gadolínio classificado como agente de alto risco parafibrose sistêmica nefrogênica.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Gadodiamida."
+        },
+        {
+          "label": "B",
+          "text": "Gadobutrol."
+        },
+        {
+          "label": "C",
+          "text": "Ácido gadoxético."
+        },
+        {
+          "label": "D",
+          "text": "Ácido gadotérico."
+        },
+        {
+          "label": "E",
+          "text": "Gadoteridol. 7"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 15,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Uma criança com cinco semanas de vida apresentavômitos em jato não biliosos e massa palpável no andarsuperior do abdome. Ao estudo ultrassonográfico, foidescrito uma lesão “em alvo” no quadrante superiordireito, com ecos centrais sugestivos de gás.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Pâncreas anelar."
+        },
+        {
+          "label": "B",
+          "text": "Estenose duodenal."
+        },
+        {
+          "label": "C",
+          "text": "Estenose hipertrófica de piloro."
+        },
+        {
+          "label": "D",
+          "text": "Doença granulomatosa crônica."
+        },
+        {
+          "label": "E",
+          "text": "Má rotação do intestino médio."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 16,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Uma criança com dois meses de idade com onfalocelee hérnia diafragmática apresenta sinais de obstruçãointestinal. O estudo ultrassonográfico mostra distensãodo duodeno proximal e inversão do posicionamento daartéria mesentérica superior com a veia mesentéricasuperior.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Atresia do intestino delgado."
+        },
+        {
+          "label": "B",
+          "text": "Intussuscepção intestinal."
+        },
+        {
+          "label": "C",
+          "text": "Enterocolite necrotizante."
+        },
+        {
+          "label": "D",
+          "text": "Má rotação do intestino médio."
+        },
+        {
+          "label": "E",
+          "text": "Piloroespasmo."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 17,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Uma criança prematura com cinco dias de vida apresenta,à ultrassonografia, sinais de gás na parede intestinal,aeroportograma e sinais de obstrução intestinal.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Enterocolite necrotizante."
+        },
+        {
+          "label": "B",
+          "text": "Doença de Hirschsprung."
+        },
+        {
+          "label": "C",
+          "text": "Apendicite aguda complicada."
+        },
+        {
+          "label": "D",
+          "text": "Atresia biliar."
+        },
+        {
+          "label": "E",
+          "text": "Anomalia congênita anorretal."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 18,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Uma criança do sexo masculino e com síndrome deDown, com cinco semanas de vida, apresenta-se comobstrução intestinal. O estudo radiográfico mostra sinaisde obstrução colônica. A relação entre os calibres do retoe do sigmoide é de aproximadamente 0,4.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Enterocolite necrotizante."
+        },
+        {
+          "label": "B",
+          "text": "Anomalia do ducto onfalomesentérico."
+        },
+        {
+          "label": "C",
+          "text": "Doença de Chagas por transmissão vertical."
+        },
+        {
+          "label": "D",
+          "text": "Doença de Hirschsprung."
+        },
+        {
+          "label": "E",
+          "text": "Anomalia anorretal."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 19,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Quanto à classificação do sistema BI-RADS®, pode-seafirmar que, na mamografia,",
+      "options": [
+        {
+          "label": "A",
+          "text": "assimetria focal, estável por mais de 36 meses,é BI-RADS® 2."
+        },
+        {
+          "label": "B",
+          "text": "mamas extremamente densas são classificadascomo BI-RADS® 0."
+        },
+        {
+          "label": "C",
+          "text": "nódulo oval e circunscrito deve ser classificadocomo BI-RADS® 2."
+        },
+        {
+          "label": "D",
+          "text": "calcificações grosseiras e heterogêneas sãoBI-RADS® 2."
+        },
+        {
+          "label": "E",
+          "text": "calcificações em bastonetes segmentares sãoBI-RADS® 3."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 20,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente de 27 anos de idade, com oito semanas degestação, apresentando nódulo palpável, sólido eirregular à ultrassonografia.Qual é a conduta mais adequada?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Controle evolutivo em seis meses, parareavaliação após parto."
+        },
+        {
+          "label": "B",
+          "text": "Biópsia de fragmento com agulha grossa, paraesclarecimento."
+        },
+        {
+          "label": "C",
+          "text": "Marcação do nódulo com fio metálico, emconsideração à gestação."
+        },
+        {
+          "label": "D",
+          "text": "Ressonância magnética, para melhorcaracterização do nódulo."
+        },
+        {
+          "label": "E",
+          "text": "Mamografia, para excluir a possibilidade defibroadenoma calcificado. 8"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 21,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente 55 anos de idade, assintomática. Refere trauma na mama esquerda há uma semana.O provável diagnóstico e a classificação BI-RADS® adequada são, respectivamente:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Necrose gordurosa, com a classificação BI-RADS® 2."
+        },
+        {
+          "label": "B",
+          "text": "Mamas heterogeneamente densas, BI-RADS® 1."
+        },
+        {
+          "label": "C",
+          "text": "Nódulo irregular, denso, espiculado, BI-RADS® 4."
+        },
+        {
+          "label": "D",
+          "text": "Distorção arquitetural, BI-RADS® 3."
+        },
+        {
+          "label": "E",
+          "text": "Assimetria focal, BI-RADS® 0."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 22,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Assinale a alternativa correta sobre a paralisia de prega vocal.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Está relacionada à disfunção dos nervos glossofaríngeo ou laríngeo recorrente."
+        },
+        {
+          "label": "B",
+          "text": "Associa-se à dilatação do seio piriforme contralateral ao lado afetado pela paralisia."
+        },
+        {
+          "label": "C",
+          "text": "Observa-se rotação posterolateral da cartilagem aritenoide do mesmo lado afetado pela paralisia."
+        },
+        {
+          "label": "D",
+          "text": "Ocorre deslocamento lateral e afilamento da prega ariepiglótica ipsilateral à paralisia."
+        },
+        {
+          "label": "E",
+          "text": "Caracteriza-se por alargamento do ventrículo laríngeo do mesmo lado afetado da paralisia. 9"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 23,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Para a mensuração dos nódulos pulmonares na tomografia computadorizada, a Associação Internacional para o Estudodo Câncer de Pulmão sugere",
+      "options": [
+        {
+          "label": "A",
+          "text": "utilizar cortes contíguos de 3 mm."
+        },
+        {
+          "label": "B",
+          "text": "utilizar a janela de pulmão para as medidas da lesão."
+        },
+        {
+          "label": "C",
+          "text": "utilizar medidas submilimétricas."
+        },
+        {
+          "label": "D",
+          "text": "considerar desnecessário medir o diâmetro do componente sólido nos nódulos subsólidos."
+        },
+        {
+          "label": "E",
+          "text": "utilizar duas medidas das lesões para fins de estadiamento."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 24,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual das alternativas a seguir representa uma característica tomográfica do enfisema panlobular?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Diminuição generalizada da atenuação pulmonar com simplificação arquitetural."
+        },
+        {
+          "label": "B",
+          "text": "Extensas bolhas pleuroapicais bilaterais com mais de 10 cm de diâmetro."
+        },
+        {
+          "label": "C",
+          "text": "Predomínio do comprometimento nos lobos superiores."
+        },
+        {
+          "label": "D",
+          "text": "Presença de bronquiectasias de tração e derrame pleural."
+        },
+        {
+          "label": "E",
+          "text": "Áreas hipoatenuantes com paredes finas nas regiões subpleurais."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 25,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Em relação à radiografia do tórax a seguir, qual é o sinal radiográfico encontrado e o principal diagnóstico a ser considerado,respectivamente?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Sinal do mediastino contínuo / Linfonodomegalia."
+        },
+        {
+          "label": "B",
+          "text": "Sinal do S de Golden / Neoplasia de pulmão."
+        },
+        {
+          "label": "C",
+          "text": "Sinal da silhueta / Aspiração de corpo estranho."
+        },
+        {
+          "label": "D",
+          "text": "Sinal de Luftsichel / Pneumonia lobar."
+        },
+        {
+          "label": "E",
+          "text": "Sinal do broncograma aéreo / Atelectasia. 10"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 26,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente, 49 anos de idade, sexo masculino, apresenta a seguinte radiografia.Qual é a localização da lesão e o principal diagnóstico diferencial, respectivamente?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Mediastino anterior / Linfoma."
+        },
+        {
+          "label": "B",
+          "text": "Mediastino posterior / Tumor neurogênico."
+        },
+        {
+          "label": "C",
+          "text": "Mediastino médio / Aneurisma de aorta."
+        },
+        {
+          "label": "D",
+          "text": "Mediastino visceral / Tumor neurogênico."
+        },
+        {
+          "label": "E",
+          "text": "Mediastino hilar / Neoplasia de pulmão."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 27,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Observe as imagens da radiografia a seguir, de um paciente jovem, com febre de início recente, tosse produtiva deaspecto purulento, previamente hígido.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Abscesso pulmonar."
+        },
+        {
+          "label": "B",
+          "text": "Adenocarcinoma pulmonar."
+        },
+        {
+          "label": "C",
+          "text": "Consolidação."
+        },
+        {
+          "label": "D",
+          "text": "Atelectasia."
+        },
+        {
+          "label": "E",
+          "text": "Tuberculose miliar. 11"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 28,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Relaciona-se com torção anexial aguda:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Ausência de vascularização ao mapeamento colorido."
+        },
+        {
+          "label": "B",
+          "text": "Presença de um cisto ovariano sem captação de fluxo ao estudo dopplervelocimétrico."
+        },
+        {
+          "label": "C",
+          "text": "Ovário aumentado de volume com aumento da ecogenicidade e folículos periféricos."
+        },
+        {
+          "label": "D",
+          "text": "Ovário difusamente hipoecogênico com volume normal e sem fluxo ao mapeamento colorido."
+        },
+        {
+          "label": "E",
+          "text": "Cisto com debris em ovário aumentado de volume e diagnóstico diferencial com endometriose."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 29,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Sobre os miomas uterinos, assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Os miomas categorias 0 a 3 (FIGO) têm relação com infertilidade."
+        },
+        {
+          "label": "B",
+          "text": "O principal diagnóstico diferencial dos miomas categoria 4 (FIGO) são os tumores sólidos de ovário."
+        },
+        {
+          "label": "C",
+          "text": "A calcificação é frequente nas degenerações malignas."
+        },
+        {
+          "label": "D",
+          "text": "A torção do pedículo é comum na gestação."
+        },
+        {
+          "label": "E",
+          "text": "O sintoma mais frequente é a dor por degeneração cística."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 30,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Considere uma mulher, 30 anos de idade, não usuária de método contraceptivo, com ciclos menstruais prévios regulares,apresentando quadro de sangramento uterino de forte intensidade e de início súbito, com HCG negativo.Assinale a alternativa que apresenta, respectivamente, o diagnóstico mais provável e a alteração ultrassonográficacorrespondente à cavidade endometrial.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hiperplasia endometrial / Espessamento do endométrio."
+        },
+        {
+          "label": "B",
+          "text": "Pólipo endometrial / Estrutura ovalada ecogênica intracavitária."
+        },
+        {
+          "label": "C",
+          "text": "Sangramento uterino disfuncional / Cavidade endometrial de aspecto normal."
+        },
+        {
+          "label": "D",
+          "text": "Sangramento de etiologia a esclarecer / Cavidade endometrial distendida por coágulos sanguíneos."
+        },
+        {
+          "label": "E",
+          "text": "Atrofia endometrial / Endométrio com espessura menor que 5 mm."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 31,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A glândula suprarrenal direita é:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Lateral e superior ao rim."
+        },
+        {
+          "label": "B",
+          "text": "Anteromedial e inferior ao rim."
+        },
+        {
+          "label": "C",
+          "text": "Anteromedial e superior ao rim."
+        },
+        {
+          "label": "D",
+          "text": "Posterior e superior ao rim."
+        },
+        {
+          "label": "E",
+          "text": "Anterior e superior ao rim."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 32,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A lesão focal mais comum do baço é:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Fibroma."
+        },
+        {
+          "label": "B",
+          "text": "Osteoma."
+        },
+        {
+          "label": "C",
+          "text": "Leiomioma."
+        },
+        {
+          "label": "D",
+          "text": "Hemangioma."
+        },
+        {
+          "label": "E",
+          "text": "Condroma. 12"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 33,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A partir da análise da imagem a seguir, assinale a alternativa que apresenta o diagnóstico mais provável.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Gravidez inicial."
+        },
+        {
+          "label": "B",
+          "text": "Mioma uterino categoria 0 FIGO."
+        },
+        {
+          "label": "C",
+          "text": "Adenomiose."
+        },
+        {
+          "label": "D",
+          "text": "Pólipo endometrial com degeneração cística."
+        },
+        {
+          "label": "E",
+          "text": "Hidrométrio."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 34,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual vaso não é encontrado posteriormente ao pâncreas?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Veia esplênica."
+        },
+        {
+          "label": "B",
+          "text": "Artéria mesentérica superior."
+        },
+        {
+          "label": "C",
+          "text": "Veia mesentérica superior."
+        },
+        {
+          "label": "D",
+          "text": "Tronco celíaco."
+        },
+        {
+          "label": "E",
+          "text": "Veia cava inferior."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 35,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Quanto à doença renal policística autossômica recessiva, assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Nas formas infantil e juvenil, os rins são moderadamente reduzidos."
+        },
+        {
+          "label": "B",
+          "text": "As formas infantil e juvenil são associadas à fibrose hepática."
+        },
+        {
+          "label": "C",
+          "text": "Nas formas neonatal e perinatal, os rins são moderadamente reduzidos."
+        },
+        {
+          "label": "D",
+          "text": "As formas infantil e juvenil são as mais comuns."
+        },
+        {
+          "label": "E",
+          "text": "A forma juvenil apresenta doença renal severa. 13"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 36,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A figura a seguir apresenta o padrão tardio de acometimento do punho por qual doença?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Osteoartrose."
+        },
+        {
+          "label": "B",
+          "text": "Artrite reativa."
+        },
+        {
+          "label": "C",
+          "text": "Artropatia por microcristais."
+        },
+        {
+          "label": "D",
+          "text": "Artrite reumatoide."
+        },
+        {
+          "label": "E",
+          "text": "Dermatomiosite. 14"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 37,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A figura a seguir apresenta o padrão tardio de acometimento da coluna vertebral por qual doença?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Mal de Pott."
+        },
+        {
+          "label": "B",
+          "text": "Sarcoidose."
+        },
+        {
+          "label": "C",
+          "text": "Espondilite anquilosante."
+        },
+        {
+          "label": "D",
+          "text": "Espondilodiscite."
+        },
+        {
+          "label": "E",
+          "text": "Mieloma múltiplo."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 38,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual é o nome da lesão óssea apresentada pela seta nesta radiografia?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Lesão em raios de sol."
+        },
+        {
+          "label": "B",
+          "text": "Lesão multilamelar."
+        },
+        {
+          "label": "C",
+          "text": "Triângulo de Codman."
+        },
+        {
+          "label": "D",
+          "text": "Sequestro ósseo."
+        },
+        {
+          "label": "E",
+          "text": "Abscesso de Brodie. 15"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 39,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual é o nome dado à área apontada pela seta na imagem a seguir?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Mão."
+        },
+        {
+          "label": "B",
+          "text": "Perna."
+        },
+        {
+          "label": "C",
+          "text": "Broca."
+        },
+        {
+          "label": "D",
+          "text": "Wernick."
+        },
+        {
+          "label": "E",
+          "text": "Audição."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 40,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente vítima de traumatismo cranioencefálico realizou a tomografia a seguir, que mostrou tratar-se de hematoma",
+      "options": [
+        {
+          "label": "A",
+          "text": "epidural."
+        },
+        {
+          "label": "B",
+          "text": "subdural."
+        },
+        {
+          "label": "C",
+          "text": "subgaleal."
+        },
+        {
+          "label": "D",
+          "text": "subaracnoideo."
+        },
+        {
+          "label": "E",
+          "text": "parenquimatoso. 16"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 41,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Sobre os achados de imagem da cirrose, é corretoafirmar que a(o)",
+      "options": [
+        {
+          "label": "A",
+          "text": "redistribuição volumétrica com aumento do lobodireito é usual nessa doença."
+        },
+        {
+          "label": "B",
+          "text": "alargamento do espaço periportal é um achadoinicial nessa entidade."
+        },
+        {
+          "label": "C",
+          "text": "redução volumétrica global do fígado é umachado precoce usual da cirrose."
+        },
+        {
+          "label": "D",
+          "text": "redução da fossa da vesícula biliar decorre doaumento do lobo hepático esquerdo."
+        },
+        {
+          "label": "E",
+          "text": "chanfradura posterior do lobo direito notch signocorre pela atrofia do lobo caudado."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 42,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Assinale a alternativa que apresenta uma característicado cisto ciliado hepático.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Lesões benignas de conteúdo espesso comorigem do intestino primitivo, sem indicaçãocirúrgica por não haver risco de degeneraçãomaligna."
+        },
+        {
+          "label": "B",
+          "text": "Cistos isolados que apresentam predomínio delocalização subcapsular no segmento 4 e quepodem apresentar contudo espesso no seuinterior."
+        },
+        {
+          "label": "C",
+          "text": "Comunicação com o sistema ductal biliar,principalmente se estiver nas adjacências do hilohepático."
+        },
+        {
+          "label": "D",
+          "text": "Lesões usualmente sintomáticas por suasdimensões com diagnóstico na infância."
+        },
+        {
+          "label": "E",
+          "text": "Lesões cujo diagnóstico final é dado por imagempor seus achados típicos, não sendo necessáriacomplementação com análise citológica do seuconteúdo."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 43,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Em relação às lesões focais das adrenais, assinale aalternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "A utilização do critério de atenuação médiainferior a 10 UH se baseia na presença deconteúdo líquido nos adenomas."
+        },
+        {
+          "label": "B",
+          "text": "Os mielolipomas são lesões indistinguíveisdos adenomas na RM, uma vez que ambosapresentam conteúdo gorduroso."
+        },
+        {
+          "label": "C",
+          "text": "Feocromocitomas possuem amplo espectro deapresentação, incluindo lesões císticas e lesõessólidas hipervascularizadas."
+        },
+        {
+          "label": "D",
+          "text": "A diferenciação entre um cisto e um adenoma nãopode ser feita pela tomografia computadorizada,mesmo com a utilização do meio de contrasteendovenoso."
+        },
+        {
+          "label": "E",
+          "text": "Invasão da veia renal é achado comum dosmielolipomas."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 44,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual é a localização mais comum das neoplasias dointestino grosso?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Ceco."
+        },
+        {
+          "label": "B",
+          "text": "Cólon transverso."
+        },
+        {
+          "label": "C",
+          "text": "Cólon descendente."
+        },
+        {
+          "label": "D",
+          "text": "Sigmoide."
+        },
+        {
+          "label": "E",
+          "text": "Reto."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": null,
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 45,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual é o melhor método para avaliação das fístulasperianais?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Ultrassonografia perianal com transdutor linear."
+        },
+        {
+          "label": "B",
+          "text": "Ultrassonografia perianal com transdutorendocavitário."
+        },
+        {
+          "label": "C",
+          "text": "Tomografia computadorizada."
+        },
+        {
+          "label": "D",
+          "text": "Ressonância magnética."
+        },
+        {
+          "label": "E",
+          "text": "Cintilografia."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 46,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Sobre as alterações morfológicas renais relacionadas àembriogênese, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "O sinal da “corcova de dromedário” é maiscomum no rim direito e representa lobulaçãocom proeminência cortical lateral do que oparênquima renal decorre da impressão devísceras ocas."
+        },
+        {
+          "label": "B",
+          "text": "Na ectopia cruzada renal, o rim ectópico pode seapresentar com ou sem fusão cortical; contudo,o ureter e sua inserção vesical apresentam-setópicos."
+        },
+        {
+          "label": "C",
+          "text": "Rins “em ferradura” representam a anomaliade fusão mais comum, e o achado pode estarassociado a alterações cardiovasculares."
+        },
+        {
+          "label": "D",
+          "text": "A persistência das lobulações fetais costuma seapresentar com deformidade calicinal associada,o que ajuda na diferenciação com alteraçõessequelares."
+        },
+        {
+          "label": "E",
+          "text": "O rim discoide (rim em panqueca) apresentaaspecto reniforme preservado e usualmenteureter único. 17"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 47,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "O diagnóstico por imagem das lesões focais dos rins tem enorme relevância clínica, pelas implicações relacionadas aosdiferentes prognósticos e condutas possíveis, dependendo do cenário.Em relação ao diagnóstico por imagem das lesões focais renais, assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "A síndrome de Birt-Hogg-Dubé pode predispor a carcinomas renais variante células claras, caracterizados comonódulos hipervasculares à tomografia computadorizada contrastada."
+        },
+        {
+          "label": "B",
+          "text": "No estudo tomográfico contrastado, o tumor maligno de células renais variante papilar pode ser confundido comcisto hiperatenuante com pseudorrealce, por ser hipovascular."
+        },
+        {
+          "label": "C",
+          "text": "A ressonância magnética permite diferenciar, com elevada acurácia, oncocitomas de carcinomas de células renaisvariante células claras."
+        },
+        {
+          "label": "D",
+          "text": "Metástases hepáticas são mais frequentes do que as pulmonares, sendo melhor caracterizadas por ressonânciamagnética."
+        },
+        {
+          "label": "E",
+          "text": "Angiomiolipomas pobres em lipídios e carcinomas de células renais variante cromófoba têm aparência similar nosestudos contrastados por TC e RM."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 48,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Uma mulher, 39 anos de idade, apresenta-se com dor lombar e disúria. Algumas imagens do estudo por TC do abdomeestão demonstradas a seguir.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Pielonefrite aguda."
+        },
+        {
+          "label": "B",
+          "text": "Neoplasia renal."
+        },
+        {
+          "label": "C",
+          "text": "Neoplasia diafragmática."
+        },
+        {
+          "label": "D",
+          "text": "Pielonefrite xantogranulomatosa."
+        },
+        {
+          "label": "E",
+          "text": "Pielonefrite enfisematosa."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 49,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Sobre os cálculos urinários, assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Os cálculos urinários possuem lucência central enquanto os flebólitos são homogêneos."
+        },
+        {
+          "label": "B",
+          "text": "Apenas 5% dos cálculos urinários são radiopacos à radiografia simples."
+        },
+        {
+          "label": "C",
+          "text": "A tomografia computadorizada é o método menos sensível para o diagnóstico dos cálculos urinários."
+        },
+        {
+          "label": "D",
+          "text": "O grau de dilatação do ureter tem relação proporcional com o tamanho do cálculo urinário."
+        },
+        {
+          "label": "E",
+          "text": "Existe uma associação entre cálculo coraliforme e pielonefrite xantogranulomatosa. 18"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 50,
+      "section": "R2",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual das seguintes anomalias congênitas do úraco é a mais sintomática?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Úraco patente."
+        },
+        {
+          "label": "B",
+          "text": "Seio umbilicouracal."
+        },
+        {
+          "label": "C",
+          "text": "Divertículo de úraco."
+        },
+        {
+          "label": "D",
+          "text": "Cisto de úraco."
+        },
+        {
+          "label": "E",
+          "text": "Cistocele de úraco.R2"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 51,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A imagem da lateral do fêmur a seguir, adquirida em exame DXA de quadril, demonstra",
+      "options": [
+        {
+          "label": "A",
+          "text": "erro frequente de posicionamento."
+        },
+        {
+          "label": "B",
+          "text": "achado frequentemente relacionado a erro na escolha do modo de aquisição."
+        },
+        {
+          "label": "C",
+          "text": "achado frequente em pacientes obesos."
+        },
+        {
+          "label": "D",
+          "text": "erro frequente no registro de dados do paciente."
+        },
+        {
+          "label": "E",
+          "text": "achado que exige a aquisição do membro contralateral, se possível. 19"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 52,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Observe a imagem a seguir, de uma criança do sexo masculino com dois anos de idade.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Esquizencefalia de lábio aberto."
+        },
+        {
+          "label": "B",
+          "text": "Cistos de aracnoide bilaterais."
+        },
+        {
+          "label": "C",
+          "text": "Neurocisticercose na forma racemosa."
+        },
+        {
+          "label": "D",
+          "text": "Complexo Dandy-Walker."
+        },
+        {
+          "label": "E",
+          "text": "Holoprosencefalia alobar."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 53,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Dos nódulos a seguir, qual apresenta a maior probabilidade de malignidade, segundo o BI-RADS®?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Nódulo oval, lobulado, com textura heterogênea."
+        },
+        {
+          "label": "B",
+          "text": "Nódulo irregular, margens espiculadas, sem alteração sonora."
+        },
+        {
+          "label": "C",
+          "text": "Nódulo redondo, circunscrito, com textura hipoecoica."
+        },
+        {
+          "label": "D",
+          "text": "Nódulo intraductal, circunscrito e ecogênico."
+        },
+        {
+          "label": "E",
+          "text": "Nódulo complexo sólido-cístico."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 54,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Das lesões a seguir, qual pode ser classificada como provavelmente benigna (BI-RADS® 3) em uma paciente de 62 anosde idade?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Cisto simples isolado em uma mama."
+        },
+        {
+          "label": "B",
+          "text": "Microcistos agrupados bilaterais."
+        },
+        {
+          "label": "C",
+          "text": "Nódulo complexo sólido-cístico."
+        },
+        {
+          "label": "D",
+          "text": "Cisto complicado isolado."
+        },
+        {
+          "label": "E",
+          "text": "Distorção arquitetural pós-cirúrgica. 20"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 55,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente, 42 anos de idade, assintomática, referindo implantes de silicone há nove anos. Analise as imagens a seguir.Sobre o implante esquerdo, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Coleção ao redor do implante sugerindo hematoma antigo."
+        },
+        {
+          "label": "B",
+          "text": "Rotura extracapsular com silicone livre no linfonodo axilar."
+        },
+        {
+          "label": "C",
+          "text": "Granuloma de silicone predominando na região lateral do implante."
+        },
+        {
+          "label": "D",
+          "text": "Linfoma anaplásico de grandes células relacionado ao implante."
+        },
+        {
+          "label": "E",
+          "text": "Não há alterações relacionadas ao implante de silicone. 21"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 56,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente de 46 anos de idade, sexo masculino, realizou uma tomografia computadorizada de seios da face. Analise asimagens a seguir.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Papiloma invertido."
+        },
+        {
+          "label": "B",
+          "text": "Pólipo."
+        },
+        {
+          "label": "C",
+          "text": "Mucocele."
+        },
+        {
+          "label": "D",
+          "text": "Osteossarcoma."
+        },
+        {
+          "label": "E",
+          "text": "Bola fúngica. 22"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 57,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A neoplasia de pulmão que mais frequentemente cursa com a síndrome da veia cava superior é",
+      "options": [
+        {
+          "label": "A",
+          "text": "carcinoma de células escamosas."
+        },
+        {
+          "label": "B",
+          "text": "carcinoma de grandes células."
+        },
+        {
+          "label": "C",
+          "text": "carcinoma de pequenas células."
+        },
+        {
+          "label": "D",
+          "text": "adenocarcinoma invasivo."
+        },
+        {
+          "label": "E",
+          "text": "carcinoma adenoescamoso."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 58,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Assinale a alternativa que apresenta achado(s) tomográfico(s) na histiocitose de células de Langerhans pulmonar.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Comprometimento pela doença dos seios costofrênicos."
+        },
+        {
+          "label": "B",
+          "text": "Cistos regulares, idênticos, bilaterais e homogêneos."
+        },
+        {
+          "label": "C",
+          "text": "Derrame pleural, especialmente quilotórax."
+        },
+        {
+          "label": "D",
+          "text": "Parênquima entre os cistos pulmonares comprometido."
+        },
+        {
+          "label": "E",
+          "text": "Linfonodomegalias calcificadas com padrão em casca de ovo."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 59,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Na definição e estudo da onfalocele, a afirmativa correta é:",
+      "options": [
+        {
+          "label": "A",
+          "text": "É comum inserção normal do cordão, com herniação do intestino e que ocorre mais frequentemente do lado direitodo umbigo."
+        },
+        {
+          "label": "B",
+          "text": "É comum inserção normal do cordão, com protrusão livre das alças intestinais e que ocorre mais frequentementedo lado direito do umbigo."
+        },
+        {
+          "label": "C",
+          "text": "É comum inserção anormal do cordão, com protrusão livre das alças intestinais e que ocorre em qualquer localda parede abdominal fetal."
+        },
+        {
+          "label": "D",
+          "text": "Não ocorre herniação isolada do intestino, uma vez que as alças estão localizadas à esquerda do abdome."
+        },
+        {
+          "label": "E",
+          "text": "Quanto maior a onfalocele, maior o risco de ela estar associada a uma alteração cromossômica fetal."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 60,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "O padrão ultrassonográfico característico da atresia duodenal é:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Ausência de líquido no estômago fetal."
+        },
+        {
+          "label": "B",
+          "text": "Sinal da “dupla bolha”."
+        },
+        {
+          "label": "C",
+          "text": "Não visualização do estômago fetal."
+        },
+        {
+          "label": "D",
+          "text": "Herniação do estômago para o tórax fetal."
+        },
+        {
+          "label": "E",
+          "text": "Presença de mecônio no abdome. 23"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 61,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise a imagem da veia jugular a seguir.Tendo em vista a imagem caracterizada na luz dessa veia, qual é o diagnóstico?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Trata-se de um ascaris."
+        },
+        {
+          "label": "B",
+          "text": "Trata-se de um trombo parcial."
+        },
+        {
+          "label": "C",
+          "text": "Trata-se de um stent."
+        },
+        {
+          "label": "D",
+          "text": "Trata-se de um artefato."
+        },
+        {
+          "label": "E",
+          "text": "Trata-se de um granuloma de inclusão."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 62,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Quanto aos cistos de fenda branquial, assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "A maioria está relacionada ao segundo arco branquial."
+        },
+        {
+          "label": "B",
+          "text": "São a causa mais comum para massa cervical na linha média."
+        },
+        {
+          "label": "C",
+          "text": "Estão localizados medialmente ao espaço carotídeo."
+        },
+        {
+          "label": "D",
+          "text": "São a primeira causa de massa cervical congênita."
+        },
+        {
+          "label": "E",
+          "text": "Estão localizados posterior e lateralmente ao músculo esternocleidomastoideo."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 63,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual é a melhor técnica para exame do tendão supraespinhoso na ultrassonografia?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Rotação lateral do braço."
+        },
+        {
+          "label": "B",
+          "text": "Extensão e rotação interna do braço."
+        },
+        {
+          "label": "C",
+          "text": "Rotação medial do braço."
+        },
+        {
+          "label": "D",
+          "text": "Abdução máxima do braço."
+        },
+        {
+          "label": "E",
+          "text": "Flexão do cotovelo e abdução do braço. 24"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 64,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual dos métodos a seguir é utilizado para o rastreamento de carcinoma hepatocelular em pacientes cirróticos?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Tomografia computadorizada."
+        },
+        {
+          "label": "B",
+          "text": "Ressonância magnética com infusão de meio de contraste convencional."
+        },
+        {
+          "label": "C",
+          "text": "Ressonância magnética com infusão de meio de contraste hepatoespecífico."
+        },
+        {
+          "label": "D",
+          "text": "Ultrassonografia."
+        },
+        {
+          "label": "E",
+          "text": "Cintilografia."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 65,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A figura a seguir apresenta imagem de uma ressonância magnética.Qual é a alteração apontada pelas setas?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Lipossubstituição."
+        },
+        {
+          "label": "B",
+          "text": "Pontes ósseas."
+        },
+        {
+          "label": "C",
+          "text": "Anquilose."
+        },
+        {
+          "label": "D",
+          "text": "Sinovite."
+        },
+        {
+          "label": "E",
+          "text": "Sacroiliíte. 25"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 66,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A figura a seguir apresenta qual padrão clássico de destruição óssea?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Permeatlivo."
+        },
+        {
+          "label": "B",
+          "text": "Geográfico."
+        },
+        {
+          "label": "C",
+          "text": "Osteoblástico."
+        },
+        {
+          "label": "D",
+          "text": "Espiculado."
+        },
+        {
+          "label": "E",
+          "text": "Osteoporótico."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 67,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A figura a seguir apresenta uma radiografia simples da mão com uma lesão.Qual é o tipo de matriz identificado pela seta?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Óssea."
+        },
+        {
+          "label": "B",
+          "text": "Condral."
+        },
+        {
+          "label": "C",
+          "text": "Fibrosa."
+        },
+        {
+          "label": "D",
+          "text": "Moteada."
+        },
+        {
+          "label": "E",
+          "text": "Blástica. 26"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 68,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Mulher, 22 anos de idade, usuária de anticoncepcional oral, apresenta cefaleia de forte intensidade há três dias, refratáriaa analgésicos. Realizou esta tomografia de crânio, que mostrou",
+      "options": [
+        {
+          "label": "A",
+          "text": "tumor."
+        },
+        {
+          "label": "B",
+          "text": "coleção."
+        },
+        {
+          "label": "C",
+          "text": "vasculite."
+        },
+        {
+          "label": "D",
+          "text": "encefalite."
+        },
+        {
+          "label": "E",
+          "text": "trombose."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 69,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Com relação à ressonância magnética a seguir, qual é o provável diagnóstico?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Linfoma."
+        },
+        {
+          "label": "B",
+          "text": "Schwanoma."
+        },
+        {
+          "label": "C",
+          "text": "Mengioma."
+        },
+        {
+          "label": "D",
+          "text": "Glioblastoma."
+        },
+        {
+          "label": "E",
+          "text": "Ependimoma. 27"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 70,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual das demências a seguir possui forma de apresentação mais comumente rapidamente progressiva?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Creutzfeldt-Jakob."
+        },
+        {
+          "label": "B",
+          "text": "Corpos de Lewy."
+        },
+        {
+          "label": "C",
+          "text": "Doença de Parkinson."
+        },
+        {
+          "label": "D",
+          "text": "Doença de Alzheimer."
+        },
+        {
+          "label": "E",
+          "text": "Demência frontotemporal."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 71,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Um paciente do sexo masculino, 48 anos de idade, queixa-se de diarreia há quatro meses, previamente hígido, em bomestado geral. Observe as imagens a seguir.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Colite ulcerativa."
+        },
+        {
+          "label": "B",
+          "text": "Doença de Crohn."
+        },
+        {
+          "label": "C",
+          "text": "Infecção por giardíase."
+        },
+        {
+          "label": "D",
+          "text": "Colite neutropênica."
+        },
+        {
+          "label": "E",
+          "text": "Linfoma secundário. 28"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 72,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "No contexto de cirrose, assinale a melhor alternativa sobre os aspectos de imagem do carcinoma hepatocelular (CH",
+      "options": [
+        {
+          "label": "A",
+          "text": "O CHC infiltrativo e a fibrose hepática confluente apresentam realce progressivo nas fases dinâmicas após ainjeção do meio de contraste."
+        },
+        {
+          "label": "B",
+          "text": "Tanto o CHC infiltrativo quanto a fibrose hepática confluente apresentam hipossinal em relação ao parênquimahepático na fase hepatobiliar."
+        },
+        {
+          "label": "C",
+          "text": "infiltrativo."
+        },
+        {
+          "label": "D",
+          "text": "O CHC infiltrativo cursa com invasão tumoral das veias hepáticas mais frequentemente do que os ramos portais."
+        },
+        {
+          "label": "E",
+          "text": "Para se considerar a possibilidade de CHC infiltrativo, é necessário haver hipervascularização na fase arterial ewashout."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 73,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Um paciente do sexo masculino, 44 anos de idade, realiza tomografia computadorizada do abdome devido a dor nohipocôndrio direito. O estudo mostra uma massa volumosa no sigmoide e uma outra lesão expansiva na adrenal esquerdacom densidade de 15 UH na fase pré-constraste, 80 UH após 70 segundos de infusão intravenosa do meio de contraste,e 30 UH após 15 minutos de infusão do meio de contraste.Qual é o diagnóstico mais provável da lesão na adrenal?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Adenocarcinoma metastático."
+        },
+        {
+          "label": "B",
+          "text": "Feocromocitoma."
+        },
+        {
+          "label": "C",
+          "text": "Adenoma."
+        },
+        {
+          "label": "D",
+          "text": "Adenocarcinoma primário."
+        },
+        {
+          "label": "E",
+          "text": "Angiomiolipoma."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 74,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Em exame de artéria femoral com estenose, observam-se velocidades muito altas com presença de aliasing no Dopplerespectral.Assinale a alternativa que apresenta a opção correta para correção.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Aumentar a frequência do transdutor."
+        },
+        {
+          "label": "B",
+          "text": "Reduzir o filtro de parede."
+        },
+        {
+          "label": "C",
+          "text": "Diminuir o ganho."
+        },
+        {
+          "label": "D",
+          "text": "Aumentar o Pulse Repetition Frequency (PRF)."
+        },
+        {
+          "label": "E",
+          "text": "Elevar a linha de base. 29"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 75,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise a imagem a seguir.Sobre a medida do complexo mediointimal, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "A imagem mostra uma medida automática ou semiautomática adequada."
+        },
+        {
+          "label": "B",
+          "text": "Está inadequada, pois deve ser realizada no bulbo."
+        },
+        {
+          "label": "C",
+          "text": "A medida do complexo mediointimal também pode ser realizada na parede anterior da artéria."
+        },
+        {
+          "label": "D",
+          "text": "Deve ser desconsiderada, pois inclui uma placa ateromatosa."
+        },
+        {
+          "label": "E",
+          "text": "Existe erro na aquisição, pois deve ser realizada na carótida interna. 30R3"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 76,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise a imagem impressa do fêmur de uma paciente com 40 anos de idade, que apresenta ciclos menstruaisregulares. A indicação para realização do exame é a utilização de prednisona oral, cronicamente, por quadro de púrpuratrombocitopênica trombótica.Baseado na análise do exame, qual é a melhor conduta?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Repetir o exame do fêmur, já que o feixe de radiação adotado não foi apropriado."
+        },
+        {
+          "label": "B",
+          "text": "Laudar baseado no Z-score, uma vez que a paciente ainda se apresenta no menacme."
+        },
+        {
+          "label": "C",
+          "text": "Laudar baseado no T-score, uma vez que a paciente utiliza cronicamente glicocorticoide."
+        },
+        {
+          "label": "D",
+          "text": "Invalidar o sítio de análise e realizar complemento com antebraço não dominante."
+        },
+        {
+          "label": "E",
+          "text": "Repetir o exame, já que o fêmur se encontra abduzido."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 77,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente, 50 anos de idade, comparece a uma clínica para realização de densitometria óssea de coluna e fêmur.Ao analisar o exame da coluna lombar, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "A análise foi realizada incorretamente e deve incluir o sítio L1-L4, já que não há vértebras com mais de umdesvio-padrão de diferença."
+        },
+        {
+          "label": "B",
+          "text": "A análise foi realizada corretamente, uma vez que as vértebras L3 e L4 estão visualmente alteradas."
+        },
+        {
+          "label": "C",
+          "text": "Deve-se invalidar o sítio da coluna lombar, e o laudo deve ser feito a partir dos exames do fêmur e do antebraçonão dominante."
+        },
+        {
+          "label": "D",
+          "text": "A análise foi realizada incorretamente e deve incluir o sítio L2-L4, que é o segmento a ser analisado nos examesde densitometria óssea."
+        },
+        {
+          "label": "E",
+          "text": "A análise foi realizada corretamente, já que as vértebras L3 e L4 apresentam sinais sugestivos de hemangioma. 31"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 78,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Sobre a válvula de uretra posterior, assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Está associada com a extrofia de bexiga na maioria dos casos."
+        },
+        {
+          "label": "B",
+          "text": "Não é possível diagnosticar no período pré-natal."
+        },
+        {
+          "label": "C",
+          "text": "O veromontano está aumentado no tipo I, mas não no tipo III."
+        },
+        {
+          "label": "D",
+          "text": "O tipo II, caracterizado por diafragma com abertura central, é o mais comum."
+        },
+        {
+          "label": "E",
+          "text": "A bexiga possui dimensões reduzidas e não há divertículos parietais."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 79,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente de 45 anos de idade, sexo feminino, com perda visual progressiva e proptose à esquerda há dois anos,foi submetida a uma ressonância magnética. Analise as imagens a seguir.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Neurite óptica."
+        },
+        {
+          "label": "B",
+          "text": "Glioma do nervo óptico."
+        },
+        {
+          "label": "C",
+          "text": "Schwannoma do nervo óptico."
+        },
+        {
+          "label": "D",
+          "text": "Meningioma da bainha do nervo óptico."
+        },
+        {
+          "label": "E",
+          "text": "Metástase de neoplasia mamária. 32"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 80,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente de 57 anos realizou uma ressonância magnética que evidenciou um schwannoma intralabiríntico à esquerda.Essas lesões são caracterizadas por perda do alto sinal em T2 e por realce focal pós-contraste e são classificadas deacordo com sua localização dentro do labirinto. Analise as imagens apresentadas a seguir.Assinale a alternativa que classifica corretamente o schwannoma desse paciente.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Intracoclear."
+        },
+        {
+          "label": "B",
+          "text": "Intravestibular."
+        },
+        {
+          "label": "C",
+          "text": "Vestibulococlear."
+        },
+        {
+          "label": "D",
+          "text": "Transmodiolar."
+        },
+        {
+          "label": "E",
+          "text": "Transótico."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 81,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise as imagens a seguir.Assinale a alternativa que apresenta, correta e respectivamente, o nome da estrutura indicada pelas setas nessas imagense seu respectivo conteúdo.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Canal óptico / Nervo óptico."
+        },
+        {
+          "label": "B",
+          "text": "Fissura orbitária superior / Artéria oftálmica."
+        },
+        {
+          "label": "C",
+          "text": "Forame redondo / Nervo maxilar (nV2)."
+        },
+        {
+          "label": "D",
+          "text": "Forame oval / Nervo mandibular (nV3)."
+        },
+        {
+          "label": "E",
+          "text": "Canal vidiano / Nervo hipoglosso. 33"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 82,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A silicoproteinose tem como principal manifestação tomográfica",
+      "options": [
+        {
+          "label": "A",
+          "text": "nódulos centrolobulares difusos, predominando nos lobos inferiores."
+        },
+        {
+          "label": "B",
+          "text": "opacidades em vidro fosco difusas, bilaterais, associadas a espessamento septal."
+        },
+        {
+          "label": "C",
+          "text": "massa fibróticas nos lobos superiores com calcificações de permeio."
+        },
+        {
+          "label": "D",
+          "text": "faveolamento assimétrico nos lobos superiores."
+        },
+        {
+          "label": "E",
+          "text": "extensas áreas de alargamento irregular do espaço aéreo nos pulmões."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 83,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente, sexo feminino, 22 anos de idade, apresentando dispneia e, no RX de tórax, velamento total do hemitórax direito.Solicitada TC de tórax.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Aspiração de corpo estranho."
+        },
+        {
+          "label": "B",
+          "text": "Tumor carcinoide."
+        },
+        {
+          "label": "C",
+          "text": "Aspergilose broncopulmonar alérgica."
+        },
+        {
+          "label": "D",
+          "text": "Carcinoma epidermoide."
+        },
+        {
+          "label": "E",
+          "text": "Tuberculose brônquica."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 84,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Com relação aos marcadores de cromossomopatias no rastreamento de primeiro trimestre, assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Na medida da transluscência nucal, se o feto apresentar circular de cordão, deve-se considerar apenas a medidadistal à circular."
+        },
+        {
+          "label": "B",
+          "text": "Se a transluscência nucal for maior que 5,5 mm, independentemente da idade gestacional, 50% dos fetos terãocariótipo alterado."
+        },
+        {
+          "label": "C",
+          "text": "A inclusão da frequência cardíaca fetal no rastreamento é importante principalmente para diferenciação entrefetos com trissomia do 21."
+        },
+        {
+          "label": "D",
+          "text": "A alteração do ducto venoso restringe-se aos fetos com aneuploidias."
+        },
+        {
+          "label": "E",
+          "text": "O osso nasal não tem importância na avaliação do primeiro trimestre, sendo relevante apenas no segundotrimestre. 34"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 85,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente, 18 anos de idade, primigesta, na primeira consulta de pré-natal, leva o laudo da primeira ultrassonografiatransvaginal, que revelou gestação gemelar de nove semanas, com presença de membrana intergemelar com aspectode “T” invertido.Diante desse resultado, conclui-se que a gravidez dessa paciente é",
+      "options": [
+        {
+          "label": "A",
+          "text": "dicoriônica e diamniótica."
+        },
+        {
+          "label": "B",
+          "text": "dicoriônica e monoamniótica."
+        },
+        {
+          "label": "C",
+          "text": "monocoriônica e diamniótica."
+        },
+        {
+          "label": "D",
+          "text": "monocoriônica e monoamniótica."
+        },
+        {
+          "label": "E",
+          "text": "apenas monoamniótica."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 86,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Para a realização da Dopplerfluxometria na gestação, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Os equipamentos atuais de ultrassom já vêm parametrizados de fábrica para a execução do exame, não sendonecessário alterar ou mudar os ajustes originais."
+        },
+        {
+          "label": "B",
+          "text": "Os indicadores de temperatura (TI) e de massa (MI) dos equipamentos devem ser ajustados a cada exame."
+        },
+        {
+          "label": "C",
+          "text": "Não existe efeito deletério da avaliação Doppler sobre o embrião e, por isso, não é preciso se preocupar com essaexposição."
+        },
+        {
+          "label": "D",
+          "text": "O tamanho da janela da amostra do Doppler não interfere no resultado da onda espectral."
+        },
+        {
+          "label": "E",
+          "text": "A correção de ângulo deve ser feita de acordo com o vaso que será avaliado."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 87,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A figura a seguir apresenta imagem de radiografia simples do cotovelo.Qual é o tendão que se insere na área destacada pela seta?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Braquial."
+        },
+        {
+          "label": "B",
+          "text": "Tríceps."
+        },
+        {
+          "label": "C",
+          "text": "Braquioradial."
+        },
+        {
+          "label": "D",
+          "text": "Bíceps."
+        },
+        {
+          "label": "E",
+          "text": "Palmar longo. 35"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 88,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A figura a seguir apresenta uma radiografia do joelho, ilustrando uma obliteração (densificação) do coxim gordurososuprapatelar (setas).O que significa esse achado?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Tumor intra-articular."
+        },
+        {
+          "label": "B",
+          "text": "Lipoma arborescente."
+        },
+        {
+          "label": "C",
+          "text": "Derrame articular."
+        },
+        {
+          "label": "D",
+          "text": "Condromatose sinovial."
+        },
+        {
+          "label": "E",
+          "text": "Bursite pré-patelar. 36"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 89,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "A figura a seguir apresenta uma imagem de tomografia computadorizada.Qual é o nome da alteração típica sinalizada pela seta nessa imagem da vértebra?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hemangioma."
+        },
+        {
+          "label": "B",
+          "text": "Cordoma."
+        },
+        {
+          "label": "C",
+          "text": "Tumor benigno da notocorda."
+        },
+        {
+          "label": "D",
+          "text": "Mastocitose."
+        },
+        {
+          "label": "E",
+          "text": "Osteopoiquilose."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "A",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 90,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Qual é o nome da lesão óssea do colo do fêmur apresentada nessa tomografia computadorizada do quadril?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Osteoblastoma."
+        },
+        {
+          "label": "B",
+          "text": "Abscesso ósseo."
+        },
+        {
+          "label": "C",
+          "text": "Osteoma osteoide."
+        },
+        {
+          "label": "D",
+          "text": "Osteossarcoma."
+        },
+        {
+          "label": "E",
+          "text": "Granuloma eosinofílico. 37"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 91,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Homem, 33 anos de idade, com histórico de HIV positivo, atualmente com cefaleia de forte intensidade. Realizou-se oestudo a seguir.Qual é o provável diagnóstico do paciente?",
+      "options": [
+        {
+          "label": "A",
+          "text": "LEMP."
+        },
+        {
+          "label": "B",
+          "text": "Linfoma."
+        },
+        {
+          "label": "C",
+          "text": "Criptococose."
+        },
+        {
+          "label": "D",
+          "text": "Tuberculose."
+        },
+        {
+          "label": "E",
+          "text": "Neurotoxoplasmose."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 92,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Na suspeita de síndrome de Sturge-Weber, quais achados clínicos radiológicos são mais característicos?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hamartomas, epilepsia e retardo mental."
+        },
+        {
+          "label": "B",
+          "text": "Schwanomas, ependimomas e meningiomas."
+        },
+        {
+          "label": "C",
+          "text": "Angioma facial e leptomeníngeo e convulsões."
+        },
+        {
+          "label": "D",
+          "text": "Hemangioblastomas e cistos pancreáticos e renais."
+        },
+        {
+          "label": "E",
+          "text": "Manchas hipocrômicas, convulsões e lesões ósseas."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 93,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Homem, 75 anos de idade, apresentando alteração de memória para fatos recentes há alguns anos. Evoluindo com piorae com dificuldade de realizar tarefas do dia a dia. Realizou ressonância, que mostrou atrofia.Qual a mais provável topografia dessa redução volumétrica?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Difusa."
+        },
+        {
+          "label": "B",
+          "text": "Hipocampal."
+        },
+        {
+          "label": "C",
+          "text": "Frontotemporal."
+        },
+        {
+          "label": "D",
+          "text": "Perirrolândica."
+        },
+        {
+          "label": "E",
+          "text": "Parieto-occipital. 38"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 94,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Paciente, 13 anos de idade, apresentando história de crises convulsivas desde o período neonatal, realizou a ressonânciamagnética a seguir.Com base na história clínica e nos achados de imagem, assinale a alternativa correta sobre o diagnóstico.",
+      "options": [
+        {
+          "label": "A",
+          "text": "É uma doença frequente, encontrada em 1 para cada 100 nascidos vivos."
+        },
+        {
+          "label": "B",
+          "text": "Trata-se de uma doença ligada a uma anomalia de migração neural."
+        },
+        {
+          "label": "C",
+          "text": "Há uma forte predileção para o sexo masculino por ser uma cromossomopatia ligada ao sexo."
+        },
+        {
+          "label": "D",
+          "text": "Não é possível realizar o diagnóstico dessa doença facilmente no período pré-natal."
+        },
+        {
+          "label": "E",
+          "text": "Inexiste polimicrogiria ou heterotopia da substância cinzenta associada a essa condição. 39"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 95,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Uma mulher, 24 anos de idade, refere dor na fossa ilíaca esquerda e alteração do fluxo menstrual. Ela fez ultrassonografiade abdome total com resultado normal. Foi solicitada ressonância magnética da pelve para melhor avaliação.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Corpo livre intraperitoneal."
+        },
+        {
+          "label": "B",
+          "text": "Teratoma ovariano."
+        },
+        {
+          "label": "C",
+          "text": "Endometrioma."
+        },
+        {
+          "label": "D",
+          "text": "Cisto ovariano hemorrágico."
+        },
+        {
+          "label": "E",
+          "text": "Gravidez ectópica."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 96,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Acerca do uso da ressonância para o tumor de reto, é correto afirmar:",
+      "options": [
+        {
+          "label": "A",
+          "text": "A utilização do meio de contraste é indicada por representar a sequência ideal para a avaliação do grau de invasãoda camada muscular própria pelo tumor."
+        },
+        {
+          "label": "B",
+          "text": "Caso haja invasão venosa extramural, depósito tumoral e invasão primária da camada muscular própria pelotumor, deve-se consider este último critério (invasão da camada muscular própria) para definição da menormargem tumoral à fáscia mesorretal."
+        },
+        {
+          "label": "C",
+          "text": "Lesões com componente mucinoso costumam apresentar melhor prognóstico."
+        },
+        {
+          "label": "D",
+          "text": "São consideradas linfonodos locorregionais na neoplasia de reto as cadeias mesorretais, mesentérica superior,ilíacas externas e inguinais."
+        },
+        {
+          "label": "E",
+          "text": "Linfonodos mesorretais entre 5-9 mm podem ser considerados suspeitos caso apresentem ao menos dois critériosmorfológicos de acometimento secundário. 40"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "E",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 97,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Acerca dos incidentalomas adrenais, assinale a alternativa correta.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Lesões adrenais com atenuação acima de 10 UH na tomografia sem contraste são presumivelmente benignas."
+        },
+        {
+          "label": "B",
+          "text": "Adenomas costumam apresentar lavagem (washout) mais tardiamente que metastases de adrenais."
+        },
+        {
+          "label": "C",
+          "text": "Cisto de adrenal costuma apresentar calcificação periférica."
+        },
+        {
+          "label": "D",
+          "text": "O padrão de sinal nas sequências de RM ponderadas em T2 é confiável para diferenciação de lesões benignase malignas de adrenais."
+        },
+        {
+          "label": "E",
+          "text": "Para definição do componente de gordura microscópica de adenomas por ressonância, deve-se incluirrotineiramente as sequências T1 pós-contraste."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "C",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 98,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Uma paciente do sexo feminino, 70 anos de idade, previamente hígida, queixa-se de dor no quadrante superior esquerdodo abdome. Algumas imagens do estudo por tomografia computadorizada estão demonstradas a seguir.Qual é o diagnóstico mais provável?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Psoíte com grande abscesso."
+        },
+        {
+          "label": "B",
+          "text": "Feocromocitoma do órgão de Zuckerkandl."
+        },
+        {
+          "label": "C",
+          "text": "Neurofibroma plexiforme."
+        },
+        {
+          "label": "D",
+          "text": "Neoplasia maligna."
+        },
+        {
+          "label": "E",
+          "text": "Abscesso fúngico. 41"
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "D",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 99,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Analise a imagem a seguir.Qual é a graduação de estenose da artéria carótida interna direita (ACI",
+      "options": [
+        {
+          "label": "A",
+          "text": "50%."
+        },
+        {
+          "label": "B",
+          "text": "50-69%."
+        },
+        {
+          "label": "C",
+          "text": "70-95%."
+        },
+        {
+          "label": "D",
+          "text": "?"
+        },
+        {
+          "label": "E",
+          "text": "100% (oclusão)."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    },
+    {
+      "question_number": 100,
+      "section": "",
+      "page_start": 1,
+      "page_end": 1,
+      "question_text": "Das agulhas a seguir, qual é a mais comumente utilizada para a retirada de fragmentos nas biópsias hepáticas?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Spinal."
+        },
+        {
+          "label": "B",
+          "text": "Tru-cut."
+        },
+        {
+          "label": "C",
+          "text": "Triple-bevel."
+        },
+        {
+          "label": "D",
+          "text": "Curved."
+        },
+        {
+          "label": "E",
+          "text": "Westcott. FOLHA DE RESPOSTAS(VERSÃO DO CANDIDATO)A B C D E01A B C D E02A B C D E03A B C D E04A B C D E05A B C D E06A B C D E07A B C D E08A B C D E09A B C D E10A B C D E11A B C D E12A B C D E13A B C D E14A B C D E15A B C D E16A B C D E17A B C D E18A B C D E19A B C D E20A B C D E21A B C D E22A B C D E23A B C D E24A B C D E25A B C D E26A B C D E27A B C D E28A B C D E29A B C D E30A B C D E31A B C D E32A B C D E33A B C D E34A B C D E35A B C D E36A B C D E37A B C D E38A B C D E39A B C D E40A B C D E41A B C D E42A B C D E43A B C D E44A B C D E45A B C D E46A B C D E47A B C D E48A B C D E49A B C D E50A B C D E51A B C D E52A B C D E53A B C D E54A B C D E55A B C D E56A B C D E57A B C D E58A B C D E59A B C D E60A B C D E61A B C D E62A B C D E63A B C D E64A B C D E65A B C D E66A B C D E67A B C D E68A B C D E69A B C D E70A B C D E71A B C D E72A B C D E73A B C D E74A B C D E75A B C D E76A B C D E77A B C D E78A B C D E79A B C D E80A B C D E81A B C D E82A B C D E83A B C D E84A B C D E85A B C D E86A B C D E87A B C D E88A B C D E89A B C D E90A B C D E91A B C D E92A B C D E93A B C D E94A B C D E95A B C D E96A B C D E97A B C D E98A B C D E99A B C D E100AO TRANSFERIR ESSAS MARCAçõES PARA A FOLHA DE RESPOSTAS,OBSERVE AS INSTRUçõES ESPECíFICAS DADAS NA CAPA DA PROVA.USE CANETA ESFEROgRáFICA AzUL OU PRETA. ATENÇÃO:AgUARDE AUTORIzAÇÃOPARA VIRAR O CADERNO DE PROVA."
+        }
+      ],
+      "has_image": false,
+      "images": [],
+      "correct_answer": "B",
+      "review_required": false,
+      "boundary_uncertain": false,
+      "image_assignment_uncertain": false,
+      "ocr_confidence_note": ""
+    }
+  ]
+}
