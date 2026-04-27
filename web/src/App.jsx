@@ -182,7 +182,6 @@ return (
       <div style={{ lineHeight:1.2 }}><div style={{ fontSize:10, color:C.textDim }}>Bem-vindo</div><div style={{ fontSize:12, color:C.textSoft, fontWeight:700 }}>{firstName}</div></div>
     </div>
     <Link to="/dashboard" style={{ textDecoration: "none" }}><button style={{ padding: "7px 14px", borderRadius: 9, fontSize: 12.5, fontWeight: 600, color: C.textSoft, background: "transparent", border: `1px solid ${C.glassBorder}`, cursor: "pointer" }}>Dashboard</button></Link>
-    <Link to="/feed" style={{ textDecoration: "none" }}><button style={{ padding: "7px 16px", borderRadius: 9, fontSize: 12.5, fontWeight: 700, color: C.bgDeep, background: C.accent, border: "none", cursor: "pointer", marginLeft: 2, boxShadow: `0 0 16px ${C.accentGlow}` }}>Abrir Feed</button></Link>
   </>
 ) : (
   <>
@@ -204,7 +203,6 @@ return (
 <div style={{ display: "flex", gap: 10, marginTop: 12, flexWrap:'wrap' }}>
 {user ? <>
   <Link to="/dashboard" style={{ textDecoration: "none", flex: 1 }}><button onClick={() => setMenuOpen(false)} style={{ width: "100%", padding: "14px", borderRadius: 10, fontSize: 15, fontWeight: 600, color: C.textSoft, background: "transparent", border: `1px solid ${C.glassBorder}`, cursor: "pointer" }}>Dashboard</button></Link>
-  <Link to="/feed" style={{ textDecoration: "none", flex: 1 }}><button onClick={() => setMenuOpen(false)} style={{ width: "100%", padding: "14px", borderRadius: 10, fontSize: 15, fontWeight: 700, color: C.bgDeep, background: C.accent, border: "none", cursor: "pointer" }}>Feed</button></Link>
 </> : <>
 <Link to="/login" style={{ textDecoration: "none", flex: 1 }}><button onClick={() => setMenuOpen(false)} style={{ width: "100%", padding: "14px", borderRadius: 10, fontSize: 15, fontWeight: 500, color: C.textSoft, background: "transparent", border: `1px solid ${C.glassBorder}`, cursor: "pointer" }}>Entrar</button></Link>
 <Link to="/signup" style={{ textDecoration: "none", flex: 1 }}><button onClick={() => setMenuOpen(false)} style={{ width: "100%", padding: "14px", borderRadius: 10, fontSize: 15, fontWeight: 700, color: C.bgDeep, background: C.accent, border: "none", cursor: "pointer" }}>Começar</button></Link>
@@ -252,9 +250,6 @@ return (
   <div className="hero-cta-row" style={{ display: "flex", gap: 14, marginBottom: 72, flexWrap: "wrap", justifyContent: "center", ...a(0.3), position: "relative", zIndex: 1 }}>
     <button style={{ padding: "15px 36px", borderRadius: 12, fontSize: 16, fontWeight: 700, color: C.bgDeep, border: "none", cursor: "pointer", background: C.accent, boxShadow: `0 0 40px ${C.accentGlow}, 0 4px 24px rgba(0,0,0,0.4)` }}>Teste 7 Dias Grátis →</button>
     <button style={{ padding: "15px 36px", borderRadius: 12, fontSize: 16, fontWeight: 600, color: C.textSoft, cursor: "pointer", background: C.glass, border: `1px solid ${C.glassBorder}`, backdropFilter: "blur(12px)" }}>Ver Demonstração</button>
-    <button onClick={onFeed} style={{ padding: "15px 28px", borderRadius: 12, fontSize: 15, fontWeight: 700, color: user ? C.bgDeep : C.textSoft, border: user ? "none" : `1px solid ${C.glassBorder}`, cursor: "pointer", background: user ? C.accent : C.glass, boxShadow: user ? `0 0 24px ${C.accentGlow}` : "none" }}>
-      {user ? "Ver Feed" : "Feed (faça login)"}
-    </button>
   </div>
 
   <div className="hero-stats" style={{ display: "flex", gap: 2, borderRadius: 18, overflow: "hidden", background: C.glass, border: `1px solid ${C.glassBorder}`, backdropFilter: "blur(16px)", ...a(0.4), position: "relative", zIndex: 1 }}>
