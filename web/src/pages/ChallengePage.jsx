@@ -153,7 +153,7 @@ function SetupScreen({ onStart, userId }) {
           </div>
         )}
 
-        <div style={{ className: 'challenge-grid-2', style: { marginBottom: 24 } }}>
+        <div className="challenge-grid-2" style={{ marginBottom: 24 }}>
           {/* Left column: Config */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
             {/* Rules card */}
@@ -194,7 +194,7 @@ function SetupScreen({ onStart, userId }) {
               <h3 style={{ fontSize: 12, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>
                 Especialidade
               </h3>
-              <div style={{ className: 'challenge-grid-3' }}>
+              <div className="challenge-grid-3">
                 {SPECIALTIES.map(s => (
                   <button key={s.name} onClick={() => setSpecialty(s.name)} style={{
                     padding: '10px 8px', borderRadius: 12, fontSize: 12, fontWeight: 600,
@@ -439,10 +439,9 @@ function BattleScreen({ challenge, specialty, timePerQuestion, onFinish, userId 
         body: JSON.stringify({ challenge_id }),
       })
       const data = await res.json()
-      data._maxStreak = maxStreak
-      onFinish(data)
+      onFinish({ ...data, maxStreak: maxStreak })
     } catch (err) {
-      onFinish({ user_score: userScore, ai_score: aiScore, questions_detail: allResults, _maxStreak: maxStreak })
+      onFinish({ user_score: userScore, ai_score: aiScore, questions_detail: allResults, maxStreak: maxStreak })
     }
   }
 
@@ -681,7 +680,7 @@ function BattleScreen({ challenge, specialty, timePerQuestion, onFinish, userId 
 // Result Screen
 // ═══════════════════════════════════════════════════════════════════════════
 function ResultScreen({ result, onRestart }) {
-  const { user_score = 0, ai_score = 0, questions_detail = [], total_time = 0, _maxStreak = 0 } = result
+  const { user_score = 0, ai_score = 0, questions_detail = [], total_time = 0, maxStreak = 0 } = result
   const won = user_score > ai_score
   const tied = user_score === ai_score
   const correctCount = questions_detail.filter(q => q.is_correct).length
@@ -813,14 +812,14 @@ function ResultScreen({ result, onRestart }) {
         </div>
 
         {/* Stats row */}
-        <div style={{
-          className: 'challenge-specialty-grid', style: { marginBottom: 20 },
-          animation: 'slideUp 0.5s ease 0.15s both',
-        }}>
+        <div
+          className="challenge-specialty-grid"
+          style={{ marginBottom: 20, animation: 'slideUp 0.5s ease 0.15s both' }}
+        >
           {[
             { label: 'Tempo Total', value: timeStr, icon: '⏱️' },
             { label: 'Questões Certas', value: `${correctCount}/${total}`, icon: '✅' },
-            { label: 'Melhor Sequência', value: `${_maxStreak || 0} seguidas`, icon: '🔥' },
+            { label: 'Melhor Sequência', value: `${maxStreak || 0} seguidas`, icon: '🔥' },
           ].map((s, i) => (
             <div key={i} style={{
               textAlign: 'center', padding: '14px 12px', borderRadius: 14,
