@@ -64,33 +64,31 @@ from contextlib import asynccontextmanager
 limiter = Limiter(key_func=get_remote_address, default_limits=["30/minute"])
 
 # ── Structured Logging ───────────────────────────────────────────────────────
-class StructuredLogger:
-    def __init__(self, name):
-        self.logger = logging.getLogger(name)
-        self.logger.setLevel(logging.INFO)
-
-    def _format(self, level, msg, **kwargs):
-        return {
-            "level": level,
-            "msg": msg,
+class JsonFormatter(logging.Formatter):
+    def format(self, record):
+        # Extra fields pass via logging.Logger.info(..., extra={"k": v})
+        # and surface as attributes on the LogRecord.
+        payload = {
+            "level": record.levelname.lower(),
+            "msg": record.getMessage(),
             "service": "aria-backend",
-            "time": datetime.now(timezone.utc).isoformat(),
-            **kwargs,
+            "time": self.formatTime(record),
         }
+        reserved = {"name", "msg", "args", "levelname", "levelno", "pathname",
+                    "filename", "module", "exc_info", "exc_text", "stack_info",
+                    "lineno", "funcName", "created", "msecs", "relativeCreated",
+                    "thread", "threadName", "processName", "process", "message",
+                    "taskName"}
+        for k, v in record.__dict__.items():
+            if k not in reserved and not k.startswith("_"):
+                payload[k] = v
+        return json.dumps(payload)
 
-    def info(self, msg, **kwargs):
-        self.logger.info(json.dumps(self._format("info", msg, **kwargs)))
-
-    def warning(self, msg, **kwargs):
-        self.logger.warning(json.dumps(self._format("warning", msg, **kwargs)))
-
-    def error(self, msg, **kwargs):
-        self.logger.error(json.dumps(self._format("error", msg, **kwargs)))
-
-    def debug(self, msg, **kwargs):
-        self.logger.debug(json.dumps(self._format("debug", msg, **kwargs)))
-
-logger = StructuredLogger("aria")
+logger = logging.getLogger("aria")
+_handler = logging.StreamHandler()
+_handler.setFormatter(JsonFormatter())
+logger.addHandler(_handler)
+logger.setLevel(logging.INFO)
 
 # Load env from parent directory
 env_path = Path(__file__).parent.parent / ".env"
@@ -116,11 +114,16 @@ async def get_http_client() -> httpx.AsyncClient:
     return _http_client
 
 
+async def run_openai_sync(func, **kwargs):
+    """Run a sync OpenAI SDK call in a thread so async routes don't block the event loop."""
+    return await asyncio.to_thread(func, **kwargs)
+
+
 # ── Lifespan: startup/shutdown ────────────────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
-    logger.info("ARIA backend starting", version="1.1.0")
+    logger.info("ARIA backend starting", extra={"version": "1.1.0"})
     try:
         openai_client.models.list()
         logger.info("OpenAI API: ok")
@@ -219,21 +222,17 @@ def _is_identity_question(q: str) -> bool:
         or any(normalized.startswith(p) for p in ["quem é ", "who is ", "what is aria"])
     )
 
+TRIVIAL_GREETINGS = {
+    "oi", "ola", "olá", "hi", "hey", "hello", "bom dia", "boa tarde",
+    "boa noite", "eae", "eaí", "e ai", " fala ", "fala", "suave", "tmp",
+    "td bem", "tá bom", "como vai", "como vai?", "tudo bem", "beleza",
+    "hey all", "hi there", "hello there", "oii", "oiii", "oi!", "olá!",
+    "bom dia!", "oi,", "ola,", "hi,", "hey,", "oi tudo bem", "oi, td bem",
+}
+
 def _is_trivial_greeting(q: str) -> bool:
     """Return True if the question is a trivial greeting that doesn't need RAG."""
-    normalized = q.lower().strip().rstrip('!').rstrip('?')
-    trivial_greetings = {
-        "oi", "ola", "olá", "hi", "hey", "hello", "bom dia", "boa tarde",
-        "boa noite", "eae", "eaí", "e ai", " fala ", "fala", "suave", "tmp",
-        "td bem", "tá bom", "como vai", "como vai?", "tudo bem", "beleza",
-        "hey all", "hi there", "hello there", "oii", "oiii", "oi!", "olá!",
-        "bom dia!", "oi,", "ola,", "hi,", "hey,", "oi tudo bem", "oi, td bem",
-    }
-    return (
-        normalized in trivial_greetings
-        or (len(normalized) <= 3 and not any(c.isalnum() for c in normalized) is False)
-        or (len(normalized) <= 2 and normalized in "oi oi oi olláhi hey".split())
-    )
+    return q.lower().strip().rstrip('!?') in TRIVIAL_GREETINGS
 
 TRIVIAL_GREETING_RESPONSE = """Olá! 👋 Eu sou a ARIA, sua assistente de radiologia por IA.
 
@@ -586,7 +585,8 @@ Exemplo:
 ]"""
 
     try:
-        response = openai_client.chat.completions.create(
+        response = await run_openai_sync(
+            openai_client.chat.completions.create,
             model="gpt-5.4-mini",
             messages=[
                 {"role": "system", "content": extraction_prompt},
@@ -872,10 +872,12 @@ async def chat_stream(request: Request, req: ChatRequest, authorization: str = N
     user = await verify_supabase_token(authorization)
     logger.info(
         "Chat stream request",
-        request_id=request_id,
-        user_id=user.get("id") if user else None,
-        question_len=len(req.question),
-        has_image=bool(req.image_base64),
+        extra={
+            "request_id": request_id,
+            "user_id": user.get("id") if user else None,
+            "question_len": len(req.question),
+            "has_image": bool(req.image_base64),
+        },
     )
 
     # 0. Trivial greeting check — bypass RAG
@@ -1045,7 +1047,7 @@ async def chat_stream(request: Request, req: ChatRequest, authorization: str = N
                     collected.append(token)
                     yield f"data: {json.dumps({'event': 'token', 'data': token})}\n\n"
             yield f"data: {json.dumps({'event': 'done', 'sources': [s.model_dump() for s in sources[:3]]})}\n\n"
-            logger.info(f"Stream complete", request_id=request_id, tokens=len(collected))
+            logger.info("Stream complete", extra={"request_id": request_id, "tokens": len(collected)})
         except Exception as e:
             logger.error(f"Stream error: {e}")
             yield f"data: {json.dumps({'event': 'error', 'data': str(e)})}\n\n"
@@ -1068,10 +1070,12 @@ async def chat(request: Request, req: ChatRequest, authorization: str = None):
     user = await verify_supabase_token(authorization)
     logger.info(
         "Chat request",
-        request_id=request_id,
-        user_id=user.get("id") if user else None,
-        question_len=len(req.question),
-        has_image=bool(req.image_base64),
+        extra={
+            "request_id": request_id,
+            "user_id": user.get("id") if user else None,
+            "question_len": len(req.question),
+            "has_image": bool(req.image_base64),
+        },
     )
 
     # Trivial greeting / identity shortcut
@@ -1208,7 +1212,8 @@ async def chat(request: Request, req: ChatRequest, authorization: str = None):
         model = "gpt-4o-mini"
 
     try:
-        response = openai_client.chat.completions.create(
+        response = await run_openai_sync(
+            openai_client.chat.completions.create,
             model=model, messages=messages, temperature=0.3, max_completion_tokens=2000,
         )
         answer = response.choices[0].message.content
